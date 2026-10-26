@@ -761,10 +761,10 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
   <div class="feature-grid" id="packageGrid"><article class="feature-card">Loading packages…</article></div>
  </div>
 </section>
-<section class="feature-section" id="accountDashboard">
+<section class="feature-section" id="accountDashboard" hidden>
  <div class="container">
-  <div class="eyebrow">Secure access</div><h2>College owner & admin dashboard</h2>
-  <p class="muted">Sign in with an existing VidyaMap account. Access depends on your assigned account role and college membership.</p>
+  <div class="eyebrow">College partner portal</div><h2>College Login</h2>
+  <p class="muted">Sign in to manage your institution. Dashboard access depends on your assigned role and college membership.</p>
   <form class="feature-form" id="dashboardLogin" style="max-width:460px">
    <label>Email<input id="dashboardEmail" type="email" autocomplete="username" required></label>
    <label>Password<input id="dashboardPassword" type="password" autocomplete="current-password" required></label>
@@ -780,11 +780,36 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 <div class="container">
 <div class="footer-main">
 <div><strong style="font-size:23px">VidyaMap</strong><p>Helping students discover educational opportunities and helping institutions grow their digital reach.</p></div>
-<div class="footer-links"><a href="#directory">Explore</a><a href="#services">Marketing</a><a href="#register">Register College</a><a href="#find">Search</a></div>
+<div class="footer-links"><a href="#directory">Explore</a><a href="#services">Marketing</a><a href="#register">Register College</a><a href="#find">Search</a><a href="?portal=college">College Login</a></div>
 </div>
 <div class="footer-bottom">© <span id="year"></span> VidyaMap · Find. Promote. Grow.</div>
 </div>
 </footer>
+
+<script>
+// Keep the college/admin sign-in off the public homepage. Open it only via ?portal=college.
+(function(){
+ const portal = new URLSearchParams(window.location.search).get("portal") === "college";
+ const dashboard = document.getElementById("accountDashboard");
+ if (dashboard) {
+   dashboard.hidden = !portal;
+   if (portal) {
+     document.body.classList.add("college-portal-mode");
+     dashboard.style.display = "block";
+     dashboard.style.minHeight = "65vh";
+     dashboard.style.padding = "64px 0";
+   }
+ }
+})();
+</script>
+<style>
+#accountDashboard[hidden]{display:none!important}
+body.college-portal-mode > .announcement,
+body.college-portal-mode header,
+body.college-portal-mode footer,
+body.college-portal-mode main > section:not(#accountDashboard){display:none!important}
+body.college-portal-mode #accountDashboard{display:block!important}
+</style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
