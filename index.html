@@ -157,7 +157,13 @@ button:disabled{opacity:.6;cursor:wait}
 "use strict";
 const SUPABASE_URL="https://taxlvccrinehasexgvhv.supabase.co";
 const SUPABASE_KEY="sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+  global: {
+    headers: {
+      apikey: SUPABASE_KEY
+    }
+  }
+});
 const $=id=>document.getElementById(id);
 let states=[],districts=[],verifiedColleges=[];
 
