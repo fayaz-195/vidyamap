@@ -816,9 +816,11 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 </footer>
 
 <script>
-// Keep the college/admin sign-in off the public homepage. Open it only via ?portal=college.
+// Keep all private sign-in screens off the public homepage.
+// ?portal=college opens the institution sign-in; ?portal=admin opens the admin sign-in.
 (function(){
- const portal = new URLSearchParams(window.location.search).get("portal") === "college";
+ const portalType = new URLSearchParams(window.location.search).get("portal");
+ const portal = portalType === "college" || portalType === "admin";
  const dashboard = document.getElementById("accountDashboard");
  if (dashboard) {
    dashboard.hidden = !portal;
@@ -827,6 +829,14 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
      dashboard.style.display = "block";
      dashboard.style.minHeight = "65vh";
      dashboard.style.padding = "64px 0";
+     const eyebrow = dashboard.querySelector(".eyebrow");
+     const heading = dashboard.querySelector("h2");
+     const intro = dashboard.querySelector(".muted");
+     if (eyebrow) eyebrow.textContent = portalType === "admin" ? "VidyaMap team access" : "College partner portal";
+     if (heading) heading.textContent = portalType === "admin" ? "VidyaMap Admin Login" : "College Login";
+     if (intro) intro.textContent = portalType === "admin"
+       ? "Private access for authorized VidyaMap team members. Admin permissions are checked after sign-in."
+       : "For approved schools and colleges. Access depends on your assigned account role and institution membership.";
    }
  }
 })();
