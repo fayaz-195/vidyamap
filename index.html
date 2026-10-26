@@ -625,6 +625,11 @@ body.vm-lead-modal-open{overflow:hidden}
 @keyframes vmAdBelt{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:700px){#studentLeadCapture.vm-lead-modal{padding:10px}#studentLeadCapture.vm-lead-modal .container{max-height:calc(100vh - 20px)}.vm-ad-ticker{top:88px!important}.ad-campaign-card,.ad-campaign-grid .ad-slot-placeholder{flex-basis:78vw;width:78vw}.ad-campaign-grid{animation-duration:55s}}
 
+
+#studentLeadCapture.vm-lead-modal .vm-lead-close{position:sticky;top:0;margin-left:auto;display:flex;align-items:center;justify-content:center;z-index:5;width:42px;height:42px;border:0;border-radius:50%;background:#172554;color:#fff;font-size:28px;line-height:1;cursor:pointer;box-shadow:0 4px 14px #0f172a35;float:right}
+#studentLeadCapture.vm-lead-modal .vm-lead-close:hover{background:#7e22ce}
+#studentLeadCapture.vm-lead-modal .search-card{position:relative}
+
 </style>
 <style>
 /* Three distinct product panels */
@@ -1788,8 +1793,13 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
  const getSaved=()=>{try{return JSON.parse(sessionStorage.getItem(savedKey)||'null')}catch{return null}};
  const saved=getSaved();
  const captureSection=document.getElementById('studentLeadCapture');
+ const closeLeadPopup=()=>{captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');};
  if(saved&&saved.lead_id){searchForm.classList.remove('vm-search-locked');captureSection.hidden=true;form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);status.textContent='Your details are saved for this session. You can now search colleges.';status.style.color='var(--green)';}
- else {searchForm.classList.add('vm-search-locked');captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');}
+ else {
+  searchForm.classList.add('vm-search-locked');captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');
+  const card=form.querySelector('.eyebrow');
+  if(card&&!form.querySelector('.vm-lead-close')){const close=document.createElement('button');close.type='button';close.className='vm-lead-close';close.setAttribute('aria-label','Close student details popup');close.title='Close';close.textContent='×';form.insertBefore(close,form.firstChild);close.addEventListener('click',closeLeadPopup);}
+ }
  const districtSelect=document.getElementById('leadStudentDistrict');
  const fillDistricts=()=>{if(!districtSelect||districtSelect.dataset.loaded)return; if(!Array.isArray(districts)||!districts.length)return;districts.forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.name;districtSelect.append(o)});districtSelect.dataset.loaded='1';};
  const waitForDistricts=()=>{fillDistricts();if(!districtSelect.dataset.loaded)setTimeout(waitForDistricts,500)};waitForDistricts();
