@@ -606,6 +606,25 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 @keyframes vmAdBelt{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:700px){.ad-campaign-card,.ad-campaign-grid .ad-slot-placeholder{flex-basis:78vw;width:78vw}.ad-campaign-grid{animation-duration:55s}}
 
+
+/* First-visit student details popup */
+#studentLeadCapture.vm-lead-modal{position:fixed!important;inset:0!important;z-index:10000!important;display:flex!important;align-items:center;justify-content:center;overflow-y:auto;background:rgba(10,22,48,.64);backdrop-filter:blur(5px);padding:22px}
+#studentLeadCapture.vm-lead-modal .container{width:min(980px,100%);max-height:calc(100vh - 44px);overflow-y:auto;margin:auto}
+#studentLeadCapture.vm-lead-modal .search-card{box-shadow:0 30px 100px #02061766;border:1px solid #ffffff90}
+body.vm-lead-modal-open{overflow:hidden}
+#studentLeadCapture[hidden]{display:none!important}
+.vm-ad-ticker{position:fixed!important;top:82px!important;left:0;right:0;z-index:9998!important;box-shadow:0 5px 18px #17255422}
+.vm-ticker-track{animation:vmTickerMove 28s linear infinite!important}
+.ad-carousel-wrap{overflow:hidden;position:relative;margin-top:24px}
+.ad-campaign-grid{display:flex;gap:16px;width:max-content;overflow:visible;scroll-snap-type:none;scroll-behavior:auto;padding:8px 3px 18px;animation:vmAdBelt 70s linear infinite}
+.ad-carousel-wrap:hover .ad-campaign-grid{animation-play-state:paused}
+.ad-campaign-card{flex:0 0 250px;width:250px}
+.ad-campaign-grid .ad-slot-placeholder{flex:0 0 250px;width:250px;min-height:220px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:1px dashed #a78bfa;border-radius:18px;background:linear-gradient(145deg,#faf5ff,#eff6ff);padding:22px;color:var(--muted)}
+.ad-slot-placeholder strong{display:block;color:var(--navy);font-size:16px;margin:10px 0 4px}
+.ad-slot-placeholder .slot-icon{font-size:28px}
+@keyframes vmAdBelt{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:700px){#studentLeadCapture.vm-lead-modal{padding:10px}#studentLeadCapture.vm-lead-modal .container{max-height:calc(100vh - 20px)}.vm-ad-ticker{top:70px!important}.ad-campaign-card,.ad-campaign-grid .ad-slot-placeholder{flex-basis:78vw;width:78vw}.ad-campaign-grid{animation-duration:55s}}
+
 </style>
 <style>
 /* Three distinct product panels */
@@ -1768,8 +1787,9 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
  const savedKey='vidyamap_public_student_lead_v1';
  const getSaved=()=>{try{return JSON.parse(sessionStorage.getItem(savedKey)||'null')}catch{return null}};
  const saved=getSaved();
- if(saved&&saved.lead_id){searchForm.classList.remove('vm-search-locked');form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);status.textContent='Your details are saved for this session. You can now search colleges.';status.style.color='var(--green)';}
- else {searchForm.classList.add('vm-search-locked');}
+ const captureSection=document.getElementById('studentLeadCapture');
+ if(saved&&saved.lead_id){searchForm.classList.remove('vm-search-locked');captureSection.hidden=true;form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);status.textContent='Your details are saved for this session. You can now search colleges.';status.style.color='var(--green)';}
+ else {searchForm.classList.add('vm-search-locked');captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');}
  const districtSelect=document.getElementById('leadStudentDistrict');
  const fillDistricts=()=>{if(!districtSelect||districtSelect.dataset.loaded)return; if(!Array.isArray(districts)||!districts.length)return;districts.forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.name;districtSelect.append(o)});districtSelect.dataset.loaded='1';};
  const waitForDistricts=()=>{fillDistricts();if(!districtSelect.dataset.loaded)setTimeout(waitForDistricts,500)};waitForDistricts();
@@ -1788,8 +1808,9 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
    sessionStorage.setItem(savedKey,JSON.stringify(lead));
    form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);
    searchForm.classList.remove('vm-search-locked');
-   status.textContent='Saved! Now search colleges. Your details will be sent to a college only when you submit an enquiry.';status.style.color='var(--green)';
-   searchForm.scrollIntoView({behavior:'smooth',block:'center'});
+   status.textContent='Saved! Your college search is now unlocked.';status.style.color='var(--green)';
+   captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');
+   document.getElementById('find')?.scrollIntoView({behavior:'smooth',block:'start'});
   }catch(err){status.textContent=err.message||'Could not save your details. Please try again.';status.style.color='var(--red)';button.disabled=false;button.textContent='Save details & start searching →';}
  });
 })();
@@ -1810,9 +1831,10 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
   const districtsData=dr.data||[], mandalsData=mr.data||[], campaigns=cr.data||[];
   const ticker=document.getElementById('vmAdTicker'),tickerTrack=document.getElementById('vmTickerTrack');
   const paidActive=campaigns.filter(c=>c.payment_status==='paid'&&(!c.starts_at||new Date(c.starts_at)<=new Date())&&(!c.ends_at||new Date(c.ends_at)>=new Date()));
-  if(paidActive.length&&ticker&&tickerTrack){
+  if(ticker&&tickerTrack){
    ticker.hidden=false;
-   const tickerItems=paidActive.map(c=>{const span=document.createElement('span');span.textContent='Sponsored · '+c.title;return span;});
+   const tickerItems=paidActive.map(c=>{const span=document.createElement('span');span.textContent='Sponsored · '+c.title+' · Your ad shown here · VidyaMap';return span;});
+   if(!tickerItems.length){const span=document.createElement('span');span.textContent='YOUR AD SHOWN HERE · VidyaMap · Promote your college with posters and videos';tickerItems.push(span);}
    [...tickerItems,...tickerItems].forEach(item=>tickerTrack.append(item.cloneNode(true)));
   }
   const [targetD,targetM,collRes]=await Promise.all([
@@ -1833,8 +1855,8 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     return ds.length>0||ms.length>0; // show only area-targeted campaigns; no manual filter needed
    });
    if(!filtered.length){
-    for(let i=1;i<=20;i++){const slot=document.createElement('article');slot.className='ad-slot-placeholder';const ico=document.createElement('div');ico.className='slot-icon';ico.textContent='📢';const h=document.createElement('strong');h.textContent='Sponsored Ad Slot '+String(i).padStart(2,'0');const p=document.createElement('p');p.textContent='Paid college poster or video';slot.append(ico,h,p);grid.append(slot);}
-    grid.innerHTML+=grid.innerHTML;
+    for(let i=1;i<=20;i++){const slot=document.createElement('article');slot.className='ad-slot-placeholder';const ico=document.createElement('div');ico.className='slot-icon';ico.textContent='📢';const h=document.createElement('strong');h.textContent='YOUR AD SHOWN HERE';const p=document.createElement('p');p.textContent='VidyaMap · Sponsored college poster or video';slot.append(ico,h,p);grid.append(slot);}
+    const slots=Array.from(grid.children);slots.forEach(slot=>grid.append(slot.cloneNode(true)));
     return;
    }
    filtered.forEach(c=>{const college=collegesById.get(c.college_id);if(!college)return;const card=document.createElement('article');card.className='ad-campaign-card';
