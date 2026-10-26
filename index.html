@@ -5,7 +5,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#123B6D">
-<meta name="description" content="Find verified colleges across Telangana and Andhra Pradesh with VidyaMap.">
+<meta name="description" content="Find verified colleges, courses, admissions and scholarships across Telangana and Andhra Pradesh with VidyaMap.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="VidyaMap | Find. Promote. Grow.">
+<meta property="og:description" content="Discover verified educational institutions across Telangana and Andhra Pradesh.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://fayaz-195.github.io/vidyamap/">
 <title>VidyaMap | Find. Promote. Grow.</title>
 
 <style>
@@ -602,6 +607,7 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 <div class="actions">
 <button class="btn" type="submit">Search institutions →</button>
 <button class="btn btn-outline" type="reset" id="resetSearch">Reset</button>
+<button class="btn btn-outline" type="button" id="nearMeSearch">📍 Find nearby colleges</button>
 </div>
 <div class="notice" id="searchNotice" role="status"></div>
 </form>
@@ -1451,6 +1457,42 @@ const loadOriginal = async () => {
 };
 loadPackages();loadAdmissionHighlights();initDashboard();
 window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
+})();
+</script>
+
+
+<script>
+(function(){
+ const button=document.getElementById("nearMeSearch");
+ if(!button)return;
+ button.addEventListener("click",()=>{
+  const notice=document.getElementById("searchNotice");
+  if(!navigator.geolocation){showNotice(notice,"Your browser does not support location search.","error");return;}
+  button.disabled=true;button.textContent="Finding nearby colleges…";
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat=pos.coords.latitude, lon=pos.coords.longitude;
+    const source=window.verifiedCollegesForCompare||[];
+    const distance=(c)=>{
+      if(typeof c.latitude!=="number"||typeof c.longitude!=="number")return Infinity;
+      const rad=x=>x*Math.PI/180, dLat=rad(c.latitude-lat),dLon=rad(c.longitude-lon);
+      const a=Math.sin(dLat/2)**2+Math.cos(rad(lat))*Math.cos(rad(c.latitude))*Math.sin(dLon/2)**2;
+      return 6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+    };
+    const near=source.map(c=>({...c,_distance:distance(c)})).filter(c=>c._distance<=50).sort((a,b)=>a._distance-b._distance);
+    if(!near.length){
+      showNotice(notice,source.some(c=>typeof c.latitude==="number"&&typeof c.longitude==="number")?
+        "No verified colleges with saved map coordinates were found within 50 km.":"Nearby search is ready, but verified college records need latitude/longitude coordinates first.","error");
+      return;
+    }
+    window.verifiedCollegesForCompare=near;
+    renderColleges(near);
+    showNotice(notice,"Showing "+near.length+" verified college(s) within 50 km. Approximate distances: "+near.slice(0,3).map(c=>c.name+" "+c._distance.toFixed(1)+" km").join("; "),"success");
+    document.getElementById("directory").scrollIntoView({behavior:"smooth",block:"start"});
+  },err=>{
+    showNotice(notice,err.code===1?"Location permission was denied. You can allow location in your browser settings.":"Could not read your location. Please try again.","error");
+  },{enableHighAccuracy:false,timeout:10000,maximumAge:60000}).finally;
+  setTimeout(()=>{button.disabled=false;button.textContent="📍 Find nearby colleges";},11000);
+ });
 })();
 </script>
 
