@@ -1777,7 +1777,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
 // Public ad showcase: only approved, in-date campaigns are read from Supabase.
 (async function initCollegeAds(){
  const grid=document.getElementById('collegeAdGrid'); if(!grid||!window.supabase)return;
- const districtSel=document.getElementById('adDistrictFilter'), mandalSel=document.getElementById('adMandalFilter');
+ const districtSel=null, mandalSel=null;
  try{
   const [dr,mr,cr]=await Promise.all([
    db.from('districts').select('id,name').eq('is_active',true).order('name'),
@@ -1802,17 +1802,15 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
   const districtsByCampaign=targetD.data||[], mandalsByCampaign=targetM.data||[], collegesById=new Map((collRes.data||[]).map(c=>[c.id,c]));
   function fillMandals(){const did=districtSel.value;mandalSel.replaceChildren();const all=document.createElement('option');all.value='';all.textContent='All mandals';mandalSel.append(all);mandalsData.filter(m=>!did||m.district_id===did).forEach(m=>{const o=document.createElement('option');o.value=m.id;o.textContent=m.name;mandalSel.append(o)});}
   function render(){
-   grid.replaceChildren(); const did=districtSel.value, mid=mandalSel.value;
+   grid.replaceChildren();
    const filtered=campaigns.filter(c=>{
+    if(c.payment_status!=='paid')return false;
     if(c.starts_at&&new Date(c.starts_at)>new Date())return false;
     if(c.ends_at&&new Date(c.ends_at)<new Date())return false;
     const ds=districtsByCampaign.filter(x=>x.campaign_id===c.id), ms=mandalsByCampaign.filter(x=>x.campaign_id===c.id);
-    if(!ds.length&&!ms.length)return false; // no location targeting = do not publish
-    if(mid)return ms.some(x=>x.mandal_id===mid)|| (ds.some(x=>x.district_id===did)&&!ms.length);
-    if(did)return ds.some(x=>x.district_id===did)||ms.some(x=>mandalsData.some(m=>m.id===x.mandal_id&&m.district_id===did));
-    return true;
+    return ds.length>0||ms.length>0; // show only area-targeted campaigns; no manual filter needed
    });
-   if(!filtered.length){const empty=document.createElement('article');empty.className='feature-card';const h=document.createElement('h3');h.textContent=did?'No approved ads for this selected area yet':'No approved college ads available yet';const p=document.createElement('p');p.textContent='Choose a district and mandal, or check back after colleges publish approved campaigns.';empty.append(h,p);grid.append(empty);return;}
+   if(!filtered.length){const empty=document.createElement('article');empty.className='feature-card';const h=document.createElement('h3');h.textContent='Sponsored college ads will appear here';const p=document.createElement('p');p.textContent='When a college pays, selects its target areas and receives founder approval, its poster or video will automatically slide here.';empty.append(h,p);grid.append(empty);return;}
    filtered.forEach(c=>{const college=collegesById.get(c.college_id);if(!college)return;const card=document.createElement('article');card.className='ad-campaign-card';
     if(c.media_type==='video'){const v=document.createElement('video');v.className='ad-campaign-video';v.src=c.media_url;v.controls=true;v.preload='metadata';v.playsInline=true;v.setAttribute('aria-label',c.title);card.append(v)}
     else {const im=document.createElement('img');im.className='ad-campaign-media';im.src=c.media_url;im.alt=c.title;im.loading='lazy';card.append(im)}
