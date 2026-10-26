@@ -483,6 +483,37 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 @media(max-width:560px) { .profile-dialog{padding:24px 18px;border-radius:20px}.profile-details{grid-template-columns:1fr}.profile-head{align-items:flex-start}.profile-head .college-logo-img,.profile-head .logo{width:58px;height:58px} }
 
 /* ===== END VIDYAMAP DESIGN ===== */
+
+/* VidyaMap growth features */
+.feature-section{padding:56px 0}
+.feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.feature-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:0 8px 26px #172b430b}
+.feature-card h3{margin:8px 0}
+.feature-card p{color:var(--muted);font-size:14px}
+.compare-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#f7f2fc;border:1px solid #e7d7f1;border-radius:14px;padding:14px;margin:18px 0}
+.compare-check{display:flex;gap:7px;align-items:center;font-size:12px;color:var(--navy);font-weight:700;margin-top:12px}
+.compare-check input{width:16px;height:16px}
+.compare-modal[hidden],.dashboard-view[hidden]{display:none!important}
+.compare-modal{position:fixed;inset:0;z-index:1100;display:grid;place-items:center;padding:18px}
+.compare-content{position:relative;background:white;border-radius:20px;padding:24px;max-width:1000px;width:100%;max-height:85vh;overflow:auto}
+.compare-table{width:100%;border-collapse:collapse;font-size:13px}
+.compare-table th,.compare-table td{padding:12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+.compare-table th{color:var(--navy);background:#f8f5fc}
+.feature-form{display:grid;gap:12px}
+.feature-form input,.feature-form textarea,.feature-form select{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:white}
+.feature-form label{font-size:13px;font-weight:700}
+.feature-note{font-size:13px;color:var(--muted);margin-top:8px}
+.consent-row{display:flex;gap:9px;align-items:flex-start;font-size:12px;color:var(--muted)}
+.consent-row input{margin-top:4px;flex-shrink:0}
+.package-price{font-size:28px;font-weight:900;color:var(--purple)}
+.package-price small{font-size:12px;color:var(--muted);font-weight:500}
+.dashboard-view{margin-top:18px;padding:18px;border:1px solid var(--border);border-radius:14px;background:#fff}
+.dashboard-list{display:grid;gap:12px}
+.dashboard-row{padding:14px;border:1px solid var(--border);border-radius:12px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.status-pill{display:inline-block;border-radius:99px;background:#f3e8ff;color:#6b21a8;padding:4px 9px;font-size:11px;font-weight:800}
+@media(max-width:800px){.feature-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.feature-grid{grid-template-columns:1fr}.compare-content{padding:16px}.compare-table th,.compare-table td{padding:8px}}
+
 </style>
 </head>
 <body>
@@ -584,6 +615,19 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
   <div class="vm-trust-item"><span class="vm-trust-icon">↗</span><div><strong>Grow Your Reach</strong><small>Digital marketing</small></div></div>
 </div>
 
+
+<div class="container compare-tools" id="compareTools">
+  <div><strong>Compare colleges</strong><div class="feature-note">Select up to 3 verified colleges from the listings below.</div></div>
+  <button class="btn" id="openCompare" type="button" disabled>Compare selected (0)</button>
+</div>
+<div class="compare-modal" id="compareModal" hidden>
+  <div class="profile-backdrop" data-close-compare></div>
+  <section class="compare-content" role="dialog" aria-modal="true" aria-label="Compare colleges">
+    <button class="profile-close" type="button" data-close-compare aria-label="Close comparison">×</button>
+    <h2>Compare colleges</h2><div id="compareContent"></div>
+  </section>
+</div>
+
 <section class="section" id="directory">
 <div class="container">
 <div class="eyebrow">Explore opportunities</div>
@@ -649,6 +693,40 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 </div>
 </section>
 </main>
+
+
+<section class="feature-section" id="admissions">
+ <div class="container">
+  <div class="eyebrow">Plan your next step</div><h2>Admissions & scholarships</h2>
+  <p class="muted">Check institution profiles for admission status and scholarship information. Always confirm deadlines with the institution.</p>
+  <div class="feature-grid" id="admissionHighlights">
+   <article class="feature-card"><strong>🎓 Admissions</strong><h3>Explore verified colleges</h3><p>Open a college profile to view available information and contact details.</p><a class="btn btn-outline" href="#directory">Browse colleges</a></article>
+   <article class="feature-card"><strong>🏅 Scholarships</strong><h3>Ask about eligibility</h3><p>Scholarship details can be displayed when a verified institution provides them.</p><a class="btn btn-outline" href="#directory">Find institutions</a></article>
+   <article class="feature-card"><strong>📅 Deadlines</strong><h3>Confirm dates directly</h3><p>Admission dates can change. Contact the college before applying.</p><a class="btn btn-outline" href="#directory">View profiles</a></article>
+  </div>
+ </div>
+</section>
+<section class="feature-section" id="marketingPackages" style="background:var(--surface)">
+ <div class="container">
+  <div class="eyebrow">For institutions</div><h2>Digital growth packages</h2>
+  <p class="muted">Illustrative monthly subscription plans currently configured in VidyaMap. Contact us to discuss promotion services.</p>
+  <div class="feature-grid" id="packageGrid"><article class="feature-card">Loading packages…</article></div>
+ </div>
+</section>
+<section class="feature-section" id="accountDashboard">
+ <div class="container">
+  <div class="eyebrow">Secure access</div><h2>College owner & admin dashboard</h2>
+  <p class="muted">Sign in with an existing VidyaMap account. Access depends on your assigned account role and college membership.</p>
+  <form class="feature-form" id="dashboardLogin" style="max-width:460px">
+   <label>Email<input id="dashboardEmail" type="email" autocomplete="username" required></label>
+   <label>Password<input id="dashboardPassword" type="password" autocomplete="current-password" required></label>
+   <div class="actions"><button class="btn" type="submit" id="dashboardLoginButton">Sign in securely</button><button class="btn btn-outline" type="button" id="dashboardSignOut" hidden>Sign out</button></div>
+   <div id="dashboardNotice" class="notice" role="status"></div>
+  </form>
+  <div id="ownerDashboard" class="dashboard-view" hidden><h3>Your college dashboard</h3><div id="ownerDashboardContent" class="dashboard-list"></div></div>
+  <div id="adminDashboard" class="dashboard-view" hidden><h3>Pending registration requests</h3><div id="adminDashboardContent" class="dashboard-list"></div></div>
+ </div>
+</section>
 
 <footer>
 <div class="container">
@@ -890,6 +968,11 @@ function openCollegeProfile(c) {
     profileText("Phone", c.phone || "", c.phone ? "tel:" + c.phone.replace(/[^+\d]/g, "") : null),
     profileText("Email", c.email || "", c.email ? "mailto:" + c.email : null)
   );
+  details.append(
+    profileText("Admissions", c.admissions_open ? "Admissions open — confirm with institution" : "Contact institution for current status"),
+    profileText("Admission deadline", c.admission_deadline || "Not announced"),
+    profileText("Scholarships", c.scholarship_info || "Contact institution for details")
+  );
   content.append(details);
 
   const actions = document.createElement("div");
@@ -909,6 +992,64 @@ function openCollegeProfile(c) {
     const a = document.createElement("a"); a.className="btn btn-outline"; a.href="mailto:"+c.email; a.textContent="Email institution"; actions.append(a);
   }
   if (actions.childElementCount) content.append(actions);
+
+  const enquiryTitle = document.createElement("h3");
+  enquiryTitle.textContent = "Enquire about this institution";
+  enquiryTitle.style.marginTop = "24px";
+  content.append(enquiryTitle);
+  const enquiryForm = document.createElement("form");
+  enquiryForm.id = "profileEnquiryForm";
+  enquiryForm.className = "feature-form";
+  enquiryForm.innerHTML = `
+    <label>Your name<input name="student_name" required minlength="2" maxlength="120" autocomplete="name"></label>
+    <label>Phone number<input name="phone" required type="tel" minlength="10" maxlength="20" autocomplete="tel"></label>
+    <label>Email (optional)<input name="email" type="email" maxlength="160" autocomplete="email"></label>
+    <label>Course of interest<input name="course_name" maxlength="100" placeholder="e.g. MPC, NEET, B.Tech"></label>
+    <label>Message (optional)<textarea name="message" rows="3" maxlength="1500" placeholder="Tell the institution what you would like to know"></textarea></label>
+    <label class="consent-row"><input name="consent" type="checkbox" required><span>I agree that this institution may contact me about my enquiry. My contact details will be shared only for this enquiry.</span></label>
+    <button class="btn" type="submit">Send enquiry securely</button>
+    <div class="feature-note" role="status" data-enquiry-status></div>
+  `;
+  enquiryForm.addEventListener("submit", async ev => {
+    ev.preventDefault();
+    const submit = enquiryForm.querySelector('button[type="submit"]');
+    const status = enquiryForm.querySelector("[data-enquiry-status]");
+    const form = new FormData(enquiryForm);
+    submit.disabled = true; submit.textContent = "Sending…";
+    try {
+      const { error } = await db.rpc("submit_college_enquiry", {
+        p_college_id: c.id,
+        p_student_name: String(form.get("student_name") || "").trim(),
+        p_phone: String(form.get("phone") || "").trim(),
+        p_email: String(form.get("email") || "").trim() || null,
+        p_district_id: c.district_id || null,
+        p_town: String(c.town || "").trim() || null,
+        p_course_name: String(form.get("course_name") || "").trim() || null,
+        p_academic_year: null,
+        p_message: String(form.get("message") || "").trim() || null,
+        p_contact_consent: form.get("consent") === "on"
+      });
+      if (error) throw error;
+      status.textContent = "Enquiry sent successfully. The institution can follow up with you.";
+      status.style.color = "var(--green)";
+      enquiryForm.reset();
+    } catch (err) {
+      status.textContent = err.message || "Enquiry could not be sent. Please try again.";
+      status.style.color = "var(--red)";
+    } finally { submit.disabled = false; submit.textContent = "Send enquiry securely"; }
+  });
+  content.append(enquiryForm);
+
+  if (c.phone) {
+    const wa = document.createElement("a");
+    wa.className = "btn btn-outline";
+    wa.target = "_blank"; wa.rel = "noopener noreferrer";
+    const phoneDigits = String(c.phone).replace(/[^\\d]/g, "");
+    wa.href = "https://wa.me/" + phoneDigits + "?text=" + encodeURIComponent("Hello, I found your institution on VidyaMap. Please share admission details.");
+    wa.textContent = "WhatsApp institution";
+    content.append(wa);
+  }
+
   modal.hidden = false;
   document.body.style.overflow = "hidden";
   $("profileTitle").focus?.();
@@ -1002,6 +1143,15 @@ function renderColleges(items) {
       } catch {}
     }
     card.append(actions);
+    const compareLabel = document.createElement("label");
+    compareLabel.className = "compare-check";
+    const compareInput = document.createElement("input");
+    compareInput.type = "checkbox";
+    compareInput.dataset.compareCollege = c.id;
+    compareInput.checked = (window.vidyaMapCompareIds || []).includes(c.id);
+    compareInput.addEventListener("change", () => window.vidyaMapSetCompare(c.id, compareInput.checked));
+    compareLabel.append(compareInput, document.createTextNode(" Add to compare"));
+    card.append(compareLabel);
     grid.append(card);
   });
 }
@@ -1009,7 +1159,7 @@ function renderColleges(items) {
 async function loadColleges() {
   const { data, error } = await db
     .from("colleges")
-    .select("id,name,description,website_url,email,phone,address,town,district_id,mandal_id,logo_path,verified_at")
+    .select("id,name,slug,status,description,category,website_url,email,phone,address,town,district_id,mandal_id,logo_path,verified_at,latitude,longitude,admissions_open,admission_deadline,scholarship_info")
     .eq("status", "verified")
     .order("name")
     .limit(500);
@@ -1041,11 +1191,11 @@ function search(event) {
     const districtOK = !selectedDistrict || String(c.district_id) === selectedDistrict;
     const mandalOK = !selectedMandal || String(c.mandal_id) === selectedMandal;
 
-    const text = [c.name, c.description, c.town]
+    const text = [c.name, c.description, c.town, c.category, c.scholarship_info]
       .filter(Boolean).join(" ").toLowerCase();
 
     const keywordOK = !keyword || text.includes(keyword);
-    const categoryOK = !category || text.includes(category);
+    const categoryOK = !category || (c.category ? c.category.toLowerCase().includes(category) : text.includes(category));
 
     return stateOK && districtOK && mandalOK && keywordOK && categoryOK;
   });
@@ -1164,5 +1314,145 @@ $("year").textContent = new Date().getFullYear();
   await loadColleges();
 })();
 </script>
+
+<script>
+(function(){
+"use strict";
+const compareIds = new Set();
+window.vidyaMapCompareIds = [];
+window.vidyaMapSetCompare = function(id, checked){
+  if(checked){
+    if(compareIds.size>=3){ alert("You can compare up to 3 colleges at a time."); const input=document.querySelector('[data-compare-college="'+id+'"]'); if(input)input.checked=false; return; }
+    compareIds.add(id);
+  } else compareIds.delete(id);
+  window.vidyaMapCompareIds=[...compareIds];
+  const button=document.getElementById("openCompare");
+  if(button){button.disabled=compareIds.size<2;button.textContent="Compare selected ("+compareIds.size+")";}
+};
+document.getElementById("openCompare")?.addEventListener("click",()=>{
+  const items=(window.verifiedCollegesForCompare||[]); 
+  const selected=[...compareIds].map(id=>items.find(c=>c.id===id)).filter(Boolean);
+  if(selected.length<2)return;
+  const fields=[
+    ["Institution","name"],["Category","category"],["Location","town"],["Address","address"],
+    ["Description","description"],["Admissions","admissions_open"],["Deadline","admission_deadline"],
+    ["Scholarship information","scholarship_info"],["Phone","phone"],["Email","email"],["Website","website_url"]
+  ];
+  const wrap=document.getElementById("compareContent");wrap.innerHTML="";
+  const table=document.createElement("table");table.className="compare-table";
+  const head=document.createElement("tr");head.append(document.createElement("th"));
+  selected.forEach(c=>{const th=document.createElement("th");th.textContent=c.name||"Institution";head.append(th);});
+  table.append(head);
+  fields.slice(1).forEach(([label,key])=>{
+    const tr=document.createElement("tr");const th=document.createElement("th");th.textContent=label;tr.append(th);
+    selected.forEach(c=>{const td=document.createElement("td");let value=c[key];if(key==="admissions_open")value=value===true?"Open — confirm with institution":"Contact institution";td.textContent=value==null||value===""?"Not provided":String(value);tr.append(td);});table.append(tr);
+  });
+  wrap.append(table);document.getElementById("compareModal").hidden=false;
+});
+document.querySelectorAll("[data-close-compare]").forEach(el=>el.addEventListener("click",()=>document.getElementById("compareModal").hidden=true));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.getElementById("compareModal").hidden=true;});
+
+async function loadPackages(){
+ const grid=document.getElementById("packageGrid");if(!grid)return;
+ const {data,error}=await db.from("subscription_plans").select("name,monthly_price_inr,lead_limit,district_limit,features").eq("is_active",true).order("monthly_price_inr");
+ if(error||!data?.length){grid.innerHTML='<article class="feature-card"><h3>Contact VidyaMap</h3><p>Ask about institution promotion and digital marketing options.</p></article>';return;}
+ grid.innerHTML="";
+ data.forEach(p=>{
+  const card=document.createElement("article");card.className="feature-card";
+  const h=document.createElement("h3");h.textContent=p.name;
+  const price=document.createElement("div");price.className="package-price";price.textContent="₹"+Number(p.monthly_price_inr).toLocaleString("en-IN");const small=document.createElement("small");small.textContent=" / month";price.append(small);
+  const leads=document.createElement("p");leads.textContent=(p.lead_limit===0?"Lead limit: custom":p.lead_limit+" lead enquiries / month");
+  const districts=document.createElement("p");districts.textContent=p.district_limit==null?"Coverage: all districts":"Coverage: up to "+p.district_limit+" district(s)";
+  const note=document.createElement("p");note.textContent="WhatsApp campaigns: "+(p.features?.whatsapp_campaigns?"Included":"Not included");
+  const a=document.createElement("a");a.className="btn";a.href="#register";a.textContent="Enquire about plan";
+  card.append(h,price,leads,districts,note,a);grid.append(card);
+ });
+}
+async function loadAdmissionHighlights(){
+ const grid=document.getElementById("admissionHighlights");if(!grid)return;
+ const {data,error}=await db.from("colleges").select("id,name,category,admissions_open,admission_deadline,scholarship_info").eq("status","verified").order("name").limit(6);
+ if(error||!data?.length)return;
+ grid.innerHTML="";
+ data.forEach(c=>{
+  const card=document.createElement("article");card.className="feature-card";
+  const status=document.createElement("span");status.className="status-pill";status.textContent=c.admissions_open?"Admissions open*":"Verified listing";
+  const h=document.createElement("h3");h.textContent=c.name;
+  const p=document.createElement("p");p.textContent=c.scholarship_info||"Contact the institution for current admissions and scholarship details.";
+  const a=document.createElement("a");a.className="btn btn-outline";a.href="#directory";a.textContent="Find in directory";
+  card.append(status,h,p,a);grid.append(card);
+ });
+}
+async function initDashboard(){
+ const login=document.getElementById("dashboardLogin"),notice=document.getElementById("dashboardNotice");
+ if(!login)return;
+ const owner=document.getElementById("ownerDashboard"),admin=document.getElementById("adminDashboard");
+ const say=(t,type)=>{notice.style.display="block";notice.textContent=t;notice.style.color=type==="error"?"var(--red)":type==="success"?"var(--green)":"var(--muted)";};
+ async function loadDashboards(user){
+  document.getElementById("dashboardSignOut").hidden=false;
+  const {data:profile}=await db.from("profiles").select("role,is_active").eq("id",user.id).maybeSingle();
+  if(!profile?.is_active){say("Your account profile is not active. Contact VidyaMap support.","error");return;}
+  if(profile.role==="platform_admin"){
+   admin.hidden=false;
+   const target=document.getElementById("adminDashboardContent");target.textContent="Loading pending requests…";
+   const {data,error}=await db.from("college_registration_requests").select("id,college_name,contact_name,contact_phone,contact_email,address,website_url,district_id,mandal_id,created_at,notes,status").eq("status","pending").order("created_at");
+   target.innerHTML="";
+   if(error){target.textContent="Could not load requests. Admin access or database policy may be missing.";return;}
+   if(!data?.length){target.textContent="No pending college registration requests.";return;}
+   data.forEach(req=>{
+    const row=document.createElement("div");row.className="dashboard-row";
+    const info=document.createElement("div");const title=document.createElement("strong");title.textContent=req.college_name;
+    const detail=document.createElement("div");detail.className="feature-note";detail.textContent=[req.contact_name,req.contact_phone,req.contact_email,req.notes].filter(Boolean).join(" · ");info.append(title,detail);
+    const actions=document.createElement("div");
+    ["approve","reject"].forEach(decision=>{const b=document.createElement("button");b.type="button";b.className=decision==="approve"?"btn":"btn btn-outline";b.textContent=decision==="approve"?"Approve & verify":"Reject";b.addEventListener("click",async()=>{
+      const notes=decision==="reject"?prompt("Reason for rejection (optional):"):"Approved by platform admin";
+      if(decision==="reject"&&notes===null)return;
+      b.disabled=true;
+      const {error}=await db.rpc("admin_review_college_request",{p_request_id:req.id,p_decision:decision,p_review_notes:notes||null});
+      if(error){say(error.message||"Could not review request","error");b.disabled=false;return;}
+      say(decision==="approve"?"College verified and owner access assigned.":"Request rejected.","success");
+      await loadDashboards(user);
+    });actions.append(b);});
+    row.append(info,actions);target.append(row);
+   });
+  }
+  const {data:members,error:memberError}=await db.from("college_members").select("college_id,member_role,colleges(id,name,status,phone,email,address,website_url,description,category,admissions_open,admission_deadline,scholarship_info)").eq("user_id",user.id).eq("is_active",true);
+  if(!memberError&&members?.length){
+   owner.hidden=false;const target=document.getElementById("ownerDashboardContent");target.innerHTML="";
+   for(const member of members){
+    const college=member.colleges;if(!college)continue;
+    const row=document.createElement("div");row.className="dashboard-row";
+    const info=document.createElement("div");const title=document.createElement("strong");title.textContent=college.name;
+    const meta=document.createElement("div");meta.className="feature-note";meta.textContent="Role: "+member.member_role+" · Status: "+college.status;info.append(title,meta);
+    const link=document.createElement("a");link.className="btn btn-outline";link.href=college.website_url||"#directory";link.textContent="Open website";
+    row.append(info,link);target.append(row);
+   }
+  }
+ }
+ login.addEventListener("submit",async ev=>{
+  ev.preventDefault();const button=document.getElementById("dashboardLoginButton");button.disabled=true;button.textContent="Signing in…";
+  try{const {data,error}=await db.auth.signInWithPassword({email:document.getElementById("dashboardEmail").value.trim(),password:document.getElementById("dashboardPassword").value});if(error)throw error;login.querySelectorAll("input").forEach(i=>i.disabled=true);say("Signed in. Checking account permissions…","success");await loadDashboards(data.user);}
+  catch(e){say(e.message||"Sign in failed","error");}
+  finally{button.disabled=false;button.textContent="Sign in securely";}
+ });
+ document.getElementById("dashboardSignOut").addEventListener("click",async()=>{await db.auth.signOut();owner.hidden=true;admin.hidden=true;login.querySelectorAll("input").forEach(i=>{i.disabled=false;i.value="";});document.getElementById("dashboardSignOut").hidden=true;say("Signed out.");});
+ const {data:{user}}=await db.auth.getUser();if(user){say("Existing session found. Loading dashboards…");await loadDashboards(user);}
+}
+const originalRender = window.renderColleges;
+if(typeof originalRender==="function"){
+ const originalLoad=window.loadColleges;
+}
+const oldLoadColleges = window.loadColleges;
+const loadOriginal = async () => {
+ const {data,error}=await db.from("colleges").select("id,name,slug,status,description,category,website_url,email,phone,address,town,district_id,mandal_id,logo_path,verified_at,latitude,longitude,admissions_open,admission_deadline,scholarship_info").eq("status","verified").order("name").limit(500);
+ if(error){console.error(error);return;}
+ window.verifiedCollegesForCompare=data||[];
+ // keep original lexical array used by existing search and rendering in sync
+ try { verifiedColleges.splice(0,verifiedColleges.length,...(data||[])); renderColleges(verifiedColleges); } catch(e){console.error(e);}
+};
+loadPackages();loadAdmissionHighlights();initDashboard();
+window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
+})();
+</script>
+
 </body>
 </html>
