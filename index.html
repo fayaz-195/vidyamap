@@ -1490,7 +1490,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     document.getElementById("directory").scrollIntoView({behavior:"smooth",block:"start"});
   },err=>{
     showNotice(notice,err.code===1?"Location permission was denied. You can allow location in your browser settings.":"Could not read your location. Please try again.","error");
-  },{enableHighAccuracy:false,timeout:10000,maximumAge:60000}).finally;
+  },{enableHighAccuracy:false,timeout:10000,maximumAge:60000});
   setTimeout(()=>{button.disabled=false;button.textContent="📍 Find nearby colleges";},11000);
  });
 })();
