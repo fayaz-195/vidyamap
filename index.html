@@ -247,32 +247,52 @@ function addOption(sel, value, label) {
   o.textContent = label;
   sel.appendChild(o);
 }
-
 async function loadLocations() {
-  const [sr, dr, mr] = await Promise.all([
+  const [sr, dr] = await Promise.all([
     db.from("states")
       .select("code,name")
       .eq("is_active", true)
       .order("name"),
+
     db.from("districts")
       .select("id,name,state_code")
-      .eq("is_active", true)
-      .order("name"),
-    db.from("mandals")
-      .select("id,name,district_id")
       .eq("is_active", true)
       .order("name")
   ]);
 
-  if (sr.error || dr.error || mr.error) {
-    console.error("Location API errors", {
+  // Load ALL active mandals in pages of 1000
+  const allMandals = [];
+  const pageSize = 1000;
+  let mandalError = null;
+
+  for (let from = 0; ; from += pageSize) {
+    const { data, error } = await db
+      .from("mandals")
+      .select("id,name,district_id")
+      .eq("is_active", true)
+      .order("name")
+      .range(from, from + pageSize - 1);
+
+    if (error) {
+      mandalError = error;
+      break;
+    }
+
+    allMandals.push(...(data || []));
+
+    if (!data || data.length < pageSize) break;
+  }
+
+  if (sr.error || dr.error || mandalError) {
+    console.error("Location loading error:", {
       states: sr.error,
       districts: dr.error,
-      mandals: mr.error
+      mandals: mandalError
     });
+
     showNotice(
       $("searchNotice"),
-      "Location data could not be loaded. Check Supabase permissions.",
+      "Location data could not be loaded. Please try again.",
       "error"
     );
     return;
@@ -280,12 +300,18 @@ async function loadLocations() {
 
   states = sr.data || [];
   districts = dr.data || [];
-  mandals = mr.data || [];
+  mandals = allMandals;
+
+  console.log("Total active mandals loaded:", mandals.length);
 
   for (const id of ["state", "regState"]) {
     const sel = $(id);
     sel.innerHTML = "";
-    addOption(sel, "", id === "state" ? "All states" : "Select state");
+    addOption(
+      sel,
+      "",
+      id === "state" ? "All states" : "Select state"
+    );
     states.forEach(s => addOption(sel, s.code, s.name));
   }
 
@@ -293,7 +319,6 @@ async function loadLocations() {
   updateSearchMandals();
   updateRegDistricts();
 }
-
 function updateSearchDistricts() {
   const sel = $("district");
   const old = sel.value;
