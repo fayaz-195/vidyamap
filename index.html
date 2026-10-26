@@ -583,6 +583,15 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 .ad-campaign-body .btn{margin-top:auto;text-align:center}
 @media(max-width:800px){.ad-campaign-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.ad-campaign-grid{grid-template-columns:1fr}.ad-area-toolbar,.ad-area-toolbar label,.ad-area-toolbar select,.ad-area-toolbar .btn{width:100%}}
+
+.ad-approval-panel{margin-top:34px;padding:24px;border:1px solid var(--border);border-radius:20px;background:#fbf8ff}
+.ad-approval-panel h3{margin:5px 0 8px;color:var(--navy)}
+.ad-review-row{align-items:flex-start!important;gap:18px}
+.ad-review-info{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1}
+.ad-review-info p{margin:0;color:var(--muted);font-size:14px}
+.ad-review-media{display:block;width:min(100%,420px);max-height:260px;object-fit:contain;object-position:left center;background:#f0edf4;border-radius:10px}
+.ad-review-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start}
+@media(max-width:700px){.ad-review-row{flex-direction:column}.ad-review-actions{width:100%}.ad-review-actions .btn{flex:1}}
 </style>
 <style>
 /* Three distinct product panels */
@@ -846,7 +855,11 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
    <div id="dashboardNotice" class="notice" role="status"></div>
   </form>
   <div id="ownerDashboard" class="dashboard-view" hidden><h3>Your college dashboard</h3><div id="ownerDashboardContent" class="dashboard-list"></div></div>
-  <div id="adminDashboard" class="dashboard-view" hidden><h3>Pending registration requests</h3><div id="adminDashboardContent" class="dashboard-list"></div></div>
+  <div id="adminDashboard" class="dashboard-view" hidden>
+   <h3>Founder / VidyaMap Staff Panel</h3>
+   <h4>Pending college registration requests</h4><div id="adminDashboardContent" class="dashboard-list"></div>
+   <div class="ad-approval-panel"><div class="eyebrow">Founder approval</div><h3>College Ads Approval</h3><p class="muted">Review posters and videos submitted by colleges. Approve only after checking content and selected district/mandal. Approved ads can appear on the public website in their targeted areas and scheduled dates.</p><div id="adApprovalNotice" class="notice" role="status"></div><div id="adApprovalList" class="dashboard-list">Loading submitted campaigns…</div></div>
+  </div>
  </div>
 </section>
 
@@ -1587,8 +1600,8 @@ async function initDashboard(){
    const {data,error}=await db.from("college_registration_requests").select("id,college_name,contact_name,contact_phone,contact_email,address,website_url,district_id,mandal_id,created_at,notes,status").eq("status","pending").order("created_at");
    target.innerHTML="";
    if(error){target.textContent="Could not load requests. Admin access or database policy may be missing.";return;}
-   if(!data?.length){target.textContent="No pending college registration requests.";return;}
-   data.forEach(req=>{
+   if(!data?.length){target.textContent="No pending college registration requests.";}
+   (data||[]).forEach(req=>{
     const row=document.createElement("div");row.className="dashboard-row";
     const info=document.createElement("div");const title=document.createElement("strong");title.textContent=req.college_name;
     const detail=document.createElement("div");detail.className="feature-note";detail.textContent=[req.contact_name,req.contact_phone,req.contact_email,req.notes].filter(Boolean).join(" · ");info.append(title,detail);
@@ -1604,6 +1617,50 @@ async function initDashboard(){
     });actions.append(b);});
     row.append(info,actions);target.append(row);
    });
+   await loadAdApprovals(user);
+  }
+  async function loadAdApprovals(user){
+   const list=document.getElementById("adApprovalList"),note=document.getElementById("adApprovalNotice");
+   if(!list)return;list.textContent="Loading submitted campaigns…";
+   const show=(msg,type)=>{note.style.display="block";note.textContent=msg;note.style.color=type==="error"?"var(--red)":"var(--green)";};
+   const {data:campaigns,error}=await db.from("college_ad_campaigns").select("id,college_id,title,description,media_type,media_url,click_url,status,starts_at,ends_at,created_at").in("status",["pending_review","approved","rejected","paused"]).order("created_at",{ascending:false}).limit(100);
+   if(error){list.textContent="Could not load ad campaigns. Verify the admin database policy.";return;}
+   list.replaceChildren();
+   if(!campaigns?.length){list.textContent="No ad campaigns submitted yet.";return;}
+   const {data:colleges}=await db.from("colleges").select("id,name,district_id,mandal_id,town").in("id",[...new Set(campaigns.map(c=>c.college_id))]);
+   const {data:ds}=await db.from("college_ad_campaign_districts").select("campaign_id,district_id");
+   const {data:ms}=await db.from("college_ad_campaign_mandals").select("campaign_id,mandal_id");
+   const {data:districtRows}=await db.from("districts").select("id,name");
+   const {data:mandalRows}=await db.from("mandals").select("id,name,district_id");
+   const collegeMap=new Map((colleges||[]).map(c=>[c.id,c]));
+   for(const c of campaigns){
+    const row=document.createElement("div");row.className="dashboard-row ad-review-row";
+    const info=document.createElement("div");info.className="ad-review-info";
+    const title=document.createElement("strong");title.textContent=c.title+" · "+(c.media_type==="video"?"Video":"Poster");
+    const college=document.createElement("div");college.className="feature-note";college.textContent=(collegeMap.get(c.college_id)?.name||"Unknown college")+" · Status: "+c.status;
+    const desc=document.createElement("p");desc.textContent=c.description||"No description supplied.";
+    const areas=document.createElement("div");areas.className="feature-note";
+    const targetedD=(ds||[]).filter(x=>x.campaign_id===c.id).map(x=>districtRows?.find(d=>d.id===x.district_id)?.name).filter(Boolean);
+    const targetedM=(ms||[]).filter(x=>x.campaign_id===c.id).map(x=>mandalRows?.find(m=>m.id===x.mandal_id)?.name).filter(Boolean);
+    areas.textContent="Districts: "+(targetedD.join(", ")||"None")+" · Mandals: "+(targetedM.join(", ")||"None");
+    info.append(title,college,desc,areas);
+    if(c.media_type==="video"){const v=document.createElement("video");v.src=c.media_url;v.controls=true;v.preload="metadata";v.playsInline=true;v.className="ad-review-media";info.append(v);}
+    else{const im=document.createElement("img");im.src=c.media_url;im.alt=c.title;im.loading="lazy";im.className="ad-review-media";info.append(im);}
+    const actions=document.createElement("div");actions.className="ad-review-actions";
+    const preview=document.createElement("a");preview.href=c.media_url;preview.target="_blank";preview.rel="noopener noreferrer";preview.className="btn btn-outline";preview.textContent="Open media";actions.append(preview);
+    if(c.status==="pending_review"){
+     for(const decision of ["approved","rejected"]){const b=document.createElement("button");b.type="button";b.className=decision==="approved"?"btn":"btn btn-outline";b.textContent=decision==="approved"?"Approve & publish":"Reject";b.addEventListener("click",async()=>{
+      if(decision==="approved"&&!(ds||[]).some(x=>x.campaign_id===c.id)&&!(ms||[]).some(x=>x.campaign_id===c.id)){show("Cannot approve: select at least one district or mandal for this campaign.","error");return;}
+      if(decision==="rejected"&&!confirm("Reject this college ad campaign?"))return;
+      b.disabled=true;
+      const {error:updateError}=await db.from("college_ad_campaigns").update({status:decision,updated_at:new Date().toISOString()}).eq("id",c.id).eq("status","pending_review");
+      if(updateError){show(updateError.message||"Campaign review failed.","error");b.disabled=false;return;}
+      show(decision==="approved"?"Campaign approved. It is eligible to appear in the public area-targeted ads section.":"Campaign rejected.","success");
+      await loadAdApprovals(user);
+     });actions.append(b);}
+    }
+    row.append(info,actions);list.append(row);
+   }
   }
   const {data:members,error:memberError}=await db.from("college_members").select("college_id,member_role,colleges(id,name,status,phone,email,address,website_url,description,category,admissions_open,admission_deadline,scholarship_info)").eq("user_id",user.id).eq("is_active",true);
   if(!memberError&&members?.length){
