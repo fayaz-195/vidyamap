@@ -562,6 +562,26 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 }
 
 </style>
+<style>
+/* Three distinct product panels */
+.vm-panel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;margin-top:30px}
+.vm-panel-card{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:30px;border-radius:24px;min-height:100%;box-shadow:0 14px 38px #20385d12}
+.vm-panel-card h3{font-size:24px;line-height:1.25;margin:10px 0;color:var(--navy)}
+.vm-panel-card p{color:var(--muted);line-height:1.65;min-height:72px}
+.vm-panel-card ul{padding-left:20px;margin:8px 0 26px;font-size:14px;color:var(--ink)}
+.vm-panel-card li{margin:9px 0}
+.vm-panel-card .btn{margin-top:auto;width:100%;text-align:center;white-space:normal}
+.vm-panel-icon{display:grid;place-items:center;width:64px;height:64px;border-radius:20px;font-size:30px;margin-bottom:14px}
+.vm-public-panel{border-top:5px solid #2768b2;background:linear-gradient(180deg,#f0f6ff 0%,#fff 42%)}
+.vm-public-panel .vm-panel-icon{background:#dceaff}
+.vm-institution-panel{border-top:5px solid #16845c;background:linear-gradient(180deg,#eafaf2 0%,#fff 42%)}
+.vm-institution-panel .vm-panel-icon{background:#d2f4e2}
+.vm-admin-panel{border-top:5px solid #76208f;background:linear-gradient(180deg,#f7edff 0%,#fff 42%)}
+.vm-admin-panel .vm-panel-icon{background:#ead8fb}
+.vm-panel-note{margin-top:24px;padding:17px 20px;border:1px solid var(--border);border-radius:15px;background:#fff;color:var(--muted);font-size:14px}
+@media(max-width:900px){.vm-panel-grid{grid-template-columns:1fr 1fr}.vm-panel-card:last-child{grid-column:1/-1}}
+@media(max-width:600px){.vm-panel-grid{grid-template-columns:1fr}.vm-panel-card:last-child{grid-column:auto}.vm-panel-card{padding:23px}.vm-panel-card p{min-height:0}}
+</style>
 </head>
 <body>
 <div class="announcement">Your education journey starts here · Telangana &amp; Andhra Pradesh</div>
@@ -756,30 +776,30 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 </section>
 <section class="feature-section" id="platformPanels">
  <div class="container">
-  <div class="eyebrow">One platform · Three panels</div>
-  <h2>VidyaMap ecosystem</h2>
-  <p class="muted">Discover institutions, manage your institution, or monitor the entire network — each with its own access and permissions.</p>
+  <div class="eyebrow">VidyaMap platform</div>
+  <h2>Three separate applications</h2>
+  <p class="muted">Each application has a different purpose and its own workspace.</p>
   <div class="feature-grid vm-panel-grid">
-   <article class="feature-card vm-panel-card">
-    <div class="vm-panel-icon">🌐</div><div class="eyebrow">Panel 01</div><h3>Public Live Website</h3>
-    <p>Students and parents can find schools and colleges, compare institutions, explore admissions and submit enquiries.</p>
-    <ul><li>Institution search & filters</li><li>Verified public profiles</li><li>Admissions enquiries</li></ul>
+   <article class="feature-card vm-panel-card vm-public-panel">
+    <div class="vm-panel-icon">🌐</div><div class="eyebrow">01 · PUBLIC</div><h3>Public Live Website</h3>
+    <p>For students, parents and visitors to discover education options.</p>
+    <ul><li>Search schools and colleges</li><li>Compare institutions and courses</li><li>View public profiles and admissions</li><li>Send student enquiries</li></ul>
     <a class="btn" href="#directory">Explore Public Website →</a>
    </article>
-   <article class="feature-card vm-panel-card">
-    <div class="vm-panel-icon">🏫</div><div class="eyebrow">Panel 02</div><h3>School / College Portal</h3>
-    <p>Approved institutions receive secure access to their own profile and institution-specific tools.</p>
-    <ul><li>Manage institution details</li><li>View assigned enquiries</li><li>Features based on subscription</li></ul>
-    <a class="btn" href="?portal=college">College Partner Login →</a>
+   <article class="feature-card vm-panel-card vm-institution-panel">
+    <div class="vm-panel-icon">🏫</div><div class="eyebrow">02 · INSTITUTION</div><h3>School / College Application</h3>
+    <p>A private workspace for each approved institution, with its own data and enabled features.</p>
+    <ul><li>Manage institution profile</li><li>View and follow up enquiries</li><li>Manage admissions information</li><li>Access subscription-based tools</li></ul>
+    <a class="btn" href="?portal=college">Institution Login →</a>
    </article>
-   <article class="feature-card vm-panel-card">
-    <div class="vm-panel-icon">🛡️</div><div class="eyebrow">Panel 03</div><h3>VidyaMap Admin</h3>
-    <p>Private team workspace for reviewing applications, contacting institutions and monitoring approved partners.</p>
-    <ul><li>Review and approve applications</li><li>Manage plans and status</li><li>Monitor institutions</li></ul>
-    <a class="btn btn-outline" href="?portal=admin">Admin Team Login →</a>
+   <article class="feature-card vm-panel-card vm-admin-panel">
+    <div class="vm-panel-icon">🛡️</div><div class="eyebrow">03 · VIDYAMAP TEAM</div><h3>Admin Monitoring Application</h3>
+    <p>A private operations console for the VidyaMap team to manage the network.</p>
+    <ul><li>Review incoming applications</li><li>Record contact and pricing discussions</li><li>Approve or reject institutions</li><li>Track subscriptions and payments</li><li>Monitor partner activity</li></ul>
+    <a class="btn btn-outline" href="?portal=admin">VidyaMap Admin Login →</a>
    </article>
   </div>
-  <p class="vm-panel-note">New institutions remain pending until the VidyaMap team contacts them, discusses pricing and services, and approves access.</p>
+  <p class="vm-panel-note">Flow: Apply → VidyaMap contacts the institution → discuss services and pricing → confirm terms → admin approval → secure account access.</p>
  </div>
 </section>
 
