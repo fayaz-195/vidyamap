@@ -594,6 +594,18 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 @media(max-width:700px){.ad-review-row{flex-direction:column}.ad-review-actions{width:100%}.ad-review-actions .btn{flex:1}}
 
 .vm-ad-ticker{position:sticky;top:96px;z-index:9;display:flex;gap:18px;align-items:center;background:#fff7ed;border-bottom:1px solid #fed7aa;padding:0 14px;min-height:42px;overflow:hidden}.vm-ad-ticker strong{flex:0 0 auto;background:#e11d48;color:#fff;padding:10px 14px;border-radius:0 20px 20px 0;font-size:12px}.vm-ticker-window{overflow:hidden;flex:1}.vm-ticker-track{display:flex;gap:40px;width:max-content;white-space:nowrap;animation:vmTickerMove 34s linear infinite;font-size:13px;color:#17365d}.vm-ticker-track span{padding:10px 0}.vm-ad-ticker:hover .vm-ticker-track{animation-play-state:paused}@keyframes vmTickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}.ad-carousel-wrap{position:relative;margin-top:24px}.ad-campaign-grid{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:5px 3px 18px;scrollbar-width:thin}.ad-campaign-card{flex:0 0 clamp(235px,27vw,310px);scroll-snap-align:start}#collegeAdGrid .feature-card{flex:0 0 min(340px,85vw);scroll-snap-align:start}@media(max-width:700px){.vm-ad-ticker{top:72px}.vm-ad-ticker strong{font-size:11px;padding:9px}.vm-ticker-track{font-size:12px;gap:24px}.ad-campaign-card{flex-basis:78vw}}
+
+/* Continuous 20-slot sponsored ad belt */
+.ad-carousel-wrap{overflow:hidden;position:relative;margin-top:24px}
+.ad-campaign-grid{display:flex;gap:16px;width:max-content;overflow:visible;scroll-snap-type:none;scroll-behavior:auto;padding:8px 3px 18px;animation:vmAdBelt 70s linear infinite}
+.ad-carousel-wrap:hover .ad-campaign-grid{animation-play-state:paused}
+.ad-campaign-card{flex:0 0 250px;width:250px;scroll-snap-align:none}
+.ad-campaign-grid .ad-slot-placeholder{flex:0 0 250px;width:250px;min-height:210px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:1px dashed #a78bfa;border-radius:18px;background:linear-gradient(145deg,#faf5ff,#eff6ff);padding:22px;color:var(--muted)}
+.ad-slot-placeholder strong{display:block;color:var(--navy);font-size:16px;margin:10px 0 4px}
+.ad-slot-placeholder .slot-icon{font-size:28px}
+@keyframes vmAdBelt{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:700px){.ad-campaign-card,.ad-campaign-grid .ad-slot-placeholder{flex-basis:78vw;width:78vw}.ad-campaign-grid{animation-duration:55s}}
+
 </style>
 <style>
 /* Three distinct product panels */
@@ -1820,7 +1832,11 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     const ds=districtsByCampaign.filter(x=>x.campaign_id===c.id), ms=mandalsByCampaign.filter(x=>x.campaign_id===c.id);
     return ds.length>0||ms.length>0; // show only area-targeted campaigns; no manual filter needed
    });
-   if(!filtered.length){const empty=document.createElement('article');empty.className='feature-card';const h=document.createElement('h3');h.textContent='Sponsored college ads will appear here';const p=document.createElement('p');p.textContent='When a college pays, selects its target areas and receives founder approval, its poster or video will automatically slide here.';empty.append(h,p);grid.append(empty);return;}
+   if(!filtered.length){
+    for(let i=1;i<=20;i++){const slot=document.createElement('article');slot.className='ad-slot-placeholder';const ico=document.createElement('div');ico.className='slot-icon';ico.textContent='📢';const h=document.createElement('strong');h.textContent='Sponsored Ad Slot '+String(i).padStart(2,'0');const p=document.createElement('p');p.textContent='Paid college poster or video';slot.append(ico,h,p);grid.append(slot);}
+    grid.innerHTML+=grid.innerHTML;
+    return;
+   }
    filtered.forEach(c=>{const college=collegesById.get(c.college_id);if(!college)return;const card=document.createElement('article');card.className='ad-campaign-card';
     if(c.media_type==='video'){const v=document.createElement('video');v.className='ad-campaign-video';v.src=c.media_url;v.controls=true;v.preload='metadata';v.playsInline=true;v.setAttribute('aria-label',c.title);card.append(v)}
     else {const im=document.createElement('img');im.className='ad-campaign-media';im.src=c.media_url;im.alt=c.title;im.loading='lazy';card.append(im)}
@@ -1830,6 +1846,10 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     if(c.click_url){try{const u=new URL(c.click_url);if(u.protocol==='https:'||u.protocol==='http:'){const a=document.createElement('a');a.className='btn';a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent='View college promotion →';body.append(a)}}catch{}}
     card.append(body);grid.append(card);
    });
+   // Fill a 20-box ad belt with real approved campaigns, then duplicate the belt for seamless motion.
+   const realCards=Array.from(grid.children);
+   if(realCards.length<20&&realCards.length>0){for(let i=realCards.length;i<20;i++)grid.append(realCards[i%realCards.length].cloneNode(true));}
+   grid.innerHTML+=grid.innerHTML;
   }
   render();
   const reel=document.getElementById('collegeAdGrid');
