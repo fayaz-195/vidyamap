@@ -1177,6 +1177,18 @@ function openCollegeProfile(c) {
     <button class="btn" type="submit">Send enquiry securely</button>
     <div class="feature-note" role="status" data-enquiry-status></div>
   `;
+  try {
+    const savedLead = JSON.parse(sessionStorage.getItem("vidyamap_public_student_lead_v1") || "null");
+    if (savedLead) {
+      const nameField = enquiryForm.querySelector('[name="student_name"]');
+      const phoneField = enquiryForm.querySelector('[name="phone"]');
+      const courseField = enquiryForm.querySelector('[name="course_name"]');
+      if (nameField) nameField.value = savedLead.student_name || "";
+      if (phoneField) phoneField.value = savedLead.phone || "";
+      if (courseField) courseField.value = savedLead.course_name || "";
+    }
+  } catch {}
+
   enquiryForm.addEventListener("submit", async ev => {
     ev.preventDefault();
     const submit = enquiryForm.querySelector('button[type="submit"]');
