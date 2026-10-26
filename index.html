@@ -677,6 +677,8 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 
 .vm-register-compact{padding:42px 0!important}.vm-register-shell{max-width:1000px!important;display:grid!important;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr)!important;gap:24px!important;align-items:start!important}.vm-register-compact .register-copy{padding-top:14px!important}.vm-register-compact .register-copy h2{font-size:clamp(26px,3vw,34px)!important;line-height:1.14!important;margin:12px 0!important}.vm-register-compact .register-copy p{font-size:14px!important;line-height:1.6!important}.vm-register-compact .register-card{padding:20px!important;border-radius:18px!important}.vm-register-compact .form-grid{gap:11px!important}.vm-register-compact .field label{font-size:12px!important;margin-bottom:5px!important}.vm-register-compact .field input,.vm-register-compact .field select{min-height:40px!important;padding:9px 11px!important}.vm-register-compact .note{font-size:11px!important;margin-top:7px!important}.vm-register-benefit{display:flex;align-items:center;gap:9px;margin-top:12px;color:var(--navy);font-size:13px;font-weight:650}.vm-register-benefit span{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;background:#dcfce7;color:#15803d}@media(max-width:760px){.vm-register-compact{padding:30px 0!important}.vm-register-shell{grid-template-columns:1fr!important;gap:14px!important}.vm-register-compact .register-card{padding:15px!important}.vm-register-compact .form-grid{grid-template-columns:1fr!important}}
 .vm-register-ad-carousel{position:relative;margin-top:24px;min-height:260px;overflow:hidden;border-radius:20px;background:#ece8fb;border:1px solid #e1d7f4;box-shadow:0 14px 35px rgba(65,42,125,.10)}.vm-register-ad-slide{display:none;min-height:260px;position:relative}.vm-register-ad-slide.is-active{display:block;animation:vmRegAdFade .6s ease}.vm-register-ad-slide img,.vm-register-ad-slide video{display:block;width:100%;height:260px;object-fit:cover}.vm-register-ad-placeholder{min-height:260px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(145deg,#142f59,#76208f);color:#fff}.vm-register-ad-placeholder span{font-size:11px;letter-spacing:2px;font-weight:800;opacity:.9}.vm-register-ad-placeholder strong{font-size:25px;line-height:1.15;margin-top:12px}.vm-register-ad-placeholder p{font-size:13px;margin:10px 0 0;color:#f0e9ff}.vm-register-ad-caption{position:absolute;left:0;right:0;bottom:0;padding:34px 18px 22px;background:linear-gradient(transparent,rgba(8,18,40,.86));color:#fff}.vm-register-ad-caption strong{font-size:18px}.vm-register-ad-caption p{font-size:12px;margin:5px 0}.vm-register-ad-caption a{display:inline-block;margin-top:5px;font-weight:bold;text-decoration:underline}.vm-register-ad-dots{position:absolute;bottom:10px;right:12px;display:flex;gap:6px;z-index:2}.vm-register-ad-dot{width:7px;height:7px;border-radius:50%;background:#ffffff80;border:0;padding:0}.vm-register-ad-dot.is-active{width:20px;border-radius:9px;background:#fff}@keyframes vmRegAdFade{from{opacity:.45}to{opacity:1}}@media(max-width:760px){.vm-register-ad-carousel{margin-top:16px;min-height:190px}.vm-register-ad-slide,.vm-register-ad-slide img,.vm-register-ad-slide video,.vm-register-ad-placeholder{min-height:190px;height:190px}.vm-register-ad-placeholder strong{font-size:21px}}
+
+.vm-student-gated{display:none!important}.vm-student-gated.vm-student-unlocked{display:flex!important}#collegeGrid.vm-student-unlocked{display:grid!important}#resultsCount.vm-student-unlocked{display:block!important}
 </style>
 <style>
 /* Three distinct product panels */
@@ -811,7 +813,7 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 </div>
 
 
-<div class="container vm-trust-strip" aria-label="VidyaMap platform highlights">
+<div class="container vm-trust-strip vm-student-gated" aria-label="VidyaMap platform highlights">
   <div class="vm-trust-item"><span class="vm-trust-icon">🎓</span><div><strong>Verified Listings</strong><small>Institution information</small></div></div>
   <div class="vm-trust-item"><span class="vm-trust-icon">👥</span><div><strong>Courses &amp; Programs</strong><small>Explore your options</small></div></div>
   <div class="vm-trust-item"><span class="vm-trust-icon">📍</span><div><strong>Telangana &amp; AP</strong><small>Regional coverage</small></div></div>
@@ -819,7 +821,7 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 </div>
 
 
-<div class="container compare-tools" id="compareTools">
+<div class="container compare-tools vm-student-gated" id="compareTools">
   <div><strong>Compare colleges</strong><div class="feature-note">Select up to 3 verified colleges from the listings below.</div></div>
   <button class="btn" id="openCompare" type="button" disabled>Compare selected (0)</button>
 </div>
@@ -836,8 +838,8 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 <div class="eyebrow">Explore opportunities</div>
 <h2>Explore verified institutions</h2>
 <p class="muted">Only approved and verified institution records are shown.</p>
-<div class="results" id="resultsCount">Loading verified institutions…</div>
-<div class="cards" id="collegeGrid"><div class="empty">Loading…</div></div>
+<div class="results vm-student-gated" id="resultsCount">Loading verified institutions…</div>
+<div class="cards vm-student-gated" id="collegeGrid"><div class="empty">Submit your student details above to view colleges.</div></div>
 </div>
 </section>
 
@@ -1742,13 +1744,15 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
  const savedKey='vidyamap_public_student_lead_v1';
  const getSaved=()=>{try{return JSON.parse(sessionStorage.getItem(savedKey)||'null')}catch{return null}};
  const captureSection=document.getElementById('studentLeadCapture');
+ const gatedItems=[document.querySelector('.vm-trust-strip'),document.getElementById('compareTools'),document.getElementById('resultsCount'),document.getElementById('collegeGrid')];
+ const setStudentGate=unlocked=>gatedItems.forEach(el=>{if(el)el.classList.toggle('vm-student-unlocked',!!unlocked)});
  const reminder=document.getElementById('vmLeadReminder');
  const openLeadPopup=()=>{captureSection.hidden=false;captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');};
  const closeLeadPopup=()=>{captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');if(reminder)reminder.classList.add('is-visible');};
  const saved=getSaved();
- if(saved&&saved.lead_id){searchForm.classList.remove('vm-search-locked');captureSection.hidden=true;form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);status.textContent='Your details are saved for this session. You can now search colleges.';status.style.color='var(--green)';if(reminder)reminder.classList.remove('is-visible');}
+ if(saved&&saved.lead_id){setStudentGate(true);searchForm.classList.remove('vm-search-locked');captureSection.hidden=true;form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);status.textContent='Your details are saved for this session. You can now search colleges.';status.style.color='var(--green)';if(reminder)reminder.classList.remove('is-visible');}
  else {
-  searchForm.classList.add('vm-search-locked');captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');if(reminder)reminder.classList.remove('is-visible');
+  setStudentGate(false);searchForm.classList.add('vm-search-locked');captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');if(reminder)reminder.classList.remove('is-visible');
   const card=form.querySelector('.eyebrow');
   if(card&&!form.querySelector('.vm-lead-close')){const close=document.createElement('button');close.type='button';close.className='vm-lead-close';close.setAttribute('aria-label','Close student details popup');close.title='Close';close.textContent='×';form.insertBefore(close,form.firstChild);close.addEventListener('click',closeLeadPopup);}
  }
@@ -1770,7 +1774,8 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
    const lead={lead_id:leadId,student_name:name,phone:phone,district_id:districtId,course_name:course,saved_at:new Date().toISOString()};
    sessionStorage.setItem(savedKey,JSON.stringify(lead));
    form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);
-   searchForm.classList.remove('vm-search-locked');
+   setStudentGate(true);
+    searchForm.classList.remove('vm-search-locked');
    status.textContent='Saved! Your college search is now unlocked.';status.style.color='var(--green)';
    captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');
    document.getElementById('find')?.scrollIntoView({behavior:'smooth',block:'start'});
