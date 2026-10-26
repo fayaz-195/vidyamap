@@ -1489,82 +1489,9 @@ $("resetSearch").addEventListener("click", () => {
   }, 0);
 });
 
-$("registerForm").addEventListener("submit", async ev => {
+$("registerForm").addEventListener("submit", ev => {
   ev.preventDefault();
-
-  const btn = $("registerSubmit");
-  btn.disabled = true;
-  btn.textContent = "Submitting…";
-
-  try {
-    const email = $("email").value.trim().toLowerCase();
-    const password = $("password").value;
-    const districtId = $("regDistrict").value;
-
-    if (!districtId) throw Error("Please select a district.");
-
-    const district = districts.find(d => String(d.id) === districtId);
-    if (!district) throw Error("The selected district is invalid.");
-
-    const { data: authData, error: authError } = await db.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: $("contactName").value.trim(),
-          phone: $("phone").value.trim()
-        }
-      }
-    });
-
-    if (authError) throw authError;
-    if (!authData.user) throw Error("Could not create the account.");
-
-    if (!authData.session) {
-      showNotice(
-        $("formNotice"),
-        "Account created. Confirm your email using the confirmation link. Then sign in to submit the registration request.",
-        "success"
-      );
-      return;
-    }
-
-    const payload = {
-      applicant_user_id: authData.user.id,
-      college_name: $("institution").value.trim(),
-      contact_name: $("contactName").value.trim(),
-           contact_designation: $("contactDesignation").value,
-      contact_phone: $("phone").value.trim(),
-      contact_email: email,
-      district_id: district.id,
-      mandal_id: $("regMandal").value || null,
-      address: $("address").value.trim() || null,
-      website_url: null,
-      notes: ["Designation: " + $("contactDesignation").value, "Category: " + $("regCategory").value]
-        .filter(Boolean).join("\n"),
-      status: "pending"
-    };
-
-    const { error } = await db
-      .from("college_registration_requests")
-      .insert(payload);
-
-    if (error) throw error;
-
-    showNotice($("formNotice"), "Registration request submitted successfully. Status: Pending review.", "success");
-    $("registerForm").reset();
-    updateRegDistricts();
-  } catch (e) {
-    console.error("Registration failed", e);
-    showNotice(
-      $("formNotice"),
-      "Registration could not be saved: " + (e.message || "Unknown error"),
-      "error"
-    );
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Submit registration request →";
-  }
+  showNotice($("formNotice"), "The callback form design is ready. Email delivery and lead saving have not been connected yet.", "success");
 });
 
 $("year").textContent = new Date().getFullYear();
