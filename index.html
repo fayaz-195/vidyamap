@@ -561,6 +561,12 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
  #accountDashboard .dashboard-row .btn { width:100%; }
 }
 
+
+/* Public student lead capture */
+#searchForm.vm-search-locked{opacity:.55;pointer-events:none;filter:grayscale(.15)}
+#searchForm.vm-search-locked:before{content:"Save your details above to start searching";display:block;padding:12px;background:#f0e8fa;border-radius:12px;color:#123B6D;font-weight:700;margin-bottom:12px}
+#studentLeadForm .field label{font-size:13px}
+#studentLeadForm .feature-note{align-self:center}
 </style>
 <style>
 /* Three distinct product panels */
@@ -631,6 +637,23 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 </div>
 </section>
 
+<section class="section" id="studentLeadCapture" style="padding:28px 0 18px">
+  <div class="container">
+    <form class="search-card" id="studentLeadForm" style="max-width:980px;margin:0 auto">
+      <div class="eyebrow">Start your college search</div>
+      <h2 style="margin:8px 0 6px;font-size:clamp(24px,3vw,34px)">First, tell us what you’re looking for</h2>
+      <p class="muted" style="margin-top:0">No OTP and no account needed. Your details are saved securely in VidyaMap so we can remember your search and route an enquiry to the college you choose.</p>
+      <div class="form-grid">
+        <div class="field"><label for="leadStudentName">Student name *</label><input id="leadStudentName" name="student_name" required minlength="2" maxlength="120" autocomplete="name" placeholder="Enter your name"></div>
+        <div class="field"><label for="leadStudentPhone">Mobile number *</label><input id="leadStudentPhone" name="phone" required type="tel" inputmode="tel" maxlength="18" autocomplete="tel" placeholder="10-digit mobile number"></div>
+        <div class="field"><label for="leadStudentDistrict">Your district (optional)</label><select id="leadStudentDistrict" name="district_id"><option value="">Select district</option></select></div>
+        <div class="field"><label for="leadStudentCourse">Interested course *</label><select id="leadStudentCourse" name="course_name" required><option value="">Select course</option><option>MPC</option><option>BiPC</option><option>MEC</option><option>CEC</option><option>IIT-JEE</option><option>NEET</option><option>B.Tech</option><option>Degree</option><option>Diploma</option><option>Other</option></select></div>
+        <label class="full" style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted)"><input id="leadStudentConsent" type="checkbox" required style="margin-top:5px"><span>I agree that VidyaMap may store these details to support my college search. My details will be shared with a college only when I submit an enquiry or request a callback for that college.</span></label>
+        <div class="full actions" style="margin-top:0"><button class="btn" id="leadStudentSubmit" type="submit">Save details &amp; start searching →</button><span id="studentLeadStatus" class="feature-note" role="status" aria-live="polite"></span></div>
+      </div>
+    </form>
+  </div>
+</section>
 <div class="container search-wrap" id="find">
 <form class="search-card" id="searchForm">
 <div class="search-title">Find your institution</div>
@@ -1634,5 +1657,41 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
 })();
 </script>
 
+
+<script>
+(function(){
+ const form=document.getElementById('studentLeadForm');
+ const searchForm=document.getElementById('searchForm');
+ if(!form||!searchForm)return;
+ const status=document.getElementById('studentLeadStatus');
+ const savedKey='vidyamap_public_student_lead_v1';
+ const getSaved=()=>{try{return JSON.parse(sessionStorage.getItem(savedKey)||'null')}catch{return null}};
+ const saved=getSaved();
+ if(saved&&saved.lead_id){searchForm.classList.remove('vm-search-locked');form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);status.textContent='Your details are saved for this session. You can now search colleges.';status.style.color='var(--green)';}
+ else {searchForm.classList.add('vm-search-locked');}
+ const districtSelect=document.getElementById('leadStudentDistrict');
+ const fillDistricts=()=>{if(!districtSelect||districtSelect.dataset.loaded)return; if(!Array.isArray(districts)||!districts.length)return;districts.forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.name;districtSelect.append(o)});districtSelect.dataset.loaded='1';};
+ const waitForDistricts=()=>{fillDistricts();if(!districtSelect.dataset.loaded)setTimeout(waitForDistricts,500)};waitForDistricts();
+ form.addEventListener('submit',async ev=>{
+  ev.preventDefault();
+  const button=document.getElementById('leadStudentSubmit');button.disabled=true;button.textContent='Saving details…';status.textContent='';
+  try{
+   const name=document.getElementById('leadStudentName').value.trim();
+   const phone=document.getElementById('leadStudentPhone').value.trim();
+   const districtId=districtSelect.value||null;
+   const course=document.getElementById('leadStudentCourse').value;
+   if(!document.getElementById('leadStudentConsent').checked)throw new Error('Please agree to the consent to continue.');
+   const {data:leadId,error}=await db.rpc('capture_student_lead',{p_student_name:name,p_phone:phone,p_district_id:districtId,p_course_name:course,p_contact_consent:true});
+   if(error)throw error;
+   const lead={lead_id:leadId,student_name:name,phone:phone,district_id:districtId,course_name:course,saved_at:new Date().toISOString()};
+   sessionStorage.setItem(savedKey,JSON.stringify(lead));
+   form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);
+   searchForm.classList.remove('vm-search-locked');
+   status.textContent='Saved! Now search colleges. Your details will be sent to a college only when you submit an enquiry.';status.style.color='var(--green)';
+   searchForm.scrollIntoView({behavior:'smooth',block:'center'});
+  }catch(err){status.textContent=err.message||'Could not save your details. Please try again.';status.style.color='var(--red)';button.disabled=false;button.textContent='Save details & start searching →';}
+ });
+})();
+</script>
 </body>
 </html>
