@@ -778,28 +778,28 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
  <div class="container">
   <div class="eyebrow">VidyaMap platform</div>
   <h2>Three separate applications</h2>
-  <p class="muted">Each application has a different purpose and its own workspace.</p>
+  <p class="muted">Public discovery, internal VidyaMap operations, and secure institution access.</p>
   <div class="feature-grid vm-panel-grid">
    <article class="feature-card vm-panel-card vm-public-panel">
-    <div class="vm-panel-icon">🌐</div><div class="eyebrow">01 · PUBLIC</div><h3>Public Live Website</h3>
-    <p>For students, parents and visitors to discover education options.</p>
-    <ul><li>Search schools and colleges</li><li>Compare institutions and courses</li><li>View public profiles and admissions</li><li>Send student enquiries</li></ul>
+    <div class="vm-panel-icon">🌐</div><div class="eyebrow">01 · PUBLIC ACCESS</div><h3>Public Live Website</h3>
+    <p>Open to students, parents and visitors.</p>
+    <ul><li>Search schools and colleges</li><li>Compare institutions and courses</li><li>Explore public profiles and admissions</li><li>Submit student enquiries</li></ul>
     <a class="btn" href="#directory">Explore Public Website →</a>
    </article>
-   <article class="feature-card vm-panel-card vm-institution-panel">
-    <div class="vm-panel-icon">🏫</div><div class="eyebrow">02 · INSTITUTION</div><h3>School / College Application</h3>
-    <p>A private workspace for each approved institution, with its own data and enabled features.</p>
-    <ul><li>Manage institution profile</li><li>View and follow up enquiries</li><li>Manage admissions information</li><li>Access subscription-based tools</li></ul>
-    <a class="btn" href="?portal=college">Institution Login →</a>
+   <article class="feature-card vm-panel-card vm-staff-panel">
+    <div class="vm-panel-icon">🧑‍💼</div><div class="eyebrow">02 · EMPLOYEE ACCESS ONLY</div><h3>VidyaMap Staff Application</h3>
+    <p>Private internal workspace for authorised VidyaMap employees. Not a public or college login.</p>
+    <ul><li>Review and follow up applications</li><li>Record pricing and service discussions</li><li>Manage approvals and subscriptions</li><li>Monitor partner institutions</li></ul>
+    <a class="btn btn-outline" href="?portal=staff">Employee Login →</a>
    </article>
-   <article class="feature-card vm-panel-card vm-admin-panel">
-    <div class="vm-panel-icon">🛡️</div><div class="eyebrow">03 · VIDYAMAP TEAM</div><h3>Admin Monitoring Application</h3>
-    <p>A private operations console for the VidyaMap team to manage the network.</p>
-    <ul><li>Review incoming applications</li><li>Record contact and pricing discussions</li><li>Approve or reject institutions</li><li>Track subscriptions and payments</li><li>Monitor partner activity</li></ul>
-    <a class="btn btn-outline" href="?portal=admin">VidyaMap Admin Login →</a>
+   <article class="feature-card vm-panel-card vm-institution-panel">
+    <div class="vm-panel-icon">🏫</div><div class="eyebrow">03 · APPROVED INSTITUTIONS</div><h3>College Management Portal</h3>
+    <p>For approved college board members, Chairman, Director, Principal and authorised administrators.</p>
+    <ul><li>Access institution-specific workspace</li><li>Manage permitted college information</li><li>View relevant enquiries and reports</li><li>Features depend on assigned role</li></ul>
+    <a class="btn" href="?portal=college">College Login →</a>
    </article>
   </div>
-  <p class="vm-panel-note">Flow: Apply → VidyaMap contacts the institution → discuss services and pricing → confirm terms → admin approval → secure account access.</p>
+  <p class="vm-panel-note">College access is issued only after VidyaMap contacts the institution, discusses services and pricing, and approves the application.</p>
  </div>
 </section>
 
@@ -829,18 +829,18 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 <div class="container">
 <div class="footer-main">
 <div><strong style="font-size:23px">VidyaMap</strong><p>Helping students discover educational opportunities and helping institutions grow their digital reach.</p></div>
-<div class="footer-links"><a href="#directory">Explore</a><a href="#services">Marketing</a><a href="#register">Register College</a><a href="#find">Search</a><a href="?portal=college">College Login</a><a href="?portal=admin">Admin Login</a></div>
+<div class="footer-links"><a href="#directory">Explore</a><a href="#services">Marketing</a><a href="#register">Register College</a><a href="#find">Search</a><a href="?portal=college">College Login</a><a href="?portal=staff">Employee Login</a><a href="?portal=college">College Login</a></div>
 </div>
 <div class="footer-bottom">© <span id="year"></span> VidyaMap · Find. Promote. Grow.</div>
 </div>
 </footer>
 
 <script>
-// Keep all private sign-in screens off the public homepage.
-// ?portal=college opens the institution sign-in; ?portal=admin opens the admin sign-in.
+// Keep private sign-in screens off the public homepage.
+// Staff and college users have separate entry routes and role checks.
 (function(){
  const portalType = new URLSearchParams(window.location.search).get("portal");
- const portal = portalType === "college" || portalType === "admin";
+ const portal = portalType === "college" || portalType === "staff";
  const dashboard = document.getElementById("accountDashboard");
  if (dashboard) {
    dashboard.hidden = !portal;
@@ -852,11 +852,11 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
      const eyebrow = dashboard.querySelector(".eyebrow");
      const heading = dashboard.querySelector("h2");
      const intro = dashboard.querySelector(".muted");
-     if (eyebrow) eyebrow.textContent = portalType === "admin" ? "VidyaMap team access" : "College partner portal";
-     if (heading) heading.textContent = portalType === "admin" ? "VidyaMap Admin Login" : "College Login";
-     if (intro) intro.textContent = portalType === "admin"
-       ? "Private access for authorized VidyaMap team members. Admin permissions are checked after sign-in."
-       : "For approved schools and colleges. Access depends on your assigned account role and institution membership.";
+     if (eyebrow) eyebrow.textContent = portalType === "staff" ? "Private VidyaMap employee access" : "Approved institution portal";
+     if (heading) heading.textContent = portalType === "staff" ? "VidyaMap Employee Login" : "College Login";
+     if (intro) intro.textContent = portalType === "staff"
+       ? "For authorised VidyaMap employees only. Employee permissions must be assigned by the platform administrator."
+       : "For approved college board members, Chairman, Director, Principal and authorised administrators. Access depends on assigned institution membership.";
    }
  }
 })();
