@@ -1,21 +1,978 @@
+
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#123B6D"><title>VidyaMap | Find. Promote. Grow.</title><style>
-:root{--navy:#123B6D;--dark:#0B2748;--pale:#EAF1F9;--ink:#172B43;--muted:#66758A;--line:#DFE6EF;--surface:#F6F8FB}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,sans-serif;color:var(--ink);line-height:1.6}a{text-decoration:none;color:inherit}button,input,select{font:inherit}.container{width:min(1160px,92%);margin:auto}.announcement{background:var(--dark);color:white;text-align:center;padding:8px;font-size:12px}header{position:sticky;top:0;background:white;border-bottom:1px solid var(--line);z-index:5}.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{display:flex;align-items:center;gap:9px;color:var(--navy);font-size:23px;font-weight:850}.mark{width:38px;height:38px;border:2px solid var(--navy);border-radius:10px;display:grid;place-items:center}.links{display:flex;align-items:center;gap:18px;font-size:13px;font-weight:700}.btn{display:inline-flex;justify-content:center;align-items:center;padding:11px 16px;border:1px solid var(--navy);border-radius:9px;background:var(--navy);color:white;font-size:13px;font-weight:750;cursor:pointer}.outline{background:white;color:var(--navy)}.hero{background:var(--surface);padding:55px 0}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:35px;align-items:center}.eyebrow{color:var(--navy);font-size:11px;font-weight:850;letter-spacing:1.7px;text-transform:uppercase}h1{color:var(--dark);font-size:clamp(36px,5vw,58px);line-height:1.08;letter-spacing:-1.5px;margin:13px 0}.hero p,.muted{color:var(--muted)}.actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}.panel{background:var(--navy);color:white;border-radius:20px;padding:28px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between}.panel h2{font-size:28px;line-height:1.25}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{border:1px solid #ffffff55;border-radius:10px;padding:13px}.stat strong,.stat span{display:block}.stat span{font-size:11px;opacity:.8}.search{position:relative;margin-top:-25px}.searchbox{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 8px 28px #123b6d12}.fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}.field label{display:block;font-size:11px;font-weight:750;margin-bottom:6px}.field input,.field select{width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;background:white;min-width:0}.search-actions{display:flex;gap:10px;margin-top:15px}section{padding:58px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:23px}.section-head h2{font-size:clamp(25px,3vw,34px);line-height:1.2;color:var(--dark);margin:7px 0}.section-head p{font-size:13px;color:var(--muted);margin:0}.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.category,.service{border:1px solid var(--line);border-radius:14px;padding:20px;background:white}.category{cursor:pointer}.icon{width:42px;height:42px;background:var(--pale);color:var(--navy);border-radius:11px;display:grid;place-items:center;font-weight:850}.category h3,.service h3{font-size:15px;margin:12px 0 5px}.category p,.service p{font-size:12px;color:var(--muted);margin:0}.directory,.register{background:var(--surface)}.college-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.college{background:white;border:1px solid var(--line);border-radius:14px;padding:19px;display:flex;flex-direction:column}.college-top{display:flex;gap:12px;align-items:flex-start}.college h3{font-size:15px;line-height:1.4;margin:0 0 4px}.location{font-size:11px;color:var(--muted)}.tag{font-size:10px;color:var(--navy);background:var(--pale);padding:5px 9px;border-radius:20px;align-self:flex-start;margin-top:14px;font-weight:800}.college p{font-size:12px;color:var(--muted);flex:1}.college .btn{width:100%}.empty{grid-column:1/-1;text-align:center;padding:30px;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}.promo{background:var(--navy);color:white;border-radius:18px;padding:30px;display:flex;align-items:center;justify-content:space-between;gap:20px}.promo h2{font-size:26px;margin:8px 0}.promo p{font-size:13px;color:#e0eaf6}.promo .btn{background:white;color:var(--navy)}.services{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.register-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:35px}.register h2{font-size:33px;line-height:1.2;color:var(--dark)}.form{background:white;border:1px solid var(--line);border-radius:15px;padding:24px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}.notice{display:none;background:var(--pale);color:var(--navy);padding:12px;border-radius:8px;font-size:12px;margin-top:12px}footer{background:var(--dark);color:white;padding:32px 0 18px}.foot{display:flex;justify-content:space-between;gap:22px}.foot p{color:#d4dfec;font-size:12px;max-width:420px}.footlinks{display:flex;gap:15px;flex-wrap:wrap;font-size:12px}.bottom{border-top:1px solid #ffffff30;margin-top:22px;padding-top:14px;font-size:11px;color:#d4dfec}@media(max-width:820px){.hero-grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr 1fr}.college-grid{grid-template-columns:1fr 1fr}.register-grid{grid-template-columns:1fr}.links{gap:10px}}@media(max-width:560px){.nav{min-height:62px}.brand{font-size:19px}.links{font-size:11px;gap:8px}.links .hide{display:none}.links .btn{padding:9px}.hero{padding:38px 0}.panel{min-height:240px;padding:22px}section{padding:44px 0}.categories{grid-template-columns:1fr 1fr}.category{padding:14px}.college-grid,.services{grid-template-columns:1fr}.section-head{align-items:flex-start}.promo{align-items:flex-start;flex-direction:column;padding:23px}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.foot{flex-direction:column}}
-</style></head><body>
-<div class="announcement">Your education journey starts here · Telangana & Andhra Pradesh</div><header><div class="container nav"><a class="brand" href="#"><span class="mark">V</span>VidyaMap</a><nav class="links"><a href="#directory">Explore</a><a class="hide" href="#services">Marketing</a><a class="btn" href="#register">Register College</a></nav></div></header><main>
-<section class="hero"><div class="container hero-grid"><div><div class="eyebrow">Find. Promote. Grow.</div><h1>Find the right college.<br>Build your future.</h1><p>Explore educational institutions, compare courses and discover opportunities across Telangana and Andhra Pradesh.</p><div class="actions"><a class="btn" href="#find">Find a College →</a><a class="btn outline" href="#register">List Your Institution</a></div><p class="muted">A smarter starting point for students, parents and institutions.</p></div><div class="panel"><div class="eyebrow" style="color:#d7e7fa">Education · Discovery · Growth</div><h2>The right information.<br>The next big step.</h2><div class="stats"><div class="stat"><strong>Explore</strong><span>Institutions & courses</span></div><div class="stat"><strong>Connect</strong><span>Students & colleges</span></div></div></div></div></section>
-<div class="container search" id="find"><form class="searchbox" id="searchForm"><strong>Find your institution</strong><div class="fields"><div class="field"><label for="state">State</label><select id="state"><option value="">All states</option><option>Telangana</option><option>Andhra Pradesh</option></select></div><div class="field"><label for="district">District</label><select id="district"><option value="">All districts</option></select></div><div class="field"><label for="category">Institution type</label><select id="category"><option value="">All categories</option><option>Junior College</option><option>Engineering</option><option>Medical</option><option>Degree College</option><option>Coaching Centre</option><option>Polytechnic & ITI</option></select></div><div class="field"><label for="keyword">Course / keyword</label><input id="keyword" placeholder="MPC, NEET, B.Tech"></div></div><div class="search-actions"><button class="btn" type="submit">Search institutions →</button><button class="btn outline" type="reset" id="reset">Reset</button></div></form></div>
-<section><div class="container"><div class="section-head"><div><div class="eyebrow">Explore opportunities</div><h2>Explore by category</h2><p>Start with the type of education you are looking for.</p></div></div><div class="categories"><a class="category" href="#directory" data-category="Junior College"><div class="icon">01</div><h3>Junior Colleges</h3><p>MPC, BiPC and intermediate pathways.</p></a><a class="category" href="#directory" data-category="Engineering"><div class="icon">02</div><h3>Engineering</h3><p>Engineering institutions and courses.</p></a><a class="category" href="#directory" data-category="Medical"><div class="icon">03</div><h3>Medical</h3><p>Explore medical education options.</p></a><a class="category" href="#directory" data-category="Degree College"><div class="icon">04</div><h3>Degree Colleges</h3><p>Undergraduate study options.</p></a><a class="category" href="#directory" data-category="Coaching Centre"><div class="icon">05</div><h3>Coaching Centres</h3><p>JEE, NEET and competitive exam preparation.</p></a><a class="category" href="#directory" data-category="Polytechnic & ITI"><div class="icon">06</div><h3>Polytechnic & ITI</h3><p>Technical and skill-based education.</p></a></div></div></section>
-<section class="directory" id="directory"><div class="container"><div class="section-head"><div><div class="eyebrow">Discover institutions</div><h2>Explore colleges</h2><p>Search institutions by location, category or course.</p></div><a href="#find">Change filters ↑</a></div><p class="muted" id="count" style="margin-bottom:15px">Sample listings shown for design preview.</p><div class="college-grid" id="grid"></div><div class="notice" id="searchNotice"></div></div></section>
-<section><div class="container"><div class="promo"><div><div class="eyebrow" style="color:#d7e7fa">For educational institutions</div><h2>Make your institution easier to discover.</h2><p>Build your online presence and connect with prospective students.</p></div><a class="btn" href="#register">List Your College →</a></div></div></section>
-<section id="services"><div class="container"><div class="section-head"><div><div class="eyebrow">Digital growth solutions</div><h2>Promote your institution</h2><p>Digital marketing support designed for education brands.</p></div></div><div class="services"><article class="service"><div class="icon">01</div><h3>Digital Advertising</h3><p>Campaign planning and ad creatives to reach prospective students.</p></article><article class="service"><div class="icon">02</div><h3>Creative & Branding</h3><p>Admission posters, social media creatives and brand communication.</p></article><article class="service"><div class="icon">03</div><h3>Websites & Lead Generation</h3><p>Landing pages and enquiry journeys built around admissions goals.</p></article></div></div></section>
-<section class="register" id="register"><div class="container register-grid"><div><div class="eyebrow">Join VidyaMap</div><h2>Register your institution.</h2><p class="muted">Help students discover your college, courses and admissions information. Submit your details to begin the listing process.</p><p><strong>Find. Promote. Grow.</strong></p></div><form class="form" id="registerForm"><div class="formgrid"><div class="field full"><label for="institution">Institution name *</label><input id="institution" required maxlength="150" placeholder="College or institution name"></div><div class="field"><label for="contact">Contact person *</label><input id="contact" required maxlength="100" placeholder="Full name"></div><div class="field"><label for="phone">Phone number *</label><input id="phone" type="tel" required maxlength="15" placeholder="Contact number"></div><div class="field"><label for="regState">State *</label><select id="regState" required><option value="">Select state</option><option>Telangana</option><option>Andhra Pradesh</option></select></div><div class="field"><label for="regDistrict">District *</label><input id="regDistrict" required maxlength="100" placeholder="District name"></div><div class="field full"><label for="regCategory">Institution category *</label><select id="regCategory" required><option value="">Select category</option><option>Junior College</option><option>Engineering</option><option>Medical</option><option>Degree College</option><option>Coaching Centre</option><option>Polytechnic & ITI</option><option>Other</option></select></div><div class="field full"><label for="email">Email (optional)</label><input id="email" type="email" maxlength="150" placeholder="college@example.com"></div><div class="field full"><button class="btn" style="width:100%" type="submit">Submit Registration Interest →</button><p class="muted" style="font-size:11px">Demo form only: details are not sent or stored yet.</p><div class="notice" id="formNotice"></div></div></div></form></div></section></main>
-<footer><div class="container"><div class="foot"><div><div class="brand" style="color:white">VidyaMap</div><p>Helping students discover educational opportunities and helping institutions grow their digital reach.</p></div><div class="footlinks"><a href="#directory">Explore</a><a href="#services">Marketing</a><a href="#register">Register College</a></div></div><div class="bottom">© <span id="year"></span> VidyaMap · Find. Promote. Grow.</div></div></footer>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123B6D">
+<meta name="description" content="Find colleges, courses and educational institutions across Telangana and Andhra Pradesh with VidyaMap.">
+<title>VidyaMap | Find. Promote. Grow.</title>
+
+<style>
+:root {
+  --navy: #123B6D;
+  --navy-dark: #0B2748;
+  --blue-light: #EAF1F9;
+  --white: #FFFFFF;
+  --ink: #172B43;
+  --muted: #66758A;
+  --border: #DFE6EF;
+  --surface: #F6F8FB;
+  --green: #18794E;
+  --radius: 16px;
+  --shadow: 0 8px 28px rgba(18,59,109,.07);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--white);
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+.container { width: min(1160px, 92%); margin: auto; }
+.announcement {
+  padding: 8px 12px;
+  background: var(--navy-dark);
+  color: white;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+header {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.nav {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--navy);
+  font-size: 24px;
+  font-weight: 850;
+  letter-spacing: -.8px;
+}
+.brand-mark {
+  width: 39px;
+  height: 39px;
+  border: 2px solid var(--navy);
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  font-weight: 850;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  font-size: 13px;
+  font-weight: 650;
+}
+.nav-links a:hover { color: var(--navy); }
+.btn {
+  border: 1px solid var(--navy);
+  background: var(--navy);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 9px;
+  font-weight: 750;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: .2s ease;
+}
+.btn:hover { background: var(--navy-dark); }
+.btn-outline { background: white; color: var(--navy); }
+.btn-outline:hover { background: var(--blue-light); }
+.hero {
+  padding: 66px 0 58px;
+  background: var(--surface);
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.08fr .92fr;
+  gap: 42px;
+  align-items: center;
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 850;
+}
+h1 {
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  margin: 15px 0;
+  color: var(--navy-dark);
+}
+.hero-copy {
+  color: var(--muted);
+  max-width: 530px;
+  font-size: 16px;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 25px 0;
+}
+.trust-line {
+  font-size: 12px;
+  color: var(--muted);
+}
+.hero-panel {
+  background: var(--navy);
+  color: white;
+  border-radius: 22px;
+  padding: 30px;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.panel-top {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  opacity: .85;
+}
+.panel-heading {
+  font-size: 28px;
+  line-height: 1.25;
+  font-weight: 800;
+  margin: 24px 0;
+}
+.panel-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.panel-stat {
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 12px;
+  padding: 14px;
+}
+.panel-stat strong { display: block; font-size: 17px; }
+.panel-stat span { font-size: 11px; opacity: .8; }
+.search-wrap {
+  position: relative;
+  z-index: 2;
+  margin-top: -28px;
+}
+.search-card {
+  padding: 24px;
+  background: white;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+}
+.search-title { font-size: 16px; font-weight: 800; margin-bottom: 16px; }
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 13px;
+}
+.field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 750;
+  margin-bottom: 6px;
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 11px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--ink);
+  background: white;
+  outline: none;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(18,59,109,.09);
+}
+.search-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+section { padding: 66px 0; }
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+.section-head h2 {
+  color: var(--navy-dark);
+  margin: 7px 0;
+  font-size: clamp(25px,3vw,34px);
+  line-height: 1.2;
+  letter-spacing: -.8px;
+}
+.section-head p { color: var(--muted); margin: 0; font-size: 14px; }
+.text-link { color: var(--navy); font-size: 13px; font-weight: 800; }
+.categories {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+}
+.category {
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: white;
+  transition: .2s;
+  cursor: pointer;
+}
+.category:hover { border-color: var(--navy); box-shadow: var(--shadow); }
+.category-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: var(--navy);
+  background: var(--blue-light);
+  font-size: 21px;
+  font-weight: 850;
+}
+.category h3 { font-size: 16px; margin: 15px 0 4px; }
+.category p { font-size: 12px; color: var(--muted); margin: 0; }
+.directory { background: var(--surface); }
+.results-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.college-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 18px;
+}
+.college-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.college-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+}
+.college-logo {
+  width: 49px;
+  height: 49px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--blue-light);
+  color: var(--navy);
+  font-weight: 850;
+  font-size: 17px;
+}
+.college-card h3 { font-size: 15px; line-height: 1.4; margin: 0 0 5px; }
+.college-location { color: var(--muted); font-size: 11px; }
+.tag {
+  display: inline-block;
+  padding: 5px 9px;
+  background: var(--blue-light);
+  color: var(--navy);
+  border-radius: 30px;
+  font-size: 10px;
+  font-weight: 800;
+  margin-top: 15px;
+  align-self: flex-start;
+}
+.college-card p {
+  color: var(--muted);
+  font-size: 12px;
+  flex: 1;
+  margin: 12px 0 18px;
+}
+.college-card .btn { width: 100%; }
+.empty-state {
+  padding: 35px 15px;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  grid-column: 1/-1;
+}
+.promo { padding: 48px 0; }
+.promo-box {
+  border-radius: 18px;
+  padding: 32px;
+  background: var(--navy);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.promo-box h2 { font-size: 27px; line-height: 1.25; margin: 8px 0; }
+.promo-box p { color: #E0EAF6; font-size: 13px; margin: 0; }
+.promo-box .btn { background: white; color: var(--navy); border-color: white; flex-shrink: 0; }
+.services {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+}
+.service {
+  padding: 23px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.service .category-icon { margin-bottom: 15px; }
+.service h3 { font-size: 16px; margin: 0 0 8px; }
+.service p { color: var(--muted); font-size: 12px; margin: 0; }
+.register { background: var(--surface); }
+.register-grid {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 38px;
+  align-items: start;
+}
+.register-copy h2 {
+  font-size: 34px;
+  line-height: 1.2;
+  color: var(--navy-dark);
+  margin: 10px 0;
+}
+.register-copy p { color: var(--muted); font-size: 14px; }
+.register-card {
+  background: white;
+  padding: 25px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.field.full { grid-column: 1/-1; }
+.form-note { color: var(--muted); font-size: 11px; margin-top: 12px; }
+footer {
+  background: var(--navy-dark);
+  color: white;
+  padding: 35px 0 20px;
+}
+.footer-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 25px;
+}
+.footer-brand { font-size: 22px; font-weight: 850; }
+footer p { font-size: 12px; color: #D4DFEC; max-width: 400px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 18px; font-size: 12px; }
+.footer-bottom {
+  margin-top: 25px;
+  border-top: 1px solid rgba(255,255,255,.2);
+  padding-top: 16px;
+  color: #D4DFEC;
+  font-size: 11px;
+}
+.notice {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 9px;
+  background: var(--blue-light);
+  color: var(--navy);
+  font-size: 12px;
+  display: none;
+}
+@media(max-width:850px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 25px; }
+  .hero { padding-top: 45px; }
+  .hero-panel { min-height: 260px; }
+  .search-grid { grid-template-columns: 1fr 1fr; }
+  .college-grid { grid-template-columns: 1fr 1fr; }
+  .register-grid { grid-template-columns: 1fr; gap: 22px; }
+  .nav-links { gap: 13px; }
+}
+@media(max-width:560px) {
+  .container { width: 91%; }
+  .nav { min-height: 65px; gap: 8px; }
+  .brand { font-size: 20px; gap: 7px; }
+  .brand-mark { width: 34px; height: 34px; }
+  .nav-links { gap: 10px; font-size: 11px; }
+  .nav-links .nav-extra { display: none; }
+  .nav-links .btn { padding: 9px 10px; font-size: 11px; }
+  .hero { padding: 38px 0 48px; }
+  h1 { font-size: 39px; letter-spacing: -1.5px; }
+  .hero-copy { font-size: 14px; }
+  .hero-panel { padding: 23px; }
+  .panel-heading { font-size: 24px; }
+  .search-card { padding: 17px; }
+  .search-grid { gap: 10px; }
+  .field input, .field select { padding: 11px 8px; font-size: 12px; }
+  section { padding: 48px 0; }
+  .categories { grid-template-columns: 1fr 1fr; gap: 11px; }
+  .category { padding: 15px; }
+  .category h3 { font-size: 13px; }
+  .category p { font-size: 11px; }
+  .college-grid { grid-template-columns: 1fr; }
+  .section-head { align-items: flex-start; }
+  .section-head h2 { font-size: 26px; }
+  .promo-box { padding: 24px; align-items: flex-start; flex-direction: column; }
+  .promo-box h2 { font-size: 24px; }
+  .services { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+  .register-copy h2 { font-size: 29px; }
+  .footer-main { flex-direction: column; }
+}
+</style>
+</head>
+
+<body>
+<div class="announcement">
+  Your education journey starts here · Telangana & Andhra Pradesh
+</div>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="#" aria-label="VidyaMap home">
+      <span class="brand-mark">V</span>
+      <span>VidyaMap</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#directory">Explore</a>
+      <a class="nav-extra" href="#services">Marketing</a>
+      <a class="btn" href="#register">Register College</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">Find. Promote. Grow.</div>
+      <h1>Find the right college.<br>Build your future.</h1>
+      <p class="hero-copy">
+        Explore educational institutions, compare courses and discover
+        opportunities across Telangana and Andhra Pradesh.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="#find">Find a College →</a>
+        <a class="btn btn-outline" href="#register">List Your Institution</a>
+      </div>
+      <div class="trust-line">A smarter starting point for students, parents and institutions.</div>
+    </div>
+
+    <div class="hero-panel">
+      <div class="panel-top">EDUCATION · DISCOVERY · GROWTH</div>
+      <div class="panel-heading">The right information.<br>The next big step.</div>
+      <div class="panel-stats">
+        <div class="panel-stat"><strong>Explore</strong><span>Institutions & courses</span></div>
+        <div class="panel-stat"><strong>Connect</strong><span>Students & colleges</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container search-wrap" id="find">
+  <form class="search-card" id="searchForm">
+    <div class="search-title">Find your institution</div>
+    <div class="search-grid">
+      <div class="field">
+        <label for="state">State</label>
+        <select id="state">
+          <option value="">All states</option>
+          <option>Telangana</option>
+          <option>Andhra Pradesh</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="district">District</label>
+        <select id="district">
+          <option value="">All districts</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="categoryFilter">Institution type</label>
+        <select id="categoryFilter">
+          <option value="">All categories</option>
+          <option>Junior College</option>
+          <option>Engineering</option>
+          <option>Medical</option>
+          <option>Degree College</option>
+          <option>Coaching Centre</option>
+          <option>Polytechnic & ITI</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="course">Course / keyword</label>
+        <input id="course" type="search" placeholder="e.g. MPC, NEET, B.Tech">
+      </div>
+    </div>
+    <div class="search-actions">
+      <button class="btn" type="submit">Search institutions →</button>
+      <button class="btn btn-outline" type="reset" id="resetSearch">Reset</button>
+    </div>
+  </form>
+</div>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Explore opportunities</div>
+        <h2>Explore by category</h2>
+        <p>Start with the type of education you are looking for.</p>
+      </div>
+    </div>
+    <div class="categories">
+      <a class="category" href="#directory" data-category="Junior College">
+        <div class="category-icon">01</div>
+        <h3>Junior Colleges</h3>
+        <p>MPC, BiPC and intermediate pathways.</p>
+      </a>
+      <a class="category" href="#directory" data-category="Engineering">
+        <div class="category-icon">02</div>
+        <h3>Engineering</h3>
+        <p>Explore engineering institutions and courses.</p>
+      </a>
+      <a class="category" href="#directory" data-category="Medical">
+        <div class="category-icon">03</div>
+        <h3>Medical</h3>
+        <p>Discover medical education options.</p>
+      </a>
+      <a class="category" href="#directory" data-category="Degree College">
+        <div class="category-icon">04</div>
+        <h3>Degree Colleges</h3>
+        <p>Find undergraduate study options.</p>
+      </a>
+      <a class="category" href="#directory" data-category="Coaching Centre">
+        <div class="category-icon">05</div>
+        <h3>Coaching Centres</h3>
+        <p>JEE, NEET and competitive exam preparation.</p>
+      </a>
+      <a class="category" href="#directory" data-category="Polytechnic & ITI">
+        <div class="category-icon">06</div>
+        <h3>Polytechnic & ITI</h3>
+        <p>Technical and skill-based education.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="directory" id="directory">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Discover institutions</div>
+        <h2>Explore colleges</h2>
+        <p>Search institutions by location, category or course.</p>
+      </div>
+      <a class="text-link" href="#find">Change filters ↑</a>
+    </div>
+
+    <div class="results-note" id="resultsCount">
+      Sample listings shown for design preview.
+    </div>
+    <div class="college-grid" id="collegeGrid"></div>
+    <div class="notice" id="searchNotice" role="status"></div>
+  </div>
+</section>
+
+<section class="promo">
+  <div class="container">
+    <div class="promo-box">
+      <div>
+        <div class="eyebrow" style="color:#D7E7FA">For educational institutions</div>
+        <h2>Make your institution easier to discover.</h2>
+        <p>Build your online presence and connect with prospective students.</p>
+      </div>
+      <a class="btn" href="#register">List Your College →</a>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Digital growth solutions</div>
+        <h2>Promote your institution</h2>
+        <p>Digital marketing support designed for education brands.</p>
+      </div>
+    </div>
+    <div class="services">
+      <article class="service">
+        <div class="category-icon">01</div>
+        <h3>Digital Advertising</h3>
+        <p>Campaign planning and ad creatives to help institutions reach prospective students.</p>
+      </article>
+      <article class="service">
+        <div class="category-icon">02</div>
+        <h3>Creative & Branding</h3>
+        <p>Professional admission posters, social media creatives and brand communication.</p>
+      </article>
+      <article class="service">
+        <div class="category-icon">03</div>
+        <h3>Websites & Lead Generation</h3>
+        <p>Landing pages and enquiry journeys designed around your admissions goals.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="register" id="register">
+  <div class="container register-grid">
+    <div class="register-copy">
+      <div class="eyebrow">Join VidyaMap</div>
+      <h2>Register your institution.</h2>
+      <p>
+        Help students discover your college, courses and admissions
+        information. Submit your details to begin the listing process.
+      </p>
+      <p><strong>Find. Promote. Grow.</strong></p>
+    </div>
+    <form class="register-card" id="registerForm">
+      <div class="form-grid">
+        <div class="field full">
+          <label for="institution">Institution name *</label>
+          <input id="institution" name="institution" required maxlength="150"
+            placeholder="Enter college or institution name">
+        </div>
+        <div class="field">
+          <label for="contactName">Contact person *</label>
+          <input id="contactName" name="contactName" required maxlength="100"
+            placeholder="Full name">
+        </div>
+        <div class="field">
+          <label for="phone">Phone number *</label>
+          <input id="phone" name="phone" type="tel" required
+            inputmode="tel" maxlength="15" placeholder="Contact number">
+        </div>
+        <div class="field">
+          <label for="regState">State *</label>
+          <select id="regState" name="state" required>
+            <option value="">Select state</option>
+            <option>Telangana</option>
+            <option>Andhra Pradesh</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="regDistrict">District *</label>
+          <input id="regDistrict" name="district" required maxlength="100"
+            placeholder="District name">
+        </div>
+        <div class="field full">
+          <label for="regCategory">Institution category *</label>
+          <select id="regCategory" name="category" required>
+            <option value="">Select category</option>
+            <option>Junior College</option>
+            <option>Engineering</option>
+            <option>Medical</option>
+            <option>Degree College</option>
+            <option>Coaching Centre</option>
+            <option>Polytechnic & ITI</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="email">Email (optional)</label>
+          <input id="email" name="email" type="email" maxlength="150"
+            placeholder="college@example.com">
+        </div>
+        <div class="field full">
+          <button class="btn" type="submit" style="width:100%">
+            Submit Registration Interest →
+          </button>
+          <div class="form-note">
+            Demo form only: your information is not sent or stored yet.
+          </div>
+          <div class="notice" id="formNotice" role="status"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-main">
+      <div>
+        <div class="footer-brand">VidyaMap</div>
+        <p>Helping students discover educational opportunities and helping institutions grow their digital reach.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#directory">Explore</a>
+        <a href="#services">Marketing</a>
+        <a href="#register">Register College</a>
+        <a href="#find">Search</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © <span id="year"></span> VidyaMap · Find. Promote. Grow.
+    </div>
+  </div>
+</footer>
+
 <script>
-const districts={"Telangana":["Adilabad","Bhadradri Kothagudem","Hanumakonda","Hyderabad","Jagtial","Jangaon","Jayashankar Bhupalpally","Jogulamba Gadwal","Kamareddy","Karimnagar","Khammam","Kumuram Bheem Asifabad","Mahabubabad","Mahabubnagar","Mancherial","Medak","Medchal-Malkajgiri","Mulugu","Nagarkurnool","Nalgonda","Narayanpet","Nirmal","Nizamabad","Peddapalli","Rajanna Sircilla","Rangareddy","Sangareddy","Siddipet","Suryapet","Vikarabad","Wanaparthy","Warangal","Yadadri Bhuvanagiri"],"Andhra Pradesh":["Alluri Sitharama Raju","Anakapalli","Anantapur","Annamayya","Bapatla","Chittoor","Dr. B. R. Ambedkar Konaseema","East Godavari","Eluru","Guntur","Kakinada","Krishna","Kurnool","Nandyal","NTR","Palnadu","Parvathipuram Manyam","Prakasam","Sri Potti Sriramulu Nellore","Sri Sathya Sai","Srikakulam","Tirupati","Visakhapatnam","Vizianagaram","West Godavari","YSR Kadapa"]};
-const colleges=[{name:"Sample Junior College",location:"Hyderabad, Telangana",state:"Telangana",district:"Hyderabad",category:"Junior College",courses:"MPC, BiPC, Intermediate"},{name:"Sample Engineering College",location:"Rangareddy, Telangana",state:"Telangana",district:"Rangareddy",category:"Engineering",courses:"B.Tech, Computer Science, Engineering"},{name:"Sample Medical Institute",location:"Guntur, Andhra Pradesh",state:"Andhra Pradesh",district:"Guntur",category:"Medical",courses:"Medical, NEET, Healthcare"},{name:"Sample Degree College",location:"Warangal, Telangana",state:"Telangana",district:"Warangal",category:"Degree College",courses:"B.Com, B.Sc, B.A, Undergraduate"},{name:"Sample Coaching Centre",location:"Vijayawada, Andhra Pradesh",state:"Andhra Pradesh",district:"NTR",category:"Coaching Centre",courses:"JEE, NEET, EAMCET"},{name:"Sample Polytechnic Institute",location:"Karimnagar, Telangana",state:"Telangana",district:"Karimnagar",category:"Polytechnic & ITI",courses:"Diploma, Polytechnic, Technical Skills"}];
-const $=id=>document.getElementById(id),state=$("state"),district=$("district"),category=$("category"),keyword=$("keyword"),grid=$("grid");function fillDistricts(){let old=district.value;district.innerHTML='<option value="">All districts</option>';(districts[state.value]||[]).forEach(d=>{let o=document.createElement("option");o.value=d;o.textContent=d;district.append(o)});if([...district.options].some(o=>o.value===old))district.value=old}state.addEventListener("change",fillDistricts);
-function render(items){grid.innerHTML="";$("count").textContent=items.length+" sample listing(s) · Demo content, not verified college records";if(!items.length){grid.innerHTML='<div class="empty">No matching sample listings. Try changing your filters.</div>';return}items.forEach(c=>{let card=document.createElement("article");card.className="college";let top=document.createElement("div");top.className="college-top";let logo=document.createElement("div");logo.className="icon";logo.textContent="VM";let details=document.createElement("div"),title=document.createElement("h3"),loc=document.createElement("div");title.textContent=c.name;loc.className="location";loc.textContent="⌖ "+c.location;details.append(title,loc);top.append(logo,details);let tag=document.createElement("span");tag.className="tag";tag.textContent=c.category;let p=document.createElement("p");p.textContent=c.courses+". Sample listing — replace with verified institution details.";let a=document.createElement("a");a.className="btn outline";a.href="#register";a.textContent="Enquire about listing";card.append(top,tag,p,a);grid.append(card)})}
-function search(e){if(e)e.preventDefault();let s=state.value.toLowerCase(),d=district.value.toLowerCase(),c=category.value.toLowerCase(),k=keyword.value.trim().toLowerCase();render(colleges.filter(x=>(!s||x.state.toLowerCase()===s)&&(!d||x.district.toLowerCase()===d)&&(!c||x.category.toLowerCase()===c)&&(!k||(x.name+" "+x.location+" "+x.courses+" "+x.category).toLowerCase().includes(k))));let n=$("searchNotice");n.style.display="block";n.textContent="Search uses sample data only. Connect a verified college database for real results."}
-$("searchForm").addEventListener("submit",search);$("reset").addEventListener("click",()=>setTimeout(()=>{fillDistricts();$("searchNotice").style.display="none";render(colleges)},0));document.querySelectorAll("[data-category]").forEach(a=>a.addEventListener("click",()=>{category.value=a.dataset.category;search()}));$("registerForm").addEventListener("submit",e=>{e.preventDefault();let n=$("formNotice");n.style.display="block";n.textContent="Demo only: your form has not been sent or saved. Connect Supabase before accepting real registrations."});$("year").textContent=new Date().getFullYear();fillDistricts();render(colleges);
-</script></body></html>
+const districts = {
+  "Telangana": [
+    "Adilabad", "Bhadradri Kothagudem", "Hanumakonda",
+    "Hyderabad", "Jagtial", "Jangaon", "Jayashankar Bhupalpally",
+    "Jogulamba Gadwal", "Kamareddy", "Karimnagar", "Khammam",
+    "Kumuram Bheem Asifabad", "Mahabubabad", "Mahabubnagar",
+    "Mancherial", "Medak", "Medchal-Malkajgiri",
+    "Mulugu", "Nagarkurnool", "Nalgonda", "Narayanpet",
+    "Nirmal", "Nizamabad", "Peddapalli", "Rajanna Sircilla",
+    "Rangareddy", "Sangareddy", "Siddipet", "Suryapet",
+    "Vikarabad", "Wanaparthy", "Warangal", "Yadadri Bhuvanagiri"
+  ],
+  "Andhra Pradesh": [
+    "Alluri Sitharama Raju", "Anakapalli", "Anantapur",
+    "Annamayya", "Bapatla", "Chittoor", "Dr. B. R. Ambedkar Konaseema",
+    "East Godavari", "Eluru", "Guntur", "Kakinada",
+    "Krishna", "Kurnool", "Nandyal", "NTR",
+    "Palnadu", "Parvathipuram Manyam", "Prakasam",
+    "Sri Potti Sriramulu Nellore", "Sri Sathya Sai",
+    "Srikakulam", "Tirupati", "Visakhapatnam",
+    "Vizianagaram", "West Godavari", "YSR Kadapa"
+  ]
+};
+
+/*
+  These entries are DEMO PLACEHOLDERS for layout testing.
+  Replace them with verified institution records before publishing
+  them as real college listings.
+*/
+const colleges = [
+  {
+    name: "Sample Junior College",
+    location: "Hyderabad, Telangana",
+    state: "Telangana",
+    district: "Hyderabad",
+    category: "Junior College",
+    courses: "MPC, BiPC, Intermediate",
+    description: "Sample listing — replace with verified college details."
+  },
+  {
+    name: "Sample Engineering College",
+    location: "Rangareddy, Telangana",
+    state: "Telangana",
+    district: "Rangareddy",
+    category: "Engineering",
+    courses: "B.Tech, Computer Science, Engineering",
+    description: "Sample listing — replace with verified college details."
+  },
+  {
+    name: "Sample Medical Institute",
+    location: "Guntur, Andhra Pradesh",
+    state: "Andhra Pradesh",
+    district: "Guntur",
+    category: "Medical",
+    courses: "Medical, NEET, Healthcare",
+    description: "Sample listing — replace with verified college details."
+  },
+  {
+    name: "Sample Degree College",
+    location: "Warangal, Telangana",
+    state: "Telangana",
+    district: "Warangal",
+    category: "Degree College",
+    courses: "B.Com, B.Sc, B.A, Undergraduate",
+    description: "Sample listing — replace with verified college details."
+  },
+  {
+    name: "Sample Coaching Centre",
+    location: "Vijayawada, Andhra Pradesh",
+    state: "Andhra Pradesh",
+    district: "NTR",
+    category: "Coaching Centre",
+    courses: "JEE, NEET, EAMCET, Competitive Exams",
+    description: "Sample listing — replace with verified centre details."
+  },
+  {
+    name: "Sample Polytechnic Institute",
+    location: "Karimnagar, Telangana",
+    state: "Telangana",
+    district: "Karimnagar",
+    category: "Polytechnic & ITI",
+    courses: "Diploma, Polytechnic, Technical Skills",
+    description: "Sample listing — replace with verified institute details."
+  }
+];
+
+const stateSelect = document.getElementById("state");
+const districtSelect = document.getElementById("district");
+const categorySelect = document.getElementById("categoryFilter");
+const courseInput = document.getElementById("course");
+const grid = document.getElementById("collegeGrid");
+const resultsCount = document.getElementById("resultsCount");
+const searchNotice = document.getElementById("searchNotice");
+
+function updateDistrictOptions(select, state, selectedValue = "") {
+  const previous = selectedValue || select.value;
+  select.innerHTML = "";
+  const all = document.createElement("option");
+  all.value = "";
+  all.textContent = "All districts";
+  select.appendChild(all);
+
+  (districts[state] || []).forEach(name => {
+    const option = document.createElement("option");
+    option.value = name;
+    option.textContent = name;
+    select.appendChild(option);
+  });
+
+  if ([...select.options].some(option => option.value === previous)) {
+    select.value = previous;
+  }
+}
+
+stateSelect.addEventListener("change", () => {
+  updateDistrictOptions(districtSelect, stateSelect.value);
+});
+
+function renderColleges(items) {
+  grid.innerHTML = "";
+
+  if (!items.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-state";
+    empty.textContent =
+      "No matching sample listings. Try changing your search filters.";
+    grid.appendChild(empty);
+    resultsCount.textContent = "0 matching sample listings";
+    return;
+  }
+
+  resultsCount.textContent =
+    items.length + " sample listing(s) · Demo content, not verified college records";
+
+  items.forEach((college, index) => {
+    const card = document.createElement("article");
+    card.className = "college-card";
+
+    const top = document.createElement("div");
+    top.className = "college-top";
+
+    const logo = document.createElement("div");
+    logo.className = "college-logo";
+    logo.textContent = "VM";
+
+    const details = document.createElement("div");
+    const title = document.createElement("h3");
+    title.textContent = college.name;
+
+    const location = document.createElement("div");
+    location.className = "college-location";
+    location.textContent = "⌖ " + college.location;
+
+    details.append(title, location);
+    top.append(logo, details);
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = college.category;
+
+    const description = document.createElement("p");
+    description.textContent =
+      college.courses + ". " + college.description;
+
+    const button = document.createElement("a");
+    button.className = "btn btn-outline";
+    button.href = "#register";
+    button.textContent = "Enquire about listing";
+    button.setAttribute("aria-label", "Enquire about listing " + college.name);
+
+    card.append(top, tag, description, button);
+    grid.appendChild(card);
+  });
+}
+
+function searchColleges(event) {
+  if (event) event.preventDefault();
+
+  const state = stateSelect.value.toLowerCase();
+  const district = districtSelect.value.toLowerCase();
+  const category = categorySelect.value.toLowerCase();
+  const keyword = courseInput.value.trim().toLowerCase();
+
+  const filtered = colleges.filter(college => {
+    const matchesState = !state || college.state.toLowerCase() === state;
+    const matchesDistrict =
+      !district || college.district.toLowerCase() === district;
+    const matchesCategory =
+      !category || college.category.toLowerCase() === category;
+    const searchable =
+      (college.name + " " + college.location + " " +
+       college.courses + " " + college.category).toLowerCase();
+    const matchesKeyword = !keyword || searchable.includes(keyword);
+
+    return matchesState && matchesDistrict &&
+      matchesCategory && matchesKeyword;
+  });
+
+  renderColleges(filtered);
+  searchNotice.style.display = "block";
+  searchNotice.textContent =
+    "Search is currently using sample data. Connect the verified college database for real results.";
+}
+
+document.getElementById("searchForm").addEventListener("submit", searchColleges);
+
+document.getElementById("resetSearch").addEventListener("click", () => {
+  setTimeout(() => {
+    updateDistrictOptions(districtSelect, "");
+    searchNotice.style.display = "none";
+    renderColleges(colleges);
+  }, 0);
+});
+
+document.querySelectorAll("[data-category]").forEach(link => {
+  link.addEventListener("click", () => {
+    categorySelect.value = link.dataset.category;
+    searchColleges();
+  });
+});
+
+document.getElementById("registerForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const notice = document.getElementById("formNotice");
+  notice.style.display = "block";
+  notice.textContent =
+    "Demo only: your form has not been sent or saved. Connect Supabase before accepting real registrations.";
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+updateDistrictOptions(districtSelect, "");
+renderColleges(colleges);
+</script>
+</body>
+</html>
