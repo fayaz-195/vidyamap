@@ -593,7 +593,7 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 .ad-review-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start}
 @media(max-width:700px){.ad-review-row{flex-direction:column}.ad-review-actions{width:100%}.ad-review-actions .btn{flex:1}}
 
-.vm-ad-ticker{position:sticky;top:72px;z-index:9;display:flex;gap:18px;align-items:center;background:#fff7ed;border-bottom:1px solid #fed7aa;padding:0 14px;min-height:42px;overflow:hidden}.vm-ad-ticker strong{flex:0 0 auto;background:#e11d48;color:#fff;padding:10px 14px;border-radius:0 20px 20px 0;font-size:12px}.vm-ticker-window{overflow:hidden;flex:1}.vm-ticker-track{display:flex;gap:40px;width:max-content;white-space:nowrap;animation:vmTickerMove 34s linear infinite;font-size:13px;color:#17365d}.vm-ticker-track span{padding:10px 0}.vm-ad-ticker:hover .vm-ticker-track{animation-play-state:paused}@keyframes vmTickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}.ad-carousel-wrap{position:relative;margin-top:24px}.ad-campaign-grid{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:5px 3px 18px;scrollbar-width:thin}.ad-campaign-card{flex:0 0 clamp(235px,27vw,310px);scroll-snap-align:start}#collegeAdGrid .feature-card{flex:0 0 min(340px,85vw);scroll-snap-align:start}@media(max-width:700px){.vm-ad-ticker{top:64px}.vm-ad-ticker strong{font-size:11px;padding:9px}.vm-ticker-track{font-size:12px;gap:24px}.ad-campaign-card{flex-basis:78vw}}
+.vm-ad-ticker{position:sticky;top:96px;z-index:9;display:flex;gap:18px;align-items:center;background:#fff7ed;border-bottom:1px solid #fed7aa;padding:0 14px;min-height:42px;overflow:hidden}.vm-ad-ticker strong{flex:0 0 auto;background:#e11d48;color:#fff;padding:10px 14px;border-radius:0 20px 20px 0;font-size:12px}.vm-ticker-window{overflow:hidden;flex:1}.vm-ticker-track{display:flex;gap:40px;width:max-content;white-space:nowrap;animation:vmTickerMove 34s linear infinite;font-size:13px;color:#17365d}.vm-ticker-track span{padding:10px 0}.vm-ad-ticker:hover .vm-ticker-track{animation-play-state:paused}@keyframes vmTickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}.ad-carousel-wrap{position:relative;margin-top:24px}.ad-campaign-grid{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:5px 3px 18px;scrollbar-width:thin}.ad-campaign-card{flex:0 0 clamp(235px,27vw,310px);scroll-snap-align:start}#collegeAdGrid .feature-card{flex:0 0 min(340px,85vw);scroll-snap-align:start}@media(max-width:700px){.vm-ad-ticker{top:72px}.vm-ad-ticker strong{font-size:11px;padding:9px}.vm-ticker-track{font-size:12px;gap:24px}.ad-campaign-card{flex-basis:78vw}}
 </style>
 <style>
 /* Three distinct product panels */
@@ -631,7 +631,7 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 </nav>
 </div>
 </header>
-<div class="vm-ad-ticker"><strong>📣 Latest Updates</strong><div class="vm-ticker-window"><div class="vm-ticker-track"><span>Admissions Open 2027–28 · Agastya Junior College</span><span>College Posters and Videos · District + Mandal targeting</span><span>Promote your college with VidyaMap</span><span>Admissions Open 2027–28 · Agastya Junior College</span><span>College Posters and Videos · District + Mandal targeting</span></div></div></div>
+<div class="vm-ad-ticker" id="vmAdTicker" hidden><strong>📣 Sponsored</strong><div class="vm-ticker-window"><div class="vm-ticker-track" id="vmTickerTrack"></div></div></div>
 
 <main>
 <section class="hero">
@@ -830,13 +830,9 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
   <div class="eyebrow">VidyaMap for institutions</div>
   <h2>College Ads &amp; Promotions</h2>
   <p class="muted">Discover college posters and videos selected for your district and mandal. Only approved campaigns within their scheduled dates are eligible to appear.</p>
-  <div class="ad-area-toolbar">
-   <label>District <select id="adDistrictFilter"><option value="">Choose district</option></select></label>
-   <label>Mandal / local area <select id="adMandalFilter" disabled><option value="">All mandals</option></select></label>
-   <button type="button" class="btn btn-outline" id="adApplyFilter">Show local ads</button>
-  </div>
-  <div class="ad-campaign-grid" id="collegeAdGrid" aria-live="polite"><article class="feature-card">Loading approved college promotions…</article></div>
-  <p class="vm-panel-note">Ad visibility depends on campaign approval, selected locations and schedule. Ads are not yet paid-targeted to a visitor's GPS location.</p>
+  <p class="muted">Sponsored posters and videos automatically slide here after payment verification and founder approval. Campaigns appear only in their selected district/mandal and active dates.</p>
+  <div class="ad-carousel-wrap"><button type="button" class="ad-scroll-btn" data-scroll="left" aria-label="Scroll ads left">‹</button><div class="ad-campaign-grid" id="collegeAdGrid" aria-live="polite"><article class="feature-card">Loading paid college promotions…</article></div><button type="button" class="ad-scroll-btn" data-scroll="right" aria-label="Scroll ads right">›</button></div>
+  <p class="vm-panel-note">Only payment-verified, founder-approved ads within their scheduled dates are displayed. No manual district selection is required for the ad carousel.</p>
  </div>
 </section>
 
@@ -1786,12 +1782,17 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
   const [dr,mr,cr]=await Promise.all([
    db.from('districts').select('id,name').eq('is_active',true).order('name'),
    db.from('mandals').select('id,name,district_id').eq('is_active',true).order('name'),
-   db.from('college_ad_campaigns').select('id,college_id,title,description,media_type,media_url,click_url,starts_at,ends_at').eq('status','approved').order('created_at',{ascending:false}).limit(100)
+   db.from('college_ad_campaigns').select('id,college_id,title,description,media_type,media_url,click_url,starts_at,ends_at,payment_status,duration_days').eq('status','approved').eq('payment_status','paid').order('created_at',{ascending:false}).limit(100)
   ]);
   if(dr.error||mr.error||cr.error)throw (dr.error||mr.error||cr.error);
   const districtsData=dr.data||[], mandalsData=mr.data||[], campaigns=cr.data||[];
-  districtsData.forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.name;districtSel.append(o)});
-  mandalSel.disabled=false;
+  const ticker=document.getElementById('vmAdTicker'),tickerTrack=document.getElementById('vmTickerTrack');
+  const paidActive=campaigns.filter(c=>c.payment_status==='paid'&&(!c.starts_at||new Date(c.starts_at)<=new Date())&&(!c.ends_at||new Date(c.ends_at)>=new Date()));
+  if(paidActive.length&&ticker&&tickerTrack){
+   ticker.hidden=false;
+   const tickerItems=paidActive.map(c=>{const span=document.createElement('span');span.textContent='Sponsored · '+c.title;return span;});
+   [...tickerItems,...tickerItems].forEach(item=>tickerTrack.append(item.cloneNode(true)));
+  }
   const [targetD,targetM,collRes]=await Promise.all([
    db.from('college_ad_campaign_districts').select('campaign_id,district_id'),
    db.from('college_ad_campaign_mandals').select('campaign_id,mandal_id'),
@@ -1822,7 +1823,11 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     card.append(body);grid.append(card);
    });
   }
-  districtSel.addEventListener('change',()=>{fillMandals();render()});mandalSel.addEventListener('change',render);document.getElementById('adApplyFilter').addEventListener('click',render);fillMandals();render();
+  render();
+  const reel=document.getElementById('collegeAdGrid');
+  if(reel){let timer=setInterval(()=>{if(!document.hidden&&reel.scrollWidth>reel.clientWidth+8){const max=reel.scrollWidth-reel.clientWidth;if(reel.scrollLeft>=max-8)reel.scrollTo({left:0,behavior:'smooth'});else reel.scrollBy({left:Math.max(250,reel.clientWidth*.8),behavior:'smooth'});}},3500);window.addEventListener('beforeunload',()=>clearInterval(timer));}
+  document.querySelectorAll('.ad-scroll-btn').forEach(b=>b.addEventListener('click',()=>{if(!b.dataset.ready){b.dataset.ready='1';b.dataset.scroll=b.getAttribute('aria-label').includes('left')?'left':'right';}reel?.scrollBy({left:(b.dataset.scroll==='left'?-1:1)*Math.max(250,(reel?.clientWidth||400)*.8),behavior:'smooth'});}));
+
  }catch(err){console.error('College ad loading failed',err);grid.replaceChildren();const msg=document.createElement('article');msg.className='feature-card';msg.textContent='College ads are temporarily unavailable. Please try again later.';grid.append(msg);}
 })();
 </script>
