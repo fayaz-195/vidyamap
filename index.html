@@ -754,6 +754,35 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
   </div>
  </div>
 </section>
+<section class="feature-section" id="platformPanels">
+ <div class="container">
+  <div class="eyebrow">One platform · Three panels</div>
+  <h2>VidyaMap ecosystem</h2>
+  <p class="muted">Discover institutions, manage your institution, or monitor the entire network — each with its own access and permissions.</p>
+  <div class="feature-grid vm-panel-grid">
+   <article class="feature-card vm-panel-card">
+    <div class="vm-panel-icon">🌐</div><div class="eyebrow">Panel 01</div><h3>Public Live Website</h3>
+    <p>Students and parents can find schools and colleges, compare institutions, explore admissions and submit enquiries.</p>
+    <ul><li>Institution search & filters</li><li>Verified public profiles</li><li>Admissions enquiries</li></ul>
+    <a class="btn" href="#directory">Explore Public Website →</a>
+   </article>
+   <article class="feature-card vm-panel-card">
+    <div class="vm-panel-icon">🏫</div><div class="eyebrow">Panel 02</div><h3>School / College Portal</h3>
+    <p>Approved institutions receive secure access to their own profile and institution-specific tools.</p>
+    <ul><li>Manage institution details</li><li>View assigned enquiries</li><li>Features based on subscription</li></ul>
+    <a class="btn" href="?portal=college">College Partner Login →</a>
+   </article>
+   <article class="feature-card vm-panel-card">
+    <div class="vm-panel-icon">🛡️</div><div class="eyebrow">Panel 03</div><h3>VidyaMap Admin</h3>
+    <p>Private team workspace for reviewing applications, contacting institutions and monitoring approved partners.</p>
+    <ul><li>Review and approve applications</li><li>Manage plans and status</li><li>Monitor institutions</li></ul>
+    <a class="btn btn-outline" href="?portal=admin">Admin Team Login →</a>
+   </article>
+  </div>
+  <p class="vm-panel-note">New institutions remain pending until the VidyaMap team contacts them, discusses pricing and services, and approves access.</p>
+ </div>
+</section>
+
 <section class="feature-section" id="marketingPackages" style="background:var(--surface)">
  <div class="container">
   <div class="eyebrow">For institutions</div><h2>Digital growth packages</h2>
@@ -780,7 +809,7 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 <div class="container">
 <div class="footer-main">
 <div><strong style="font-size:23px">VidyaMap</strong><p>Helping students discover educational opportunities and helping institutions grow their digital reach.</p></div>
-<div class="footer-links"><a href="#directory">Explore</a><a href="#services">Marketing</a><a href="#register">Register College</a><a href="#find">Search</a><a href="?portal=college">College Login</a></div>
+<div class="footer-links"><a href="#directory">Explore</a><a href="#services">Marketing</a><a href="#register">Register College</a><a href="#find">Search</a><a href="?portal=college">College Login</a><a href="?portal=admin">Admin Login</a></div>
 </div>
 <div class="footer-bottom">© <span id="year"></span> VidyaMap · Find. Promote. Grow.</div>
 </div>
@@ -809,6 +838,18 @@ body.college-portal-mode header,
 body.college-portal-mode footer,
 body.college-portal-mode main > section:not(#accountDashboard){display:none!important}
 body.college-portal-mode #accountDashboard{display:block!important}
+
+.vm-panel-grid{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:22px;margin-top:28px}
+.vm-panel-card{display:flex;flex-direction:column;align-items:flex-start;min-height:100%;padding:28px}
+.vm-panel-card h3{margin:10px 0 4px;color:var(--navy);font-size:23px}
+.vm-panel-card p{color:var(--muted);line-height:1.65}
+.vm-panel-card ul{padding-left:20px;margin:8px 0 24px;color:var(--ink);font-size:14px}
+.vm-panel-card li{margin:7px 0}
+.vm-panel-card .btn{margin-top:auto;max-width:100%;text-align:center}
+.vm-panel-icon{display:grid;place-items:center;width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,#eee7ff,#e6f1ff);font-size:28px;margin-bottom:12px}
+.vm-panel-note{margin-top:20px;padding:15px 18px;border:1px solid var(--border);border-radius:14px;background:#ffffffb8;color:var(--muted);font-size:14px}
+@media(max-width:850px){.vm-panel-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.vm-panel-grid{grid-template-columns:1fr}.vm-panel-card{padding:22px}}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
