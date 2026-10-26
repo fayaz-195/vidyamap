@@ -8,7 +8,19 @@
 <meta name="description" content="Find verified colleges across Telangana and Andhra Pradesh with VidyaMap.">
 <title>VidyaMap | Find. Promote. Grow.</title>
 <style>
-:root{--navy:#123B6D;--dark:#0B2748;--light:#EAF1F9;--ink:#172B43;--muted:#66758A;--border:#DFE6EF;--surface:#F6F8FB;--green:#18794E;--red:#B42318}
+
+:root {
+  --navy: #123B6D;
+  --purple: #76208F;
+  --dark: #0B2748;
+  --light: #F1E8F5;
+  --ink: #172B43;
+  --muted: #66758A;
+  --border: #DFE6EF;
+  --surface: #FCFAFD;
+  --green: #18794E;
+  --red: #B42318;
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.6}
@@ -18,7 +30,14 @@ button,input,select,textarea{font:inherit}
 .announcement{background:var(--dark);color:#fff;text-align:center;padding:8px;font-size:12px}
 header{background:#fff;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--border)}
 .nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:10px;color:var(--navy);font-size:24px;font-weight:800}
+.brand-word-map {
+  color: var(--purple);
+}
+.brand-mark {
+  border-color: var(--purple);
+  color: var(--purple);
+  border-radius: 50%;
+}
 .brand-mark{width:40px;height:40px;border:2px solid var(--navy);border-radius:11px;display:grid;place-items:center}
 .nav-links{display:flex;align-items:center;gap:22px;font-size:14px;font-weight:bold}
 .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--navy);color:white;border:1px solid var(--navy);padding:12px 18px;border-radius:10px;font-weight:bold;cursor:pointer}
@@ -76,7 +95,10 @@ button:disabled{opacity:.6;cursor:wait}
 <div class="announcement">Your education journey starts here · Telangana &amp; Andhra Pradesh</div>
 <header>
 <div class="container nav">
-<a class="brand" href="#"><span class="brand-mark">V</span>VidyaMap</a>
+<a class="brand" href="#">
+  <span class="brand-mark">V</span>
+  <span>Vidya<span class="brand-word-map">Map</span></span>
+</a>
 <nav class="nav-links">
 <a href="#directory">Explore</a>
 <a href="#services">Marketing</a>
