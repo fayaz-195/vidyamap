@@ -692,6 +692,15 @@ body.vm-public-locked #vmLeadReminderOpen,body.vm-public-locked #studentLeadCapt
 body.vm-public-locked #platformPanels .ad-scroll-btn{opacity:.45}
 body.vm-public-locked #platformPanels .ad-campaign-card a{pointer-events:none!important;filter:blur(2px)}
 
+
+/* Lock and blur only the verified-institutions directory cards */
+#directory .college-card.vm-directory-locked{position:relative;overflow:hidden}
+#directory .college-card.vm-directory-locked>*:not(.vm-directory-lock-overlay){filter:blur(5px)!important;user-select:none!important;pointer-events:none!important}
+#directory .college-card.vm-directory-locked button:disabled,
+#directory .college-card.vm-directory-locked input:disabled{opacity:.55!important;cursor:not-allowed!important}
+#directory .college-card.vm-directory-locked a[aria-disabled="true"]{cursor:not-allowed!important}
+#directory .college-card.vm-directory-locked::after{content:"PREVIEW ONLY";position:absolute;top:14px;right:14px;padding:6px 10px;border-radius:999px;background:rgba(245,243,255,.94);color:#6b21a8;border:1px solid #ddd6fe;font-size:10px;font-weight:800;letter-spacing:1px;pointer-events:none}
+
 </style>
 <style>
 /* Three distinct product panels */
@@ -1358,7 +1367,8 @@ function renderColleges(items) {
     const m = mandals.find(x => String(x.id) === String(c.mandal_id));
     const state = states.find(x => d && x.code === d.state_code);
     const card = document.createElement("article");
-    card.className = "college-card";
+    card.className = "college-card vm-directory-locked";
+    card.setAttribute("aria-label", "College listing preview is blurred and disabled");
 
     const top = document.createElement("div");
     top.className = "college-top";
@@ -1427,6 +1437,11 @@ function renderColleges(items) {
     compareInput.addEventListener("change", () => window.vidyaMapSetCompare(c.id, compareInput.checked));
     compareLabel.append(compareInput, document.createTextNode(" Add to compare"));
     card.append(compareLabel);
+    card.querySelectorAll("button, a, input, select").forEach(control => {
+      if (control.matches("a")) { control.removeAttribute("href"); control.removeAttribute("target"); control.setAttribute("aria-disabled", "true"); }
+      else control.disabled = true;
+      control.setAttribute("tabindex", "-1");
+    });
     grid.append(card);
   });
 }
