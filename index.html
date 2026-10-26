@@ -1636,7 +1636,7 @@ async function initDashboard(){
     const row=document.createElement("div");row.className="dashboard-row ad-review-row";
     const info=document.createElement("div");info.className="ad-review-info";
     const title=document.createElement("strong");title.textContent=c.title+" · "+(c.media_type==="video"?"Video":"Poster");
-    const college=document.createElement("div");college.className="feature-note";college.textContent=(collegeMap.get(c.college_id)?.name||"Unknown college")+" · Status: "+c.status;
+    const college=document.createElement("div");college.className="feature-note";college.textContent=(collegeMap.get(c.college_id)?.name||"Unknown college")+" · Campaign: "+c.status+" · Payment: "+(c.payment_status||"unpaid")+" · Duration: "+(c.duration_days||1)+" day(s)"+(Number(c.payment_amount_inr)>0?" · ₹"+c.payment_amount_inr:"");
     const desc=document.createElement("p");desc.textContent=c.description||"No description supplied.";
     const areas=document.createElement("div");areas.className="feature-note";
     const targetedD=(ds||[]).filter(x=>x.campaign_id===c.id).map(x=>districtRows?.find(d=>d.id===x.district_id)?.name).filter(Boolean);
@@ -1647,8 +1647,18 @@ async function initDashboard(){
     else{const im=document.createElement("img");im.src=c.media_url;im.alt=c.title;im.loading="lazy";im.className="ad-review-media";info.append(im);}
     const actions=document.createElement("div");actions.className="ad-review-actions";
     const preview=document.createElement("a");preview.href=c.media_url;preview.target="_blank";preview.rel="noopener noreferrer";preview.className="btn btn-outline";preview.textContent="Open media";actions.append(preview);
+    if(c.payment_status!=="paid" && c.status!=="rejected"){
+     const pay=document.createElement("button");pay.type="button";pay.className="btn btn-outline";pay.textContent="Verify payment received";pay.addEventListener("click",async()=>{
+      const ref=prompt("Enter payment reference / UTR (required):");if(!ref||!ref.trim())return;
+      pay.disabled=true;
+      const {error:pe}=await db.from("college_ad_campaigns").update({payment_status:"paid",payment_reference:ref.trim(),paid_at:new Date().toISOString(),updated_at:new Date().toISOString()}).eq("id",c.id);
+      if(pe){show(pe.message||"Could not verify payment.","error");pay.disabled=false;return;}
+      show("Payment marked as received. You can now approve the campaign.","success");await loadAdApprovals(user);
+     });actions.append(pay);
+    }
     if(c.status==="pending_review"){
      for(const decision of ["approved","rejected"]){const b=document.createElement("button");b.type="button";b.className=decision==="approved"?"btn":"btn btn-outline";b.textContent=decision==="approved"?"Approve & publish":"Reject";b.addEventListener("click",async()=>{
+      if(decision==="approved"&&c.payment_status!=="paid"){show("Verify the payment before approving this campaign.","error");return;}
       if(decision==="approved"&&!(ds||[]).some(x=>x.campaign_id===c.id)&&!(ms||[]).some(x=>x.campaign_id===c.id)){show("Cannot approve: select at least one district or mandal for this campaign.","error");return;}
       if(decision==="rejected"&&!confirm("Reject this college ad campaign?"))return;
       b.disabled=true;
