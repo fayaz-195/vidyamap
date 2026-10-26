@@ -567,6 +567,22 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 #searchForm.vm-search-locked:before{content:"Save your details above to start searching";display:block;padding:12px;background:#f0e8fa;border-radius:12px;color:#123B6D;font-weight:700;margin-bottom:12px}
 #studentLeadForm .field label{font-size:13px}
 #studentLeadForm .feature-note{align-self:center}
+
+/* College advertising showcase */
+.ad-area-toolbar{display:flex;flex-wrap:wrap;gap:14px;align-items:end;margin:24px 0}
+.ad-area-toolbar label{display:grid;gap:6px;min-width:210px;font-size:13px;font-weight:700;color:var(--navy)}
+.ad-area-toolbar select{padding:12px;border:1px solid var(--border);border-radius:10px;background:#fff;min-width:210px;color:var(--ink)}
+.ad-campaign-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.ad-campaign-card{padding:0;overflow:hidden;border:1px solid var(--border);border-radius:20px;background:#fff;box-shadow:0 12px 32px #20385d10;display:flex;flex-direction:column}
+.ad-campaign-media{width:100%;aspect-ratio:4/3;object-fit:cover;background:#f1e8f5;display:block}
+.ad-campaign-video{width:100%;aspect-ratio:4/3;display:block;background:#101828}
+.ad-campaign-body{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.ad-campaign-body h3{margin:0;color:var(--navy);font-size:20px}
+.ad-campaign-body p{margin:0;color:var(--muted);font-size:14px}
+.ad-campaign-meta{font-size:12px;color:var(--muted)}
+.ad-campaign-body .btn{margin-top:auto;text-align:center}
+@media(max-width:800px){.ad-campaign-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.ad-campaign-grid{grid-template-columns:1fr}.ad-area-toolbar,.ad-area-toolbar label,.ad-area-toolbar select,.ad-area-toolbar .btn{width:100%}}
 </style>
 <style>
 /* Three distinct product panels */
@@ -799,30 +815,16 @@ footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
 </section>
 <section class="feature-section" id="platformPanels">
  <div class="container">
-  <div class="eyebrow">VidyaMap platform</div>
-  <h2>Three separate applications</h2>
-  <p class="muted">Public discovery, internal VidyaMap operations, and secure institution access.</p>
-  <div class="feature-grid vm-panel-grid">
-   <article class="feature-card vm-panel-card vm-public-panel">
-    <div class="vm-panel-icon">🌐</div><div class="eyebrow">01 · PUBLIC ACCESS</div><h3>Public Live Website</h3>
-    <p>Open to students, parents and visitors.</p>
-    <ul><li>Search schools and colleges</li><li>Compare institutions and courses</li><li>Explore public profiles and admissions</li><li>Submit student enquiries</li></ul>
-    <a class="btn" href="#directory">Explore Public Website →</a>
-   </article>
-   <article class="feature-card vm-panel-card vm-staff-panel">
-    <div class="vm-panel-icon">🧑‍💼</div><div class="eyebrow">02 · EMPLOYEE ACCESS ONLY</div><h3>VidyaMap Staff Application</h3>
-    <p>Private internal workspace for authorised VidyaMap employees. Not a public or college login.</p>
-    <ul><li>Review and follow up applications</li><li>Record pricing and service discussions</li><li>Manage approvals and subscriptions</li><li>Monitor partner institutions</li></ul>
-    <a class="btn btn-outline" href="?portal=staff">Employee Login →</a>
-   </article>
-   <article class="feature-card vm-panel-card vm-institution-panel">
-    <div class="vm-panel-icon">🏫</div><div class="eyebrow">03 · APPROVED INSTITUTIONS</div><h3>College Management Portal</h3>
-    <p>For approved college board members, Chairman, Director, Principal and authorised administrators.</p>
-    <ul><li>Access institution-specific workspace</li><li>Manage permitted college information</li><li>View relevant enquiries and reports</li><li>Features depend on assigned role</li></ul>
-    <a class="btn" href="?portal=college">College Login →</a>
-   </article>
+  <div class="eyebrow">VidyaMap for institutions</div>
+  <h2>College Ads &amp; Promotions</h2>
+  <p class="muted">Discover college posters and videos selected for your district and mandal. Only approved campaigns within their scheduled dates are eligible to appear.</p>
+  <div class="ad-area-toolbar">
+   <label>District <select id="adDistrictFilter"><option value="">Choose district</option></select></label>
+   <label>Mandal / local area <select id="adMandalFilter" disabled><option value="">All mandals</option></select></label>
+   <button type="button" class="btn btn-outline" id="adApplyFilter">Show local ads</button>
   </div>
-  <p class="vm-panel-note">College access is issued only after VidyaMap contacts the institution, discusses services and pricing, and approves the application.</p>
+  <div class="ad-campaign-grid" id="collegeAdGrid" aria-live="polite"><article class="feature-card">Loading approved college promotions…</article></div>
+  <p class="vm-panel-note">Ad visibility depends on campaign approval, selected locations and schedule. Ads are not yet paid-targeted to a visitor's GPS location.</p>
  </div>
 </section>
 
@@ -1714,5 +1716,56 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
  });
 })();
 </script>
+
+<script>
+// Public ad showcase: only approved, in-date campaigns are read from Supabase.
+(async function initCollegeAds(){
+ const grid=document.getElementById('collegeAdGrid'); if(!grid||!window.supabase)return;
+ const districtSel=document.getElementById('adDistrictFilter'), mandalSel=document.getElementById('adMandalFilter');
+ try{
+  const [dr,mr,cr]=await Promise.all([
+   db.from('districts').select('id,name').eq('is_active',true).order('name'),
+   db.from('mandals').select('id,name,district_id').eq('is_active',true).order('name'),
+   db.from('college_ad_campaigns').select('id,college_id,title,description,media_type,media_url,click_url,starts_at,ends_at').eq('status','approved').order('created_at',{ascending:false}).limit(100)
+  ]);
+  if(dr.error||mr.error||cr.error)throw (dr.error||mr.error||cr.error);
+  const districtsData=dr.data||[], mandalsData=mr.data||[], campaigns=cr.data||[];
+  districtsData.forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.name;districtSel.append(o)});
+  mandalSel.disabled=false;
+  const [targetD,targetM,collRes]=await Promise.all([
+   db.from('college_ad_campaign_districts').select('campaign_id,district_id'),
+   db.from('college_ad_campaign_mandals').select('campaign_id,mandal_id'),
+   db.from('colleges').select('id,name,slug,status').eq('status','verified')
+  ]);
+  if(targetD.error||targetM.error||collRes.error)throw (targetD.error||targetM.error||collRes.error);
+  const districtsByCampaign=targetD.data||[], mandalsByCampaign=targetM.data||[], collegesById=new Map((collRes.data||[]).map(c=>[c.id,c]));
+  function fillMandals(){const did=districtSel.value;mandalSel.replaceChildren();const all=document.createElement('option');all.value='';all.textContent='All mandals';mandalSel.append(all);mandalsData.filter(m=>!did||m.district_id===did).forEach(m=>{const o=document.createElement('option');o.value=m.id;o.textContent=m.name;mandalSel.append(o)});}
+  function render(){
+   grid.replaceChildren(); const did=districtSel.value, mid=mandalSel.value;
+   const filtered=campaigns.filter(c=>{
+    if(c.starts_at&&new Date(c.starts_at)>new Date())return false;
+    if(c.ends_at&&new Date(c.ends_at)<new Date())return false;
+    const ds=districtsByCampaign.filter(x=>x.campaign_id===c.id), ms=mandalsByCampaign.filter(x=>x.campaign_id===c.id);
+    if(!ds.length&&!ms.length)return false; // no location targeting = do not publish
+    if(mid)return ms.some(x=>x.mandal_id===mid)|| (ds.some(x=>x.district_id===did)&&!ms.length);
+    if(did)return ds.some(x=>x.district_id===did)||ms.some(x=>mandalsData.some(m=>m.id===x.mandal_id&&m.district_id===did));
+    return true;
+   });
+   if(!filtered.length){const empty=document.createElement('article');empty.className='feature-card';const h=document.createElement('h3');h.textContent=did?'No approved ads for this selected area yet':'No approved college ads available yet';const p=document.createElement('p');p.textContent='Choose a district and mandal, or check back after colleges publish approved campaigns.';empty.append(h,p);grid.append(empty);return;}
+   filtered.forEach(c=>{const college=collegesById.get(c.college_id);if(!college)return;const card=document.createElement('article');card.className='ad-campaign-card';
+    if(c.media_type==='video'){const v=document.createElement('video');v.className='ad-campaign-video';v.src=c.media_url;v.controls=true;v.preload='metadata';v.playsInline=true;v.setAttribute('aria-label',c.title);card.append(v)}
+    else {const im=document.createElement('img');im.className='ad-campaign-media';im.src=c.media_url;im.alt=c.title;im.loading='lazy';card.append(im)}
+    const body=document.createElement('div');body.className='ad-campaign-body';const h=document.createElement('h3');h.textContent=c.title;const org=document.createElement('div');org.className='ad-campaign-meta';org.textContent=college.name+' · '+(c.media_type==='video'?'Video promotion':'College poster');body.append(h,org);
+    if(c.description){const p=document.createElement('p');p.textContent=c.description;body.append(p)}
+    const area=document.createElement('div');area.className='ad-campaign-meta';const ids=[...new Set([...districtsByCampaign.filter(x=>x.campaign_id===c.id).map(x=>x.district_id),...mandalsByCampaign.filter(x=>x.campaign_id===c.id).map(x=>mandalsData.find(m=>m.id===x.mandal_id)?.district_id).filter(Boolean)])];area.textContent=ids.map(id=>districtsData.find(d=>d.id===id)?.name).filter(Boolean).join(', ');body.append(area);
+    if(c.click_url){try{const u=new URL(c.click_url);if(u.protocol==='https:'||u.protocol==='http:'){const a=document.createElement('a');a.className='btn';a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent='View college promotion →';body.append(a)}}catch{}}
+    card.append(body);grid.append(card);
+   });
+  }
+  districtSel.addEventListener('change',()=>{fillMandals();render()});mandalSel.addEventListener('change',render);document.getElementById('adApplyFilter').addEventListener('click',render);fillMandals();render();
+ }catch(err){console.error('College ad loading failed',err);grid.replaceChildren();const msg=document.createElement('article');msg.className='feature-card';msg.textContent='College ads are temporarily unavailable. Please try again later.';grid.append(msg);}
+})();
+</script>
+
 </body>
 </html>
