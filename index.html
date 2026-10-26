@@ -738,93 +738,13 @@ footer p { font-size: 12px; color: #D4DFEC; max-width: 400px; }
     </div>
   </div>
 </footer>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const districts = {
-  "Telangana": [
-    "Adilabad", "Bhadradri Kothagudem", "Hanumakonda",
-    "Hyderabad", "Jagtial", "Jangaon", "Jayashankar Bhupalpally",
-    "Jogulamba Gadwal", "Kamareddy", "Karimnagar", "Khammam",
-    "Kumuram Bheem Asifabad", "Mahabubabad", "Mahabubnagar",
-    "Mancherial", "Medak", "Medchal-Malkajgiri",
-    "Mulugu", "Nagarkurnool", "Nalgonda", "Narayanpet",
-    "Nirmal", "Nizamabad", "Peddapalli", "Rajanna Sircilla",
-    "Rangareddy", "Sangareddy", "Siddipet", "Suryapet",
-    "Vikarabad", "Wanaparthy", "Warangal", "Yadadri Bhuvanagiri"
-  ],
-  "Andhra Pradesh": [
-    "Alluri Sitharama Raju", "Anakapalli", "Anantapur",
-    "Annamayya", "Bapatla", "Chittoor", "Dr. B. R. Ambedkar Konaseema",
-    "East Godavari", "Eluru", "Guntur", "Kakinada",
-    "Krishna", "Kurnool", "Nandyal", "NTR",
-    "Palnadu", "Parvathipuram Manyam", "Prakasam",
-    "Sri Potti Sriramulu Nellore", "Sri Sathya Sai",
-    "Srikakulam", "Tirupati", "Visakhapatnam",
-    "Vizianagaram", "West Godavari", "YSR Kadapa"
-  ]
-};
 
-/*
-  These entries are DEMO PLACEHOLDERS for layout testing.
-  Replace them with verified institution records before publishing
-  them as real college listings.
-*/
-const colleges = [
-  {
-    name: "Sample Junior College",
-    location: "Hyderabad, Telangana",
-    state: "Telangana",
-    district: "Hyderabad",
-    category: "Junior College",
-    courses: "MPC, BiPC, Intermediate",
-    description: "Sample listing — replace with verified college details."
-  },
-  {
-    name: "Sample Engineering College",
-    location: "Rangareddy, Telangana",
-    state: "Telangana",
-    district: "Rangareddy",
-    category: "Engineering",
-    courses: "B.Tech, Computer Science, Engineering",
-    description: "Sample listing — replace with verified college details."
-  },
-  {
-    name: "Sample Medical Institute",
-    location: "Guntur, Andhra Pradesh",
-    state: "Andhra Pradesh",
-    district: "Guntur",
-    category: "Medical",
-    courses: "Medical, NEET, Healthcare",
-    description: "Sample listing — replace with verified college details."
-  },
-  {
-    name: "Sample Degree College",
-    location: "Warangal, Telangana",
-    state: "Telangana",
-    district: "Warangal",
-    category: "Degree College",
-    courses: "B.Com, B.Sc, B.A, Undergraduate",
-    description: "Sample listing — replace with verified college details."
-  },
-  {
-    name: "Sample Coaching Centre",
-    location: "Vijayawada, Andhra Pradesh",
-    state: "Andhra Pradesh",
-    district: "NTR",
-    category: "Coaching Centre",
-    courses: "JEE, NEET, EAMCET, Competitive Exams",
-    description: "Sample listing — replace with verified centre details."
-  },
-  {
-    name: "Sample Polytechnic Institute",
-    location: "Karimnagar, Telangana",
-    state: "Telangana",
-    district: "Karimnagar",
-    category: "Polytechnic & ITI",
-    courses: "Diploma, Polytechnic, Technical Skills",
-    description: "Sample listing — replace with verified institute details."
-  }
-];
+const SUPABASE_URL = "https://taxlvccrinehasexgvhv.supabase.co";
+const SUPABASE_KEY = "sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA";
+
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const stateSelect = document.getElementById("state");
 const districtSelect = document.getElementById("district");
@@ -833,30 +753,127 @@ const courseInput = document.getElementById("course");
 const grid = document.getElementById("collegeGrid");
 const resultsCount = document.getElementById("resultsCount");
 const searchNotice = document.getElementById("searchNotice");
+const registerForm = document.getElementById("registerForm");
+const formNotice = document.getElementById("formNotice");
 
-function updateDistrictOptions(select, state, selectedValue = "") {
-  const previous = selectedValue || select.value;
-  select.innerHTML = "";
-  const all = document.createElement("option");
-  all.value = "";
-  all.textContent = "All districts";
-  select.appendChild(all);
+let districts = [];
+let states = [];
+let verifiedColleges = [];
 
-  (districts[state] || []).forEach(name => {
-    const option = document.createElement("option");
-    option.value = name;
-    option.textContent = name;
-    select.appendChild(option);
-  });
+function message(el, text, error = false) {
+  el.style.display = "block";
+  el.textContent = text;
+  el.style.color = error ? "#b42318" : "#18794e";
+}
 
-  if ([...select.options].some(option => option.value === previous)) {
-    select.value = previous;
+function addOption(select, value, label) {
+  const option = document.createElement("option");
+  option.value = value;
+  option.textContent = label;
+  select.appendChild(option);
+}
+
+async function loadLocations() {
+  const [stateResult, districtResult] = await Promise.all([
+    db.from("states").select("code,name").eq("is_active", true).order("name"),
+    db.from("districts").select("id,name,state_code")
+      .eq("is_active", true).order("name")
+  ]);
+
+  if (stateResult.error || districtResult.error) {
+    message(searchNotice, "Location data load కాలేదు. Database permissions తనిఖీ చేయండి.", true);
+    return;
+  }
+
+  states = stateResult.data || [];
+  districts = districtResult.data || [];
+
+  stateSelect.innerHTML = "";
+  addOption(stateSelect, "", "All states");
+  states.forEach(s => addOption(stateSelect, s.code, s.name));
+
+  districtSelect.innerHTML = "";
+  addOption(districtSelect, "", "All districts");
+
+  const regState = document.getElementById("regState");
+  const regDistrict = document.getElementById("regDistrict");
+
+  if (regState) {
+    regState.innerHTML = "";
+    addOption(regState, "", "Select state");
+    states.forEach(s => addOption(regState, s.code, s.name));
+  }
+
+  if (regDistrict) {
+    const replacement = document.createElement("select");
+    replacement.id = "regDistrict";
+    replacement.name = "district";
+    replacement.required = true;
+    replacement.innerHTML = "";
+    addOption(replacement, "", "Select district");
+    regDistrict.replaceWith(replacement);
+    replacement.addEventListener("change", () => {});
+  }
+
+  updateDistricts();
+  updateRegistrationDistricts();
+}
+
+function updateDistricts() {
+  const selected = districtSelect.value;
+  districtSelect.innerHTML = "";
+  addOption(districtSelect, "", "All districts");
+
+  districts
+    .filter(d => !stateSelect.value || d.state_code === stateSelect.value)
+    .forEach(d => addOption(districtSelect, d.id, d.name));
+
+  if ([...districtSelect.options].some(o => o.value === selected)) {
+    districtSelect.value = selected;
   }
 }
 
-stateSelect.addEventListener("change", () => {
-  updateDistrictOptions(districtSelect, stateSelect.value);
-});
+function updateRegistrationDistricts() {
+  const regState = document.getElementById("regState");
+  const regDistrict = document.getElementById("regDistrict");
+  if (!regState || !regDistrict) return;
+
+  const selected = regDistrict.value;
+  regDistrict.innerHTML = "";
+  addOption(regDistrict, "", "Select district");
+
+  districts
+    .filter(d => !regState.value || d.state_code === regState.value)
+    .forEach(d => addOption(regDistrict, d.id, d.name));
+
+  if ([...regDistrict.options].some(o => o.value === selected)) {
+    regDistrict.value = selected;
+  }
+}
+
+stateSelect.addEventListener("change", updateDistricts);
+document.getElementById("regState").addEventListener("change", updateRegistrationDistricts);
+
+async function loadColleges() {
+  grid.innerHTML = "";
+  resultsCount.textContent = "Loading verified colleges…";
+
+  const result = await db
+    .from("colleges")
+    .select("id,name,description,website_url,phone,address,town,district_id")
+    .eq("status", "verified")
+    .order("name")
+    .limit(500);
+
+  if (result.error) {
+    resultsCount.textContent = "College data could not be loaded.";
+    message(searchNotice, "Database read error. Check the colleges RLS policy.", true);
+    return;
+  }
+
+  verifiedColleges = result.data || [];
+  renderColleges(verifiedColleges);
+}
 
 function renderColleges(items) {
   grid.innerHTML = "";
@@ -864,17 +881,18 @@ function renderColleges(items) {
   if (!items.length) {
     const empty = document.createElement("div");
     empty.className = "empty-state";
-    empty.textContent =
-      "No matching sample listings. Try changing your search filters.";
+    empty.textContent = "No verified colleges match these filters yet.";
     grid.appendChild(empty);
-    resultsCount.textContent = "0 matching sample listings";
+    resultsCount.textContent = "0 verified colleges";
     return;
   }
 
-  resultsCount.textContent =
-    items.length + " sample listing(s) · Demo content, not verified college records";
+  resultsCount.textContent = `${items.length} verified college(s)`;
 
-  items.forEach((college, index) => {
+  items.forEach(college => {
+    const district = districts.find(d => d.id === college.district_id);
+    const state = states.find(s => district && s.code === district.state_code);
+
     const card = document.createElement("article");
     card.className = "college-card";
 
@@ -887,92 +905,179 @@ function renderColleges(items) {
 
     const details = document.createElement("div");
     const title = document.createElement("h3");
-    title.textContent = college.name;
+    title.textContent = college.name || "Institution";
 
     const location = document.createElement("div");
     location.className = "college-location";
-    location.textContent = "⌖ " + college.location;
+    location.textContent = [college.town, district?.name, state?.name]
+      .filter(Boolean).join(", ") || "Location not provided";
 
     details.append(title, location);
     top.append(logo, details);
 
-    const tag = document.createElement("span");
-    tag.className = "tag";
-    tag.textContent = college.category;
-
     const description = document.createElement("p");
-    description.textContent =
-      college.courses + ". " + college.description;
+    description.textContent = college.description || "Verified institution on VidyaMap.";
 
-    const button = document.createElement("a");
-    button.className = "btn btn-outline";
-    button.href = "#register";
-    button.textContent = "Enquire about listing";
-    button.setAttribute("aria-label", "Enquire about listing " + college.name);
+    card.append(top, description);
 
-    card.append(top, tag, description, button);
+    if (college.website_url) {
+      const website = document.createElement("a");
+      website.className = "btn btn-outline";
+      website.href = college.website_url;
+      website.target = "_blank";
+      website.rel = "noopener noreferrer";
+      website.textContent = "Visit website";
+      card.appendChild(website);
+    }
+
     grid.appendChild(card);
   });
 }
 
-function searchColleges(event) {
+async function searchColleges(event) {
   if (event) event.preventDefault();
 
-  const state = stateSelect.value.toLowerCase();
-  const district = districtSelect.value.toLowerCase();
-  const category = categorySelect.value.toLowerCase();
+  const stateCode = stateSelect.value;
+  const districtId = districtSelect.value;
   const keyword = courseInput.value.trim().toLowerCase();
 
-  const filtered = colleges.filter(college => {
-    const matchesState = !state || college.state.toLowerCase() === state;
-    const matchesDistrict =
-      !district || college.district.toLowerCase() === district;
-    const matchesCategory =
-      !category || college.category.toLowerCase() === category;
-    const searchable =
-      (college.name + " " + college.location + " " +
-       college.courses + " " + college.category).toLowerCase();
-    const matchesKeyword = !keyword || searchable.includes(keyword);
+  const filtered = verifiedColleges.filter(c => {
+    const d = districts.find(x => x.id === c.district_id);
+    const matchesState = !stateCode || d?.state_code === stateCode;
+    const matchesDistrict = !districtId || String(c.district_id) === districtId;
+    const text = [c.name, c.description, c.address, c.town]
+      .filter(Boolean).join(" ").toLowerCase();
+    const matchesKeyword = !keyword || text.includes(keyword);
 
-    return matchesState && matchesDistrict &&
-      matchesCategory && matchesKeyword;
+    return matchesState && matchesDistrict && matchesKeyword;
   });
 
   renderColleges(filtered);
-  searchNotice.style.display = "block";
-  searchNotice.textContent =
-    "Search is currently using sample data. Connect the verified college database for real results.";
+  message(
+    searchNotice,
+    "Verified college records మాత్రమే చూపిస్తున్నాం. Course/type search కోసం databaseలో course/category data అవసరం."
+  );
 }
 
 document.getElementById("searchForm").addEventListener("submit", searchColleges);
 
 document.getElementById("resetSearch").addEventListener("click", () => {
   setTimeout(() => {
-    updateDistrictOptions(districtSelect, "");
+    stateSelect.value = "";
+    updateDistricts();
+    districtSelect.value = "";
+    categorySelect.value = "";
+    courseInput.value = "";
+    renderColleges(verifiedColleges);
     searchNotice.style.display = "none";
-    renderColleges(colleges);
   }, 0);
 });
 
-document.querySelectorAll("[data-category]").forEach(link => {
-  link.addEventListener("click", () => {
-    categorySelect.value = link.dataset.category;
-    searchColleges();
-  });
-});
+// Password field: Supabase Auth account creation కోసం.
+const emailInput = document.getElementById("email");
+emailInput.required = true;
 
-document.getElementById("registerForm").addEventListener("submit", event => {
+const passwordWrap = document.createElement("div");
+passwordWrap.className = "field full";
+
+const passwordLabel = document.createElement("label");
+passwordLabel.htmlFor = "accountPassword";
+passwordLabel.textContent = "Create password *";
+
+const passwordInput = document.createElement("input");
+passwordInput.id = "accountPassword";
+passwordInput.type = "password";
+passwordInput.minLength = 8;
+passwordInput.required = true;
+passwordInput.autocomplete = "new-password";
+passwordInput.placeholder = "At least 8 characters";
+
+passwordWrap.append(passwordLabel, passwordInput);
+emailInput.closest(".field").after(passwordWrap);
+
+registerForm.addEventListener("submit", async event => {
   event.preventDefault();
-  const notice = document.getElementById("formNotice");
-  notice.style.display = "block";
-  notice.textContent =
-    "Demo only: your form has not been sent or saved. Connect Supabase before accepting real registrations.";
+
+  const institution = document.getElementById("institution").value.trim();
+  const contactName = document.getElementById("contactName").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const email = emailInput.value.trim().toLowerCase();
+  const password = passwordInput.value;
+  const stateCode = document.getElementById("regState").value;
+  const districtId = document.getElementById("regDistrict").value;
+  const category = document.getElementById("regCategory").value;
+
+  const submitButton = registerForm.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  submitButton.textContent = "Submitting…";
+
+  try {
+    if (!institution || !contactName || !phone || !email ||
+        !password || !stateCode || !districtId || !category) {
+      throw new Error("అన్ని required fields నింపండి.");
+    }
+
+    let authResult = await db.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: contactName, phone }
+      }
+    });
+
+    let session = authResult.data?.session;
+
+    if (authResult.error) {
+      const signIn = await db.auth.signInWithPassword({ email, password });
+      if (signIn.error) throw authResult.error;
+      session = signIn.data.session;
+    }
+
+    if (!session) {
+      message(
+        formNotice,
+        "Account created. Email confirmation అవసరం కావచ్చు. Email verify చేసి, అదే email/passwordతో form మళ్లీ submit చేయండి."
+      );
+      return;
+    }
+
+    const request = await db.from("college_registration_requests").insert({
+      applicant_user_id: session.user.id,
+      college_name: institution,
+      contact_name: contactName,
+      contact_phone: phone,
+      contact_email: email,
+      district_id: districtId,
+      address: "",
+      website_url: null,
+      notes: "Institution category: " + category,
+      status: "pending"
+    });
+
+    if (request.error) throw request.error;
+
+    message(formNotice, "Registration request submitted successfully. Status: Pending review.");
+    registerForm.reset();
+    passwordInput.value = "";
+  } catch (error) {
+    console.error("Registration error:", error);
+    message(
+      formNotice,
+      "Registration save కాలేదు: " + (error.message || "Unknown error"),
+      true
+    );
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit Registration Interest →";
+  }
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
-updateDistrictOptions(districtSelect, "");
-renderColleges(colleges);
+(async function init() {
+  await loadLocations();
+  await loadColleges();
+})();
 </script>
 </body>
 </html>
