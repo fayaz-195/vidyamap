@@ -7,6 +7,255 @@
 <meta name="theme-color" content="#123B6D">
 <meta name="description" content="Find verified colleges across Telangana and Andhra Pradesh with VidyaMap.">
 <title>VidyaMap | Find. Promote. Grow.</title>
+
+/* ===== VIDYAMAP FLOATING WINDOWS DESIGN ===== */
+
+:root {
+  --navy: #102D55;
+  --purple: #76208F;
+  --dark: #0B2142;
+  --light: #F0E8FA;
+  --ink: #172B49;
+  --muted: #64728D;
+  --border: #E6E3F3;
+  --surface: #F8F7FF;
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% 24%, rgba(118,32,143,.10), transparent 22rem),
+    radial-gradient(circle at 88% 30%, rgba(92,151,255,.13), transparent 25rem),
+    linear-gradient(135deg, #FBFAFF, #F3F6FF 48%, #FFF9FF);
+}
+
+.announcement {
+  background: linear-gradient(100deg, #102D55, #263E77);
+  color: white;
+}
+
+header {
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 30px rgba(25,37,78,.06);
+  border-bottom: 1px solid rgba(230,227,243,.8);
+}
+
+.nav {
+  min-height: 82px;
+}
+
+.brand img {
+  filter: drop-shadow(0 8px 14px rgba(39,35,84,.10));
+}
+
+.nav-links a:not(.btn):hover {
+  color: var(--purple);
+}
+
+.btn {
+  background: linear-gradient(120deg, #76208F, #4C238C);
+  color: white;
+  border-color: transparent;
+  border-radius: 14px;
+  box-shadow: 0 9px 22px rgba(95,35,145,.20);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 13px 28px rgba(95,35,145,.26);
+}
+
+.btn-outline {
+  background: rgba(255,255,255,.88);
+  color: var(--navy);
+  border: 1px solid #D8D8EF;
+  box-shadow: 0 6px 18px rgba(22,42,84,.07);
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 76px 0 58px;
+  background:
+    radial-gradient(circle at 76% 20%, rgba(118,32,143,.10), transparent 18rem),
+    radial-gradient(circle at 92% 76%, rgba(77,147,255,.15), transparent 22rem),
+    transparent;
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 1;
+  gap: 48px;
+}
+
+.eyebrow {
+  color: var(--purple);
+}
+
+h1 {
+  font-size: clamp(40px, 5.2vw, 66px);
+  letter-spacing: -2px;
+}
+
+.hero-copy {
+  max-width: 570px;
+}
+
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, #102D55, #4C238C);
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 30px;
+  min-height: 340px;
+  box-shadow: 0 24px 65px rgba(43,36,100,.22);
+  animation: vm-float 7s ease-in-out infinite;
+}
+
+.hero-panel::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -75px;
+  top: -70px;
+  border-radius: 50%;
+  border: 1px solid #ffffff35;
+  box-shadow: 0 0 0 22px #ffffff0b,
+              0 0 0 45px #ffffff08;
+  pointer-events: none;
+}
+
+.panel-stats {
+  position: relative;
+  z-index: 1;
+}
+
+.panel-stat {
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(8px);
+  border-color: #ffffff38;
+  border-radius: 16px;
+}
+
+.search-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+.search-card,
+.register-card {
+  background: rgba(255,255,255,.84);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,.95);
+  border-radius: 25px;
+  box-shadow: 0 18px 55px rgba(60,43,120,.12),
+              inset 0 1px 0 #ffffff;
+}
+
+.search-card {
+  padding: 28px;
+}
+
+.search-title {
+  color: var(--navy);
+  font-size: 21px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  border-color: #E3E1F0;
+  border-radius: 13px;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 4px 12px rgba(30,44,90,.035);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: 2px solid rgba(118,32,143,.18);
+  border-color: var(--purple);
+}
+
+.college-card,
+.category-card {
+  border: 1px solid rgba(255,255,255,.95);
+  border-radius: 21px;
+  background: rgba(255,255,255,.86);
+  box-shadow: 0 12px 35px rgba(37,47,99,.08);
+  transition: transform .22s ease,
+              box-shadow .22s ease;
+}
+
+.college-card:hover,
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 42px rgba(65,42,125,.14);
+}
+
+.logo {
+  background: linear-gradient(135deg, #F1E9FF, #E7F0FF);
+  color: var(--purple);
+  border-radius: 14px;
+}
+
+.register {
+  background: linear-gradient(
+    130deg,
+    rgba(241,232,250,.78),
+    rgba(238,245,255,.82)
+  );
+}
+
+footer {
+  background: linear-gradient(110deg, #0B2142, #2B1B59);
+}
+
+@keyframes vm-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .nav {
+    min-height: 68px;
+  }
+
+  .brand img {
+    height: 44px !important;
+    max-width: 145px !important;
+  }
+
+  .hero {
+    padding: 48px 0 44px;
+  }
+
+  .hero-panel {
+    min-height: 280px;
+    animation: none;
+  }
+
+  .search-card {
+    padding: 18px;
+  }
+}
+
+/* ===== END VIDYAMAP DESIGN ===== */
 <style>
 :root {
   --navy: #123B6D;
