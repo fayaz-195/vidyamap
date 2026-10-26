@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123B6D">
+<title>VidyaMap | Find. Promote. Grow.</title>
+<style>
+:root{--navy:#123B6D;--ink:#17283e;--muted:#66758a;--line:#e2e8f0;--bg:#f6f8fb}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:white;line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1120px,92%);margin:auto}
+header{border-bottom:1px solid var(--line);background:#fff}
+.nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--navy);font-size:25px;font-weight:800;letter-spacing:-.8px}
+.mark{width:35px;height:35px;border:3px solid var(--navy);border-radius:10px;display:grid;place-items:center;font-size:19px}
+.links{display:flex;align-items:center;gap:22px;font-size:14px;font-weight:600}
+.btn{display:inline-flex;justify-content:center;align-items:center;padding:12px 18px;border:1px solid var(--navy);border-radius:7px;background:var(--navy);color:white;font-weight:700;cursor:pointer}
+.btn.outline{background:white;color:var(--navy)}
+.hero{padding:68px 0 52px;background:#f7f9fc}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:35px;align-items:center}
+.eyebrow{font-size:12px;letter-spacing:1.8px;font-weight:800;color:var(--navy);text-transform:uppercase}
+h1{font-size:clamp(38px,5.5vw,61px);line-height:1.08;letter-spacing:-2px;margin:14px 0 20px;color:#142b47}
+h1 span{color:var(--navy)}
+.lead{font-size:17px;color:var(--muted);max-width:570px}
+.hero-art{min-height:265px;background:var(--navy);border-radius:16px;padding:28px;color:white;display:flex;flex-direction:column;justify-content:space-between}
+.art-top{font-size:13px;letter-spacing:1px}
+.route{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:800}
+.pin{border:2px solid white;border-radius:50% 50% 50% 0;transform:rotate(-45deg);width:24px;height:24px;display:inline-block}
+.pin:after{content:"";display:block;width:6px;height:6px;border:2px solid white;border-radius:50%;margin:7px}
+.art-note{font-size:13px;color:#e2eaf5}
+.search-box{background:white;padding:20px;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 35px #123b6d12;margin-top:27px}
+.search-box h3{margin:0 0 13px;font-size:16px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+label{font-size:12px;font-weight:700;color:#475569;display:block;margin-bottom:5px}
+select,input,textarea{font:inherit;width:100%;border:1px solid #d7dfeb;border-radius:7px;padding:12px;background:#fff;color:var(--ink)}
+.search-box .btn{width:100%;margin-top:12px}
+.results{margin-top:18px}
+.empty{padding:14px;background:var(--bg);border-radius:8px;color:var(--muted);font-size:14px}
+section{padding:55px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:24px}
+h2{font-size:30px;letter-spacing:-.7px;line-height:1.2;margin:7px 0}
+.sub{color:var(--muted);margin:8px 0 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{border:1px solid var(--line);border-radius:11px;padding:22px;background:#fff}
+.card h3{margin:10px 0 5px;font-size:18px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.tile-icon{width:44px;height:44px;display:grid;place-items:center;border:1px solid #d7e0ed;border-radius:10px;color:var(--navy);font-size:21px;font-weight:800}
+.tint{background:var(--bg)}
+.cta{padding:30px;border-radius:13px;background:var(--navy);color:white;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.cta h2{margin-top:0}
+.cta p{color:#e1e9f3;margin-bottom:0}
+.cta .btn{background:white;color:var(--navy);border-color:white;white-space:nowrap}
+.result{border:1px solid var(--line);padding:14px;border-radius:8px;margin-top:10px}
+.result h3{margin:0;font-size:16px}
+.result p{margin:4px 0;color:var(--muted);font-size:13px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.full{grid-column:1/-1}
+.note{font-size:12px;color:var(--muted)}
+footer{padding:28px 0;background:#0e2d50;color:white;font-size:13px}
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:760px){
+.links a:not(.btn){display:none}
+.nav{min-height:66px}
+.brand{font-size:22px}
+.hero{padding:42px 0 35px}
+.hero-grid{grid-template-columns:1fr;gap:24px}
+.hero-art{min-height:190px}
+.grid{grid-template-columns:1fr 1fr}
+.section-head{align-items:start;flex-direction:column}
+.cta{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:480px){
+.grid{grid-template-columns:1fr}
+.fields,.form-grid{grid-template-columns:1fr}
+.full{grid-column:auto}
+h1{letter-spacing:-1.2px}
+section{padding:40px 0}
+.card{padding:18px}
+}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap nav">
+  <a class="brand" href="#"><span class="mark">V</span> VidyaMap</a>
+  <nav class="links">
+   <a href="#categories">Explore</a>
+   <a href="#services">Marketing</a>
+   <a class="btn" href="#register">Register College</a>
+  </nav>
+ </div>
+</header>
+<main>
+<section class="hero">
+ <div class="wrap hero-grid">
+  <div>
+   <div class="eyebrow">Your education journey starts here</div>
+   <h1>Find the right path.<br><span>Build your future.</span></h1>
+   <p class="lead">Discover educational institutions and courses across Telangana and Andhra Pradesh. A smarter starting point for students, parents and colleges.</p>
+   <div class="search-box" id="search">
+    <h3>Find your institution</h3>
+    <div class="fields">
+     <div><label for="state">State</label>
+      <select id="state"><option value="">Select state</option><option>Telangana</option><option>Andhra Pradesh</option></select>
+     </div>
+     <div><label for="district">District</label>
+      <select id="district"><option value="">Select district</option></select>
+     </div>
+     <div><label for="category">Institution category</label>
+      <select id="category">
+       <option value="">All categories</option>
+       <option>Junior College</option><option>Engineering College</option>
+       <option>Medical College</option><option>Degree College</option>
+       <option>Coaching Centre</option><option>Polytechnic / ITI</option>
+       <option>University</option>
+      </select>
+     </div>
+     <div><label for="course">Course / interest</label><input id="course" placeholder="e.g. MPC, NEET, B.Tech"></div>
+    </div>
+    <button class="btn" id="searchBtn" type="button">Search institutions →</button>
+    <div class="results" id="results" aria-live="polite"></div>
+   </div>
+  </div>
+  <div class="hero-art">
+   <div class="art-top">EDUCATION • DISCOVERY • GROWTH</div>
+   <div class="route"><span class="pin"></span><span>Explore</span><span>→</span><span class="pin"></span><span>Achieve</span></div>
+   <div class="art-note">One platform for finding institutions and growing their digital reach.</div>
+  </div>
+ </div>
+</section>
+<section id="categories">
+ <div class="wrap">
+  <div class="section-head"><div><div class="eyebrow">Explore opportunities</div><h2>Explore by category</h2><p class="sub">Start with the type of education you are looking for.</p></div></div>
+  <div class="grid">
+   <a class="card category" href="#search" data-category="Junior College"><div class="tile-icon">01</div><h3>Junior Colleges</h3><p>MPC, BiPC and intermediate pathways.</p></a>
+   <a class="card category" href="#search" data-category="Engineering College"><div class="tile-icon">02</div><h3>Engineering</h3><p>Explore engineering institutions and courses.</p></a>
+   <a class="card category" href="#search" data-category="Medical College"><div class="tile-icon">03</div><h3>Medical</h3><p>Discover medical education options.</p></a>
+   <a class="card category" href="#search" data-category="Degree College"><div class="tile-icon">04</div><h3>Degree Colleges</h3><p>Find undergraduate study options.</p></a>
+   <a class="card category" href="#search" data-category="Coaching Centre"><div class="tile-icon">05</div><h3>Coaching Centres</h3><p>JEE, NEET and competitive exam preparation.</p></a>
+   <a class="card category" href="#search" data-category="Polytechnic / ITI"><div class="tile-icon">06</div><h3>Polytechnic & ITI</h3><p>Technical and skill-based education.</p></a>
+  </div>
+ </div>
+</section>
+<section class="tint">
+ <div class="wrap">
+  <div class="cta">
+   <div><div class="eyebrow" style="color:#dbe7f5">For educational institutions</div><h2>Make your institution easier to discover.</h2><p>Build your online presence and connect with prospective students.</p></div>
+   <a class="btn" href="#register">List your college →</a>
+  </div>
+ </div>
+</section>
+<section id="services">
+ <div class="wrap">
+  <div class="section-head"><div><div class="eyebrow">Digital growth solutions</div><h2>Promote your institution</h2><p class="sub">Digital marketing support for education brands.</p></div></div>
+  <div class="grid">
+   <div class="card"><div class="tile-icon">A</div><h3>Digital Advertising</h3><p>Campaign planning for Google, Facebook and Instagram.</p></div>
+   <div class="card"><div class="tile-icon">B</div><h3>Creative Design</h3><p>Admission posters, social media creatives and branding.</p></div>
+   <div class="card"><div class="tile-icon">C</div><h3>Website & Enquiries</h3><p>Landing pages and enquiry workflows for admissions.</p></div>
+  </div>
+ </div>
+</section>
+<section id="register" class="tint">
+ <div class="wrap">
+  <div class="section-head"><div><div class="eyebrow">Partner with VidyaMap</div><h2>Register your institution</h2><p class="sub">Submit your details to express interest in a listing.</p></div></div>
+  <form id="enquiryForm" class="card">
+   <div class="form-grid">
+    <div><label for="collegeName">Institution name *</label><input id="collegeName" required maxlength="150" placeholder="College or institution name"></div>
+    <div><label for="contactName">Contact person *</label><input id="contactName" required maxlength="100" placeholder="Your name"></div>
+    <div><label for="phone">Phone number *</label><input id="phone" required inputmode="tel" pattern="[0-9 +()-]{10,18}" placeholder="Contact number"></div>
+    <div><label for="email">Email</label><input id="email" type="email" placeholder="name@example.com"></div>
+    <div class="full"><label for="regState">State</label><select id="regState"><option>Telangana</option><option>Andhra Pradesh</option></select></div>
+    <div class="full"><label><input type="checkbox" id="consent" required style="width:auto"> I agree to be contacted about this institution registration request. *</label></div>
+    <div class="full"><button class="btn" type="submit">Prepare registration request</button><p class="note">Demo only: this form does not send or save your details yet.</p><div id="formMessage" class="note" aria-live="polite"></div></div>
+   </div>
+  </form>
+ </div>
+</section>
+</main>
+<footer><div class="wrap foot"><div><strong>VidyaMap</strong> — Find. Promote. Grow.</div><div>Education Directory & Digital Marketing</div><div>Telangana · Andhra Pradesh</div></div></footer>
+<script>
+const districts={
+"Telangana":["Adilabad","Bhadradri Kothagudem","Hanumakonda","Hyderabad","Jagtial","Jangaon","Jayashankar Bhupalpally","Jogulamba Gadwal","Kamareddy","Karimnagar","Khammam","Kumuram Bheem Asifabad","Mahabubabad","Mahabubnagar","Mancherial","Medak","Medchal-Malkajgiri","Mulugu","Nagarkurnool","Nalgonda","Narayanpet","Nirmal","Nizamabad","Peddapalli","Rajanna Sircilla","Suryapet","Vikarabad","Wanaparthy","Warangal","Yadadri Bhuvanagiri","Rangareddy","Sangareddy","Siddipet"],
+"Andhra Pradesh":["Alluri Sitharama Raju","Anakapalli","Anantapur","Annamayya","Bapatla","Chittoor","Dr. B. R. Ambedkar Konaseema","East Godavari","Eluru","Guntur","Kakinada","Krishna","Kurnool","Nandyal","NTR","Palnadu","Parvathipuram Manyam","Prakasam","Sri Potti Sriramulu Nellore","Sri Sathya Sai","Srikakulam","Tirupati","Visakhapatnam","Vizianagaram","West Godavari","YSR Kadapa"]
+};
+const state=document.getElementById("state");
+const district=document.getElementById("district");
+state.addEventListener("change",()=>{
+ district.innerHTML='<option value="">Select district</option>';
+ (districts[state.value]||[]).forEach(name=>{
+  const o=document.createElement("option");o.value=name;o.textContent=name;district.appendChild(o);
+ });
+});
+document.getElementById("searchBtn").addEventListener("click",()=>{
+ const result=document.getElementById("results");
+ result.replaceChildren();
+ const msg=document.createElement("div");msg.className="empty";
+ msg.textContent="Search filters are ready. Verified institution listings will appear here once the VidyaMap database is connected.";
+ result.appendChild(msg);
+});
+document.querySelectorAll(".category").forEach(el=>el.addEventListener("click",()=>{
+ document.getElementById("category").value=el.dataset.category;
+}));
+document.getElementById("enquiryForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ document.getElementById("formMessage").textContent="Form preview validated. No information was sent or stored. Database connection is the next step.";
+});
+</script>
+</body>
+  </html>
+                                                            
