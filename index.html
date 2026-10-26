@@ -630,6 +630,8 @@ body.vm-lead-modal-open{overflow:hidden}
 #studentLeadCapture.vm-lead-modal .vm-lead-close:hover{background:#7e22ce}
 #studentLeadCapture.vm-lead-modal .search-card{position:relative}
 
+
+.vm-lead-reminder{display:none;align-items:center;justify-content:space-between;gap:16px;padding:16px 20px;margin:18px auto 0;max-width:1180px;border:1px solid #c4b5fd;border-radius:16px;background:linear-gradient(100deg,#f5f3ff,#eff6ff);box-shadow:0 8px 24px #312e8112}.vm-lead-reminder.is-visible{display:flex}.vm-lead-reminder-copy{display:flex;align-items:flex-start;gap:12px}.vm-lead-reminder-icon{font-size:24px;line-height:1.2}.vm-lead-reminder strong{display:block;color:#172554;font-size:15px;margin-bottom:4px}.vm-lead-reminder p{margin:0;color:#526581;font-size:13px;line-height:1.5}.vm-lead-reminder button{flex:0 0 auto;border:0;border-radius:10px;background:#6d28d9;color:#fff;padding:11px 16px;font-weight:700;cursor:pointer}@media(max-width:640px){.vm-lead-reminder{align-items:stretch;flex-direction:column}.vm-lead-reminder button{width:100%}}
 </style>
 <style>
 /* Three distinct product panels */
@@ -718,6 +720,7 @@ body.vm-lead-modal-open{overflow:hidden}
     </form>
   </div>
 </section>
+<div class="container"><aside class="vm-lead-reminder" id="vmLeadReminder" role="status" aria-live="polite"><div class="vm-lead-reminder-copy"><span class="vm-lead-reminder-icon">🎓</span><div><strong>Student details submit chesi college search chesukondi</strong><p>Find colleges, compare courses and send an enquiry. Start by submitting your student details.</p></div></div><button type="button" id="vmLeadReminderOpen">Submit Student Details →</button></aside></div>
 <div class="container search-wrap" id="find">
 <form class="search-card" id="searchForm">
 <div class="search-title">Find your institution</div>
@@ -1791,15 +1794,18 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
  const status=document.getElementById('studentLeadStatus');
  const savedKey='vidyamap_public_student_lead_v1';
  const getSaved=()=>{try{return JSON.parse(sessionStorage.getItem(savedKey)||'null')}catch{return null}};
- const saved=getSaved();
  const captureSection=document.getElementById('studentLeadCapture');
- const closeLeadPopup=()=>{captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');};
- if(saved&&saved.lead_id){searchForm.classList.remove('vm-search-locked');captureSection.hidden=true;form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);status.textContent='Your details are saved for this session. You can now search colleges.';status.style.color='var(--green)';}
+ const reminder=document.getElementById('vmLeadReminder');
+ const openLeadPopup=()=>{captureSection.hidden=false;captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');};
+ const closeLeadPopup=()=>{captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');if(reminder)reminder.classList.add('is-visible');};
+ const saved=getSaved();
+ if(saved&&saved.lead_id){searchForm.classList.remove('vm-search-locked');captureSection.hidden=true;form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);status.textContent='Your details are saved for this session. You can now search colleges.';status.style.color='var(--green)';if(reminder)reminder.classList.remove('is-visible');}
  else {
-  searchForm.classList.add('vm-search-locked');captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');
+  searchForm.classList.add('vm-search-locked');captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');if(reminder)reminder.classList.remove('is-visible');
   const card=form.querySelector('.eyebrow');
   if(card&&!form.querySelector('.vm-lead-close')){const close=document.createElement('button');close.type='button';close.className='vm-lead-close';close.setAttribute('aria-label','Close student details popup');close.title='Close';close.textContent='×';form.insertBefore(close,form.firstChild);close.addEventListener('click',closeLeadPopup);}
  }
+ document.getElementById('vmLeadReminderOpen')?.addEventListener('click',openLeadPopup);
  const districtSelect=document.getElementById('leadStudentDistrict');
  const fillDistricts=()=>{if(!districtSelect||districtSelect.dataset.loaded)return; if(!Array.isArray(districts)||!districts.length)return;districts.forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.name;districtSelect.append(o)});districtSelect.dataset.loaded='1';};
  const waitForDistricts=()=>{fillDistricts();if(!districtSelect.dataset.loaded)setTimeout(waitForDistricts,500)};waitForDistricts();
