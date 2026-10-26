@@ -164,6 +164,19 @@ const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
     }
   }
 });
+(async () => {
+  const r = await fetch(
+    "https://taxlvccrinehasexgvhv.supabase.co/rest/v1/states?select=code,name",
+    {
+      headers: {
+        apikey: "sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA",
+        Authorization: "Bearer sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA"
+      }
+    }
+  );
+  console.log("DIRECT API STATUS:", r.status);
+  console.log("DIRECT API RESPONSE:", await r.text());
+})();
 const $=id=>document.getElementById(id);
 let states=[],districts=[],verifiedColleges=[];
 
