@@ -1196,7 +1196,7 @@ function openCollegeProfile(c) {
     const form = new FormData(enquiryForm);
     submit.disabled = true; submit.textContent = "Sending…";
     try {
-      const { error } = await db.rpc("submit_college_enquiry", {
+      const { data: enquiryId, error } = await db.rpc("submit_college_enquiry", {
         p_college_id: c.id,
         p_student_name: String(form.get("student_name") || "").trim(),
         p_phone: String(form.get("phone") || "").trim(),
@@ -1204,13 +1204,22 @@ function openCollegeProfile(c) {
         p_district_id: c.district_id || null,
         p_town: String(c.town || "").trim() || null,
         p_course_name: String(form.get("course_name") || "").trim() || null,
-        p_academic_year: null,
+        p_academic_year: "2027-28",
         p_message: String(form.get("message") || "").trim() || null,
         p_contact_consent: form.get("consent") === "on"
       });
       if (error) throw error;
-      status.textContent = "Enquiry sent successfully. The institution can follow up with you.";
-      status.style.color = "var(--green)";
+      const { data: mailResult, error: mailError } = await db.functions.invoke("notify-college-enquiry", {
+        body: { enquiry_id: enquiryId, college_id: c.id }
+      });
+      if (mailError || mailResult?.error) {
+        status.textContent = "Enquiry saved successfully, but email notification could not be sent yet. Please try contacting the institution directly.";
+        status.style.color = "var(--red)";
+        console.warn("VidyaMap email notification failed", mailError || mailResult?.error);
+      } else {
+        status.textContent = "Enquiry submitted successfully. Email notification has been queued for the institution.";
+        status.style.color = "var(--green)";
+      }
       enquiryForm.reset();
     } catch (err) {
       status.textContent = err.message || "Enquiry could not be sent. Please try again.";
