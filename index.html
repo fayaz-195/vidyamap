@@ -335,6 +335,125 @@ footer {
   }
 }
 
+
+/* ===== VIDYAMAP REFERENCE-INSPIRED FINISH ===== */
+:root { --navy:#102D55; --purple:#76208F; --dark:#0B2142; --light:#F0E8FA; --ink:#172B49; --muted:#64728D; --border:#E6E3F3; --surface:#F8F7FF; }
+html { scroll-behavior:smooth; }
+body { overflow-x:hidden; background:radial-gradient(circle at 3% 17%,#e6e9ff99,transparent 17rem),radial-gradient(circle at 96% 43%,#eadbff99,transparent 20rem),linear-gradient(135deg,#fff 0%,#f8f7ff 52%,#f0f5ff 100%); }
+.container { width:min(1380px,calc(100% - 64px)); }
+.announcement { min-height:42px; display:flex; align-items:center; padding:8px max(24px,calc((100vw - 1380px)/2)); background:linear-gradient(90deg,#0b2c59,#163f79); color:#fff; font-size:14px; letter-spacing:.01em; }
+header { position:sticky; top:0; z-index:20; background:#ffffffdf; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border-bottom:1px solid #e6e3f3c9; box-shadow:0 8px 30px #1d31500a; }
+.nav { min-height:100px; gap:24px; }
+.brand { flex-shrink:0; }
+.brand img { display:block; height:70px!important; max-width:360px!important; width:auto; filter:drop-shadow(0 5px 10px #25234a12); }
+.nav-links { gap:clamp(16px,3vw,44px); align-items:center; }
+.nav-links a:not(.btn) { color:#142c52; font-weight:650; transition:color .2s; }
+.nav-links a:not(.btn):hover { color:var(--purple); }
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:9px; background:linear-gradient(115deg,#8d19b5,#4b148c); color:white; border:1px solid transparent; border-radius:17px; padding:15px 23px; font-weight:750; box-shadow:0 10px 25px #70209b30; transition:transform .2s,box-shadow .2s; }
+.btn:hover { transform:translateY(-2px); box-shadow:0 15px 32px #70209b3b; }
+.btn-outline { background:#ffffffdf; color:var(--navy); border:1px solid #bfc8e4; box-shadow:0 7px 18px #1a35600d; }
+.hero { position:relative; overflow:hidden; padding:54px 0 28px; background:radial-gradient(ellipse at 72% 54%,#dceaff8c,transparent 38%),radial-gradient(ellipse at 13% 10%,#eee3ff80,transparent 32%),transparent; }
+.hero:before,.hero:after { content:""; position:absolute; width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#b9a4ff,#8d5df0);box-shadow:0 8px 25px #8a68e85c;opacity:.65;pointer-events:none; }
+.hero:before { left:3%;top:18%; }.hero:after { right:2%;bottom:20%;width:38px;height:38px; }
+.hero-grid { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); align-items:center; gap:clamp(24px,4vw,64px); }
+.hero-grid > div:first-child { padding:10px 0 24px; }
+.eyebrow { color:var(--navy); font-size:15px; font-weight:850; letter-spacing:.14em; text-transform:uppercase; }
+h1 { font-size:clamp(42px,4.7vw,68px); line-height:1.04; letter-spacing:-.045em; color:#112e58; margin:16px 0; }
+.hero-grid h1 { max-width:690px; }
+.hero-grid h1 br { display:block; }
+.hero-copy { max-width:590px; color:#526483; font-size:18px; line-height:1.55; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:14px; margin:24px 0 18px; }
+.muted { color:var(--muted); }
+.hero-grid .muted { font-size:14px; }
+.hero-panel { min-height:440px; height:100%; position:relative; overflow:hidden; isolation:isolate; border:1px solid #ffffffc9; border-radius:30px; background:radial-gradient(ellipse at 52% 76%,#c4ddff 0%,#d9e9ff8c 24%,transparent 50%),linear-gradient(135deg,#fbf9ff,#e9eaff 50%,#f5e8ff); box-shadow:0 25px 65px #473b8520,inset 0 1px 0 white; animation:none; }
+.hero-panel:before { content:""; position:absolute; z-index:-1; inset:0; background:radial-gradient(circle at 82% 20%,#b6a1ff7a,transparent 12%),radial-gradient(circle at 15% 75%,#ffffffc9,transparent 24%),linear-gradient(180deg,#ffffff20,transparent); pointer-events:none; }
+.hero-panel:after { content:""; position:absolute; z-index:0; left:-10%;right:-10%;bottom:-23%;height:49%;border-radius:50% 50% 0 0;background:linear-gradient(180deg,#b8d3ff7d,#d8d5ffb5 50%,#f7f1ff);border-top:2px solid #ffffffc9; pointer-events:none; }
+.hero-art-heading { position:absolute; top:22px;left:24px;z-index:3;color:#233a69;font-size:12px;font-weight:850;letter-spacing:.12em; }
+.hero-art-orbit { position:absolute; border:1px dashed #a99ce7a6; border-radius:50%; transform:rotate(-22deg); }
+.orbit-one { width:75%;height:42%;left:11%;top:23%; }.orbit-two { width:90%;height:24%;left:2%;top:48%;border-color:#ffffffb0; }
+.hero-art-skyline { position:absolute; left:0;right:0;bottom:26%;text-align:center;color:#ffffffa8;font-size:clamp(34px,5vw,64px);letter-spacing:12px;text-shadow:0 4px 10px #8d9ac055;white-space:nowrap; }
+.map-road { position:absolute; z-index:1; left:-7%;right:-8%;bottom:8%;height:22%;border:10px solid #fff;border-left:0;border-right:0;transform:rotate(-5deg);border-radius:50%;background:linear-gradient(180deg,#9a91f7,#8a6ce5);box-shadow:0 5px 20px #8c7be966; }
+.map-road:after { content:"";position:absolute;left:0;right:0;top:50%;border-top:3px dashed #ffffffde; }
+.student-illustration { position:absolute;z-index:4;left:47%;bottom:10%;width:110px;height:205px;filter:drop-shadow(0 12px 12px #273d6a2b); }
+.student-head { position:absolute;top:0;left:34px;width:43px;height:48px;border-radius:48% 48% 42% 42%;background:linear-gradient(90deg,#b97e5e,#e0ae89);border:5px solid #302b37;border-bottom:0; }
+.student-body { position:absolute;left:12px;top:42px;width:88px;height:115px;border-radius:30px 30px 12px 12px;background:linear-gradient(90deg,#172c4a,#314b70 55%,#122644);border:4px solid #f5f3ff;color:#bd9cff;font-size:38px;text-align:center;padding-top:27px; }
+.student-bag { position:absolute;z-index:2;left:26px;top:82px;width:61px;height:68px;border-radius:12px;background:linear-gradient(135deg,#35275e,#171f48);border:2px solid #a5a9df;color:#d3b4ff;text-align:center;padding-top:13px;font-size:30px; }
+.floating-category { position:absolute;z-index:5;display:flex;align-items:center;gap:9px;min-height:60px;padding:12px 14px;border:1px solid #ffffffeb;border-radius:18px;background:#ffffffd9;backdrop-filter:blur(12px);box-shadow:0 10px 26px #394b8820;color:#182b4a;font-size:12px;max-width:205px; }
+.floating-category span { display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border-radius:12px;background:#f0e9ff;font-size:20px; }
+.floating-category b { font-size:12px;line-height:1.2; }
+.floating-category i { position:absolute;right:10px;top:-8px;width:14px;height:14px;border-radius:50% 50% 50% 0;background:var(--purple);transform:rotate(-45deg);box-shadow:0 0 0 4px #fff9; }
+.cat-school { top:16%;left:4%;background:#fff0f4e8; }.cat-school span{background:#ffe0e9}.cat-school i{background:#e52d5b}
+.cat-junior { top:15%;left:38%;background:#edf5ffe8}.cat-junior span{background:#dcecff}.cat-junior i{background:#1684e8}
+.cat-degree { top:17%;right:3%;background:#fff8e8e8}.cat-degree span{background:#fff0c9}.cat-degree i{background:#f3a600}
+.cat-engineering { top:42%;left:8%;background:#f8edffe8}.cat-engineering span{background:#ecd8ff}.cat-engineering i{background:#8424b2}
+.cat-diploma { top:43%;right:5%;background:#eafcf4e8}.cat-diploma span{background:#d4f8e7}.cat-diploma i{background:#12a66a}
+.cat-coaching { top:66%;left:3%;background:#fff2e8e8}.cat-coaching span{background:#ffe0c6}.cat-coaching i{background:#f0781b}
+.cat-university { top:65%;right:3%;background:#eef4ffe8}.cat-university span{background:#dce9ff}.cat-university i{background:#174f9b}
+.hero-panel-bottom { position:absolute;z-index:6;left:24px;bottom:18px;display:flex;flex-direction:column;color:#20365f;gap:3px; }
+.hero-panel-bottom strong { font-size:16px; }.hero-panel-bottom span { font-size:11px;color:#64728d; }
+.search-wrap { position:relative;z-index:8;margin-top:0;margin-bottom:24px; }
+.search-card,.register-card { background:#ffffffd9;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid #ffffffed;border-radius:25px;box-shadow:0 18px 50px #4a38871a,inset 0 1px 0 #fff; }
+.search-card { padding:25px 28px; }
+.search-title { color:var(--navy);font-size:22px;font-weight:850;margin-bottom:16px; }
+.search-grid { gap:14px; }
+.field input,.field select,.field textarea { border:1px solid #e4e4f2;border-radius:13px;background:#ffffffeb;min-height:48px;box-shadow:0 4px 12px #1e2c5a08;transition:border-color .2s,box-shadow .2s; }
+.field input:focus,.field select:focus,.field textarea:focus { outline:3px solid #76208f1c;border-color:var(--purple); }
+.vm-trust-strip { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:0 auto 36px;padding:17px 20px;background:#ffffffd9;backdrop-filter:blur(16px);border:1px solid #e8eafb;border-radius:24px;box-shadow:0 12px 35px #3445740c; }
+.vm-trust-item { display:flex;align-items:center;justify-content:center;gap:13px;padding:8px 12px;border-right:1px solid #e5e8f3; }
+.vm-trust-item:last-child { border-right:0; }
+.vm-trust-icon { display:grid;place-items:center;width:54px;height:54px;flex:0 0 54px;border-radius:50%;background:linear-gradient(135deg,#f0e9ff,#e4f0ff);font-size:24px; }
+.vm-trust-item strong,.vm-trust-item small { display:block; }.vm-trust-item strong { color:var(--purple);font-size:15px; }.vm-trust-item small { margin-top:3px;color:var(--muted);font-size:12px; }
+.section { padding:54px 0; }
+.section h2 { color:#112e58;letter-spacing:-.025em; }
+.college-card,.category-card { border:1px solid #ffffffed;border-radius:21px;background:#ffffffdc;box-shadow:0 12px 35px #252f630d;transition:transform .22s,box-shadow .22s; }
+.college-card:hover,.category-card:hover { transform:translateY(-5px);box-shadow:0 20px 42px #412a7d20; }
+.logo { background:linear-gradient(135deg,#f1e9ff,#e7f0ff);color:var(--purple);border-radius:14px; }
+.register { background:linear-gradient(130deg,#f1e8facc,#eef5ffd1); }
+.register-card { padding:26px; }
+footer { background:linear-gradient(110deg,#0b2142,#2b1b59); }
+@media (max-width:1050px) {
+ .container { width:min(100% - 40px,900px); }
+ .hero-grid { grid-template-columns:1fr;gap:28px; }
+ .hero-grid > div:first-child { padding-bottom:0; }
+ .hero-panel { min-height:430px; }
+ .brand img { height:58px!important;max-width:280px!important; }
+ .vm-trust-item { justify-content:flex-start; }
+}
+@media (max-width:700px) {
+ .container { width:calc(100% - 28px); }
+ .announcement { font-size:11px;padding:8px 14px; }
+ .nav { min-height:76px;flex-wrap:wrap;padding:10px 0; }
+ .brand img { height:48px!important;max-width:210px!important; }
+ .nav-links { width:100%;justify-content:space-between;gap:8px;padding-bottom:8px; }
+ .nav-links a { font-size:13px; }
+ .nav-links .btn { padding:10px 12px; }
+ .hero { padding:34px 0 20px; }
+ h1 { font-size:clamp(38px,10vw,54px);letter-spacing:-.04em; }
+ .hero-copy { font-size:16px; }
+ .hero-panel { min-height:370px;border-radius:23px; }
+ .floating-category { min-height:45px;padding:7px 8px;gap:5px;max-width:150px;border-radius:13px; }
+ .floating-category span { width:26px;height:26px;flex-basis:26px;font-size:16px;border-radius:8px; }
+ .floating-category b { font-size:10px; }
+ .cat-school { top:16%;left:2%; }.cat-junior { top:15%;left:35%; }.cat-degree { top:17%;right:2%; }
+ .cat-engineering { top:41%;left:2%; }.cat-diploma { top:42%;right:2%; }.cat-coaching { top:64%;left:2%; }.cat-university { top:64%;right:2%; }
+ .student-illustration { transform:scale(.75);transform-origin:bottom center;left:40%;bottom:8%; }
+ .hero-art-heading { top:15px;left:15px;font-size:9px; }
+ .hero-panel-bottom { left:15px;bottom:12px; }
+ .search-card { padding:18px; }
+ .vm-trust-strip { grid-template-columns:repeat(2,minmax(0,1fr));padding:10px;margin-bottom:24px; }
+ .vm-trust-item { padding:10px 6px;border-right:0;gap:8px; }
+ .vm-trust-item:nth-child(odd) { border-right:1px solid #e5e8f3; }
+ .vm-trust-icon { width:38px;height:38px;flex-basis:38px;font-size:18px; }
+ .vm-trust-item strong { font-size:12px; }.vm-trust-item small { font-size:10px; }
+ .section { padding:38px 0; }
+}
+@media (max-width:420px) {
+ .floating-category { max-width:128px; }
+ .cat-junior { left:34%; }.cat-engineering { max-width:137px; }
+ .hero-panel { min-height:340px; }
+ .student-illustration { left:37%;transform:scale(.62); }
+}
+
 /* ===== END VIDYAMAP DESIGN ===== */
 </style>
 </head>
@@ -367,13 +486,21 @@ footer {
 </div>
 <p class="muted">A smarter starting point for students, parents and institutions.</p>
 </div>
-<div class="hero-panel">
-<div>EDUCATION · DISCOVERY · GROWTH</div>
-<h2>The right information.<br>The next big step.</h2>
-<div class="panel-stats">
-<div class="panel-stat"><strong>Explore</strong><span>Institutions &amp; courses</span></div>
-<div class="panel-stat"><strong>Connect</strong><span>Students &amp; colleges</span></div>
-</div>
+<div class="hero-panel" aria-label="VidyaMap education discovery illustration">
+  <div class="hero-art-orbit orbit-one"></div>
+  <div class="hero-art-orbit orbit-two"></div>
+  <div class="hero-art-skyline" aria-hidden="true">⌂　⌂　⌂　⌂　⌂</div>
+  <div class="hero-art-heading">EDUCATION · DISCOVERY · GROWTH</div>
+  <div class="map-road" aria-hidden="true"></div>
+  <div class="student-illustration" aria-hidden="true"><span class="student-head"></span><span class="student-body">✦</span><span class="student-bag">⌖</span></div>
+  <div class="floating-category cat-school"><span>🏫</span><b>Schools</b><i></i></div>
+  <div class="floating-category cat-junior"><span>🏛️</span><b>Junior Colleges</b><i></i></div>
+  <div class="floating-category cat-degree"><span>🎓</span><b>Degree Colleges</b><i></i></div>
+  <div class="floating-category cat-engineering"><span>🏢</span><b>Engineering &amp; Medical</b><i></i></div>
+  <div class="floating-category cat-diploma"><span>⚙️</span><b>Diploma &amp; ITI</b><i></i></div>
+  <div class="floating-category cat-coaching"><span>👥</span><b>Coaching Centres</b><i></i></div>
+  <div class="floating-category cat-university"><span>🏫</span><b>Universities</b><i></i></div>
+  <div class="hero-panel-bottom"><strong>Find your path.</strong><span>Explore · Connect · Grow</span></div>
 </div>
 </div>
 </section>
@@ -419,6 +546,14 @@ footer {
 </div>
 <div class="notice" id="searchNotice" role="status"></div>
 </form>
+</div>
+
+
+<div class="container vm-trust-strip" aria-label="VidyaMap platform highlights">
+  <div class="vm-trust-item"><span class="vm-trust-icon">🎓</span><div><strong>Verified Listings</strong><small>Institution information</small></div></div>
+  <div class="vm-trust-item"><span class="vm-trust-icon">👥</span><div><strong>Courses &amp; Programs</strong><small>Explore your options</small></div></div>
+  <div class="vm-trust-item"><span class="vm-trust-icon">📍</span><div><strong>Telangana &amp; AP</strong><small>Regional coverage</small></div></div>
+  <div class="vm-trust-item"><span class="vm-trust-icon">↗</span><div><strong>Grow Your Reach</strong><small>Digital marketing</small></div></div>
 </div>
 
 <section class="section" id="directory">
