@@ -680,14 +680,16 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 
 .vm-student-gated{display:none!important}.vm-student-gated.vm-student-unlocked{display:flex!important}#collegeGrid.vm-student-unlocked{display:grid!important}#resultsCount.vm-student-unlocked{display:block!important}
 
-/* Public preview lock until student details are submitted */
-body.vm-public-locked main > section:not(#studentLeadCapture):not(#platformPanels){filter:blur(5px);pointer-events:none;user-select:none}
+/* Public preview lock: keep the website readable; blur and disable only college directory details */
+body.vm-public-locked main > section:not(#studentLeadCapture):not(#platformPanels){filter:none!important;pointer-events:auto!important;user-select:auto!important}
 body.vm-public-locked main #directory .college-card img,
 body.vm-public-locked main #directory .college-card h3,
 body.vm-public-locked main #directory .college-card .college-top,
 body.vm-public-locked main #directory .college-card p,
 body.vm-public-locked main #directory .college-card .badge{filter:blur(6px)}
-body.vm-public-locked a,body.vm-public-locked button{pointer-events:none!important;cursor:not-allowed!important}
+body.vm-public-locked #directory .college-card a,
+body.vm-public-locked #directory .college-card button,
+body.vm-public-locked #directory .college-card input{pointer-events:none!important;cursor:not-allowed!important}
 body.vm-public-locked #vmLeadReminderOpen,body.vm-public-locked #studentLeadCapture button{pointer-events:auto!important;cursor:pointer!important;filter:none!important}
 body.vm-public-locked #platformPanels .ad-scroll-btn{opacity:.45}
 body.vm-public-locked #platformPanels .ad-campaign-card a{pointer-events:none!important;filter:blur(2px)}
