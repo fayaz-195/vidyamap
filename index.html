@@ -679,6 +679,19 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 .vm-register-ad-carousel{position:relative;margin-top:24px;min-height:260px;overflow:hidden;border-radius:20px;background:#ece8fb;border:1px solid #e1d7f4;box-shadow:0 14px 35px rgba(65,42,125,.10)}.vm-register-ad-slide{display:none;min-height:260px;position:relative}.vm-register-ad-slide.is-active{display:block;animation:vmRegAdFade .6s ease}.vm-register-ad-slide img,.vm-register-ad-slide video{display:block;width:100%;height:260px;object-fit:cover}.vm-register-ad-placeholder{min-height:260px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(145deg,#142f59,#76208f);color:#fff}.vm-register-ad-placeholder span{font-size:11px;letter-spacing:2px;font-weight:800;opacity:.9}.vm-register-ad-placeholder strong{font-size:25px;line-height:1.15;margin-top:12px}.vm-register-ad-placeholder p{font-size:13px;margin:10px 0 0;color:#f0e9ff}.vm-register-ad-caption{position:absolute;left:0;right:0;bottom:0;padding:34px 18px 22px;background:linear-gradient(transparent,rgba(8,18,40,.86));color:#fff}.vm-register-ad-caption strong{font-size:18px}.vm-register-ad-caption p{font-size:12px;margin:5px 0}.vm-register-ad-caption a{display:inline-block;margin-top:5px;font-weight:bold;text-decoration:underline}.vm-register-ad-dots{position:absolute;bottom:10px;right:12px;display:flex;gap:6px;z-index:2}.vm-register-ad-dot{width:7px;height:7px;border-radius:50%;background:#ffffff80;border:0;padding:0}.vm-register-ad-dot.is-active{width:20px;border-radius:9px;background:#fff}@keyframes vmRegAdFade{from{opacity:.45}to{opacity:1}}@media(max-width:760px){.vm-register-ad-carousel{margin-top:16px;min-height:190px}.vm-register-ad-slide,.vm-register-ad-slide img,.vm-register-ad-slide video,.vm-register-ad-placeholder{min-height:190px;height:190px}.vm-register-ad-placeholder strong{font-size:21px}}
 
 .vm-student-gated{display:none!important}.vm-student-gated.vm-student-unlocked{display:flex!important}#collegeGrid.vm-student-unlocked{display:grid!important}#resultsCount.vm-student-unlocked{display:block!important}
+
+/* Public preview lock until student details are submitted */
+body.vm-public-locked main > section:not(#studentLeadCapture):not(#platformPanels){filter:blur(5px);pointer-events:none;user-select:none}
+body.vm-public-locked main #directory .college-card img,
+body.vm-public-locked main #directory .college-card h3,
+body.vm-public-locked main #directory .college-card .college-top,
+body.vm-public-locked main #directory .college-card p,
+body.vm-public-locked main #directory .college-card .badge{filter:blur(6px)}
+body.vm-public-locked a,body.vm-public-locked button{pointer-events:none!important;cursor:not-allowed!important}
+body.vm-public-locked #vmLeadReminderOpen,body.vm-public-locked #studentLeadCapture button{pointer-events:auto!important;cursor:pointer!important;filter:none!important}
+body.vm-public-locked #platformPanels .ad-scroll-btn{opacity:.45}
+body.vm-public-locked #platformPanels .ad-campaign-card a{pointer-events:none!important;filter:blur(2px)}
+
 </style>
 <style>
 /* Three distinct product panels */
@@ -1750,9 +1763,9 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
  const openLeadPopup=()=>{captureSection.hidden=false;captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');};
  const closeLeadPopup=()=>{captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');if(reminder)reminder.classList.add('is-visible');};
  const saved=getSaved();
- if(saved&&saved.lead_id){setStudentGate(true);searchForm.classList.remove('vm-search-locked');captureSection.hidden=true;form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);status.textContent='Your details are saved for this session. You can now search colleges.';status.style.color='var(--green)';if(reminder)reminder.classList.remove('is-visible');}
+ if(saved&&saved.lead_id){document.body.classList.remove('vm-public-locked');setStudentGate(true);searchForm.classList.remove('vm-search-locked');captureSection.hidden=true;form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);status.textContent='Your details are saved for this session. You can now search colleges.';status.style.color='var(--green)';if(reminder)reminder.classList.remove('is-visible');}
  else {
-  setStudentGate(false);searchForm.classList.add('vm-search-locked');captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');if(reminder)reminder.classList.remove('is-visible');
+  document.body.classList.add('vm-public-locked');setStudentGate(false);searchForm.classList.add('vm-search-locked');captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');if(reminder)reminder.classList.remove('is-visible');
   const card=form.querySelector('.eyebrow');
   if(card&&!form.querySelector('.vm-lead-close')){const close=document.createElement('button');close.type='button';close.className='vm-lead-close';close.setAttribute('aria-label','Close student details popup');close.title='Close';close.textContent='×';form.insertBefore(close,form.firstChild);close.addEventListener('click',closeLeadPopup);}
  }
@@ -1774,7 +1787,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
    const lead={lead_id:leadId,student_name:name,phone:phone,district_id:districtId,course_name:course,saved_at:new Date().toISOString()};
    sessionStorage.setItem(savedKey,JSON.stringify(lead));
    form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);
-   setStudentGate(true);
+   document.body.classList.remove('vm-public-locked');setStudentGate(true);
     searchForm.classList.remove('vm-search-locked');
    status.textContent='Saved! Your college search is now unlocked.';status.style.color='var(--green)';
    captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');
