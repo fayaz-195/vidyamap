@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#123B6D">
 <meta name="description" content="Find verified colleges across Telangana and Andhra Pradesh with VidyaMap.">
 <title>VidyaMap | Find. Promote. Grow.</title>
@@ -37,8 +37,8 @@ h1{font-size:clamp(38px,5vw,62px);line-height:1.1;letter-spacing:-1.8px;margin:1
 .search-wrap{margin-top:-28px;position:relative}
 .search-card,.register-card{background:white;border:1px solid var(--border);border-radius:18px;padding:24px;box-shadow:0 8px 28px #123b6d12}
 .search-title{font-size:18px;font-weight:800;margin-bottom:18px}
-.search-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.field{display:flex;flex-direction:column;gap:7px}
+.search-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.field{display:flex;flex-direction:column;gap:7px;min-width:0}
 .field label{font-size:12px;font-weight:800}
 .field input,.field select,.field textarea{width:100%;min-height:46px;padding:11px;border:1px solid var(--border);border-radius:9px;background:white;color:var(--ink)}
 .field textarea{min-height:90px}
@@ -67,6 +67,7 @@ footer{background:var(--dark);color:white;padding:40px 0 18px}
 .footer-links{display:flex;gap:16px;flex-wrap:wrap;font-size:13px}
 .footer-bottom{border-top:1px solid #ffffff33;margin-top:24px;padding-top:14px;font-size:12px;color:#d4deea}
 button:disabled{opacity:.6;cursor:wait}
+@media(max-width:1000px){.search-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.hero-grid,.register-grid{grid-template-columns:1fr}.search-grid{grid-template-columns:1fr 1fr}.cards,.categories{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.nav{min-height:64px}.brand{font-size:20px}.nav-links{gap:8px}.nav-links a:not(.btn){display:none}.nav-links .btn{font-size:12px;padding:10px}.search-grid,.cards,.categories,.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.hero-panel{padding:24px}.section{padding:46px 0}.footer-main{flex-direction:column}}
 </style>
@@ -76,9 +77,14 @@ button:disabled{opacity:.6;cursor:wait}
 <header>
 <div class="container nav">
 <a class="brand" href="#"><span class="brand-mark">V</span>VidyaMap</a>
-<nav class="nav-links"><a href="#directory">Explore</a><a href="#services">Marketing</a><a class="btn" href="#register">Register College</a></nav>
+<nav class="nav-links">
+<a href="#directory">Explore</a>
+<a href="#services">Marketing</a>
+<a class="btn" href="#register">Register College</a>
+</nav>
 </div>
 </header>
+
 <main>
 <section class="hero">
 <div class="container hero-grid">
@@ -86,48 +92,94 @@ button:disabled{opacity:.6;cursor:wait}
 <div class="eyebrow">Find. Promote. Grow.</div>
 <h1>Find the right college.<br>Build your future.</h1>
 <p class="hero-copy">Explore educational institutions, compare courses and discover opportunities across Telangana and Andhra Pradesh.</p>
-<div class="hero-actions"><a class="btn" href="#find">Find a College →</a><a class="btn btn-outline" href="#register">List Your Institution</a></div>
+<div class="hero-actions">
+<a class="btn" href="#find">Find a College →</a>
+<a class="btn btn-outline" href="#register">List Your Institution</a>
+</div>
 <p class="muted">A smarter starting point for students, parents and institutions.</p>
 </div>
 <div class="hero-panel">
 <div>EDUCATION · DISCOVERY · GROWTH</div>
 <h2>The right information.<br>The next big step.</h2>
-<div class="panel-stats"><div class="panel-stat"><strong>Explore</strong><span>Institutions &amp; courses</span></div><div class="panel-stat"><strong>Connect</strong><span>Students &amp; colleges</span></div></div>
+<div class="panel-stats">
+<div class="panel-stat"><strong>Explore</strong><span>Institutions &amp; courses</span></div>
+<div class="panel-stat"><strong>Connect</strong><span>Students &amp; colleges</span></div>
+</div>
 </div>
 </div>
 </section>
+
 <div class="container search-wrap" id="find">
 <form class="search-card" id="searchForm">
 <div class="search-title">Find your institution</div>
 <div class="search-grid">
-<div class="field"><label for="state">State</label><select id="state"><option value="">All states</option></select></div>
-<div class="field"><label for="district">District</label><select id="district"><option value="">All districts</option></select></div>
-<div class="field"><label for="categoryFilter">Institution type</label><select id="categoryFilter"><option value="">All categories</option><option>Junior College</option><option>Engineering</option><option>Medical</option><option>Degree College</option><option>Coaching Centre</option><option>Polytechnic &amp; ITI</option></select></div>
-<div class="field"><label for="course">Course / keyword</label><input id="course" placeholder="e.g. MPC, NEET, B.Tech"></div>
+<div class="field">
+<label for="state">State</label>
+<select id="state"><option value="">All states</option></select>
 </div>
-<div class="actions"><button class="btn" type="submit">Search institutions →</button><button class="btn btn-outline" type="reset" id="resetSearch">Reset</button></div>
+<div class="field">
+<label for="district">District</label>
+<select id="district"><option value="">All districts</option></select>
+</div>
+<div class="field">
+<label for="searchMandal">Mandal</label>
+<select id="searchMandal"><option value="">All mandals</option></select>
+</div>
+<div class="field">
+<label for="categoryFilter">Institution type</label>
+<select id="categoryFilter">
+<option value="">All categories</option>
+<option>Junior College</option>
+<option>Engineering</option>
+<option>Medical</option>
+<option>Degree College</option>
+<option>Coaching Centre</option>
+<option>Polytechnic &amp; ITI</option>
+</select>
+</div>
+<div class="field">
+<label for="course">Course / keyword</label>
+<input id="course" placeholder="e.g. MPC, NEET, B.Tech">
+</div>
+</div>
+<div class="actions">
+<button class="btn" type="submit">Search institutions →</button>
+<button class="btn btn-outline" type="reset" id="resetSearch">Reset</button>
+</div>
 <div class="notice" id="searchNotice" role="status"></div>
 </form>
 </div>
+
 <section class="section" id="directory">
 <div class="container">
-<div class="eyebrow">Explore opportunities</div><h2>Explore verified institutions</h2>
+<div class="eyebrow">Explore opportunities</div>
+<h2>Explore verified institutions</h2>
 <p class="muted">Only approved and verified institution records are shown.</p>
 <div class="results" id="resultsCount">Loading verified institutions…</div>
 <div class="cards" id="collegeGrid"><div class="empty">Loading…</div></div>
 </div>
 </section>
+
 <section class="section" id="services" style="background:var(--surface)">
-<div class="container"><div class="eyebrow">For institutions</div><h2>Grow your institution</h2>
+<div class="container">
+<div class="eyebrow">For institutions</div>
+<h2>Grow your institution</h2>
 <div class="categories">
 <article class="category-card"><strong>01</strong><h3>College Visibility</h3><p>Help students find accurate institution information.</p></article>
 <article class="category-card"><strong>02</strong><h3>Admissions Enquiries</h3><p>Share official contact details with prospective students.</p></article>
 <article class="category-card"><strong>03</strong><h3>Digital Growth</h3><p>Build a reliable online presence with a verified listing.</p></article>
-</div></div>
+</div>
+</div>
 </section>
+
 <section class="register" id="register">
 <div class="container register-grid">
-<div class="register-copy"><div class="eyebrow">Join VidyaMap</div><h2>Register your institution.</h2><p class="muted">Submit details to request a listing. Requests remain pending until reviewed by the VidyaMap team.</p><strong>Find. Promote. Grow.</strong></div>
+<div class="register-copy">
+<div class="eyebrow">Join VidyaMap</div>
+<h2>Register your institution.</h2>
+<p class="muted">Submit details to request a listing. Requests remain pending until reviewed by the VidyaMap team.</p>
+<strong>Find. Promote. Grow.</strong>
+</div>
 <form class="register-card" id="registerForm">
 <div class="form-grid">
 <div class="field full"><label for="institution">Institution name *</label><input id="institution" required maxlength="150" placeholder="College or institution name"></div>
@@ -136,188 +188,397 @@ button:disabled{opacity:.6;cursor:wait}
 <div class="field"><label for="regState">State *</label><select id="regState" required><option value="">Select state</option></select></div>
 <div class="field"><label for="regDistrict">District *</label><select id="regDistrict" required><option value="">Select district</option></select></div>
 <div class="field"><label for="regMandal">Mandal (optional)</label><select id="regMandal"><option value="">Select mandal</option></select></div>
-<div class="field"><label for="regCategory">Institution category *</label><select id="regCategory" required><option value="">Select category</option><option>Junior College</option><option>Engineering</option><option>Medical</option><option>Degree College</option><option>Coaching Centre</option><option>Polytechnic &amp; ITI</option><option>Other</option></select></div>
+<div class="field"><label for="regCategory">Institution category *</label><select id="regCategory" required>
+<option value="">Select category</option><option>Junior College</option><option>Engineering</option><option>Medical</option><option>Degree College</option><option>Coaching Centre</option><option>Polytechnic &amp; ITI</option><option>Other</option>
+</select></div>
 <div class="field full"><label for="email">Email *</label><input id="email" type="email" required maxlength="150" autocomplete="email" placeholder="you@example.com"></div>
 <div class="field full"><label for="password">Create password *</label><input id="password" type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></div>
 <div class="field full"><label for="address">Address (optional)</label><input id="address" maxlength="250" placeholder="Institution address"></div>
 <div class="field full"><label for="website">Website (optional)</label><input id="website" type="url" maxlength="250" placeholder="https://example.com"></div>
 <div class="field full"><label for="notes">Additional details (optional)</label><textarea id="notes" maxlength="1000" placeholder="Courses offered or other details"></textarea></div>
-<div class="field full"><button class="btn" id="registerSubmit" type="submit" style="width:100%">Create account &amp; submit request →</button><div class="note">Never share your password with anyone. Requests are reviewed before publication.</div><div class="notice" id="formNotice" role="status"></div></div>
+<div class="field full">
+<button class="btn" id="registerSubmit" type="submit" style="width:100%">Create account &amp; submit request →</button>
+<div class="note">Never share your password with anyone. Requests are reviewed before publication.</div>
+<div class="notice" id="formNotice" role="status"></div>
+</div>
 </div>
 </form>
 </div>
 </section>
 </main>
-<footer><div class="container">
-<div class="footer-main"><div><strong style="font-size:23px">VidyaMap</strong><p>Helping students discover educational opportunities and helping institutions grow their digital reach.</p></div><div class="footer-links"><a href="#directory">Explore</a><a href="#services">Marketing</a><a href="#register">Register College</a><a href="#find">Search</a></div></div>
+
+<footer>
+<div class="container">
+<div class="footer-main">
+<div><strong style="font-size:23px">VidyaMap</strong><p>Helping students discover educational opportunities and helping institutions grow their digital reach.</p></div>
+<div class="footer-links"><a href="#directory">Explore</a><a href="#services">Marketing</a><a href="#register">Register College</a><a href="#find">Search</a></div>
+</div>
 <div class="footer-bottom">© <span id="year"></span> VidyaMap · Find. Promote. Grow.</div>
-</div></footer>
+</div>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 "use strict";
-const SUPABASE_URL="https://taxlvccrinehasexgvhv.supabase.co";
-const SUPABASE_KEY="sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA";
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-  global: {
-    headers: {
-      apikey: SUPABASE_KEY
-    }
+
+const SUPABASE_URL = "https://taxlvccrinehasexgvhv.supabase.co";
+const SUPABASE_KEY = "sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA";
+
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const $ = id => document.getElementById(id);
+
+let states = [];
+let districts = [];
+let mandals = [];
+let verifiedColleges = [];
+
+function showNotice(el, text, type = "") {
+  el.style.display = "block";
+  el.textContent = text;
+  el.style.color = type === "error" ? "var(--red)" :
+    type === "success" ? "var(--green)" : "var(--muted)";
+}
+
+function addOption(sel, value, label) {
+  const o = document.createElement("option");
+  o.value = String(value ?? "");
+  o.textContent = label;
+  sel.appendChild(o);
+}
+
+async function loadLocations() {
+  const [sr, dr, mr] = await Promise.all([
+    db.from("states")
+      .select("code,name")
+      .eq("is_active", true)
+      .order("name"),
+    db.from("districts")
+      .select("id,name,state_code")
+      .eq("is_active", true)
+      .order("name"),
+    db.from("mandals")
+      .select("id,name,district_id")
+      .eq("is_active", true)
+      .order("name")
+  ]);
+
+  if (sr.error || dr.error || mr.error) {
+    console.error("Location API errors", {
+      states: sr.error,
+      districts: dr.error,
+      mandals: mr.error
+    });
+    showNotice(
+      $("searchNotice"),
+      "Location data could not be loaded. Check Supabase permissions.",
+      "error"
+    );
+    return;
   }
+
+  states = sr.data || [];
+  districts = dr.data || [];
+  mandals = mr.data || [];
+
+  for (const id of ["state", "regState"]) {
+    const sel = $(id);
+    sel.innerHTML = "";
+    addOption(sel, "", id === "state" ? "All states" : "Select state");
+    states.forEach(s => addOption(sel, s.code, s.name));
+  }
+
+  updateSearchDistricts();
+  updateSearchMandals();
+  updateRegDistricts();
+}
+
+function updateSearchDistricts() {
+  const sel = $("district");
+  const old = sel.value;
+  sel.innerHTML = "";
+  addOption(sel, "", "All districts");
+
+  districts
+    .filter(d => !$("state").value || d.state_code === $("state").value)
+    .forEach(d => addOption(sel, d.id, d.name));
+
+  if ([...sel.options].some(o => o.value === old)) sel.value = old;
+}
+
+function updateSearchMandals() {
+  const sel = $("searchMandal");
+  const old = sel.value;
+  sel.innerHTML = "";
+  addOption(sel, "", "All mandals");
+
+  const districtId = $("district").value;
+
+  mandals
+    .filter(m => !districtId || String(m.district_id) === districtId)
+    .forEach(m => addOption(sel, m.id, m.name));
+
+  if ([...sel.options].some(o => o.value === old)) sel.value = old;
+}
+
+function updateRegDistricts() {
+  const sel = $("regDistrict");
+  const old = sel.value;
+  sel.innerHTML = "";
+  addOption(sel, "", "Select district");
+
+  districts
+    .filter(d => !$("regState").value || d.state_code === $("regState").value)
+    .forEach(d => addOption(sel, d.id, d.name));
+
+  if ([...sel.options].some(o => o.value === old)) sel.value = old;
+  updateRegMandals();
+}
+
+function updateRegMandals() {
+  const sel = $("regMandal");
+  sel.innerHTML = "";
+  addOption(sel, "", "Select mandal (optional)");
+
+  const districtId = $("regDistrict").value;
+  if (!districtId) return;
+
+  mandals
+    .filter(m => String(m.district_id) === districtId)
+    .forEach(m => addOption(sel, m.id, m.name));
+}
+
+$("state").addEventListener("change", () => {
+  updateSearchDistricts();
+  updateSearchMandals();
 });
-(async () => {
-  const r = await fetch(
-    "https://taxlvccrinehasexgvhv.supabase.co/rest/v1/states?select=code,name",
-    {
-      headers: {
-        apikey: "sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA",
-        Authorization: "Bearer sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA"
-      }
-    }
-  );
-  console.log("DIRECT API STATUS:", r.status);
-  console.log("DIRECT API RESPONSE:", await r.text());
-})();
-const $=id=>document.getElementById(id);
-let states=[],districts=[],verifiedColleges=[];
 
-function showNotice(el,text,type=""){
- el.style.display="block";el.textContent=text;
- el.style.color=type==="error"?"var(--red)":type==="success"?"var(--green)":"var(--muted)";
-}
-function addOption(sel,value,label){
- const o=document.createElement("option");o.value=String(value??"");o.textContent=label;sel.appendChild(o);
-}
-async function loadLocations(){
- const [sr,dr]=await Promise.all([
-  db.from("states").select("code,name").eq("is_active",true).order("name"),
-  db.from("districts").select("id,name,state_code").eq("is_active",true).order("name")
- ]);
- if(sr.error||dr.error){
-  console.error("Location API errors",{states:sr.error,districts:dr.error});
-  showNotice($("searchNotice"),"Location data could not be loaded. Check Supabase API settings and read policies.","error");return;
- }
- states=sr.data||[];districts=dr.data||[];
- for(const id of ["state","regState"]){
-  const sel=$(id);sel.innerHTML="";addOption(sel,"",id==="state"?"All states":"Select state");
-  states.forEach(s=>addOption(sel,s.code,s.name));
- }
- updateSearchDistricts();updateRegDistricts();
-}
-function updateSearchDistricts(){
- const sel=$("district"),old=sel.value;sel.innerHTML="";addOption(sel,"","All districts");
- districts.filter(d=>!$("state").value||d.state_code===$("state").value).forEach(d=>addOption(sel,d.id,d.name));
- if([...sel.options].some(o=>o.value===old))sel.value=old;
-}
-function updateRegDistricts(){
- const sel=$("regDistrict"),old=sel.value;sel.innerHTML="";addOption(sel,"","Select district");
- districts.filter(d=>!$("regState").value||d.state_code===$("regState").value).forEach(d=>addOption(sel,d.id,d.name));
- if([...sel.options].some(o=>o.value===old))sel.value=old;
- updateMandals();
-}
-async function updateMandals(){
- const sel=$("regMandal");sel.innerHTML="";addOption(sel,"","Select mandal (optional)");
- if(!$("regDistrict").value)return;
- const {data,error}=await db.from("mandals").select("id,name").eq("district_id",$("regDistrict").value).eq("is_active",true).order("name");
- if(error){console.error("Mandal query error",error);return}
- (data||[]).forEach(m=>addOption(sel,m.id,m.name));
-}
-$("state").addEventListener("change",updateSearchDistricts);
-$("regState").addEventListener("change",updateRegDistricts);
-$("regDistrict").addEventListener("change",updateMandals);
+$("district").addEventListener("change", updateSearchMandals);
+$("regState").addEventListener("change", updateRegDistricts);
+$("regDistrict").addEventListener("change", updateRegMandals);
 
-function renderColleges(items){
- const grid=$("collegeGrid");grid.innerHTML="";
- if(!items.length){
-  const e=document.createElement("div");e.className="empty";e.textContent="No verified colleges match these filters yet.";
-  grid.appendChild(e);$("resultsCount").textContent="0 verified colleges";return;
- }
- $("resultsCount").textContent=items.length+" verified college(s)";
- items.forEach(c=>{
-  const d=districts.find(x=>String(x.id)===String(c.district_id));
-  const s=states.find(x=>d&&x.code===d.state_code);
-  const card=document.createElement("article");card.className="college-card";
-  const top=document.createElement("div");top.className="college-top";
-  const logo=document.createElement("div");logo.className="logo";logo.textContent="VM";
-  const info=document.createElement("div");const h=document.createElement("h3");h.textContent=c.name||"Institution";
-  const loc=document.createElement("div");loc.className="location";
-  loc.textContent=[c.town,d?.name,s?.name].filter(Boolean).join(", ")||"Location not provided";
-  info.append(h,loc);top.append(logo,info);card.append(top);
-  const p=document.createElement("p");p.textContent=c.description||"Verified institution on VidyaMap.";card.append(p);
-  if(c.website_url){
-   try{const u=new URL(c.website_url);if(["https:","http:"].includes(u.protocol)){
-    const a=document.createElement("a");a.className="btn btn-outline";a.href=u.href;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Visit website";card.append(a);
-   }}catch{}
+function renderColleges(items) {
+  const grid = $("collegeGrid");
+  grid.innerHTML = "";
+
+  if (!items.length) {
+    const e = document.createElement("div");
+    e.className = "empty";
+    e.textContent = "No verified colleges match these filters yet.";
+    grid.appendChild(e);
+    $("resultsCount").textContent = "0 verified colleges";
+    return;
   }
-  grid.append(card);
- });
-}
-async function loadColleges(){
- const {data,error}=await db.from("colleges").select("id,name,description,website_url,town,district_id").eq("status","verified").order("name").limit(500);
- if(error){
-  console.error("College API error",error);$("resultsCount").textContent="Verified college data could not be loaded.";
-  showNotice($("searchNotice"),"The college data request failed. Check the Supabase response.","error");return;
- }
- verifiedColleges=data||[];renderColleges(verifiedColleges);
-}
-function search(event){
- if(event)event.preventDefault();
- const keyword=$("course").value.trim().toLowerCase();
- const category=$("categoryFilter").value.trim().toLowerCase();
- renderColleges(verifiedColleges.filter(c=>{
-  const d=districts.find(x=>String(x.id)===String(c.district_id));
-  const stateOK=!$("state").value||d?.state_code===$("state").value;
-  const districtOK=!$("district").value||String(c.district_id)===$("district").value;
-  const text=[c.name,c.description,c.town].filter(Boolean).join(" ").toLowerCase();
-  return stateOK&&districtOK&&(!keyword||text.includes(keyword))&&(!category||text.includes(category));
- }));
- if(category)showNotice($("searchNotice"),"Institution type is matched against text because the database has no dedicated category field.");
-}
-$("searchForm").addEventListener("submit",search);
-$("resetSearch").addEventListener("click",()=>setTimeout(()=>{
- $("state").value="";updateSearchDistricts();$("district").value="";
- $("categoryFilter").value="";$("course").value="";$("searchNotice").style.display="none";
- renderColleges(verifiedColleges);
-},0));
 
-$("registerForm").addEventListener("submit",async ev=>{
- ev.preventDefault();const btn=$("registerSubmit");btn.disabled=true;btn.textContent="Submitting…";
- try{
-  const email=$("email").value.trim().toLowerCase(),password=$("password").value,districtId=$("regDistrict").value;
-  if(!districtId)throw Error("Please select a district.");
-  const district=districts.find(d=>String(d.id)===districtId);
-  if(!district)throw Error("The selected district is invalid.");
-  const {data:authData,error:authError}=await db.auth.signUp({
-   email,password,options:{data:{full_name:$("contactName").value.trim(),phone:$("phone").value.trim()}}
+  $("resultsCount").textContent = items.length + " verified college(s)";
+
+  items.forEach(c => {
+    const d = districts.find(x => String(x.id) === String(c.district_id));
+    const m = mandals.find(x => String(x.id) === String(c.mandal_id));
+    const s = states.find(x => d && x.code === d.state_code);
+
+    const card = document.createElement("article");
+    card.className = "college-card";
+
+    const top = document.createElement("div");
+    top.className = "college-top";
+
+    const logo = document.createElement("div");
+    logo.className = "logo";
+    logo.textContent = "VM";
+
+    const info = document.createElement("div");
+    const h = document.createElement("h3");
+    h.textContent = c.name || "Institution";
+
+    const loc = document.createElement("div");
+    loc.className = "location";
+    loc.textContent = [c.town, m?.name, d?.name, s?.name]
+      .filter(Boolean).join(", ") || "Location not provided";
+
+    info.append(h, loc);
+    top.append(logo, info);
+    card.append(top);
+
+    const p = document.createElement("p");
+    p.textContent = c.description || "Verified institution on VidyaMap.";
+    card.append(p);
+
+    if (c.website_url) {
+      try {
+        const u = new URL(c.website_url);
+        if (["https:", "http:"].includes(u.protocol)) {
+          const a = document.createElement("a");
+          a.className = "btn btn-outline";
+          a.href = u.href;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = "Visit website";
+          card.append(a);
+        }
+      } catch {}
+    }
+
+    grid.append(card);
   });
-  if(authError)throw authError;
-  if(!authData.user)throw Error("Could not create the account.");
-  if(!authData.session){
-   showNotice($("formNotice"),"Account created. Confirm your email using the confirmation link. Then sign in and submit the registration request.","success");return;
+}
+
+async function loadColleges() {
+  const { data, error } = await db
+    .from("colleges")
+    .select("id,name,description,website_url,town,district_id,mandal_id")
+    .eq("status", "verified")
+    .order("name")
+    .limit(500);
+
+  if (error) {
+    console.error("College API error", error);
+    $("resultsCount").textContent = "Verified college data could not be loaded.";
+    showNotice($("searchNotice"), "The college data request failed. Check the Supabase response.", "error");
+    return;
   }
-  const payload={
-   applicant_user_id:authData.user.id,
-   college_name:$("institution").value.trim(),
-   contact_name:$("contactName").value.trim(),
-   contact_phone:$("phone").value.trim(),
-   contact_email:email,
-   district_id:district.id,
-   mandal_id:$("regMandal").value?Number($("regMandal").value):null,
-   address:$("address").value.trim()||null,
-   website_url:$("website").value.trim()||null,
-   notes:["Category: "+$("regCategory").value,$("notes").value.trim()].filter(Boolean).join("\n"),
-   status:"pending"
-  };
-  const {error}=await db.from("college_registration_requests").insert(payload);
-  if(error)throw error;
-  showNotice($("formNotice"),"Registration request submitted successfully. Status: Pending review.","success");
-  $("registerForm").reset();updateRegDistricts();
- }catch(e){
-  console.error("Registration failed",e);
-  showNotice($("formNotice"),"Registration could not be saved: "+(e.message||"Unknown error"),"error");
- }finally{btn.disabled=false;btn.textContent="Create account & submit request →"}
+
+  verifiedColleges = data || [];
+  renderColleges(verifiedColleges);
+}
+
+function search(event) {
+  if (event) event.preventDefault();
+
+  const keyword = $("course").value.trim().toLowerCase();
+  const category = $("categoryFilter").value.trim().toLowerCase();
+  const selectedState = $("state").value;
+  const selectedDistrict = $("district").value;
+  const selectedMandal = $("searchMandal").value;
+
+  const filtered = verifiedColleges.filter(c => {
+    const d = districts.find(x => String(x.id) === String(c.district_id));
+
+    const stateOK = !selectedState || d?.state_code === selectedState;
+    const districtOK = !selectedDistrict || String(c.district_id) === selectedDistrict;
+    const mandalOK = !selectedMandal || String(c.mandal_id) === selectedMandal;
+
+    const text = [c.name, c.description, c.town]
+      .filter(Boolean).join(" ").toLowerCase();
+
+    const keywordOK = !keyword || text.includes(keyword);
+    const categoryOK = !category || text.includes(category);
+
+    return stateOK && districtOK && mandalOK && keywordOK && categoryOK;
+  });
+
+  renderColleges(filtered);
+
+  if (category) {
+    showNotice(
+      $("searchNotice"),
+      "Institution type is matched against text because the database has no dedicated category field."
+    );
+  } else {
+    $("searchNotice").style.display = "none";
+  }
+
+  $("directory").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+$("searchForm").addEventListener("submit", search);
+
+$("resetSearch").addEventListener("click", () => {
+  setTimeout(() => {
+    $("state").value = "";
+    updateSearchDistricts();
+    $("district").value = "";
+    updateSearchMandals();
+    $("searchMandal").value = "";
+    $("categoryFilter").value = "";
+    $("course").value = "";
+    $("searchNotice").style.display = "none";
+    renderColleges(verifiedColleges);
+  }, 0);
 });
-$("year").textContent=new Date().getFullYear();
-(async()=>{await loadLocations();await loadColleges()})();
+
+$("registerForm").addEventListener("submit", async ev => {
+  ev.preventDefault();
+
+  const btn = $("registerSubmit");
+  btn.disabled = true;
+  btn.textContent = "Submitting…";
+
+  try {
+    const email = $("email").value.trim().toLowerCase();
+    const password = $("password").value;
+    const districtId = $("regDistrict").value;
+
+    if (!districtId) throw Error("Please select a district.");
+
+    const district = districts.find(d => String(d.id) === districtId);
+    if (!district) throw Error("The selected district is invalid.");
+
+    const { data: authData, error: authError } = await db.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: $("contactName").value.trim(),
+          phone: $("phone").value.trim()
+        }
+      }
+    });
+
+    if (authError) throw authError;
+    if (!authData.user) throw Error("Could not create the account.");
+
+    if (!authData.session) {
+      showNotice(
+        $("formNotice"),
+        "Account created. Confirm your email using the confirmation link. Then sign in to submit the registration request.",
+        "success"
+      );
+      return;
+    }
+
+    const payload = {
+      applicant_user_id: authData.user.id,
+      college_name: $("institution").value.trim(),
+      contact_name: $("contactName").value.trim(),
+      contact_phone: $("phone").value.trim(),
+      contact_email: email,
+      district_id: district.id,
+      mandal_id: $("regMandal").value || null,
+      address: $("address").value.trim() || null,
+      website_url: $("website").value.trim() || null,
+      notes: ["Category: " + $("regCategory").value, $("notes").value.trim()]
+        .filter(Boolean).join("\n"),
+      status: "pending"
+    };
+
+    const { error } = await db
+      .from("college_registration_requests")
+      .insert(payload);
+
+    if (error) throw error;
+
+    showNotice($("formNotice"), "Registration request submitted successfully. Status: Pending review.", "success");
+    $("registerForm").reset();
+    updateRegDistricts();
+  } catch (e) {
+    console.error("Registration failed", e);
+    showNotice(
+      $("formNotice"),
+      "Registration could not be saved: " + (e.message || "Unknown error"),
+      "error"
+    );
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Create account & submit request →";
+  }
+});
+
+$("year").textContent = new Date().getFullYear();
+
+(async () => {
+  await loadLocations();
+  await loadColleges();
+})();
 </script>
 </body>
 </html>
