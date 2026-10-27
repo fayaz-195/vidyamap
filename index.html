@@ -3171,5 +3171,23 @@ body{height:auto!important;min-height:100vh!important;overflow-x:clip!important;
  .vm-hero-benefit-row .vm-audience-item,.vm-hero-benefit-row .vm-audience-item+.vm-hero-benefit-row .vm-audience-item{border-left:0!important}
  .vm-hero-benefit-row .vm-audience-item+.vm-audience-item{border-top:1px solid #dce1f2!important}
 }
+
+/* Balanced side-by-side alignment for audience and trust strips */
+@media(min-width:1000px){
+.vm-hero-benefit-row{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr)!important;gap:18px!important;align-items:stretch!important;width:min(1420px,94%)!important;margin:18px auto 30px!important;padding:0!important}
+.vm-hero-benefit-row>.vm-audience-outer,.vm-hero-benefit-row>.vm-trust-outer{min-width:0!important;width:100%!important;position:relative!important;inset:auto!important;transform:none!important}
+.vm-hero-benefit-row .vm-audience-strip{min-height:98px!important;height:100%!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:center!important;padding:8px!important;border-radius:18px!important}
+.vm-hero-benefit-row .vm-audience-item{gap:8px!important;padding:8px!important;min-width:0!important}
+.vm-hero-benefit-row .vm-audience-item>span{width:34px!important;height:34px!important;flex:0 0 34px!important}
+.vm-hero-benefit-row .vm-audience-item strong{font-size:11px!important;white-space:normal!important}
+.vm-hero-benefit-row .vm-audience-item small{font-size:9px!important}
+.vm-hero-benefit-row .vm-trust-strip{min-height:98px!important;height:100%!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;align-items:stretch!important;padding:8px 5px!important;border-radius:20px!important}
+.vm-hero-benefit-row .vm-trust-item{gap:6px!important;padding:7px 6px!important;min-width:0!important}
+.vm-hero-benefit-row .vm-trust-icon{width:30px!important;height:30px!important;flex:0 0 30px!important;font-size:15px!important}
+.vm-hero-benefit-row .vm-trust-item strong{font-size:10px!important;line-height:1.2!important}
+.vm-hero-benefit-row .vm-trust-item small{font-size:8px!important;line-height:1.25!important}
+}
+@media(max-width:999px){.vm-hero-benefit-row{display:grid!important;grid-template-columns:1fr!important;gap:12px!important;width:min(900px,92%)!important;margin:16px auto 24px!important}}
+@media(max-width:600px){.vm-hero-benefit-row .vm-audience-strip{grid-template-columns:1fr!important}.vm-hero-benefit-row .vm-trust-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important}.vm-hero-benefit-row .vm-trust-item:nth-child(even){border-right:0!important}.vm-hero-benefit-row .vm-trust-item:nth-child(n+3){border-top:1px solid #ffffff50!important}}
 </style></body>
 </html>
