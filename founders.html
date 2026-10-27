@@ -130,6 +130,16 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
 @media(max-width:1100px){.vm-shared-brand,.vm-shared-brand img{width:220px!important;min-width:220px!important;max-width:220px!important}.vm-shared-brand{min-width:220px!important}}
 @media(max-width:760px){.vm-shared-nav{min-height:76px!important}.vm-shared-brand{width:190px!important;min-width:190px!important;min-height:64px!important}.vm-shared-brand img{width:190px!important;max-width:190px!important;height:64px!important;max-height:64px!important}}
 @media(max-width:420px){.vm-shared-brand{width:160px!important;min-width:160px!important;min-height:58px!important}.vm-shared-brand img{width:160px!important;max-width:160px!important;height:58px!important;max-height:58px!important}}
+</style><style id="vm-sponsored-single-visible-fix">
+.vm-sponsored-bar{display:flex!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:44px!important;overflow:hidden!important;position:relative!important;z-index:20!important;background:#fff8ed!important;color:#152744!important}
+.vm-sponsored-bar .vm-sponsored-label{display:inline-flex!important;visibility:visible!important;opacity:1!important;flex:0 0 auto!important}
+.vm-sponsored-bar .vm-sponsored-message{display:block!important;visibility:visible!important;opacity:1!important;flex:1 1 auto!important;min-width:0!important;overflow:hidden!important;white-space:nowrap!important}
+.vm-sponsored-bar .vm-sponsored-track{display:block!important;width:max-content!important;animation:vmSponsoredSingleMove 28s linear infinite!important;will-change:transform!important}
+.vm-sponsored-bar .vm-sponsored-track span{display:inline-block!important;padding-right:70px!important;white-space:nowrap!important;visibility:visible!important;opacity:1!important;color:#152744!important}
+.vm-sponsored-bar:hover .vm-sponsored-track{animation-play-state:paused!important}
+@keyframes vmSponsoredSingleMove{from{transform:translateX(0)}to{transform:translateX(-55%)}}
+.vm-ad-ticker{display:none!important}
+@media(prefers-reduced-motion:reduce){.vm-sponsored-bar .vm-sponsored-track{animation:none!important;white-space:normal!important}.vm-sponsored-bar .vm-sponsored-message{white-space:normal!important}}
 </style></head>
 <body>
 <header class="vm-shared-header">
@@ -145,7 +155,7 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
     </nav>
   </div>
 </header><div class="vm-inner-sponsored-strip" role="region" aria-label="Sponsored college promotions"><span class="vm-inner-sponsored-label">🔥 Sponsored</span><div class="vm-inner-sponsored-track"><span class="vm-inner-sponsored-text">SHOW YOUR COLLEGE HERE · VidyaMap · Promote your college with approved posters and videos · Campaigns display after approval</span></div></div>
-<div class="vm-sponsored-bar" aria-label="Scrolling sponsored college promotions"><span class="vm-sponsored-label">🔥 Sponsored</span><div class="vm-sponsored-message"><div class="vm-sponsored-track"><span><strong>SHOW YOUR COLLEGE HERE - VidyaMap</strong> · Promote your college with posters and videos　 |　 <strong>GET MORE ADMISSIONS</strong> · Digital Marketing for Colleges　 |　 WHATSAPP · META ADS · YOUTUBE ADS · WEBSITE SEO　 |　 Advertise with VidyaMap today</span><span aria-hidden="true"><strong>SHOW YOUR COLLEGE HERE - VidyaMap</strong> · Promote your college with posters and videos　 |　 <strong>GET MORE ADMISSIONS</strong> · Digital Marketing for Colleges　 |　 WHATSAPP · META ADS · YOUTUBE ADS · WEBSITE SEO　 |　 Advertise with VidyaMap today</span></div></div></div>
+<div class="vm-sponsored-bar" aria-label="Scrolling sponsored college promotions"><span class="vm-sponsored-label">🔥 Sponsored</span><div class="vm-sponsored-message"><div class="vm-sponsored-track"><span><strong>SHOW YOUR COLLEGE HERE - VidyaMap</strong> · Promote your college with posters and videos　 |　 <strong>GET MORE ADMISSIONS</strong> · Digital Marketing for Colleges　 |　 WHATSAPP · META ADS · YOUTUBE ADS · WEBSITE SEO　 |　 Advertise with VidyaMap today</span></div></div></div>
 <main class="container">
 <div class="hero">
 <section class="profile" aria-label="Founder profile">
