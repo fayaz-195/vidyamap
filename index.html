@@ -2992,5 +2992,49 @@ body{height:auto!important;min-height:100vh!important;overflow-x:clip!important;
 .vm-ad-ticker{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:100%!important;z-index:2!important;margin:0!important}
 #studentLeadCapture.vm-lead-modal{position:fixed!important;inset:0!important;overflow-y:auto!important}
 #studentLeadCapture.vm-lead-modal .container{max-height:calc(100dvh - 24px)!important;overflow-y:auto!important}
+</style><style id="vm-home-benefits-alignment-final">
+/* Keep both benefit strips visible and aligned below the hero, never overlaying the artwork */
+.vm-hero-benefit-row{
+ display:grid!important;
+ grid-template-columns:minmax(0,1fr)!important;
+ gap:14px!important;
+ width:min(1240px,calc(100% - 48px))!important;
+ max-width:1240px!important;
+ margin:24px auto 36px!important;
+ padding:0!important;
+ position:relative!important;
+ inset:auto!important;
+ transform:none!important;
+ clear:both!important;
+ align-items:stretch!important;
+ box-sizing:border-box!important;
+}
+.vm-hero-benefit-row>.vm-audience-outer,
+.vm-hero-benefit-row>.vm-trust-outer{
+ width:100%!important;max-width:none!important;margin:0!important;
+ position:relative!important;inset:auto!important;transform:none!important;
+}
+.vm-hero-benefit-row .vm-audience-strip{
+ grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ padding:12px 16px!important;
+ border:1px solid #e0e4f5!important;
+ border-radius:20px!important;
+ background:linear-gradient(110deg,#fff,#f6f3ff 60%,#eef5ff)!important;
+ box-shadow:0 10px 26px #20345c0c!important;
+}
+.vm-hero-benefit-row .vm-audience-item{padding:9px 14px!important;gap:11px!important}
+.vm-hero-benefit-row .vm-audience-item>span{width:40px!important;height:40px!important;flex-basis:40px!important}
+.vm-hero-benefit-row .vm-trust-strip{grid-template-columns:repeat(4,minmax(0,1fr))!important;padding:13px 12px!important}
+.vm-hero-benefit-row .vm-trust-item{padding:9px 13px!important;gap:10px!important}
+@media(max-width:760px){
+ .vm-hero-benefit-row{width:calc(100% - 28px)!important;margin:18px auto 26px!important;gap:12px!important}
+ .vm-hero-benefit-row .vm-audience-strip{grid-template-columns:1fr!important;padding:8px 12px!important}
+ .vm-hero-benefit-row .vm-audience-item,.vm-hero-benefit-row .vm-audience-item+.vm-audience-item{border-left:0!important;border-top:1px solid #dce1f2!important;padding:10px 4px!important}
+ .vm-hero-benefit-row .vm-audience-item:first-child{border-top:0!important}
+ .vm-hero-benefit-row .vm-trust-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .vm-hero-benefit-row .vm-trust-item{border-right:0!important;padding:10px 7px!important}
+ .vm-hero-benefit-row .vm-trust-item:nth-child(odd){border-right:1px solid #ffffff70!important}
+ .vm-hero-benefit-row .vm-trust-item:nth-child(-n+2){border-bottom:1px solid #ffffff70!important}
+}
 </style></body>
 </html>
