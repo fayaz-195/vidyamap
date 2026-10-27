@@ -1015,27 +1015,19 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 </main>
 
 
-<section class="feature-section" id="admissions">
+<section class="feature-section vm-ad-only-slot" id="admissions">
  <div class="container">
-  <div class="eyebrow">Plan your next step</div><h2>Admissions & scholarships</h2>
-  <p class="muted">Check institution profiles for admission status and scholarship information. Always confirm deadlines with the institution.</p>
-  <div class="feature-grid" id="admissionHighlights">
-   <article class="feature-card"><strong>🎓 Admissions</strong><h3>Explore verified colleges</h3><p>Open a college profile to view available information and contact details.</p><a class="btn btn-outline" href="#directory">Browse colleges</a></article>
-   <article class="feature-card"><strong>🏅 Scholarships</strong><h3>Ask about eligibility</h3><p>Scholarship details can be displayed when a verified institution provides them.</p><a class="btn btn-outline" href="#directory">Find institutions</a></article>
-   <article class="feature-card"><strong>📅 Deadlines</strong><h3>Confirm dates directly</h3><p>Admission dates can change. Contact the college before applying.</p><a class="btn btn-outline" href="#directory">View profiles</a></article>
+  <div class="vm-ad-slot-heading"><span class="eyebrow">Sponsored · College promotions</span><span class="vm-ad-slot-badge">AD</span></div>
+  <h2>Explore colleges through their promotions</h2>
+  <p class="muted">Approved college posters and videos rotate automatically below.</p>
+  <div class="vm-ad-stage">
+   <div class="vm-ad-stage-glow" aria-hidden="true"></div>
+   <div class="ad-carousel-wrap"><button type="button" class="ad-scroll-btn" data-scroll="left" aria-label="Previous college ad">‹</button><div class="ad-campaign-grid" id="collegeAdGrid" aria-live="polite"><article class="feature-card">Loading approved college promotions…</article></div><button type="button" class="ad-scroll-btn" data-scroll="right" aria-label="Next college ad">›</button></div>
   </div>
+  <p class="vm-panel-note">Only payment-verified, founder-approved campaigns within their scheduled dates are displayed.</p>
  </div>
 </section>
-<section class="feature-section" id="platformPanels">
- <div class="container">
-  <div class="eyebrow">VidyaMap for institutions</div>
-  <h2>College Ads &amp; Promotions</h2>
-  <p class="muted">Discover college posters and videos selected for your district and mandal. Only approved campaigns within their scheduled dates are eligible to appear.</p>
-  <p class="muted">Sponsored posters and videos automatically slide here after payment verification and founder approval. Campaigns appear only in their selected district/mandal and active dates.</p>
-  <div class="ad-carousel-wrap"><button type="button" class="ad-scroll-btn" data-scroll="left" aria-label="Scroll ads left">‹</button><div class="ad-campaign-grid" id="collegeAdGrid" aria-live="polite"><article class="feature-card">Loading paid college promotions…</article></div><button type="button" class="ad-scroll-btn" data-scroll="right" aria-label="Scroll ads right">›</button></div>
-  <p class="vm-panel-note">Only payment-verified, founder-approved ads within their scheduled dates are displayed. No manual district selection is required for the ad carousel.</p>
- </div>
-</section>
+
 
 <section class="feature-section" id="marketingPackages" style="background:var(--surface)">
  <div class="container">
@@ -2501,6 +2493,12 @@ main{overflow:visible!important}
 .vm-nav-dropdown-menu a[aria-current="page"]{background:linear-gradient(100deg,#f0e4ff,#e7edff);color:#6520a0;font-weight:850;box-shadow:inset 3px 0 0 #76208f}
 @media(max-width:900px){.vm-full-nav>a[aria-current="page"],.vm-full-nav>a.is-active,.vm-full-nav .vm-nav-dropdown-trigger[aria-current="page"],.vm-full-nav .vm-nav-dropdown-trigger.is-active{transform:none}}
 
+
+/* Sponsored college ad stage */
+.vm-ad-only-slot{position:relative;overflow:hidden;padding:64px 0 70px;background:linear-gradient(135deg,#f7f2ff 0%,#eef5ff 52%,#fff8ed 100%)}
+.vm-ad-slot-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}.vm-ad-slot-badge{display:inline-flex;align-items:center;justify-content:center;border:1px solid #d7c5f2;background:#fff;border-radius:999px;padding:5px 11px;color:#6f2395;font-size:11px;font-weight:900;letter-spacing:1px}
+.vm-ad-only-slot h2{font-size:clamp(28px,4vw,42px);line-height:1.15;max-width:780px;margin:8px 0}.vm-ad-stage{position:relative;margin-top:24px;padding:22px;border:1px solid #e1d5f6;border-radius:28px;background:#ffffffb8;box-shadow:0 22px 55px #39206c12;overflow:hidden}.vm-ad-stage-glow{position:absolute;right:-70px;top:-100px;width:250px;height:250px;border-radius:50%;background:#d9c4ff55;filter:blur(4px);pointer-events:none}.vm-ad-stage .ad-carousel-wrap{position:relative;z-index:1}.vm-ad-only-slot .ad-campaign-grid{scroll-snap-type:x mandatory}.vm-ad-only-slot .ad-campaign-grid>*{scroll-snap-align:start}.vm-ad-only-slot .vm-panel-note{font-size:12px;margin-top:14px}
+@media(max-width:600px){.vm-ad-only-slot{padding:42px 0}.vm-ad-stage{padding:12px;border-radius:20px}.vm-ad-slot-heading{align-items:flex-start}}
 </style>
 <script id="vm-ask-query-script">
 (function(){
