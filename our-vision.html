@@ -87,7 +87,15 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
 @keyframes vmSponsoredTickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:600px){.vm-sponsored-bar{gap:9px;padding:6px 10px;min-height:40px}.vm-sponsored-label{padding:7px 9px;font-size:11px}.vm-sponsored-track{animation-duration:25s}.vm-sponsored-track span{padding-right:30px}}
 @media(prefers-reduced-motion:reduce){.vm-sponsored-track{animation:none!important}}
-</style></style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body><header class="vm-shared-header">
+</style></style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style id="vm-logo-consistency-fix">
+/* VidyaMap logo sizing: same clear, larger brand mark on every page */
+.vm-shared-nav{min-height:96px!important;gap:clamp(10px,1.5vw,22px)!important}
+.vm-shared-brand{width:260px!important;min-width:260px!important;min-height:82px!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}
+.vm-shared-brand img{display:block!important;width:260px!important;max-width:260px!important;height:82px!important;max-height:82px!important;object-fit:contain!important;object-position:left center!important;padding:0!important;margin:0!important;filter:none!important}
+@media(max-width:1100px){.vm-shared-brand,.vm-shared-brand img{width:220px!important;min-width:220px!important;max-width:220px!important}.vm-shared-brand{min-width:220px!important}}
+@media(max-width:760px){.vm-shared-nav{min-height:76px!important}.vm-shared-brand{width:190px!important;min-width:190px!important;min-height:64px!important}.vm-shared-brand img{width:190px!important;max-width:190px!important;height:64px!important;max-height:64px!important}}
+@media(max-width:420px){.vm-shared-brand{width:160px!important;min-width:160px!important;min-height:58px!important}.vm-shared-brand img{width:160px!important;max-width:160px!important;height:58px!important;max-height:58px!important}}
+</style></head><body><header class="vm-shared-header">
   <div class="vm-shared-nav">
     <a class="vm-shared-brand" href="./index.html" aria-label="VidyaMap Home"><img src="./vidyamap-logo.png" alt="VidyaMap"></a>
     <button class="vm-shared-toggle" type="button" aria-expanded="false" aria-controls="vmSharedLinks" aria-label="Toggle navigation">☰</button>
