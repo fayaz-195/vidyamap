@@ -1078,6 +1078,12 @@ body.vm-lead-modal-open{overflow:hidden!important}
 @keyframes vmSponsoredSingleMove{from{transform:translateX(0)}to{transform:translateX(-55%)}}
 .vm-ad-ticker{display:none!important}
 @media(prefers-reduced-motion:reduce){.vm-sponsored-bar .vm-sponsored-track{animation:none!important;white-space:normal!important}.vm-sponsored-bar .vm-sponsored-message{white-space:normal!important}}
+</style><style id="vm-sponsored-fast-continuous">
+/* Sponsored ticker: faster, continuous motion; never pause on hover */
+.vm-sponsored-bar .vm-sponsored-track{animation:vmSponsoredContinuous 15s linear infinite!important;animation-play-state:running!important;will-change:transform}
+.vm-sponsored-bar:hover .vm-sponsored-track,.vm-sponsored-bar .vm-sponsored-track:hover{animation-play-state:running!important}
+.vm-sponsored-bar .vm-sponsored-track span{padding-right:90px!important}
+@keyframes vmSponsoredContinuous{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 </style></head>
 <body>
 <div class="announcement">Your Education Journey Starts Here · Telangana &amp; Andhra Pradesh</div>
