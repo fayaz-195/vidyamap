@@ -2427,9 +2427,10 @@ main{overflow:visible!important}
 </div>
 <style id="vm-ask-query-styles">
 .vm-ask-widget{position:fixed;right:22px;bottom:22px;z-index:9990;font-family:Arial,Helvetica,sans-serif;color:#10264a}
-.vm-ask-launcher{display:flex;align-items:center;gap:11px;border:0;border-radius:18px;padding:12px 16px;background:linear-gradient(135deg,#5428df,#087cf0);color:#fff;box-shadow:0 10px 32px #17255445;cursor:pointer;text-align:left;min-width:205px}
-.vm-ask-launcher-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:#ffffff25;font-size:25px}
-.vm-ask-launcher strong,.vm-ask-launcher small{display:block}.vm-ask-launcher strong{font-size:16px}.vm-ask-launcher small{font-size:11px;opacity:.9;margin-top:3px}.vm-ask-online{width:9px;height:9px;background:#6dffb0;border-radius:50%;margin-left:auto;box-shadow:0 0 0 4px #ffffff20}
+.vm-ask-launcher{display:flex;align-items:center;gap:11px;border:1px solid #d8d9ff;border-radius:999px;padding:9px 17px 9px 10px;background:linear-gradient(135deg,#24145f 0%,#5531c9 55%,#1677df 100%);color:#fff;box-shadow:0 8px 24px #35207845, inset 0 1px 0 #ffffff35;cursor:pointer;text-align:left;min-width:218px;transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}
+.vm-ask-launcher:hover{transform:translateY(-2px);box-shadow:0 13px 30px #35207855,inset 0 1px 0 #ffffff35;filter:saturate(1.12)}.vm-ask-launcher:focus-visible{outline:3px solid #a5b4fc;outline-offset:3px}
+.vm-ask-launcher-icon{display:grid;place-items:center;width:44px;height:44px;flex-shrink:0;border-radius:50%;background:linear-gradient(145deg,#ffffff32,#ffffff12);border:1px solid #ffffff35;font-size:24px;box-shadow:inset 0 1px 3px #ffffff20}
+.vm-ask-launcher strong,.vm-ask-launcher small{display:block}.vm-ask-launcher strong{font-size:15px;letter-spacing:.15px}.vm-ask-launcher small{font-size:10px;opacity:.88;margin-top:3px}.vm-ask-online{width:8px;height:8px;flex-shrink:0;background:#6dffb0;border-radius:50%;margin-left:auto;box-shadow:0 0 0 4px #ffffff20}
 .vm-ask-panel{position:absolute;right:0;bottom:76px;width:min(390px,calc(100vw - 28px));height:min(640px,calc(100dvh - 115px));min-height:420px;background:#fff;border:1px solid #dfe6f5;border-radius:23px;box-shadow:0 22px 70px #14264c35;display:flex;flex-direction:column;overflow:hidden}
 .vm-ask-panel[hidden]{display:none!important}
 .vm-ask-head{display:flex;align-items:center;gap:11px;padding:15px;background:linear-gradient(110deg,#173f88,#6828dc);color:#fff;flex-shrink:0}
