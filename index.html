@@ -1147,6 +1147,46 @@ body.college-portal-mode #accountDashboard{display:block!important}
   .ad-campaign-grid{animation:none!important;transform:none!important}
 }
 
+
+/* Screenshot fixes: prevent mobile overlap and reduce oversized section gaps */
+@media(max-width:760px){
+  .search-wrap{margin-top:18px!important}
+  #vmLeadReminder{position:relative;z-index:1;margin-top:14px!important;margin-bottom:0!important}
+  #vmLeadReminder.is-visible{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:16px!important}
+  #vmLeadReminder .vm-lead-reminder-copy{min-width:0}
+  #vmLeadReminder .vm-lead-reminder-copy>div{min-width:0}
+  #vmLeadReminder strong{font-size:17px;line-height:1.45}
+  #vmLeadReminder p{font-size:14px;line-height:1.5}
+  #vmLeadReminder button{width:100%;min-height:48px}
+  #searchForm.vm-search-locked:before{margin:0 0 14px!important;line-height:1.45;overflow-wrap:anywhere}
+  .vm-register-compact{padding:26px 0!important}
+  .vm-register-shell{gap:16px!important}
+  .vm-register-compact .register-copy{padding-top:0!important}
+  .vm-register-compact .register-copy .eyebrow{margin-bottom:8px;line-height:1.4}
+  .vm-register-compact .register-copy h2{margin:10px 0 12px!important}
+  .vm-register-compact .register-copy p{margin:0 0 14px!important}
+  .vm-register-ad-carousel{margin-top:12px!important;min-height:190px!important;height:190px!important}
+  .vm-register-ad-slide,.vm-register-ad-slide.is-active{min-height:190px!important;height:190px!important}
+  .vm-register-ad-slide img,.vm-register-ad-slide video,.vm-register-ad-placeholder{min-height:190px!important;height:190px!important;box-sizing:border-box}
+  .vm-register-ad-placeholder{padding:20px!important}
+  .vm-register-ad-placeholder strong{font-size:20px!important;line-height:1.25}
+  .vm-register-ad-placeholder p{font-size:14px!important;line-height:1.45}
+  #find{scroll-margin-top:84px}
+  #find .search-card{padding:18px!important}
+  #find .search-title{font-size:25px;line-height:1.25;margin-bottom:16px}
+  #find .search-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+  #find .field{min-width:0}
+  #find .field label{font-size:14px}
+  #find .field input,#find .field select{min-height:48px;font-size:16px!important}
+  #find .actions .btn{width:100%;min-height:48px}
+  .section{padding-top:34px;padding-bottom:34px}
+}
+@media(max-width:380px){
+  #vmLeadReminder{padding:13px!important}
+  .vm-register-ad-placeholder{padding:16px!important}
+  .vm-register-ad-placeholder strong{font-size:18px!important}
+}
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
