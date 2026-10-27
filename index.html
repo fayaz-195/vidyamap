@@ -837,20 +837,16 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 </head>
 <body>
 <div class="announcement">Your Education Journey Starts Here · Telangana &amp; Andhra Pradesh</div>
-<header>
-<div class="container nav">
-<a class="brand" href="#" style="display:flex;align-items:center;gap:10px;">
-  <img src="./vidyamap-logo.png" alt="VidyaMap Logo"
-       style="height:55px;width:auto;max-width:180px;object-fit:contain;">
+<header class="vm-site-header">
+<div class="container nav vm-main-nav">
+<a class="brand" href="#" aria-label="VidyaMap home" style="display:flex;align-items:center;gap:10px;">
+  <img src="./vidyamap-logo.png" alt="VidyaMap Logo" style="height:58px;width:auto;max-width:190px;object-fit:contain;">
 </a>
 <button class="vm-mobile-menu-toggle" type="button" aria-controls="vmPrimaryNav" aria-expanded="false" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
-<nav class="nav-links" id="vmPrimaryNav">
-<a href="#directory">Explore</a>
-<a href="#services">Marketing</a>
-<a class="btn" href="#register">Register College</a>
-</nav>
-</div>
-</header>
+<nav class="nav-links vm-full-nav" id="vmPrimaryNav" aria-label="Main navigation">
+<a href="#">Home</a><a href="#directory">Explore Colleges</a><a href="#services">Marketing Services</a><a href="#register">For Colleges</a><a href="#about">About</a><a href="#contact">Contact</a><a class="vm-nav-search" href="#find" aria-label="Search colleges">⌕</a><a class="btn vm-register-nav" href="#register"><span aria-hidden="true">♜</span> Register College</a>
+</nav></div></header>
+<div class="vm-sponsored-bar"><span class="vm-sponsored-label">🔥 Sponsored</span><span><strong>SHOW YOUR COLLEGE HERE - VidyaMap</strong> · Promote your college with posters and videos</span><span class="vm-sponsored-divider">|</span><span><strong>GET MORE ADMISSIONS</strong> · Digital Marketing for Colleges</span><span class="vm-sponsored-divider">|</span><span>WHATSAPP · META ADS · YOUTUBE ADS · WEBSITE SEO</span></div>
 <div class="vm-ad-ticker" id="vmAdTicker" hidden><strong>📣 Sponsored</strong><div class="vm-ticker-window"><div class="vm-ticker-track" id="vmTickerTrack"></div></div></div>
 
 <main>
@@ -2338,5 +2334,28 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
 @media(max-width:560px){.hero-panel{border-radius:22px!important}.hero-panel .vm-hero-image{aspect-ratio:1.6/1!important}}
 </style>
 
+<style id="vm-clean-hero-layout">
+.vm-site-header{position:sticky;top:0;z-index:100;background:#fff!important;border-bottom:1px solid #e7eaf4!important;box-shadow:0 3px 18px rgba(22,42,84,.06)!important}
+.vm-main-nav{width:min(1440px,94%)!important;min-height:76px!important;gap:26px!important}
+.vm-full-nav{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:clamp(12px,1.8vw,28px)!important;white-space:nowrap!important;font-size:14px!important}
+.vm-full-nav>a:not(.btn){color:#0b2347!important;font-weight:700!important}.vm-full-nav>a:first-child{color:#7020ef!important}
+.vm-nav-search{font-size:30px!important;line-height:1!important;font-weight:400!important}.vm-register-nav{padding:13px 18px!important;border-radius:12px!important;gap:10px!important}
+.vm-sponsored-bar{min-height:48px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;padding:9px 3%;background:#fff8ed;border-bottom:1px solid #f0e5d7;color:#152744;font-size:13px;line-height:1.4}
+.vm-sponsored-label{background:#f3232b;color:white;font-weight:800;border-radius:7px;padding:7px 12px;white-space:nowrap}.vm-sponsored-divider{color:#a7a9b4}
+.hero{padding:34px 0 32px!important;background:linear-gradient(100deg,#fff 0%,#fbfaff 42%,#f2f3ff 100%)!important}
+.hero-grid{width:min(1440px,94%)!important;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)!important;gap:34px!important;align-items:center!important}
+.hero-grid>div:first-child{min-width:0;padding:8px 0}.hero .eyebrow{font-size:13px!important;letter-spacing:3px!important;margin-bottom:10px!important}
+.vm-hero-brand-pill{margin:0 0 18px!important}
+.hero h1{max-width:740px!important;font-size:clamp(46px,4.4vw,72px)!important;line-height:1.03!important;letter-spacing:-2.5px!important;margin:16px 0 20px!important;font-weight:850!important}
+.hero-copy{max-width:650px!important;font-size:clamp(17px,1.2vw,20px)!important;line-height:1.55!important;color:#5d7095!important}
+.hero-actions{gap:16px!important;margin:23px 0 17px!important}.hero-actions .btn{min-height:58px!important;padding:14px 24px!important;font-size:16px!important;border-radius:15px!important}
+.hero .muted{font-size:13px!important}.hero-panel{width:100%!important;min-width:0!important;min-height:0!important;height:auto!important;align-self:center!important;padding:0!important;overflow:hidden!important;border-radius:28px!important;background:transparent!important;box-shadow:0 22px 52px rgba(65,59,170,.14)!important;border:1px solid rgba(255,255,255,.8)!important}
+.hero-panel::before,.hero-panel::after{display:none!important;content:none!important}
+.hero-panel .vm-hero-image{display:block!important;position:static!important;width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:2/1!important;object-fit:contain!important;object-position:center!important;border-radius:inherit!important}
+.vm-audience-strip{margin-top:24px!important;padding-top:16px!important}.vm-trust-strip{width:min(1440px,94%)!important;margin:0 auto 24px!important}
+@media(max-width:1180px){.vm-main-nav{width:94%!important}.vm-full-nav{gap:11px!important;font-size:12px!important}.vm-register-nav{padding:10px 12px!important}.hero-grid{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)!important;gap:24px!important}.hero h1{font-size:clamp(42px,4.4vw,58px)!important;letter-spacing:-1.8px!important}.vm-sponsored-bar{gap:10px;font-size:11px}}
+@media(max-width:850px){.vm-main-nav{min-height:70px!important}.vm-full-nav{display:none!important}.vm-sponsored-bar{justify-content:flex-start;gap:10px;padding:10px 4%;font-size:11px}.vm-sponsored-divider{display:none}.hero{padding:28px 0 25px!important}.hero-grid{grid-template-columns:1fr!important;gap:24px!important}.hero h1{font-size:clamp(42px,8vw,62px)!important;letter-spacing:-1.8px!important}.hero-panel{max-width:100%!important;border-radius:22px!important}.hero-panel .vm-hero-image{aspect-ratio:1.65/1!important}.vm-audience-strip{margin-top:22px!important}}
+@media(max-width:560px){.vm-main-nav{min-height:64px!important}.vm-sponsored-bar{font-size:10px}.vm-sponsored-bar>span:nth-of-type(n+3){display:none}.hero-grid{width:92%!important}.hero h1{font-size:clamp(37px,10vw,48px)!important;line-height:1.06!important;letter-spacing:-1.3px!important}.hero-copy{font-size:16px!important}.hero-actions .btn{min-height:52px!important;padding:12px 16px!important;font-size:14px!important}.hero-panel .vm-hero-image{aspect-ratio:1.45/1!important}}
+</style>
 </body>
 </html>
