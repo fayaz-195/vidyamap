@@ -96,6 +96,17 @@ footer{background:linear-gradient(120deg,#0d2444,#26245d 65%,#42205f)!important;
     card.append(copy);track.append(card);
    });
   });
+  /* vm-ad-autoscroll-installed: gently advance horizontal ad tracks when multiple ads exist */
+  slots.forEach(slot=>{
+   const track=slot.querySelector(".vm-approved-ad-track");
+   if(!track||track.children.length<2||track.querySelector(".vm-approved-ad-empty"))return;
+   let timer=null;
+   const step=()=>{if(track.scrollWidth<=track.clientWidth+8)return;const max=track.scrollWidth-track.clientWidth;if(track.scrollLeft>=max-8)track.scrollTo({left:0,behavior:"smooth"});else track.scrollBy({left:Math.max(240,track.clientWidth*.72),behavior:"smooth"});};
+   const start=()=>{if(timer)clearInterval(timer);timer=setInterval(step,4200)};
+   const stop=()=>{if(timer)clearInterval(timer);timer=null};
+   track.addEventListener("mouseenter",stop);track.addEventListener("mouseleave",start);track.addEventListener("focusin",stop);track.addEventListener("focusout",start);
+   start();
+  });
  }catch(err){console.warn("Approved ad slots unavailable",err);}
 })();
 </script><script id="vm-floating-brand-ui">
