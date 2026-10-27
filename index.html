@@ -919,7 +919,23 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!import
 .vm-approved-ad-copy{padding:14px}.vm-approved-ad-copy h3{font-size:17px;line-height:1.3;margin:0 0 6px;color:#132d53}.vm-approved-ad-copy p{font-size:13px;color:#65718a;margin:0 0 9px}.vm-approved-ad-meta{font-size:11px;color:#7a3ba0;font-weight:800;margin-bottom:9px}.vm-approved-ad-link{display:inline-flex;padding:8px 12px;border-radius:9px;background:linear-gradient(120deg,#7823a0,#433fc0);color:white!important;font-size:12px;font-weight:800;text-decoration:none}
 .vm-approved-ad-empty{border:1px dashed #cfc4e5;border-radius:14px;padding:18px;color:#6a7287;background:#fbfaff;font-size:13px}
 @media(max-width:650px){.vm-approved-ad-slot{padding:22px 0}.vm-approved-ad-inner{padding:14px;border-radius:18px}.vm-approved-ad-track{grid-auto-columns:minmax(230px,84%)}.vm-approved-ad-media,.vm-approved-ad-card video{height:165px}}
-</style></style></style></style></style></style>
+<style id="vm-hero-benefit-layout">
+.vm-hero-benefit-row{position:relative;z-index:4;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);align-items:center;gap:22px;margin:0 auto 28px}
+.vm-hero-benefit-row .vm-audience-outer,.vm-hero-benefit-row .vm-trust-outer{min-width:0;width:100%;margin:0!important;position:relative;z-index:1}
+.vm-hero-benefit-row .vm-audience-strip{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;width:100%!important;max-width:none!important;gap:0;padding:10px 0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.vm-hero-benefit-row .vm-audience-item{min-width:0;display:flex!important;align-items:center!important;gap:9px!important;padding:8px 10px!important}
+.vm-hero-benefit-row .vm-audience-item+.vm-audience-item{border-left:1px solid #dce1f2!important;padding-left:12px!important}
+.vm-hero-benefit-row .vm-audience-item>span{width:38px!important;height:38px!important;flex:0 0 38px!important}
+.vm-hero-benefit-row .vm-audience-item strong{font-size:13px!important;white-space:nowrap}
+.vm-hero-benefit-row .vm-audience-item small{font-size:11px!important}
+.vm-hero-benefit-row .vm-trust-strip{width:100%!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;padding:11px 8px!important;border-radius:22px!important;box-sizing:border-box}
+.vm-hero-benefit-row .vm-trust-item{gap:8px!important;padding:8px 9px!important}
+.vm-hero-benefit-row .vm-trust-icon{width:36px!important;height:36px!important;flex:0 0 36px!important;font-size:18px!important}
+.vm-hero-benefit-row .vm-trust-item strong{font-size:12px!important;line-height:1.2!important}
+.vm-hero-benefit-row .vm-trust-item small{font-size:10px!important;line-height:1.3!important}
+@media(max-width:1050px){.vm-hero-benefit-row{grid-template-columns:1fr;gap:10px;margin-top:8px}.vm-hero-benefit-row .vm-audience-strip{max-width:760px!important;margin:0 auto!important}.vm-hero-benefit-row .vm-trust-strip{max-width:900px;margin:0 auto!important}}
+@media(max-width:640px){.vm-hero-benefit-row{gap:12px;margin-bottom:22px}.vm-hero-benefit-row .vm-audience-strip{grid-template-columns:1fr!important;padding:5px 0!important}.vm-hero-benefit-row .vm-audience-item,.vm-hero-benefit-row .vm-audience-item+.vm-audience-item{border-left:0!important;border-top:1px solid #e4e7f5!important;padding:10px 4px!important}.vm-hero-benefit-row .vm-audience-item:first-child{border-top:0!important}.vm-hero-benefit-row .vm-trust-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0;padding:8px!important}.vm-hero-benefit-row .vm-trust-item{border-right:0!important;padding:10px 6px!important}.vm-hero-benefit-row .vm-trust-item:nth-child(odd){border-right:1px solid #ffffff70!important}.vm-hero-benefit-row .vm-trust-item:nth-child(-n+2){border-bottom:1px solid #ffffff70!important}}
+</style></style></style></style></style></style></style>
 <style>
 /* Three distinct product panels */
 .vm-panel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;margin-top:30px}
@@ -1008,19 +1024,18 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!import
 </div>
 
 </section>
-<div class="container vm-audience-outer"><div class="vm-audience-strip" aria-label="Who VidyaMap helps">
- <div class="vm-audience-item"><span aria-hidden="true">👥</span><div><strong>For Students</strong><small>Explore &amp; Compare</small></div></div>
- <div class="vm-audience-item"><span aria-hidden="true">👨‍👩‍👧</span><div><strong>For Parents</strong><small>Get Trusted Information</small></div></div>
- <div class="vm-audience-item"><span aria-hidden="true">🏛️</span><div><strong>For Institutions</strong><small>Promote &amp; Connect</small></div></div>
-</div></div>
-
-<div class="container vm-trust-outer">
- <div class="vm-trust-strip" aria-label="VidyaMap platform benefits">
+<div class="container vm-hero-benefit-row">
+ <div class="vm-audience-outer"><div class="vm-audience-strip" aria-label="Who VidyaMap helps">
+  <div class="vm-audience-item"><span aria-hidden="true">👥</span><div><strong>For Students</strong><small>Explore &amp; Compare</small></div></div>
+  <div class="vm-audience-item"><span aria-hidden="true">👨‍👩‍👧</span><div><strong>For Parents</strong><small>Get Trusted Information</small></div></div>
+  <div class="vm-audience-item"><span aria-hidden="true">🏛️</span><div><strong>For Institutions</strong><small>Promote &amp; Connect</small></div></div>
+ </div></div>
+ <div class="vm-trust-outer"><div class="vm-trust-strip" aria-label="VidyaMap platform benefits">
   <div class="vm-trust-item"><span class="vm-trust-icon" aria-hidden="true">🎓</span><div><strong>Verified Listings</strong><small>Institution information</small></div></div>
   <div class="vm-trust-item"><span class="vm-trust-icon" aria-hidden="true">👥</span><div><strong>Courses &amp; Programs</strong><small>Explore your options</small></div></div>
   <div class="vm-trust-item"><span class="vm-trust-icon" aria-hidden="true">📍</span><div><strong>Telangana &amp; AP</strong><small>Regional coverage</small></div></div>
   <div class="vm-trust-item"><span class="vm-trust-icon" aria-hidden="true">↗</span><div><strong>Grow Your Reach</strong><small>Digital marketing</small></div></div>
- </div>
+ </div></div>
 </div>
 
 <section class="section" id="studentLeadCapture" style="padding:28px 0 18px">
