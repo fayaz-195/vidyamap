@@ -27,9 +27,9 @@
 
 ### Phase 0 — Baseline, documentation, and safe delivery
 - [x] Inspect repository pages, Supabase tables, migrations, and Edge Functions.
-- [ ] Document feature inventory, release gates, and known risks.
-- [ ] Extend automated checks from the homepage to all HTML pages.
-- [ ] Verify unique IDs, closed HTML/script tags, and inline JavaScript syntax.
+- [x] Document feature inventory, release gates, and known risks.
+- [x] Extend automated checks from the homepage to all HTML pages.
+- [x] Verify unique IDs, closed HTML/script tags, and inline JavaScript syntax.
 - [ ] Capture a known-good baseline commit before larger refactors.
 - **Done when:** the baseline and known risks are documented and CI checks every page without breaking existing functionality.
 
@@ -133,4 +133,4 @@
 
 ## Current execution status
 
-The initial repository/backend audit is complete. The roadmap is the source of truth for implementation order. Phase 0 delivery checks and security review are the first engineering tasks; later phases should be implemented in order, with the existing design preserved.
+The initial repository/backend audit is complete. The roadmap is the source of truth for implementation order. The all-page static quality workflow is deployed and passed on commit `52cb3073af3a1c256e054cde5cb7afb6a87956d9`. Security review is still open; later phases should be implemented in order, with the existing design preserved.
