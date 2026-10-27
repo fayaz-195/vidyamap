@@ -957,7 +957,23 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!import
 .vm-hero-benefit-row{margin-top:-34px!important;margin-bottom:24px!important}
 @media(max-width:850px){.vm-hero-benefit-row{margin-top:-16px!important;margin-bottom:20px!important}}
 @media(max-width:640px){.vm-hero-benefit-row{margin-top:0!important;margin-bottom:18px!important}}
-</style></style></style></style></style></style></style></style>
+<style id="vm-student-form-visibility-fix">
+/* Keep the student-details form fully reachable on desktop and mobile */
+#studentLeadCapture:not(.vm-lead-modal)[hidden]{display:none!important}
+#studentLeadCapture.vm-lead-modal{position:fixed!important;inset:0!important;z-index:10000!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;overflow-y:auto!important;overscroll-behavior:contain;padding:clamp(10px,3vh,28px) 12px!important;box-sizing:border-box!important}
+#studentLeadCapture.vm-lead-modal .container{width:min(980px,100%)!important;max-height:none!important;height:auto!important;overflow:visible!important;margin:0 auto!important;flex:0 0 auto!important;padding:0!important}
+#studentLeadCapture.vm-lead-modal #studentLeadForm{width:100%!important;max-width:980px!important;max-height:none!important;overflow:visible!important;box-sizing:border-box!important;padding:clamp(16px,3vw,30px)!important;margin:0 auto 18px!important}
+#studentLeadCapture.vm-lead-modal .form-grid{row-gap:14px!important}
+#studentLeadCapture.vm-lead-modal #leadStudentSubmit{min-height:48px!important;white-space:normal!important}
+#studentLeadCapture.vm-lead-modal .vm-lead-close{position:relative!important;float:right!important;top:auto!important;margin:-4px -4px 4px 12px!important}
+@media(max-width:600px){
+ #studentLeadCapture.vm-lead-modal{padding:10px 8px 18px!important}
+ #studentLeadCapture.vm-lead-modal #studentLeadForm{padding:16px 13px!important}
+ #studentLeadCapture.vm-lead-modal #studentLeadSubmit{width:100%!important}
+ #studentLeadCapture.vm-lead-modal .full.actions{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+ #studentLeadCapture.vm-lead-modal #studentLeadStatus{display:block!important;overflow-wrap:anywhere}
+}
+</style></style></style></style></style></style></style></style></style>
 <style>
 /* Three distinct product panels */
 .vm-panel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;margin-top:30px}
