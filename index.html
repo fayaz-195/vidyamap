@@ -796,7 +796,20 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 
 /* Robust About dropdown positioning and interaction */
 .vm-main-nav{overflow:visible!important}.vm-full-nav{overflow:visible!important}.vm-nav-dropdown{align-self:stretch!important}.vm-nav-dropdown-menu{top:100%!important;left:0!important;z-index:99999!important;display:none}.vm-nav-dropdown:hover>.vm-nav-dropdown-menu,.vm-nav-dropdown:focus-within>.vm-nav-dropdown-menu,.vm-nav-dropdown.is-open>.vm-nav-dropdown-menu{display:block!important}
-</style>
+<style id="vm-approved-ad-slots-css">
+.vm-approved-ad-slot{position:relative;overflow:hidden;padding:34px 0;background:linear-gradient(115deg,#f5f0ff,#eef6ff 55%,#fff8ef);border-block:1px solid #e7def8}
+.vm-approved-ad-inner{width:min(1180px,92%);margin:auto;border:1px solid #e3d8f5;background:#ffffffc9;border-radius:24px;padding:20px;box-shadow:0 16px 40px #29345d10}
+.vm-approved-ad-kicker{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#7022a0;font-size:11px;font-weight:900;letter-spacing:1.7px;text-transform:uppercase}
+.vm-approved-ad-badge{border:1px solid #dac8f1;border-radius:99px;padding:4px 9px;background:white;letter-spacing:1px}
+.vm-approved-ad-title{font-size:clamp(20px,3vw,29px);line-height:1.2;margin:9px 0;color:#122d54}
+.vm-approved-ad-sub{margin:0 0 16px;color:#66728a;font-size:14px}
+.vm-approved-ad-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(240px,32%);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 12px;scrollbar-width:thin}
+.vm-approved-ad-card{scroll-snap-align:start;min-width:0;overflow:hidden;border:1px solid #e5e5f2;border-radius:18px;background:#fff;box-shadow:0 10px 25px #1b2d4b0b}
+.vm-approved-ad-media{display:block;width:100%;height:190px;object-fit:cover;background:#e9e7f3}.vm-approved-ad-card video{display:block;width:100%;height:190px;object-fit:cover;background:#111}
+.vm-approved-ad-copy{padding:14px}.vm-approved-ad-copy h3{font-size:17px;line-height:1.3;margin:0 0 6px;color:#132d53}.vm-approved-ad-copy p{font-size:13px;color:#65718a;margin:0 0 9px}.vm-approved-ad-meta{font-size:11px;color:#7a3ba0;font-weight:800;margin-bottom:9px}.vm-approved-ad-link{display:inline-flex;padding:8px 12px;border-radius:9px;background:linear-gradient(120deg,#7823a0,#433fc0);color:white!important;font-size:12px;font-weight:800;text-decoration:none}
+.vm-approved-ad-empty{border:1px dashed #cfc4e5;border-radius:14px;padding:18px;color:#6a7287;background:#fbfaff;font-size:13px}
+@media(max-width:650px){.vm-approved-ad-slot{padding:22px 0}.vm-approved-ad-inner{padding:14px;border-radius:18px}.vm-approved-ad-track{grid-auto-columns:minmax(230px,84%)}.vm-approved-ad-media,.vm-approved-ad-card video{height:165px}}
+</style></style>
 <style>
 /* Three distinct product panels */
 .vm-panel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;margin-top:30px}
@@ -865,7 +878,7 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 <div class="vm-ad-ticker" id="vmAdTicker" hidden><strong>📣 Sponsored</strong><div class="vm-ticker-window"><div class="vm-ticker-track" id="vmTickerTrack"></div></div></div>
 
 <main>
-<section class="hero">
+<section class="hero"><section class="vm-approved-ad-slot" id="vmAdAfterHero" data-vm-ad-slot data-kind="image"><div class="vm-approved-ad-inner"><div class="vm-approved-ad-kicker"><span>VidyaMap · Sponsored showcase</span><span class="vm-approved-ad-badge">AD</span></div><h2 class="vm-approved-ad-title">College posters · Featured institutions</h2><p class="vm-approved-ad-sub">A visual showcase of approved college promotions.</p><div class="vm-approved-ad-track"><div class="vm-approved-ad-empty">Approved college promotions will appear here.</div></div></div></section>
 <div class="container hero-grid">
 <div>
 <div class="eyebrow">Find. Promote. Grow.</div>
@@ -993,7 +1006,7 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
   </section>
 </div>
 
-<section class="section" id="services" style="background:var(--surface)">
+<section class="section" id="services" style="background:var(--surface)"><section class="vm-approved-ad-slot" id="vmAdAfterServices" data-vm-ad-slot data-kind="video"><div class="vm-approved-ad-inner"><div class="vm-approved-ad-kicker"><span>VidyaMap · Sponsored showcase</span><span class="vm-approved-ad-badge">AD</span></div><h2 class="vm-approved-ad-title">College videos · Campus in motion</h2><p class="vm-approved-ad-sub">Watch active college video promotions.</p><div class="vm-approved-ad-track"><div class="vm-approved-ad-empty">Approved college promotions will appear here.</div></div></div></section>
 <div class="container">
 <div class="eyebrow">VidyaMap for institutions</div>
 <h2>Advertise your college on VidyaMap</h2>
@@ -1011,7 +1024,7 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 </div>
 </section>
 
-<section class="register vm-register-compact" id="register"><div class="container vm-register-shell"><div class="register-copy"><div class="eyebrow">College partnerships</div><h2>List your college</h2><p class="muted">Share a few details so the VidyaMap team can contact your institution about listings and admissions promotions.</p><div class="vm-register-ad-carousel" id="vmRegisterAdCarousel" aria-label="Featured college promotions"><div class="vm-register-ad-slide is-active"><div class="vm-register-ad-placeholder"><span>VIDYAMAP PROMOTIONS</span><strong>Promote your college here</strong><p>Approved college posters and videos will appear here automatically.</p></div></div><div class="vm-register-ad-dots" id="vmRegisterAdDots" aria-hidden="true"></div></div></div><form class="register-card vm-lead-design-only" id="registerForm"><div class="vm-honeypot" aria-hidden="true"><label for="websiteTrap">Leave this field empty</label><input id="websiteTrap" name="website" type="text" tabindex="-1" autocomplete="off"></div><div class="form-grid"><div class="field full"><label for="institution">College / Institution name *</label><input id="institution" required maxlength="150" placeholder="Enter institution name"></div><div class="field"><label for="contactName">Contact person *</label><input id="contactName" required maxlength="100" placeholder="Full name"></div><div class="field"><label for="contactDesignation">Designation *</label><select id="contactDesignation" required><option value="">Select designation</option><option>Founder</option><option>Chairman</option><option>Director</option><option>Principal</option><option>Admissions In-charge</option><option>Administrator</option><option>Other</option></select></div><div class="field"><label for="phone">Phone number *</label><input id="phone" required type="tel" maxlength="15" placeholder="Contact number"></div><div class="field"><label for="regCategory">Institution category *</label><select id="regCategory" required><option value="">Select category</option><option>School</option><option>Junior College</option><option>Degree College</option><option>Engineering</option><option>Medical</option><option>Coaching Centre</option><option>Polytechnic &amp; ITI</option><option>Other</option></select></div><div class="field"><label for="regState">State *</label><select id="regState" required><option value="">Select state</option></select></div><div class="field"><label for="regDistrict">District *</label><select id="regDistrict" required><option value="">Select district</option></select></div><div class="field"><label for="regMandal">Mandal / local area</label><select id="regMandal"><option value="">Select mandal (optional)</option></select></div><div class="field full"><label for="address">Institution address (optional)</label><input id="address" maxlength="250" placeholder="Town or local area"></div><div class="field full"><button class="btn" id="registerSubmit" type="submit" style="width:100%">Request a callback →</button><div class="note">No account or password is needed for this callback request.</div><div class="notice" id="formNotice" role="status"></div></div></div></form></div></section>
+<section class="register vm-register-compact" id="register"><section class="vm-approved-ad-slot" id="vmAdAfterRegister" data-vm-ad-slot data-kind="mixed"><div class="vm-approved-ad-inner"><div class="vm-approved-ad-kicker"><span>VidyaMap · Sponsored showcase</span><span class="vm-approved-ad-badge">AD</span></div><h2 class="vm-approved-ad-title">Sponsored college spotlight</h2><p class="vm-approved-ad-sub">Discover approved posters and video campaigns.</p><div class="vm-approved-ad-track"><div class="vm-approved-ad-empty">Approved college promotions will appear here.</div></div></div></section><div class="container vm-register-shell"><div class="register-copy"><div class="eyebrow">College partnerships</div><h2>List your college</h2><p class="muted">Share a few details so the VidyaMap team can contact your institution about listings and admissions promotions.</p><div class="vm-register-ad-carousel" id="vmRegisterAdCarousel" aria-label="Featured college promotions"><div class="vm-register-ad-slide is-active"><div class="vm-register-ad-placeholder"><span>VIDYAMAP PROMOTIONS</span><strong>Promote your college here</strong><p>Approved college posters and videos will appear here automatically.</p></div></div><div class="vm-register-ad-dots" id="vmRegisterAdDots" aria-hidden="true"></div></div></div><form class="register-card vm-lead-design-only" id="registerForm"><div class="vm-honeypot" aria-hidden="true"><label for="websiteTrap">Leave this field empty</label><input id="websiteTrap" name="website" type="text" tabindex="-1" autocomplete="off"></div><div class="form-grid"><div class="field full"><label for="institution">College / Institution name *</label><input id="institution" required maxlength="150" placeholder="Enter institution name"></div><div class="field"><label for="contactName">Contact person *</label><input id="contactName" required maxlength="100" placeholder="Full name"></div><div class="field"><label for="contactDesignation">Designation *</label><select id="contactDesignation" required><option value="">Select designation</option><option>Founder</option><option>Chairman</option><option>Director</option><option>Principal</option><option>Admissions In-charge</option><option>Administrator</option><option>Other</option></select></div><div class="field"><label for="phone">Phone number *</label><input id="phone" required type="tel" maxlength="15" placeholder="Contact number"></div><div class="field"><label for="regCategory">Institution category *</label><select id="regCategory" required><option value="">Select category</option><option>School</option><option>Junior College</option><option>Degree College</option><option>Engineering</option><option>Medical</option><option>Coaching Centre</option><option>Polytechnic &amp; ITI</option><option>Other</option></select></div><div class="field"><label for="regState">State *</label><select id="regState" required><option value="">Select state</option></select></div><div class="field"><label for="regDistrict">District *</label><select id="regDistrict" required><option value="">Select district</option></select></div><div class="field"><label for="regMandal">Mandal / local area</label><select id="regMandal"><option value="">Select mandal (optional)</option></select></div><div class="field full"><label for="address">Institution address (optional)</label><input id="address" maxlength="250" placeholder="Town or local area"></div><div class="field full"><button class="btn" id="registerSubmit" type="submit" style="width:100%">Request a callback →</button><div class="note">No account or password is needed for this callback request.</div><div class="notice" id="formNotice" role="status"></div></div></div></form></div></section>
 </main>
 
 
@@ -1029,7 +1042,7 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 </section>
 
 
-<section class="feature-section" id="marketingPackages" style="background:var(--surface)">
+<section class="feature-section" id="marketingPackages" style="background:var(--surface)"><section class="vm-approved-ad-slot" id="vmAdAfterMarketing" data-vm-ad-slot data-kind="image"><div class="vm-approved-ad-inner"><div class="vm-approved-ad-kicker"><span>VidyaMap · Sponsored showcase</span><span class="vm-approved-ad-badge">AD</span></div><h2 class="vm-approved-ad-title">More colleges to discover</h2><p class="vm-approved-ad-sub">Sponsored college creatives selected for visibility.</p><div class="vm-approved-ad-track"><div class="vm-approved-ad-empty">Approved college promotions will appear here.</div></div></div></section>
  <div class="container">
   <div class="eyebrow">Digital marketing services</div>
   <h2>Promote your business. Reach more people.</h2>
@@ -2587,5 +2600,39 @@ main{overflow:visible!important}
 })();
 </script>
 
-</body>
+<script id="vm-approved-ad-slots-script">
+(async function(){
+ const slots=[...document.querySelectorAll("[data-vm-ad-slot]")];if(!slots.length)return;
+ const putEmpty=(slot)=>{const track=slot.querySelector(".vm-approved-ad-track");if(!track)return;const e=document.createElement("div");e.className="vm-approved-ad-empty";e.textContent="Approved college promotions will appear here when an active campaign matches this placement.";track.replaceChildren(e)};
+ slots.forEach(putEmpty);
+ if(!window.supabase)return;
+ try{
+  const client=window.supabase.createClient("https://taxlvccrinehasexgvhv.supabase.co","sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA");
+  const {data,error}=await client.from("college_ad_campaigns").select("id,college_id,title,description,media_type,media_url,click_url,starts_at,ends_at,payment_status,status").eq("status","approved").eq("payment_status","paid").order("created_at",{ascending:false}).limit(100);
+  if(error)throw error;
+  const now=new Date(),active=(data||[]).filter(c=>c.media_url&&(!c.starts_at||new Date(c.starts_at)<=now)&&(!c.ends_at||new Date(c.ends_at)>=now));
+  const ids=[...new Set(active.map(c=>c.college_id).filter(Boolean))];let collegeMap=new Map();
+  if(ids.length){const cr=await client.from("colleges").select("id,name,status").in("id",ids).eq("status","verified");if(!cr.error)collegeMap=new Map((cr.data||[]).map(c=>[c.id,c]));}
+  const usable=active.filter(c=>collegeMap.has(c.college_id));
+  slots.forEach((slot,slotIndex)=>{
+   const track=slot.querySelector(".vm-approved-ad-track");if(!track)return;
+   const kind=slot.dataset.kind||"mixed";
+   let items=usable.filter(c=>kind==="image"?c.media_type!=="video":kind==="video"?c.media_type==="video":true);
+   if(!items.length){putEmpty(slot);return}
+   const offset=slotIndex%items.length;items=items.slice(offset).concat(items.slice(0,offset));
+   track.replaceChildren();
+   items.slice(0,6).forEach(c=>{
+    const card=document.createElement("article");card.className="vm-approved-ad-card";
+    if(c.media_type==="video"){const v=document.createElement("video");v.src=c.media_url;v.controls=true;v.preload="metadata";v.playsInline=true;v.setAttribute("aria-label",c.title||"College promotion video");card.append(v)}
+    else{const img=document.createElement("img");img.className="vm-approved-ad-media";img.src=c.media_url;img.alt=c.title||"College promotion";img.loading="lazy";card.append(img)}
+    const copy=document.createElement("div");copy.className="vm-approved-ad-copy";const meta=document.createElement("div");meta.className="vm-approved-ad-meta";meta.textContent="SPONSORED · "+(c.media_type==="video"?"VIDEO":"COLLEGE POSTER");
+    const h=document.createElement("h3");h.textContent=c.title||"College promotion";const p=document.createElement("p");p.textContent=c.description||collegeMap.get(c.college_id).name;copy.append(meta,h,p);
+    const org=document.createElement("p");org.textContent=collegeMap.get(c.college_id).name;copy.append(org);
+    if(c.click_url){try{const u=new URL(c.click_url);if(["https:","http:"].includes(u.protocol)){const a=document.createElement("a");a.className="vm-approved-ad-link";a.href=u.href;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Explore promotion →";copy.append(a)}}catch{}}
+    card.append(copy);track.append(card);
+   });
+  });
+ }catch(err){console.warn("Approved ad slots unavailable",err);}
+})();
+</script></body>
 </html>
