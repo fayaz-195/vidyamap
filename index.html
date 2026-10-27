@@ -846,6 +846,21 @@ img{max-width:100%}
 <label for="course">Course / keyword</label>
 <input id="course" placeholder="e.g. MPC, NEET, B.Tech">
 </div>
+  <div class="field">
+    <label for="admissionFilter">Admissions</label>
+    <select id="admissionFilter">
+      <option value="">All verified colleges</option>
+      <option value="open">Admissions marked open</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="sortColleges">Sort results</label>
+    <select id="sortColleges">
+      <option value="name">Name (A–Z)</option>
+      <option value="admissions">Admissions open first</option>
+      <option value="recent">Recently verified first</option>
+    </select>
+  </div>
 </div>
 <div class="actions">
 <button class="btn" type="submit">Search institutions →</button>
@@ -1496,6 +1511,8 @@ function search(event) {
   const selectedState = $("state").value;
   const selectedDistrict = $("district").value;
   const selectedMandal = $("searchMandal").value;
+  const admissionFilter = $("admissionFilter")?.value || "";
+  const sortMode = $("sortColleges")?.value || "name";
 
   const filtered = verifiedColleges.filter(c => {
     const d = districts.find(x => String(x.id) === String(c.district_id));
@@ -1510,7 +1527,19 @@ function search(event) {
     const keywordOK = !keyword || text.includes(keyword);
     const categoryOK = !category || (c.category ? c.category.toLowerCase().includes(category) : text.includes(category));
 
-    return stateOK && districtOK && mandalOK && keywordOK && categoryOK;
+    const admissionsOK = admissionFilter !== "open" || c.admissions_open === true;
+    return stateOK && districtOK && mandalOK && keywordOK && categoryOK && admissionsOK;
+  });
+
+  filtered.sort((a, b) => {
+    if (sortMode === "admissions") {
+      const diff = Number(b.admissions_open === true) - Number(a.admissions_open === true);
+      if (diff) return diff;
+    } else if (sortMode === "recent") {
+      const diff = new Date(b.verified_at || 0).getTime() - new Date(a.verified_at || 0).getTime();
+      if (diff) return diff;
+    }
+    return String(a.name || "").localeCompare(String(b.name || ""), undefined, { sensitivity: "base" });
   });
 
   renderColleges(filtered);
@@ -1538,6 +1567,8 @@ $("resetSearch").addEventListener("click", () => {
     $("searchMandal").value = "";
     $("categoryFilter").value = "";
     $("course").value = "";
+    $("admissionFilter").value = "";
+    $("sortColleges").value = "name";
     $("searchNotice").style.display = "none";
     renderColleges(verifiedColleges);
   }, 0);
