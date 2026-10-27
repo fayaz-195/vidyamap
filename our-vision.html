@@ -32,7 +32,18 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!import
 .vm-approved-ad-copy{padding:14px}.vm-approved-ad-copy h3{font-size:17px;line-height:1.3;margin:0 0 6px;color:#132d53}.vm-approved-ad-copy p{font-size:13px;color:#65718a;margin:0 0 9px}.vm-approved-ad-meta{font-size:11px;color:#7a3ba0;font-weight:800;margin-bottom:9px}.vm-approved-ad-link{display:inline-flex;padding:8px 12px;border-radius:9px;background:linear-gradient(120deg,#7823a0,#433fc0);color:white!important;font-size:12px;font-weight:800;text-decoration:none}
 .vm-approved-ad-empty{border:1px dashed #cfc4e5;border-radius:14px;padding:18px;color:#6a7287;background:#fbfaff;font-size:13px}
 @media(max-width:650px){.vm-approved-ad-slot{padding:22px 0}.vm-approved-ad-inner{padding:14px;border-radius:18px}.vm-approved-ad-track{grid-auto-columns:minmax(230px,84%)}.vm-approved-ad-media,.vm-approved-ad-card video{height:165px}}
-</style><style id="vm-brand-system">
+<style id="vm-scroll-and-sponsored-fix">
+html{overflow-y:auto!important;min-height:100%;scroll-behavior:smooth;scroll-padding-top:118px}
+body{min-height:100%;height:auto!important;overflow-y:auto!important;overflow-x:hidden!important}
+body.vm-lead-modal-open{overflow:hidden!important}
+.vm-inner-sponsored-strip{position:relative;z-index:5;display:flex;align-items:center;gap:18px;min-height:42px;padding:8px max(20px,calc((100% - 1380px)/2));overflow:hidden;background:linear-gradient(90deg,#fff8eb,#f4edff 48%,#eef5ff);border-bottom:1px solid #e6def2;color:#18345e;font-size:12px;white-space:nowrap}
+.vm-inner-sponsored-label{flex:none;border-radius:8px;padding:7px 12px;background:linear-gradient(110deg,#f04452,#df183d);color:white;font-weight:900;box-shadow:0 5px 12px #d91d3b25}
+.vm-inner-sponsored-track{min-width:0;overflow:hidden;flex:1}
+.vm-inner-sponsored-text{display:inline-block;padding-left:100%;animation:vmSponsoredTicker 24s linear infinite;font-weight:700}
+.vm-inner-sponsored-strip:hover .vm-inner-sponsored-text{animation-play-state:paused}
+@keyframes vmSponsoredTicker{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.vm-inner-sponsored-text{animation:none;padding-left:0}}
+</style></style><style id="vm-brand-system">
 :root{--vm-navy:#102b50;--vm-purple:#76208f;--vm-blue:#2859a8;--vm-ice:#edf4ff;--vm-lilac:#f5edff;--vm-border:#d9dff1;--vm-text:#152b49;--vm-muted:#64728b}
 html{scroll-behavior:smooth;scroll-padding-top:100px}
 body{color:var(--vm-text);background:radial-gradient(ellipse at 8% 5%,#eee2ff75,transparent 30rem),radial-gradient(ellipse at 95% 24%,#dbeaff70,transparent 30rem),linear-gradient(135deg,#fff 0%,#f8f7ff 60%,#eff5ff 100%)}
@@ -107,7 +118,7 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
       <a href="./index.html#contact">Contact</a><a class="vm-shared-register" href="./index.html#register">Register College</a>
     </nav>
   </div>
-</header>
+</header><div class="vm-inner-sponsored-strip" role="region" aria-label="Sponsored college promotions"><span class="vm-inner-sponsored-label">🔥 Sponsored</span><div class="vm-inner-sponsored-track"><span class="vm-inner-sponsored-text">SHOW YOUR COLLEGE HERE · VidyaMap · Promote your college with approved posters and videos · Campaigns display after approval</span></div></div>
 <div class="vm-sponsored-bar" aria-label="Scrolling sponsored college promotions"><span class="vm-sponsored-label">🔥 Sponsored</span><div class="vm-sponsored-message"><div class="vm-sponsored-track"><span><strong>SHOW YOUR COLLEGE HERE - VidyaMap</strong> · Promote your college with posters and videos　 |　 <strong>GET MORE ADMISSIONS</strong> · Digital Marketing for Colleges　 |　 WHATSAPP · META ADS · YOUTUBE ADS · WEBSITE SEO　 |　 Advertise with VidyaMap today</span><span aria-hidden="true"><strong>SHOW YOUR COLLEGE HERE - VidyaMap</strong> · Promote your college with posters and videos　 |　 <strong>GET MORE ADMISSIONS</strong> · Digital Marketing for Colleges　 |　 WHATSAPP · META ADS · YOUTUBE ADS · WEBSITE SEO　 |　 Advertise with VidyaMap today</span></div></div></div><main><div class="eyebrow">OUR VISION</div><div class="hero"><div class="icon" aria-hidden="true">🌱</div><h1>A more informed path to education</h1><p class="desc">Our vision is to build a trusted, accessible education discovery platform where students can make informed choices and institutions can reach learners who are looking for suitable opportunities.</p><div class="actions"><a class="btn" href="./about.html">All About Pages</a></div></div></main><footer>VidyaMap · Find. Promote. Grow.<section class="vm-approved-ad-slot" id="vmPageAdSlot" data-vm-ad-slot data-kind="mixed"><div class="vm-approved-ad-inner"><div class="vm-approved-ad-kicker"><span>VidyaMap · Sponsored showcase</span><span class="vm-approved-ad-badge">AD</span></div><h2 class="vm-approved-ad-title">College promotions</h2><p class="vm-approved-ad-sub">Approved college posters and videos appear here during active campaigns.</p><div class="vm-approved-ad-track"><div class="vm-approved-ad-empty">Approved college promotions will appear here.</div></div></div></section></footer><script id="vm-shared-navigation">(function(){const nav=document.getElementById('vmSharedLinks');if(!nav)return;const toggle=document.querySelector('.vm-shared-toggle'),drop=document.querySelector('.vm-shared-dropdown'),about=document.querySelector('.vm-shared-about');if(toggle)toggle.addEventListener('click',()=>{const open=nav.classList.toggle('is-open');toggle.setAttribute('aria-expanded',String(open));});if(about)about.addEventListener('click',e=>{if(window.matchMedia('(max-width:820px)').matches){e.preventDefault();const open=drop.classList.toggle('is-open');about.setAttribute('aria-expanded',String(open));}});document.addEventListener('click',e=>{if(drop&&!drop.contains(e.target)){drop.classList.remove('is-open');about?.setAttribute('aria-expanded','false')}if(toggle&&!nav.contains(e.target)&&!toggle.contains(e.target)){nav.classList.remove('is-open');toggle.setAttribute('aria-expanded','false')}});const current=location.pathname.split('/').pop()||'index.html',hash=location.hash;let active=null;for(const a of nav.querySelectorAll('a[href]')){try{const u=new URL(a.href,location.href);if(u.pathname.split('/').pop()===current&&u.hash==='')active=a;if(current==='index.html'&&hash&&u.pathname.split('/').pop()==='index.html'&&u.hash===hash)active=a}catch(e){}}if(active){active.setAttribute('aria-current','page');const d=active.closest('.vm-shared-dropdown');if(d){d.classList.add('is-current');about?.setAttribute('aria-current','page')}}})();</script>
 <script id="vm-approved-ad-slots-script">
 (async function(){
@@ -163,5 +174,37 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
  document.head.append(style);document.body.append(wrap);
  const btn=wrap.querySelector("button");const update=()=>btn.classList.toggle("visible",window.scrollY>360);
  window.addEventListener("scroll",update,{passive:true});btn.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));update();
+})();
+</script><script id="vm-scroll-and-sponsored-fix">
+(function(){
+ function repairScroll(){
+  const capture=document.getElementById("studentLeadCapture");
+  const modalOpen=!!(capture&&!capture.hidden&&capture.classList.contains("vm-lead-modal")&&document.body.classList.contains("vm-lead-modal-open"));
+  if(!modalOpen)document.body.classList.remove("vm-lead-modal-open");
+  document.documentElement.style.setProperty("overflow-y","auto","important");
+  document.body.style.setProperty("overflow-y","auto","important");
+  document.body.style.setProperty("height","auto","important");
+  document.body.style.setProperty("min-height","100%","important");
+  if(location.hash){
+   const id=decodeURIComponent(location.hash.slice(1));
+   if(id&&id!=="contact"&&id!=="register"&&id!=="studentLeadCapture"){
+    const target=document.getElementById(id);
+    if(target&&window.scrollY===0)setTimeout(()=>target.scrollIntoView({block:"start",behavior:"smooth"}),80);
+   }
+  }
+ }
+ window.addEventListener("pageshow",repairScroll);
+ window.addEventListener("hashchange",()=>setTimeout(repairScroll,0));
+ document.addEventListener("DOMContentLoaded",repairScroll);
+ window.addEventListener("load",repairScroll);
+ document.addEventListener("click",e=>{
+  const a=e.target.closest('a[href]');
+  if(!a)return;
+  const url=new URL(a.href,location.href);
+  if(url.origin===location.origin&&url.pathname===location.pathname&&url.hash){
+   const target=document.getElementById(decodeURIComponent(url.hash.slice(1)));
+   if(target){e.preventDefault();history.pushState(null,"",url.hash);target.scrollIntoView({behavior:"smooth",block:"start"});}
+  }
+ });
 })();
 </script></body></html>
