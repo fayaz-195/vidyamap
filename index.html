@@ -841,7 +841,13 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 @media(min-width:1100px){.hero-grid{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)!important}}
 @media(max-width:850px){.hero{padding:34px 0 24px!important}.hero-grid{margin-bottom:22px!important}.vm-audience-strip{margin-bottom:0!important;padding:10px!important}.vm-audience-item{padding:7px 9px!important;gap:8px}.vm-audience-item+.vm-audience-item{padding-left:12px!important}.vm-audience-item>span{flex-basis:36px!important;width:36px!important;height:36px!important}}
 @media(max-width:640px){.hero-grid{grid-template-columns:1fr!important}.hero-panel{width:100%;margin-top:4px!important}.vm-audience-strip{grid-template-columns:1fr!important;gap:0!important}.vm-audience-item,.vm-audience-item+.vm-audience-item{border-left:0!important;border-top:1px solid #e4e7f5;padding:9px 5px!important}.vm-audience-item:first-child{border-top:0}.vm-audience-item>span{flex-basis:38px!important;width:38px!important;height:38px!important}}
-</style></style></style>
+<style id="vm-audience-alignment-fix">
+.vm-audience-outer{position:relative;z-index:3;margin-top:-8px;margin-bottom:28px}
+.vm-audience-outer .vm-audience-strip{width:100%!important;max-width:none!important;margin:0!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:center!important;padding:16px 22px!important;border-radius:20px!important;background:linear-gradient(110deg,#ffffff,#f6f3ff 60%,#eef5ff)!important;border:1px solid #e0e4f5!important;box-shadow:0 12px 28px #20345c10!important}
+.vm-audience-outer .vm-audience-item{min-width:0;display:flex!important;align-items:center!important;gap:12px!important;padding:8px 18px!important}
+.vm-audience-outer .vm-audience-item+.vm-audience-item{border-left:1px solid #dce1f2!important;padding-left:22px!important}
+@media(max-width:640px){.vm-audience-outer{margin-top:0;margin-bottom:20px}.vm-audience-outer .vm-audience-strip{grid-template-columns:1fr!important;padding:10px 14px!important}.vm-audience-outer .vm-audience-item,.vm-audience-outer .vm-audience-item+.vm-audience-item{border-left:0!important;border-top:1px solid #e4e7f5!important;padding:10px 4px!important}.vm-audience-outer .vm-audience-item:first-child{border-top:0!important}}
+</style></style></style></style>
 <style>
 /* Three distinct product panels */
 .vm-panel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;margin-top:30px}
@@ -922,11 +928,7 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 <a class="btn btn-outline" href="#register">List Your Institution</a>
 </div>
 <p class="muted">A smarter starting point for students, parents and institutions.</p>
-<div class="vm-audience-strip" aria-label="Who VidyaMap helps">
- <div class="vm-audience-item"><span aria-hidden="true">👥</span><div><strong>For Students</strong><small>Explore &amp; Compare</small></div></div>
- <div class="vm-audience-item"><span aria-hidden="true">👨‍👩‍👧</span><div><strong>For Parents</strong><small>Get Trusted Information</small></div></div>
- <div class="vm-audience-item"><span aria-hidden="true">🏛️</span><div><strong>For Institutions</strong><small>Promote &amp; Connect</small></div></div>
-</div>
+
 </div>
 <div class="hero-panel vm-edu-overlay" aria-label="Explore education categories">
   <div class="vm-edu-card vm-edu-schools"><span class="vm-edu-icon">🏫</span><span><strong>Schools</strong><small>Foundational Learning</small></span><i></i></div>
@@ -940,6 +942,11 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 </div>
 
 </section>
+<div class="container vm-audience-outer"><div class="vm-audience-strip" aria-label="Who VidyaMap helps">
+ <div class="vm-audience-item"><span aria-hidden="true">👥</span><div><strong>For Students</strong><small>Explore &amp; Compare</small></div></div>
+ <div class="vm-audience-item"><span aria-hidden="true">👨‍👩‍👧</span><div><strong>For Parents</strong><small>Get Trusted Information</small></div></div>
+ <div class="vm-audience-item"><span aria-hidden="true">🏛️</span><div><strong>For Institutions</strong><small>Promote &amp; Connect</small></div></div>
+</div></div>
 
 <section class="section" id="studentLeadCapture" style="padding:28px 0 18px">
   <div class="container">
