@@ -14,38 +14,48 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Validate HTML structure and inline JavaScript syntax
+      - name: Validate every public HTML page and inline JavaScript
         run: |
           node <<'NODE'
           const fs = require('fs');
           const vm = require('vm');
-          const html = fs.readFileSync('index.html', 'utf8');
-          const assert = (condition, message) => {
+          const pages = fs.readdirSync('.').filter(name => name.endsWith('.html')).sort();
+          let failures = 0;
+          const check = (condition, message) => {
             if (!condition) {
               console.error('FAIL:', message);
-              process.exitCode = 1;
+              failures++;
             } else {
               console.log('PASS:', message);
             }
           };
-          assert(/<!doctype html/i.test(html), 'doctype exists');
-          assert(/<html\b/i.test(html) && /<\/html>\s*$/i.test(html), 'HTML root is closed');
-          assert(/name=["']viewport["']/i.test(html), 'responsive viewport is configured');
-          const ids = [...html.matchAll(/\bid=["']([^"']+)["']/g)].map(m => m[1]);
-          const duplicates = ids.filter((id, i) => ids.indexOf(id) !== i);
-          assert(duplicates.length === 0, 'HTML IDs are unique' + (duplicates.length ? ': ' + [...new Set(duplicates)].join(', ') : ''));
-          const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)];
-          assert(scripts.length > 0, 'inline scripts are present');
-          assert((html.match(/<script\b/gi) || []).length === scripts.length, 'all script tags are closed');
-          scripts.forEach((match, index) => {
-            const code = match[1].trim();
-            if (!code) return;
-            try {
-              new vm.Script(code, { filename: 'inline-script-' + (index + 1) + '.js' });
-              console.log('PASS: inline JavaScript syntax #' + (index + 1));
-            } catch (error) {
-              console.error('FAIL: inline JavaScript syntax #' + (index + 1) + ':', error.message);
-              process.exitCode = 1;
-            }
-          });
+          check(pages.length >= 1, 'HTML pages discovered');
+          for (const file of pages) {
+            const html = fs.readFileSync(file, 'utf8');
+            const label = file + ': ';
+            check(/<!doctype html/i.test(html), label + 'doctype exists');
+            check(/<html\b/i.test(html) && /<\/html>\s*$/i.test(html), label + 'HTML root is closed');
+            check(/name=["']viewport["']/i.test(html), label + 'responsive viewport is configured');
+            const ids = [...html.matchAll(/\bid=["']([^"']+)["']/g)].map(match => match[1]);
+            const duplicates = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
+            check(duplicates.length === 0, label + 'IDs are unique' + (duplicates.length ? ': ' + duplicates.join(', ') : ''));
+            const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)];
+            check((html.match(/<script\b/gi) || []).length === scripts.length, label + 'all script tags are closed');
+            scripts.forEach((match, index) => {
+              const code = match[1].trim();
+              if (!code) return;
+              try {
+                new vm.Script(code, { filename: file + ':inline-script-' + (index + 1) + '.js' });
+                console.log('PASS:', label + 'inline JavaScript syntax #' + (index + 1));
+              } catch (error) {
+                console.error('FAIL:', label + 'inline JavaScript syntax #' + (index + 1) + ': ' + error.message);
+                failures++;
+              }
+            });
+          }
+          if (failures) {
+            console.error('Static checks failed:', failures);
+            process.exit(1);
+          }
+          console.log('All static checks passed for ' + pages.length + ' HTML pages.');
           NODE
