@@ -80,6 +80,32 @@ input:focus,select:focus,textarea:focus{outline:3px solid #8b39ac28!important;bo
 .vm-approved-ad-inner{border:1px solid #e4d9f5!important;background:#ffffffd9!important}
 footer{background:linear-gradient(120deg,#0d2444,#26245d 65%,#42205f)!important;color:#e9edff!important}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+</style><style id="vm-section-spacing-refresh">
+/* Comfortable breathing room between major content sections */
+main>section:not(.hero):not(.profile-dialog),
+body>section:not(.hero):not(.profile-dialog),
+section.section:not(#studentLeadCapture),
+section.feature-section,
+section.register,
+section.vm-approved-ad-slot{
+  scroll-margin-top:110px;
+}
+main>section:not(.hero):not(.profile-dialog),
+body>section:not(.hero):not(.profile-dialog){
+  margin-block:clamp(12px,1.8vw,24px);
+}
+section.section:not(#studentLeadCapture),
+section.feature-section,
+section.register{
+  padding-block:clamp(52px,6vw,78px)!important;
+}
+section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
+@media(max-width:650px){
+ main>section:not(.hero):not(.profile-dialog),
+ body>section:not(.hero):not(.profile-dialog){margin-block:10px}
+ section.section:not(#studentLeadCapture),section.feature-section,section.register{padding-block:44px!important}
+ section.vm-approved-ad-slot{padding-block:26px!important}
+}
 </style></style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body>
 <header class="vm-shared-header">
