@@ -2389,5 +2389,17 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
 /* Keep the header's main sponsored strip; hide the redundant rotating ticker. */
 .vm-ad-ticker{display:none!important}
 </style>
+<style id="vm-scroll-and-hero-sharpness">
+/* Restore normal document scrolling; the hero artwork should not trap the page. */
+html{height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:auto!important;scroll-behavior:auto!important}
+body{height:auto!important;min-height:100vh!important;overflow-x:hidden!important;overflow-y:auto!important;position:static!important}
+main{overflow:visible!important}
+.hero{overflow:visible!important}
+.hero::before{pointer-events:none!important}
+.hero-panel.vm-edu-overlay{overflow:visible!important}
+.vm-edu-card{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.vm-edu-card strong,.vm-edu-card small{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+</style>
 </body>
 </html>
