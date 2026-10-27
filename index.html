@@ -836,7 +836,8 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 <div class="container hero-grid">
 <div>
 <div class="eyebrow">Find. Promote. Grow.</div>
-<h1>Find the right college.<br>Build your future.</h1>
+<div class="vm-hero-brand-pill"><span>🎓</span> VIDYAMAP</div>
+<h1>Find the right <span class="vm-hero-gradient">college.</span><br>Build your <span class="vm-hero-gradient vm-hero-underline">future.</span></h1>
 <p class="hero-copy">Explore educational institutions, compare courses and discover opportunities across Telangana and Andhra Pradesh.</p>
 <div class="hero-actions">
 <a class="btn" href="#find">Find a College →</a>
@@ -859,7 +860,14 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
   <div class="floating-category cat-coaching"><span>👥</span><b>Coaching Centres</b><i></i></div>
   <div class="floating-category cat-university"><span>🏫</span><b>Universities</b><i></i></div>
   <div class="hero-panel-bottom"><strong>Find your path.</strong><span>Explore · Connect · Grow</span></div>
+  <div class="vm-hero-campus" aria-hidden="true"><span>✦</span><b>✦</b><i>✦</i></div>
 </div>
+</div>
+<div class="vm-trust-strip" aria-label="VidyaMap benefits">
+  <div class="vm-trust-item"><span class="vm-trust-icon">📖</span><div><strong>Multiple Courses</strong><small>Explore Options</small></div></div>
+  <div class="vm-trust-item"><span class="vm-trust-icon">📍</span><div><strong>Across AP &amp; TS</strong><small>Wide Coverage</small></div></div>
+  <div class="vm-trust-item"><span class="vm-trust-icon">📊</span><div><strong>Compare Easily</strong><small>Make Better Decisions</small></div></div>
+  <div class="vm-trust-item"><span class="vm-trust-icon">🛡️</span><div><strong>Trusted Platform</strong><small>For Your Future</small></div></div>
 </div>
 </section>
 
@@ -1206,6 +1214,91 @@ body.college-portal-mode #accountDashboard{display:block!important}
  .vm-register-demo-panel{height:210px!important;min-height:210px!important;padding:22px!important;gap:9px}
  .vm-register-demo-panel strong{font-size:22px!important}
  .vm-register-demo-panel p{font-size:14px!important}
+}
+
+
+/* VIDYAMAP highlighted hero redesign */
+.hero{
+  padding:54px 0 36px!important;
+  background:
+    radial-gradient(ellipse at 77% 10%,rgba(55,133,255,.17),transparent 34%),
+    radial-gradient(ellipse at 95% 65%,rgba(116,39,236,.18),transparent 38%),
+    linear-gradient(115deg,#fff 0%,#fbfaff 38%,#f1efff 100%)!important;
+}
+.hero-grid{grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr)!important;gap:34px!important;align-items:center!important}
+.vm-hero-brand-pill{display:inline-flex;align-items:center;gap:9px;padding:9px 17px;margin-bottom:14px;border:1px solid #e3dcff;border-radius:999px;background:#ffffffc9;color:#6425d5;font-size:12px;font-weight:900;letter-spacing:1.7px;box-shadow:0 6px 18px #6b48d30d}
+.vm-hero-brand-pill span{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#eee7ff;font-size:16px}
+.hero .eyebrow{font-size:13px;letter-spacing:3px;color:#273d70}
+.hero h1{font-size:clamp(44px,5vw,74px)!important;line-height:1.03!important;letter-spacing:-2.5px!important;margin:10px 0 20px!important;color:#102e5b}
+.vm-hero-gradient{background:linear-gradient(100deg,#7026e9,#a11bd4 55%,#2b6df5);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vm-hero-underline{position:relative;white-space:nowrap}
+.vm-hero-underline:after{content:"";position:absolute;left:2%;right:-2%;height:5px;bottom:-8px;border-radius:99px;background:linear-gradient(90deg,#3b82f6,#a855f7);transform:rotate(-2deg);opacity:.75}
+.hero-copy{font-size:clamp(17px,1.35vw,21px)!important;line-height:1.65!important;max-width:590px;color:#586b8e}
+.hero-actions{gap:14px!important;margin:26px 0 18px!important}
+.hero-actions .btn{min-height:58px;padding:16px 24px!important;border-radius:18px!important;font-size:16px;box-shadow:0 12px 28px #6323bf25}
+.hero-actions .btn:first-child{background:linear-gradient(110deg,#a20fce,#5914b5)!important}
+.hero-actions .btn-outline{border:1px solid #d7d5f4!important;background:#ffffffde!important}
+.hero>.container>.hero-grid>div:first-child>.muted{font-size:14px;margin-top:20px}
+.hero-panel{min-height:490px!important;border-radius:30px!important;background:
+ radial-gradient(circle at 78% 18%,#ffffff45,transparent 20%),
+ linear-gradient(135deg,#2789f7 0%,#6354f5 42%,#7c26ed 72%,#4520a7 100%)!important;
+ border:1px solid #ffffffc9!important;box-shadow:0 26px 70px #4d35b53b!important;animation:none!important}
+.hero-panel:before{width:300px;height:300px;right:-80px;top:-120px;border-color:#ffffff55;box-shadow:0 0 0 24px #ffffff10,0 0 0 50px #ffffff08}
+.hero-panel:after{height:40%;bottom:-12%;background:linear-gradient(180deg,#b7c7ffb5,#c9baffc9 60%,#f3efff)!important;border-top:3px solid #ffffffd9}
+.hero-art-heading{top:24px;left:26px;color:#fff!important;text-shadow:0 2px 10px #2c237a60}
+.hero-art-orbit{border-color:#ffffff70}
+.orbit-two{border-color:#ffffff8c}
+.hero-art-skyline{bottom:25%;color:#ffffffb5;font-size:clamp(40px,5vw,72px);text-shadow:0 4px 15px #28228b65}
+.map-road{height:23%;bottom:8%;background:linear-gradient(180deg,#a08bff,#6c46e7)!important;box-shadow:0 8px 25px #3a1ba66e;border-width:10px}
+.student-illustration{left:48%;bottom:10%;transform:scale(1.08);transform-origin:bottom center}
+.floating-category{box-shadow:0 14px 32px #211c6b2c;border-color:#ffffff}
+.hero-panel-bottom{bottom:22px;color:#1d3565}
+.hero-panel-bottom strong{font-size:18px}
+.vm-hero-campus{position:absolute;z-index:2;left:62%;top:34%;width:96px;height:78px;background:linear-gradient(180deg,#ffddfa,#f18eff 55%,#bd58f5);clip-path:polygon(50% 0,100% 25%,94% 33%,94% 100%,6% 100%,6% 33%,0 25%);filter:drop-shadow(0 6px 12px #30207c75);opacity:.95}
+.vm-hero-campus:before{content:"";position:absolute;inset:24px 14px 0;background:repeating-linear-gradient(90deg,#fff8 0 7px,transparent 7px 18px)}
+.vm-hero-campus span,.vm-hero-campus b,.vm-hero-campus i{position:absolute;top:12px;left:45%;font-style:normal;color:#fff;font-size:10px}
+.vm-hero-campus b{left:25%}.vm-hero-campus i{left:65%}
+.vm-trust-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:28px 0 0;padding:15px 10px;background:#ffffffbd;border:1px solid #e2e5fb;border-radius:22px;box-shadow:0 15px 40px #35277d12;backdrop-filter:blur(16px)}
+.vm-trust-item{display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 12px;border-right:1px solid #e1e5f3;min-width:0}
+.vm-trust-item:last-child{border-right:0}
+.vm-trust-icon{width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#e9dcff,#dceeff);font-size:21px}
+.vm-trust-item strong{display:block;font-size:13px;line-height:1.35;color:#172e5b}
+.vm-trust-item small{display:block;font-size:11px;line-height:1.4;margin-top:3px;color:#697a9c}
+@media(max-width:1050px){
+ .hero{padding:36px 0 28px!important}
+ .hero-grid{grid-template-columns:minmax(0,1fr)!important;gap:26px!important}
+ .hero-panel{min-height:430px!important}
+ .vm-trust-strip{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:8px}
+ .vm-trust-item:nth-child(2){border-right:0}
+}
+@media(max-width:640px){
+ .hero{padding:28px 0 22px!important}
+ .hero-grid{gap:20px!important}
+ .vm-hero-brand-pill{margin-bottom:9px;padding:7px 13px}
+ .hero h1{font-size:clamp(38px,10.3vw,52px)!important;line-height:1.06!important;letter-spacing:-1.8px!important;margin:8px 0 14px!important}
+ .hero-copy{font-size:16px!important;line-height:1.55!important}
+ .hero-actions{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;margin:18px 0 12px!important}
+ .hero-actions .btn{width:100%;box-sizing:border-box;justify-content:center;min-height:52px;padding:14px 18px!important}
+ .hero-panel{min-height:360px!important;border-radius:22px!important}
+ .hero-art-heading{font-size:9px;top:15px;left:15px;letter-spacing:1.3px}
+ .floating-category{min-height:43px;padding:7px 8px;gap:5px;border-radius:12px;max-width:145px;font-size:10px}
+ .floating-category span{width:25px;height:25px;flex-basis:25px;border-radius:8px;font-size:15px}
+ .floating-category b{font-size:9px}
+ .cat-school{top:17%;left:3%}.cat-junior{top:17%;left:38%}.cat-degree{top:19%;right:2%}
+ .cat-engineering{top:42%;left:3%}.cat-diploma{top:43%;right:2%}
+ .cat-coaching{top:65%;left:2%}.cat-university{top:65%;right:2%}
+ .student-illustration{left:43%;bottom:10%;transform:scale(.76)}
+ .vm-hero-campus{left:59%;top:37%;transform:scale(.7)}
+ .hero-panel-bottom{left:15px;bottom:12px}
+ .hero-panel-bottom strong{font-size:14px}
+ .hero-panel-bottom span{font-size:9px}
+ .vm-trust-strip{grid-template-columns:1fr 1fr;margin-top:18px;padding:9px 4px;border-radius:17px}
+ .vm-trust-item{justify-content:flex-start;padding:8px 6px;gap:7px}
+ .vm-trust-item:nth-child(odd){border-right:1px solid #e1e5f3}
+ .vm-trust-item:nth-child(even){border-right:0}
+ .vm-trust-icon{width:32px;height:32px;flex-basis:32px;font-size:16px}
+ .vm-trust-item strong{font-size:10px}
+ .vm-trust-item small{font-size:9px}
 }
 
 </style>
