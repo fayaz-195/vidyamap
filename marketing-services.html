@@ -48,8 +48,21 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!import
 .vm-shared-toggle{display:none;border:1px solid #e4dcf8;border-radius:13px;background:linear-gradient(145deg,#fff,#f1eaff);color:#61209a;font-size:22px;width:46px;height:46px;cursor:pointer}
 @media(max-width:1000px){.vm-shared-nav{width:calc(100% - 24px);gap:10px}.vm-shared-brand img{height:52px;max-width:165px}.vm-shared-links{gap:4px}.vm-shared-links>a,.vm-shared-about{padding:10px 8px;font-size:12px}}
 @media(max-width:820px){.vm-shared-nav{min-height:74px}.vm-shared-toggle{display:block}.vm-shared-links{display:none;position:absolute;top:calc(100% + 8px);left:12px;right:12px;align-items:stretch;flex-direction:column;padding:13px;border:1px solid #e5def7;border-radius:18px;background:#fffffff7;box-shadow:0 18px 42px #19234c2e;backdrop-filter:blur(16px)}.vm-shared-links.is-open{display:flex}.vm-shared-links>a,.vm-shared-about{width:100%;justify-content:flex-start;font-size:14px;padding:12px}.vm-shared-dropdown{width:100%}.vm-shared-menu{position:static;min-width:0;margin:5px 0 8px 8px;box-shadow:none;background:#fbfaff}.vm-shared-register{justify-content:center!important}.vm-shared-brand img{height:48px;max-width:150px}}
-</style>
-</head><body>
+<style id="vm-approved-ad-slots-css">
+.vm-approved-ad-slot{position:relative;overflow:hidden;padding:34px 0;background:linear-gradient(115deg,#f5f0ff,#eef6ff 55%,#fff8ef);border-block:1px solid #e7def8}
+.vm-approved-ad-inner{width:min(1180px,92%);margin:auto;border:1px solid #e3d8f5;background:#ffffffc9;border-radius:24px;padding:20px;box-shadow:0 16px 40px #29345d10}
+.vm-approved-ad-kicker{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#7022a0;font-size:11px;font-weight:900;letter-spacing:1.7px;text-transform:uppercase}
+.vm-approved-ad-badge{border:1px solid #dac8f1;border-radius:99px;padding:4px 9px;background:white;letter-spacing:1px}
+.vm-approved-ad-title{font-size:clamp(20px,3vw,29px);line-height:1.2;margin:9px 0;color:#122d54}
+.vm-approved-ad-sub{margin:0 0 16px;color:#66728a;font-size:14px}
+.vm-approved-ad-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(240px,32%);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 12px;scrollbar-width:thin}
+.vm-approved-ad-card{scroll-snap-align:start;min-width:0;overflow:hidden;border:1px solid #e5e5f2;border-radius:18px;background:#fff;box-shadow:0 10px 25px #1b2d4b0b}
+.vm-approved-ad-media{display:block;width:100%;height:190px;object-fit:cover;background:#e9e7f3}.vm-approved-ad-card video{display:block;width:100%;height:190px;object-fit:cover;background:#111}
+.vm-approved-ad-copy{padding:14px}.vm-approved-ad-copy h3{font-size:17px;line-height:1.3;margin:0 0 6px;color:#132d53}.vm-approved-ad-copy p{font-size:13px;color:#65718a;margin:0 0 9px}.vm-approved-ad-meta{font-size:11px;color:#7a3ba0;font-weight:800;margin-bottom:9px}.vm-approved-ad-link{display:inline-flex;padding:8px 12px;border-radius:9px;background:linear-gradient(120deg,#7823a0,#433fc0);color:white!important;font-size:12px;font-weight:800;text-decoration:none}
+.vm-approved-ad-empty{border:1px dashed #cfc4e5;border-radius:14px;padding:18px;color:#6a7287;background:#fbfaff;font-size:13px}
+@media(max-width:650px){.vm-approved-ad-slot{padding:22px 0}.vm-approved-ad-inner{padding:14px;border-radius:18px}.vm-approved-ad-track{grid-auto-columns:minmax(230px,84%)}.vm-approved-ad-media,.vm-approved-ad-card video{height:165px}}
+</style></style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body>
 <header class="vm-shared-header">
   <div class="vm-shared-nav">
     <a class="vm-shared-brand" href="./index.html" aria-label="VidyaMap Home"><img src="./vidyamap-logo.png" alt="VidyaMap"></a>
@@ -92,7 +105,7 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!import
 <section class="section" style="padding-top:0"><div class="container"><div class="section-title"><div class="eyebrow">How it works</div><h2>A simple process</h2></div><div class="steps"><div class="step"><strong>01 · DISCOVER</strong><h3>Understand your goals</h3><p>We discuss your institution, audience, key message, and preferred channels.</p></div><div class="step"><strong>02 · CREATE</strong><h3>Prepare the campaign</h3><p>We shape the creative assets and promotion plan around the agreed brief.</p></div><div class="step"><strong>03 · REVIEW</strong><h3>Learn and improve</h3><p>Review available campaign signals and identify practical next steps. Specific outcomes are not guaranteed.</p></div></div></div></section>
 <section class="container cta"><div><h2>Ready to promote your college or business?</h2><p>Tell us what you want to promote and which audience you want to reach.</p></div><a class="button" href="./index.html#register">Register / Contact VidyaMap →</a></section>
 </main>
-<footer><div class="container">© VidyaMap · Find. Promote. Grow.</div></footer>
+<footer><div class="container">© VidyaMap · Find. Promote. Grow.</div><section class="vm-approved-ad-slot" id="vmPageAdSlot" data-vm-ad-slot data-kind="mixed"><div class="vm-approved-ad-inner"><div class="vm-approved-ad-kicker"><span>VidyaMap · Sponsored showcase</span><span class="vm-approved-ad-badge">AD</span></div><h2 class="vm-approved-ad-title">College promotions</h2><p class="vm-approved-ad-sub">Approved college posters and videos appear here during active campaigns.</p><div class="vm-approved-ad-track"><div class="vm-approved-ad-empty">Approved college promotions will appear here.</div></div></div></section></footer>
 <script id="vm-shared-navigation">
 (function(){const nav=document.getElementById('vmSharedLinks');if(!nav)return;const toggle=document.querySelector('.vm-shared-toggle');const drop=document.querySelector('.vm-shared-dropdown');const about=document.querySelector('.vm-shared-about');
 if(toggle)toggle.addEventListener('click',()=>{const open=nav.classList.toggle('is-open');toggle.setAttribute('aria-expanded',String(open));});
@@ -103,4 +116,38 @@ for(const a of nav.querySelectorAll('a[href]')){try{const u=new URL(a.href,locat
 if(active){active.setAttribute('aria-current','page');const d=active.closest('.vm-shared-dropdown');if(d){d.classList.add('is-current');about?.setAttribute('aria-current','page');}const menuLink=active.closest('.vm-shared-menu');if(menuLink){about?.setAttribute('aria-current','page');}}
 })();
 </script>
-</body></html>
+<script id="vm-approved-ad-slots-script">
+(async function(){
+ const slots=[...document.querySelectorAll("[data-vm-ad-slot]")];if(!slots.length)return;
+ const putEmpty=(slot)=>{const track=slot.querySelector(".vm-approved-ad-track");if(!track)return;const e=document.createElement("div");e.className="vm-approved-ad-empty";e.textContent="Approved college promotions will appear here when an active campaign matches this placement.";track.replaceChildren(e)};
+ slots.forEach(putEmpty);
+ if(!window.supabase)return;
+ try{
+  const client=window.supabase.createClient("https://taxlvccrinehasexgvhv.supabase.co","sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA");
+  const {data,error}=await client.from("college_ad_campaigns").select("id,college_id,title,description,media_type,media_url,click_url,starts_at,ends_at,payment_status,status").eq("status","approved").eq("payment_status","paid").order("created_at",{ascending:false}).limit(100);
+  if(error)throw error;
+  const now=new Date(),active=(data||[]).filter(c=>c.media_url&&(!c.starts_at||new Date(c.starts_at)<=now)&&(!c.ends_at||new Date(c.ends_at)>=now));
+  const ids=[...new Set(active.map(c=>c.college_id).filter(Boolean))];let collegeMap=new Map();
+  if(ids.length){const cr=await client.from("colleges").select("id,name,status").in("id",ids).eq("status","verified");if(!cr.error)collegeMap=new Map((cr.data||[]).map(c=>[c.id,c]));}
+  const usable=active.filter(c=>collegeMap.has(c.college_id));
+  slots.forEach((slot,slotIndex)=>{
+   const track=slot.querySelector(".vm-approved-ad-track");if(!track)return;
+   const kind=slot.dataset.kind||"mixed";
+   let items=usable.filter(c=>kind==="image"?c.media_type!=="video":kind==="video"?c.media_type==="video":true);
+   if(!items.length){putEmpty(slot);return}
+   const offset=slotIndex%items.length;items=items.slice(offset).concat(items.slice(0,offset));
+   track.replaceChildren();
+   items.slice(0,6).forEach(c=>{
+    const card=document.createElement("article");card.className="vm-approved-ad-card";
+    if(c.media_type==="video"){const v=document.createElement("video");v.src=c.media_url;v.controls=true;v.preload="metadata";v.playsInline=true;v.setAttribute("aria-label",c.title||"College promotion video");card.append(v)}
+    else{const img=document.createElement("img");img.className="vm-approved-ad-media";img.src=c.media_url;img.alt=c.title||"College promotion";img.loading="lazy";card.append(img)}
+    const copy=document.createElement("div");copy.className="vm-approved-ad-copy";const meta=document.createElement("div");meta.className="vm-approved-ad-meta";meta.textContent="SPONSORED · "+(c.media_type==="video"?"VIDEO":"COLLEGE POSTER");
+    const h=document.createElement("h3");h.textContent=c.title||"College promotion";const p=document.createElement("p");p.textContent=c.description||collegeMap.get(c.college_id).name;copy.append(meta,h,p);
+    const org=document.createElement("p");org.textContent=collegeMap.get(c.college_id).name;copy.append(org);
+    if(c.click_url){try{const u=new URL(c.click_url);if(["https:","http:"].includes(u.protocol)){const a=document.createElement("a");a.className="vm-approved-ad-link";a.href=u.href;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Explore promotion →";copy.append(a)}}catch{}}
+    card.append(copy);track.append(card);
+   });
+  });
+ }catch(err){console.warn("Approved ad slots unavailable",err);}
+})();
+</script></body></html>
