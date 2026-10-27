@@ -682,6 +682,20 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 
 /* Verified institution cards are displayed normally; no blur or preview lock. */
 
+/* Accessibility and mobile polish */
+:focus-visible{outline:3px solid #76208f!important;outline-offset:3px}
+button:disabled,[aria-disabled="true"]{cursor:not-allowed}
+img{max-width:100%}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+@media(max-width:560px){
+  .container{padding-left:16px;padding-right:16px}
+  input,select,textarea,button{max-width:100%}
+  .form-grid{grid-template-columns:minmax(0,1fr)!important}
+}
+
 /* Preview-lock institution directory cards */
 .vm-directory-locked{position:relative;overflow:hidden}
 .vm-directory-locked>*:not(.vm-directory-lock-overlay){filter:blur(4px);user-select:none}
@@ -1531,7 +1545,23 @@ $("resetSearch").addEventListener("click", () => {
 
 $("registerForm").addEventListener("submit", ev => {
   ev.preventDefault();
-  showNotice($("formNotice"), "The callback form design is ready. Email delivery and lead saving have not been connected yet.", "success");
+  const form = ev.currentTarget;
+  const phone = $("phone");
+  const digits = (phone.value || "").replace(/\\D/g, "");
+  phone.setCustomValidity("");
+  if (digits.length < 10 || digits.length > 13) {
+    phone.setCustomValidity("Enter a valid phone number with 10 to 13 digits.");
+    phone.reportValidity();
+    return;
+  }
+  // Do not report a false success: the current database policy does not permit
+  // anonymous writes to college_registration_requests. A secure server endpoint
+  // must be configured before this form can create a real lead.
+  showNotice(
+    $("formNotice"),
+    "Your details have not been submitted yet because secure online submission is being configured. Please contact the VidyaMap team directly; do not submit sensitive information here.",
+    "error"
+  );
 });
 
 $("year").textContent = new Date().getFullYear();
