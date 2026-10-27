@@ -13,7 +13,12 @@ h1{font-size:clamp(36px,5vw,56px);line-height:1.08;letter-spacing:-1.5px;color:v
 .search-panel{margin:14px auto 30px;padding:22px;background:#ffffffdf;border:1px solid #fff;border-radius:22px;box-shadow:0 15px 40px #30437415}
 .filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:14px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:6px;color:var(--navy)}input,select{width:100%;padding:12px 13px;border:1px solid #d9dfee;border-radius:11px;background:#fff;color:var(--ink);min-height:46px}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:11px;padding:12px 17px;background:linear-gradient(120deg,#76208f,#4b36c7);color:#fff;font-weight:800;cursor:pointer}.btn.secondary{background:#fff;border:1px solid #d9dfee;color:var(--navy)}
-.status{color:var(--muted);font-size:14px;margin:18px 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;padding-bottom:70px}
+.status{color:var(--muted);font-size:14px;margin:18px 0}
+.compare-panel{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:8px 0 20px;padding:18px 20px;border:1px solid #e6d9f5;border-radius:18px;background:#f7f0ff}
+.compare-panel strong{color:var(--navy)}.compare-panel p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.compare-modal[hidden]{display:none}.compare-modal{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:20px}.compare-backdrop{position:absolute;inset:0;background:#0b1737a8;backdrop-filter:blur(4px)}.compare-dialog{position:relative;width:min(900px,100%);max-height:85vh;overflow:auto;padding:25px;background:#fff;border-radius:20px;box-shadow:0 25px 80px #0004}.close-compare{position:absolute;right:12px;top:10px;border:0;background:#f2edfa;border-radius:50%;width:36px;height:36px;font-size:24px;cursor:pointer}.compare-table{width:100%;border-collapse:collapse;margin-top:16px}.compare-table th,.compare-table td{text-align:left;padding:12px;border-bottom:1px solid #e8e8f2;vertical-align:top}.compare-table th{color:var(--navy);background:#f7f5fc}
+.compare-check{display:flex;align-items:center;gap:7px;margin-top:15px;font-size:12px;font-weight:700;color:var(--navy)}.compare-check input{width:auto;min-height:0}
+@media(max-width:560px){.compare-panel{align-items:flex-start;flex-direction:column}.compare-dialog{padding:20px 14px}.compare-table th,.compare-table td{padding:8px;font-size:12px}}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;padding-bottom:70px}
 .card{background:#ffffffed;border:1px solid #fff;border-radius:20px;padding:21px;box-shadow:0 13px 30px #30437412;min-width:0}.top{display:flex;gap:13px;align-items:center;margin-bottom:12px}.logo{width:54px;height:54px;flex:0 0 54px;border-radius:15px;background:linear-gradient(135deg,#f1e7ff,#e5edff);display:grid;place-items:center;color:var(--purple);font-weight:900;overflow:hidden}.logo img{width:100%;height:100%;object-fit:contain}.card h2{font-size:18px;line-height:1.3;color:var(--navy);margin:0 0 5px;overflow-wrap:anywhere}.location{font-size:12px;color:var(--muted)}.pill{display:inline-block;background:#e7f7ef;color:#146c43;border-radius:99px;padding:4px 9px;font-size:11px;font-weight:900;margin:2px 0 10px}.card p{color:var(--muted);font-size:14px;margin:8px 0 15px}.card-actions{display:flex;gap:8px;flex-wrap:wrap}.card-actions a,.card-actions button{font-size:12px;padding:9px 11px}.empty{grid-column:1/-1;padding:35px;text-align:center;color:var(--muted);background:#ffffffb8;border:1px dashed #d9dfee;border-radius:18px}
  .pagination{display:flex;justify-content:center;align-items:center;gap:12px;padding:0 0 60px}.pagination button:disabled{opacity:.4;cursor:not-allowed}footer{padding:24px 0;background:#0b2142;color:#dce6f5;font-size:13px}
 @media(max-width:1000px){.filters{grid-template-columns:repeat(3,minmax(0,1fr))}.filters .field:first-child{grid-column:1/-1}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -72,15 +77,25 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!import
 <div class="field"><label for="mandal">Mandal</label><select id="mandal"><option value="">All mandals</option></select></div>
 <div class="field"><label for="admissions">Admissions</label><select id="admissions"><option value="">All verified colleges</option><option value="open">Admissions marked open</option></select></div>
 </div><div class="actions"><button class="btn" type="submit">Search colleges →</button><button class="btn secondary" id="reset" type="reset">Reset filters</button></div></form>
+<section class="compare-panel" id="comparePanel"><div><strong>Compare colleges</strong><p>Select up to 3 verified colleges to compare their details.</p></div><button class="btn" id="openCompare" type="button" disabled>Compare selected (0)</button></section>
+<div class="compare-modal" id="compareModal" hidden><div class="compare-backdrop" data-close-compare></div><section class="compare-dialog" role="dialog" aria-modal="true" aria-label="Compare colleges"><button class="close-compare" type="button" data-close-compare aria-label="Close comparison">×</button><h2>Compare colleges</h2><div id="compareContent"></div></section></div>
 <div class="status" id="status" role="status">Loading verified institutions…</div><div class="grid" id="collegeGrid"><div class="empty">Loading colleges…</div></div><div class="pagination"><button class="btn secondary" id="prevPage" type="button" disabled>← Previous</button><span class="status" id="pageStatus">Page 1</span><button class="btn secondary" id="nextPage" type="button" disabled>Next →</button></div></div></section></main>
 <footer><div class="container">© VidyaMap · Find. Promote. Grow.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 "use strict";
+(function(){
+ const key="vidyamap_public_student_lead_v1";
+ let saved=null;try{saved=JSON.parse(sessionStorage.getItem(key)||"null")}catch{}
+ if(saved&&saved.lead_id)return;
+ const url=new URL(location.href);
+ const next="explore-colleges.html"+url.search;
+ location.replace("./index.html?next="+encodeURIComponent(next)+"#studentLeadCapture");
+})();
 const db=window.supabase.createClient("https://taxlvccrinehasexgvhv.supabase.co","sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA");
 const grid=document.getElementById("collegeGrid"),statusEl=document.getElementById("status");
 const districtSelect=document.getElementById("district"),mandalSelect=document.getElementById("mandal");
-const PAGE_SIZE=12;let colleges=[],districts=[],mandals=[],filtered=[],page=1;
+const PAGE_SIZE=12;let colleges=[],districts=[],mandals=[],filtered=[],page=1;const compareIds=new Set();
 function safeLink(raw){try{const u=new URL(raw);return ["https:","http:"].includes(u.protocol)?u.href:""}catch{return ""}}
 function setOptions(select,items,label){const old=select.value;select.innerHTML="";const first=document.createElement("option");first.value="";first.textContent=label;select.append(first);items.forEach(x=>{const o=document.createElement("option");o.value=String(x.id);o.textContent=x.name;select.append(o)});if([...select.options].some(o=>o.value===old))select.value=old}
 function updateMandals(){const d=districtSelect.value;setOptions(mandalSelect,mandals.filter(m=>!d||String(m.district_id)===d),"All mandals");}
@@ -109,9 +124,27 @@ function render(){
   if(c.website_url){const href=safeLink(c.website_url);if(href){const a=document.createElement("a");a.className="btn secondary";a.href=href;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Website ↗";actions.append(a)}}
   if(c.phone){const a=document.createElement("a");a.className="btn";a.href="tel:"+String(c.phone).replace(/[^+0-9]/g,"");a.textContent="Call college";actions.append(a)}
   if(c.email){const a=document.createElement("a");a.className="btn secondary";a.href="mailto:"+c.email;a.textContent="Email";actions.append(a)}
-  card.append(actions);grid.append(card);
+  card.append(actions);
+  const compareLabel=document.createElement("label");compareLabel.className="compare-check";
+  const check=document.createElement("input");check.type="checkbox";check.checked=compareIds.has(String(c.id));check.addEventListener("change",()=>{
+   const id=String(c.id);
+   if(check.checked&&compareIds.size>=3){check.checked=false;statusEl.textContent="You can compare up to 3 colleges at a time.";return}
+   if(check.checked)compareIds.add(id);else compareIds.delete(id);
+   updateCompareButton();
+  });
+  compareLabel.append(check,document.createTextNode(" Add to compare"));card.append(compareLabel);grid.append(card);
  });
 }
+function updateCompareButton(){const b=document.getElementById("openCompare");b.disabled=compareIds.size<2;b.textContent="Compare selected ("+compareIds.size+")";}
+function openCompare(){const items=colleges.filter(c=>compareIds.has(String(c.id)));if(items.length<2)return;
+ const fields=[["College",c=>c.name],["Category",c=>c.category],["Location",c=>[c.town,districts.find(d=>String(d.id)===String(c.district_id))?.name,c.address].filter(Boolean).join(", ")],["Admissions",c=>c.admissions_open===true?"Marked open":"Not marked open"],["Description",c=>c.description],["Phone",c=>c.phone],["Email",c=>c.email],["Website",c=>c.website_url]];
+ const table=document.createElement("table");table.className="compare-table";const head=document.createElement("tr");head.append(document.createElement("th"));items.forEach(c=>{const th=document.createElement("th");th.textContent=c.name||"College";head.append(th)});table.append(head);
+ fields.forEach(([label,get])=>{const tr=document.createElement("tr"),th=document.createElement("th");th.textContent=label;tr.append(th);items.forEach(c=>{const td=document.createElement("td");const v=get(c);if(label==="Website"&&v){const a=document.createElement("a");a.href=safeLink(v);a.textContent="Open website";a.target="_blank";a.rel="noopener noreferrer";td.append(a)}else td.textContent=v||"—";tr.append(td)});table.append(tr)});
+ const host=document.getElementById("compareContent");host.innerHTML="";host.append(table);document.getElementById("compareModal").hidden=false;
+}
+document.getElementById("openCompare").addEventListener("click",openCompare);
+document.querySelectorAll("[data-close-compare]").forEach(el=>el.addEventListener("click",()=>document.getElementById("compareModal").hidden=true));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.getElementById("compareModal").hidden=true});
 function search(){
  const keyword=document.getElementById("keyword").value.trim().toLowerCase(),cat=document.getElementById("category").value.toLowerCase(),district=districtSelect.value,mandal=mandalSelect.value,adm=document.getElementById("admissions").value;
  filtered=colleges.filter(c=>{
