@@ -2952,5 +2952,14 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
   }
  });
 })();
-</script></body>
+</script><style id="vm-final-scroll-normalization">
+/* One document-level vertical scrollbar; avoid nested page scrolling. */
+html{height:auto!important;min-height:100%!important;overflow-x:clip!important;overflow-y:auto!important;overscroll-behavior-y:auto!important}
+body{height:auto!important;min-height:100vh!important;overflow-x:clip!important;overflow-y:visible!important;position:relative!important;overscroll-behavior-y:auto!important}
+#app,#appRoot,#page,#pageContent,main,.page-shell,.page-content,.site-content{height:auto!important;min-height:0;max-height:none!important;overflow-y:visible!important;overscroll-behavior: auto!important}
+.vm-shared-header{position:sticky!important;top:0!important;z-index:9997!important}
+.vm-ad-ticker{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:100%!important;z-index:2!important;margin:0!important}
+#studentLeadCapture.vm-lead-modal{position:fixed!important;inset:0!important;overflow-y:auto!important}
+#studentLeadCapture.vm-lead-modal .container{max-height:calc(100dvh - 24px)!important;overflow-y:auto!important}
+</style></body>
 </html>
