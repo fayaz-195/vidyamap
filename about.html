@@ -33,6 +33,25 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!import
 .vm-approved-ad-copy{padding:14px}.vm-approved-ad-copy h3{font-size:17px;line-height:1.3;margin:0 0 6px;color:#132d53}.vm-approved-ad-copy p{font-size:13px;color:#65718a;margin:0 0 9px}.vm-approved-ad-meta{font-size:11px;color:#7a3ba0;font-weight:800;margin-bottom:9px}.vm-approved-ad-link{display:inline-flex;padding:8px 12px;border-radius:9px;background:linear-gradient(120deg,#7823a0,#433fc0);color:white!important;font-size:12px;font-weight:800;text-decoration:none}
 .vm-approved-ad-empty{border:1px dashed #cfc4e5;border-radius:14px;padding:18px;color:#6a7287;background:#fbfaff;font-size:13px}
 @media(max-width:650px){.vm-approved-ad-slot{padding:22px 0}.vm-approved-ad-inner{padding:14px;border-radius:18px}.vm-approved-ad-track{grid-auto-columns:minmax(230px,84%)}.vm-approved-ad-media,.vm-approved-ad-card video{height:165px}}
+</style><style id="vm-brand-system">
+:root{--vm-navy:#102b50;--vm-purple:#76208f;--vm-blue:#2859a8;--vm-ice:#edf4ff;--vm-lilac:#f5edff;--vm-border:#d9dff1;--vm-text:#152b49;--vm-muted:#64728b}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{color:var(--vm-text);background:radial-gradient(ellipse at 8% 5%,#eee2ff75,transparent 30rem),radial-gradient(ellipse at 95% 24%,#dbeaff70,transparent 30rem),linear-gradient(135deg,#fff 0%,#f8f7ff 60%,#eff5ff 100%)}
+a,button,.btn{transition:transform .2s ease,box-shadow .2s ease,background .2s ease,border-color .2s ease}
+a:focus-visible,button:focus-visible{outline:3px solid #9a52bd;outline-offset:3px}
+.btn,button.btn,.button,.vm-shared-nav a{border-radius:999px!important}
+.btn:not(.secondary),.button:not(.secondary){background:linear-gradient(115deg,#78229a 0%,#4b43bd 55%,#2469bd 100%)!important;color:#fff!important;border:1px solid #ffffff80!important;box-shadow:0 8px 22px #56218b24}
+.btn.secondary,.btn-outline{background:linear-gradient(120deg,#fff,#f3f0ff)!important;color:#17345e!important;border:1px solid #d7d5f1!important;box-shadow:0 5px 14px #293e7410}
+.btn:hover,.button:hover{transform:translateY(-2px);box-shadow:0 12px 26px #53208e2c}
+input,select,textarea{border-radius:14px!important;border-color:var(--vm-border)!important;background:#ffffffeb!important;color:var(--vm-text)!important}
+input:focus,select:focus,textarea:focus{outline:3px solid #8b39ac28!important;border-color:#8a37aa!important}
+.card,.feature-card,.vm-approved-ad-inner,.search-panel,.hero-art,.step,.cta,.vm-ad-stage{border-radius:22px!important;box-shadow:0 14px 34px #243b6910}
+.vm-shared-header{background:#ffffffd9!important;border-bottom:1px solid #e5def4!important;box-shadow:0 8px 28px #182f5310!important;backdrop-filter:blur(18px)!important}
+.vm-shared-nav a[aria-current=page],.vm-shared-nav a.active{background:linear-gradient(115deg,#78229a,#3c59bb)!important;color:#fff!important;box-shadow:0 6px 18px #58218b24!important}
+.vm-approved-ad-slot{background:linear-gradient(115deg,#f4edff 0%,#edf4ff 56%,#fff8ed 100%)!important}
+.vm-approved-ad-inner{border:1px solid #e4d9f5!important;background:#ffffffd9!important}
+footer{background:linear-gradient(120deg,#0d2444,#26245d 65%,#42205f)!important;color:#e9edff!important}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
 </style></style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body><header class="vm-shared-header">
   <div class="vm-shared-nav">
     <a class="vm-shared-brand" href="./index.html" aria-label="VidyaMap Home"><img src="./vidyamap-logo.png" alt="VidyaMap"></a>
@@ -79,5 +98,15 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!import
    });
   });
  }catch(err){console.warn("Approved ad slots unavailable",err);}
+})();
+</script><script id="vm-floating-brand-ui">
+(function(){
+ if(document.getElementById("vm-brand-floating-tools"))return;
+ const wrap=document.createElement("div");wrap.id="vm-brand-floating-tools";
+ wrap.innerHTML='<button type="button" class="vm-float-top" aria-label="Back to top" title="Back to top">↑</button>';
+ const style=document.createElement("style");style.textContent='#vm-brand-floating-tools .vm-float-top{position:fixed;right:22px;bottom:24px;z-index:9000;width:48px;height:48px;border:1px solid #ffffff9c;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#76208f,#3b59b7 70%,#2370c5);color:#fff;font-size:23px;font-weight:900;box-shadow:0 9px 25px #35205a3b;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s}#vm-brand-floating-tools .vm-float-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}#vm-brand-floating-tools .vm-float-top:hover{box-shadow:0 12px 28px #35205a52;transform:translateY(-2px)}@media(max-width:600px){#vm-brand-floating-tools .vm-float-top{right:14px;bottom:16px;width:44px;height:44px}}';
+ document.head.append(style);document.body.append(wrap);
+ const btn=wrap.querySelector("button");const update=()=>btn.classList.toggle("visible",window.scrollY>360);
+ window.addEventListener("scroll",update,{passive:true});btn.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));update();
 })();
 </script></body></html>
