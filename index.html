@@ -2411,5 +2411,80 @@ main{overflow:visible!important}
 @keyframes vmSponsoredOneLine{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 @media(prefers-reduced-motion:reduce){.vm-sponsored-bar .vm-sponsored-message span{animation:none!important;padding-left:0!important;white-space:normal!important}}
 </style>
+<!-- VidyaMap Ask Query student guidance chatbot -->
+<div id="vmAskWidget" class="vm-ask-widget">
+  <button id="vmAskLauncher" class="vm-ask-launcher" type="button" aria-label="Open Ask Query student guidance chatbot" aria-expanded="false">
+    <span class="vm-ask-launcher-icon">✦</span><span><strong>Ask Query</strong><small>Study • Courses • Careers</small></span><span class="vm-ask-online"></span>
+  </button>
+  <section id="vmAskPanel" class="vm-ask-panel" aria-label="Ask Query chatbot" hidden>
+    <header class="vm-ask-head"><div class="vm-ask-avatar">🎓</div><div class="vm-ask-head-copy"><strong>Ask Query</strong><small>Your study & career guide · Telugu / English</small></div><button id="vmAskClose" type="button" aria-label="Close chatbot">×</button></header>
+    <div class="vm-ask-welcome"><strong>Namaste! 👋</strong><p>10th tarvata em chadavali? MPC, IIT/JEE, EAMCET, degree courses, universities, jobs — mee doubts adugandi. Step-by-step explain chestanu.</p></div>
+    <div class="vm-ask-quick"><button type="button" data-ask="After 10th what courses can I choose?">After 10th</button><button type="button" data-ask="MPC subjects, options and future careers explain cheyyi">MPC options</button><button type="button" data-ask="IIT JEE exam and admission process explain cheyyi">IIT / JEE</button><button type="button" data-ask="Inter tarvata degree courses and jobs cheppu">Degree & Jobs</button></div>
+    <div id="vmAskMessages" class="vm-ask-messages" aria-live="polite"><div class="vm-ask-msg bot"><strong>Start here</strong><br>Example: “10th tarvata MPC teesukunte em options untayi?”</div></div>
+    <form id="vmAskForm" class="vm-ask-form"><input id="vmAskInput" type="text" maxlength="700" placeholder="Mee question ikkada type cheyyandi..." aria-label="Type your study or career question" required><button type="submit" aria-label="Send question">➤</button></form>
+    <p class="vm-ask-note">Guidance is a starting point. Exam rules and eligibility can change; verify with official notifications.</p>
+  </section>
+</div>
+<style id="vm-ask-query-styles">
+.vm-ask-widget{position:fixed;right:22px;bottom:22px;z-index:9990;font-family:Arial,Helvetica,sans-serif;color:#10264a}
+.vm-ask-launcher{display:flex;align-items:center;gap:11px;border:0;border-radius:18px;padding:12px 16px;background:linear-gradient(135deg,#5428df,#087cf0);color:#fff;box-shadow:0 10px 32px #17255445;cursor:pointer;text-align:left;min-width:205px}
+.vm-ask-launcher-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:#ffffff25;font-size:25px}
+.vm-ask-launcher strong,.vm-ask-launcher small{display:block}.vm-ask-launcher strong{font-size:16px}.vm-ask-launcher small{font-size:11px;opacity:.9;margin-top:3px}.vm-ask-online{width:9px;height:9px;background:#6dffb0;border-radius:50%;margin-left:auto;box-shadow:0 0 0 4px #ffffff20}
+.vm-ask-panel{position:absolute;right:0;bottom:76px;width:min(390px,calc(100vw - 28px));height:min(640px,calc(100dvh - 115px));min-height:420px;background:#fff;border:1px solid #dfe6f5;border-radius:23px;box-shadow:0 22px 70px #14264c35;display:flex;flex-direction:column;overflow:hidden}
+.vm-ask-panel[hidden]{display:none!important}
+.vm-ask-head{display:flex;align-items:center;gap:11px;padding:15px;background:linear-gradient(110deg,#173f88,#6828dc);color:#fff;flex-shrink:0}
+.vm-ask-avatar{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:#ffffff24;font-size:22px}
+.vm-ask-head-copy{min-width:0;flex:1}.vm-ask-head-copy strong,.vm-ask-head-copy small{display:block}.vm-ask-head-copy strong{font-size:16px}.vm-ask-head-copy small{font-size:10px;opacity:.9;margin-top:4px}
+.vm-ask-head button{border:0;background:#ffffff20;color:#fff;border-radius:10px;width:34px;height:34px;font-size:24px;cursor:pointer}
+.vm-ask-welcome{padding:13px 15px 9px;background:#f4f6ff;border-bottom:1px solid #e9edfa;flex-shrink:0}.vm-ask-welcome strong{font-size:14px}.vm-ask-welcome p{font-size:12px;line-height:1.55;margin:5px 0 0;color:#435574}
+.vm-ask-quick{display:flex;gap:7px;padding:10px 12px;overflow-x:auto;border-bottom:1px solid #edf0f7;flex-shrink:0;scrollbar-width:thin}.vm-ask-quick button{white-space:nowrap;border:1px solid #d9dfff;background:#f6f5ff;color:#4c2ab3;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:700;cursor:pointer}
+.vm-ask-messages{padding:13px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;flex:1;min-height:0;background:#fff}
+.vm-ask-msg{max-width:91%;padding:10px 12px;border-radius:14px;font-size:12px;line-height:1.6;overflow-wrap:anywhere;white-space:normal}
+.vm-ask-msg.bot{align-self:flex-start;background:#f0f3fb;color:#1c3155;border-bottom-left-radius:4px}.vm-ask-msg.user{align-self:flex-end;background:#e9e5ff;color:#2d216f;border-bottom-right-radius:4px}
+.vm-ask-msg strong{color:inherit}.vm-ask-msg ul{padding-left:17px;margin:5px 0}.vm-ask-msg p{margin:4px 0}.vm-ask-msg .vm-ask-small{font-size:10px;color:#62718b}
+.vm-ask-form{display:flex;gap:8px;padding:11px;border-top:1px solid #e7ebf4;background:#fff;flex-shrink:0}.vm-ask-form input{min-width:0;flex:1;border:1px solid #dbe2f0;border-radius:13px;padding:11px 12px;font-size:12px;outline:none}.vm-ask-form input:focus{border-color:#7254ed;box-shadow:0 0 0 3px #7254ed20}.vm-ask-form button{width:43px;border:0;border-radius:13px;background:#5c35df;color:#fff;font-size:19px;cursor:pointer}
+.vm-ask-note{margin:0;padding:0 12px 9px;font-size:9px;color:#71809a;background:#fff;flex-shrink:0}
+@media(max-width:560px){.vm-ask-widget{right:12px;bottom:12px}.vm-ask-launcher{min-width:0;padding:10px 12px;border-radius:16px}.vm-ask-launcher-icon{width:36px;height:36px}.vm-ask-launcher small{font-size:10px}.vm-ask-panel{position:fixed;left:8px;right:8px;bottom:8px;width:auto;height:min(78dvh,700px);min-height:390px;border-radius:20px}.vm-ask-quick button{font-size:10px}}
+</style>
+<script id="vm-ask-query-script">
+(function(){
+ const launcher=document.getElementById('vmAskLauncher'),panel=document.getElementById('vmAskPanel'),close=document.getElementById('vmAskClose'),form=document.getElementById('vmAskForm'),input=document.getElementById('vmAskInput'),messages=document.getElementById('vmAskMessages');
+ if(!launcher||!panel||!form||!messages)return;
+ const open=()=>{panel.hidden=false;launcher.setAttribute('aria-expanded','true');setTimeout(()=>input.focus(),30)};
+ const shut=()=>{panel.hidden=true;launcher.setAttribute('aria-expanded','false');launcher.focus()};
+ launcher.addEventListener('click',()=>panel.hidden?open():shut());close.addEventListener('click',shut);
+ const add=(text,who)=>{const d=document.createElement('div');d.className='vm-ask-msg '+who;d.textContent=text;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;return d};
+ const answer=(q)=>{
+ const x=q.toLowerCase().replace(/[’']/g,"'");let a='';
+ if(/after 10|10th|ssc| పదో|పదో తరగతి/.test(x)){
+ a='After 10th, mee interest and marks batti options:\n• MPC: Maths, Physics, Chemistry — engineering, computer science, architecture (extra eligibility may apply), data/AI, defence entry routes and pure sciences.\n• BiPC: Biology, Physics, Chemistry — medical/allied health, pharmacy, life sciences and agriculture-related courses.\n• MEC/CEC: commerce, accounting, business, economics, law routes.\n• Diploma/Polytechnic: technical programmes; later lateral-entry engineering options may exist.\n• ITI/Vocational: practical trade and skill-based jobs.\nMee interest enti — Maths/technology, Biology/medical, business, leka practical skills?';
+ }else if(/mpc|maths.*physics|physics.*chemistry|engineering|btech|b\.tech|computer science|data science|ai course/.test(x)){
+ a='MPC lo usually Mathematics, Physics, Chemistry untayi (board/college syllabus confirm cheyyandi). Possible pathways:\n1. Engineering: JEE Main → NITs/IIITs/other participating institutes; JEE Advanced qualification → IIT admission process. State engineering admissions often use EAPCET/EAMCET or the state’s current counselling route.\n2. Computing: CSE, IT, AI/Data Science, Cybersecurity, Electronics.\n3. Other options: BSc Maths/Physics/Statistics, BCA (eligibility varies), architecture/design routes, defence exams where eligible, merchant navy or aviation only after checking specific medical/subject rules.\nNext step: choose target, prepare for the relevant exam, check eligibility, then apply for counselling. Mee state AP aa Telangana aa?';
+ }else if(/iit|jee|advanced|main|nit|iiit/.test(x)){
+ a='IIT/NIT pathway simple-ga:\n1. Inter MPC (or eligible equivalent) complete cheyyandi; current year subject and marks criteria official notice lo check cheyyali.\n2. JEE Main rayandi. JEE Main rank/eligibility batti NIT/IIIT and other participating institutes counselling (usually JoSAA/CSAB as applicable) untundi.\n3. IIT kosam JEE Main lo required cutoff qualify ayyi JEE Advanced rayali; rank, eligibility and seat availability batti IIT counselling lo choices fill cheyyali.\n4. Documents, category certificates (if applicable), deadlines and seat acceptance carefully follow cheyyandi.\nJEE Main alone IIT seat guarantee cheyyadu. Official sources: jeemain.nta.nic.in, jeeadv.ac.in, josaa.nic.in. Mee target year cheppandi.';
+ }else if(/eamcet|eapcet|apcet|state entrance|telangana|andhra|ap colleges|ts colleges/.test(x)){
+ a='Engineering/Pharmacy admissions ki AP lo AP EAPCET, Telangana lo TG EAPCET current-year notification and counselling rules check cheyyali. Generally: eligibility → entrance exam → rank/result → certificate verification → web options → seat allotment → fee payment/reporting. Exact dates, weightage, eligible courses and rules year-to-year change avvachu. Official AP: cets.apsche.ap.gov.in; Telangana: eapcet.tgche.ac.in (current official portal verify cheyyandi). Mee state and course cheppandi.';
+ }else if(/bi.?pc|biology|medical|mbbs|neet|doctor|pharmacy|nursing/.test(x)){
+ a='BiPC/biology pathway lo MBBS/BDS ki NEET-UG and current eligibility/rules important. Other possibilities: BPharm, PharmD, nursing, physiotherapy, allied health sciences, agriculture, veterinary (admission route differs), biotechnology/microbiology/life sciences. Every course ki subject, age, entrance and counselling rules different. MBBS seat NEET rank + counselling batti; guaranteed admission ani evaraina cheppina verify cheyyandi. Official NEET info: neet.nta.nic.in. Mee interest doctor aa, pharmacy aa, allied health aa?';
+ }else if(/degree|bsc|bca|bcom|ba |commerce|mec|cec|law|business|management/.test(x)){
+ a='Inter tarvata degree choices mee subjects and goal batti:\n• BSc: Maths, Physics, Computer Science, Statistics, Life Sciences etc.\n• BCA/Computer degrees: college-specific Maths/subject eligibility check cheyyali.\n• BCom/BBA/Economics: business, accounting, finance and management.\n• BA/psychology/languages/social sciences.\n• Law: 5-year integrated law after 12th, entrance/college rules apply.\n• Professional courses and competitive exams ki separate eligibility untundi.\nCourse choose chesetappudu syllabus, recognised college, total fees, internships and job outcomes compare cheyyandi. Mee subjects enti?';
+ }else if(/job|salary|career|future|scope|employment|earn/.test(x)){
+ a='Career clarity kosam 4 things compare cheyyandi: (1) mee interest/strengths, (2) required qualification & entrance, (3) course cost/duration, (4) practical skills + internships. MPC students ki engineering/IT, electronics, analytics, research, teaching (required qualifications tho), government/defence exams where eligible laanti routes untayi. Salary fixed kaadu — skills, location, college, experience batti vary avtundi. “Highest salary guarantee” claims ni nammakandi. Mee preferred work: computers, core engineering, government job, research, leka business?';
+ }else if(/university|college join|admission|counselling|apply|seat/.test(x)){
+ a='College admission general steps:\n1. Course and recognised institutions shortlist cheyyandi.\n2. Official eligibility + entrance exam requirement verify cheyyandi.\n3. Application/exam deadlines miss avvakandi.\n4. Results/rank tarvata official counselling lo registration, certificate verification and web options.\n5. Allotment tarvata fees, documents, reporting complete cheyyandi.\n6. College approval/accreditation, placements data, fees/refund policy and hostel safety compare cheyyandi.\nCourse + state + admission year chepthe more specific path chepthanu.';
+ }else if(/diploma|polytechnic|iti|vocational/.test(x)){
+ a='Diploma/Polytechnic and ITI are skill-focused alternatives after 10th (eligibility/course options vary by state). Diploma students may have lateral-entry engineering options under current rules; ITI can lead to trade-based apprenticeships/jobs and further certifications. Course recognition, lab facilities, apprenticeship links, fees and local demand verify cheyyandi. Mee interest electrical, mechanical, computer, civil, automotive, leka another trade aa?';
+ }else if(/hello|hi|namaste|hey|నమస్కారం/.test(x)){
+ a='Namaste! Mee study/career question adugandi. Example: After 10th options, MPC subjects and careers, JEE-to-IIT steps, EAPCET admissions, degree choices, diploma/ITI or jobs.';
+ }else{
+ a='Mee question ni specific-ga guide cheyyadaniki help chestanu. Ee topics lo adagochu: After 10th courses, MPC/BiPC, JEE Main/Advanced & IIT/NIT, AP/Telangana EAPCET, degree options, diploma/ITI, jobs and careers.\n\nMee current class (10th/Inter/degree), state (AP/Telangana/other), and interest cheppandi — step-by-step pathway suggest chestanu.';
+ }
+ return a;
+ };
+ const send=(q)=>{q=q.trim();if(!q)return;add(q,'user');const b=add(answer(q),'bot');b.style.whiteSpace='pre-line'};
+ form.addEventListener('submit',e=>{e.preventDefault();send(input.value);input.value='';input.focus()});
+ panel.querySelectorAll('[data-ask]').forEach(b=>b.addEventListener('click',()=>{open();send(b.getAttribute('data-ask'))}));
+})();
+</script>
 </body>
 </html>
