@@ -878,12 +878,7 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
   <div class="vm-edu-card vm-edu-universities"><span class="vm-edu-icon">🏫</span><span><strong>Universities</strong><small>Higher Education</small></span><i></i></div>
 </div>
 </div>
-<div class="vm-trust-strip" aria-label="VidyaMap benefits">
-  <div class="vm-trust-item"><span class="vm-trust-icon">📖</span><div><strong>Multiple Courses</strong><small>Explore Options</small></div></div>
-  <div class="vm-trust-item"><span class="vm-trust-icon">📍</span><div><strong>Across AP &amp; TS</strong><small>Wide Coverage</small></div></div>
-  <div class="vm-trust-item"><span class="vm-trust-icon">📊</span><div><strong>Compare Easily</strong><small>Make Better Decisions</small></div></div>
-  <div class="vm-trust-item"><span class="vm-trust-icon">🛡️</span><div><strong>Trusted Platform</strong><small>For Your Future</small></div></div>
-</div>
+
 </section>
 
 <section class="section" id="studentLeadCapture" style="padding:28px 0 18px">
@@ -2377,6 +2372,18 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
 @media(max-width:1180px){.hero{padding-bottom:130px!important;min-height:620px!important}.hero-panel.vm-edu-overlay{height:400px!important;min-height:400px!important}.vm-edu-card{min-width:180px;padding:11px 13px;gap:9px}.vm-edu-icon{flex-basis:36px;width:36px;height:36px;font-size:20px}.vm-edu-card strong{font-size:13px}.vm-edu-card small{font-size:10px}.vm-trust-strip{width:51%!important;right:2%!important}.vm-trust-item strong{font-size:11px}}
 @media(max-width:850px){.hero{background-size:auto 440px!important;background-position:58% top!important;padding:26px 0 28px!important;min-height:0!important}.hero-grid{grid-template-columns:1fr!important;gap:10px!important}.hero-panel.vm-edu-overlay{height:390px!important;min-height:390px!important;margin-top:0!important}.vm-edu-card{max-width:48%;min-width:0;padding:9px 11px;border-radius:16px;gap:7px}.vm-edu-icon{width:30px;height:30px;flex-basis:30px;font-size:17px}.vm-edu-card strong{font-size:11px;white-space:normal}.vm-edu-card small{font-size:9px;white-space:normal}.vm-edu-schools{left:0;top:2%}.vm-edu-junior{left:34%;top:0}.vm-edu-degree{right:0;top:12%}.vm-edu-engineering{left:0;top:35%}.vm-edu-diploma{right:0;top:39%}.vm-edu-coaching{left:0;top:68%}.vm-edu-universities{right:0;top:72%}.vm-trust-strip{position:relative!important;right:auto!important;bottom:auto!important;width:92%!important;margin:12px auto 0!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;background:rgba(75,65,231,.88)!important}}
 @media(max-width:560px){.hero{background-size:auto 340px!important;background-position:58% top!important;padding-top:22px!important}.hero-panel.vm-edu-overlay{height:325px!important;min-height:325px!important}.vm-edu-card{max-width:49%;padding:7px 8px;gap:5px;border-radius:13px}.vm-edu-icon{width:25px;height:25px;flex-basis:25px;font-size:14px}.vm-edu-card strong{font-size:9px}.vm-edu-card small{font-size:8px}.vm-edu-card i{width:13px;height:13px;right:8px;top:-7px;border-width:3px}.vm-edu-schools{top:3%}.vm-edu-junior{left:33%}.vm-edu-degree{top:15%}.vm-edu-engineering{top:38%}.vm-edu-diploma{top:43%}.vm-edu-coaching{top:73%}.vm-edu-universities{top:76%}.vm-trust-strip{width:92%!important;padding:12px!important}.vm-trust-item strong{font-size:11px}.vm-trust-item small{font-size:9px}}
+</style>
+<style id="vm-hero-clarity-fix">
+/* Improve legibility and remove the extra overlapping feature ribbon. */
+.hero{background-color:#f7f5ff!important;background-image:linear-gradient(90deg,rgba(255,255,255,.96) 0%,rgba(255,255,255,.90) 31%,rgba(255,255,255,.25) 52%,rgba(255,255,255,0) 68%),url("assets/dreamy-campus-background.svg")!important;background-repeat:no-repeat!important;background-position:center top!important;background-size:100% auto!important}
+.hero .eyebrow,.hero .vm-hero-brand-pill,.hero h1,.hero .hero-copy,.hero .hero-actions,.hero> .container .muted,.vm-audience-strip{position:relative;z-index:3}
+.hero h1{color:#102e59!important;text-shadow:0 1px 0 rgba(255,255,255,.3)!important}
+.hero-copy{color:#405a80!important;text-shadow:0 1px 1px rgba(255,255,255,.45)!important}
+.vm-edu-card{background:#fff!important;backdrop-filter:none!important;box-shadow:0 8px 22px rgba(26,42,92,.13)!important;border:1px solid #e8e8fb!important}
+.vm-edu-card strong{color:#0b2347!important}.vm-edu-card small{color:#40577e!important}
+.vm-trust-strip{backdrop-filter:none!important}
+@media(max-width:850px){.hero{background-image:linear-gradient(180deg,rgba(255,255,255,.88) 0%,rgba(255,255,255,.64) 40%,rgba(255,255,255,.08) 100%),url("assets/dreamy-campus-background.svg")!important;background-size:auto 440px!important;background-position:center top!important}}
+@media(max-width:560px){.hero{background-size:auto 340px!important}}
 </style>
 </body>
 </html>
