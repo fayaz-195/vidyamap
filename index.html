@@ -2489,7 +2489,8 @@ main{overflow:visible!important}
  }
  return a;
  };
- const send=(q)=>{q=q.trim();if(!q)return;add(q,'user');const b=add(answer(q),'bot');b.style.whiteSpace='pre-line'};
+ const chatHistory=[];
+ const send=async(q)=>{q=q.trim();if(!q)return;add(q,'user');input.value='';input.disabled=true;form.querySelector('button[type="submit"]').disabled=true;const waiting=add('Mee question chaduvutunnanu…','bot');waiting.setAttribute('aria-live','polite');chatHistory.push({role:'user',content:q});try{const res=await fetch('https://taxlvccrinehasexgvhv.supabase.co/functions/v1/vidyamap-ai-counsellor',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chatHistory.slice(-20)})});const data=await res.json();if(!res.ok||!data.reply)throw new Error(data.error||'AI counsellor is temporarily unavailable.');waiting.textContent=data.reply;waiting.style.whiteSpace='pre-line';chatHistory.push({role:'assistant',content:data.reply});}catch(err){waiting.textContent=(err&&err.message)||'AI counsellor is temporarily unavailable. Please try again.';waiting.style.whiteSpace='pre-line';chatHistory.pop();}finally{input.disabled=false;form.querySelector('button[type="submit"]').disabled=false;input.focus();messages.scrollTop=messages.scrollHeight}};
  form.addEventListener('submit',e=>{e.preventDefault();send(input.value);input.value='';input.focus()});
  panel.querySelectorAll('[data-ask]').forEach(b=>b.addEventListener('click',()=>{open();send(b.getAttribute('data-ask'))}));
 })();
