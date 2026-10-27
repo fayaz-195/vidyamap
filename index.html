@@ -812,6 +812,20 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 @media(max-width:900px){.vm-panel-grid{grid-template-columns:1fr 1fr}.vm-panel-card:last-child{grid-column:1/-1}}
 @media(max-width:600px){.vm-panel-grid{grid-template-columns:1fr}.vm-panel-card:last-child{grid-column:auto}.vm-panel-card{padding:23px}.vm-panel-card p{min-height:0}}
 </style>
+
+<style>
+/* Responsive web-app audience row; native HTML, not a flattened poster */
+.vm-audience-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:28px;max-width:700px;border-top:1px solid #dfe5f5;padding-top:18px}
+.vm-audience-item{display:flex;align-items:center;gap:10px;min-width:0;padding:5px 14px 5px 0}
+.vm-audience-item+.vm-audience-item{border-left:1px solid #d9e0f2;padding-left:16px}
+.vm-audience-item>span{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:50%;background:linear-gradient(145deg,#e7e4ff,#d8ecff);font-size:20px}
+.vm-audience-item strong,.vm-audience-item small{display:block;line-height:1.35}
+.vm-audience-item strong{font-size:14px;color:#142d5c}
+.vm-audience-item small{font-size:12px;color:#61708e;margin-top:4px}
+.vm-trust-strip{position:relative;z-index:3}
+@media(max-width:850px){.vm-audience-strip{max-width:none;margin-top:18px}.vm-audience-item{padding-right:8px}.vm-audience-item+.vm-audience-item{padding-left:9px}.vm-audience-item>span{flex-basis:34px;width:34px;height:34px;font-size:17px}.vm-audience-item strong{font-size:12px}.vm-audience-item small{font-size:10px}}
+@media(max-width:420px){.vm-audience-strip{grid-template-columns:1fr;gap:8px}.vm-audience-item,.vm-audience-item+.vm-audience-item{border-left:0;padding:4px 0}.vm-audience-item>span{flex-basis:38px;width:38px;height:38px}.vm-audience-item strong{font-size:13px}.vm-audience-item small{font-size:11px}}
+</style>
 </head>
 <body>
 <div class="announcement">Your Education Journey Starts Here · Telangana &amp; Andhra Pradesh</div>
@@ -844,6 +858,11 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 <a class="btn btn-outline" href="#register">List Your Institution</a>
 </div>
 <p class="muted">A smarter starting point for students, parents and institutions.</p>
+<div class="vm-audience-strip" aria-label="Who VidyaMap helps">
+ <div class="vm-audience-item"><span aria-hidden="true">👥</span><div><strong>For Students</strong><small>Explore &amp; Compare</small></div></div>
+ <div class="vm-audience-item"><span aria-hidden="true">👨‍👩‍👧</span><div><strong>For Parents</strong><small>Get Trusted Information</small></div></div>
+ <div class="vm-audience-item"><span aria-hidden="true">🏛️</span><div><strong>For Institutions</strong><small>Promote &amp; Connect</small></div></div>
+</div>
 </div>
 <div class="hero-panel" aria-label="VidyaMap education discovery illustration">
   <div class="hero-art-orbit orbit-one"></div>
