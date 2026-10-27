@@ -1690,7 +1690,7 @@ function renderColleges(items) {
     const m = mandals.find(x => String(x.id) === String(c.mandal_id));
     const state = states.find(x => d && x.code === d.state_code);
     const card = document.createElement("article");
-    card.className = "college-card vm-directory-locked";
+    card.className = "college-card";
     card.setAttribute("aria-label", "Verified institution listing");
 
     const top = document.createElement("div");
@@ -1751,12 +1751,6 @@ function renderColleges(items) {
       } catch {}
     }
     card.append(actions);
-    const lockOverlay = document.createElement("div");
-    lockOverlay.className = "vm-directory-lock-overlay";
-    lockOverlay.innerHTML = '<div>🔒 College details locked</div><span>Submit student details to unlock profiles and links</span>';
-    card.append(lockOverlay);
-    view.disabled = true;
-    if (actions.querySelectorAll("a").length) actions.querySelectorAll("a").forEach(link => { link.removeAttribute("href"); link.setAttribute("aria-disabled","true"); });
     const compareLabel = document.createElement("label");
     compareLabel.className = "compare-check";
     const compareInput = document.createElement("input");
