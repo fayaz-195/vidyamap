@@ -1736,6 +1736,39 @@ async function initDashboard(){
     });actions.append(b);});
     row.append(info,actions);target.append(row);
    });
+   const leadHeading=document.createElement("h3");leadHeading.textContent="Public college callback leads";leadHeading.style.marginTop="28px";target.append(leadHeading);
+   const {data:publicLeads,error:publicLeadError}=await db.from("college_public_leads").select("id,institution_name,contact_name,contact_designation,contact_phone,category,state_code,district_id,mandal_id,address,status,created_at").order("created_at",{ascending:false}).limit(100);
+   if(publicLeadError){
+    const msg=document.createElement("p");msg.className="feature-note";msg.textContent="Callback leads could not be loaded. Check the admin table policy.";target.append(msg);
+   }else if(!publicLeads?.length){
+    const msg=document.createElement("p");msg.className="feature-note";msg.textContent="No public callback leads yet.";target.append(msg);
+   }else{
+    const [{data:leadDistricts},{data:leadMandals}]=await Promise.all([
+      db.from("districts").select("id,name"),
+      db.from("mandals").select("id,name")
+    ]);
+    const districtNames=new Map((leadDistricts||[]).map(x=>[x.id,x.name]));
+    const mandalNames=new Map((leadMandals||[]).map(x=>[x.id,x.name]));
+    for(const lead of publicLeads){
+      const row=document.createElement("div");row.className="dashboard-row";
+      const info=document.createElement("div");
+      const title=document.createElement("strong");title.textContent=lead.institution_name+" · "+lead.category;
+      const detail=document.createElement("div");detail.className="feature-note";
+      detail.textContent=[lead.contact_name,lead.contact_designation,lead.contact_phone,districtNames.get(lead.district_id),mandalNames.get(lead.mandal_id),lead.state_code,lead.address,new Date(lead.created_at).toLocaleString()].filter(Boolean).join(" · ");
+      info.append(title,detail);
+      const status=document.createElement("select");status.setAttribute("aria-label","Callback lead status");
+      [["pending","Pending"],["contacted","Contacted"],["closed","Closed"],["spam","Spam"]].forEach(([value,label])=>{const opt=document.createElement("option");opt.value=value;opt.textContent=label;status.append(opt);});
+      status.value=lead.status;
+      status.addEventListener("change",async()=>{
+        status.disabled=true;
+        const {error}=await db.from("college_public_leads").update({status:status.value}).eq("id",lead.id);
+        if(error){say("Could not update callback status: "+(error.message||"database error"),"error");status.value=lead.status;}
+        else{lead.status=status.value;say("Callback lead status updated.","success");}
+        status.disabled=false;
+      });
+      row.append(info,status);target.append(row);
+    }
+   }
    await loadAdApprovals(user);
   }
   async function loadAdApprovals(user){
