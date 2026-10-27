@@ -681,6 +681,22 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 .vm-student-gated{display:none!important}.vm-student-gated.vm-student-unlocked{display:flex!important}#collegeGrid.vm-student-unlocked{display:grid!important}#resultsCount.vm-student-unlocked{display:block!important}
 
 /* Verified institution cards are displayed normally; no blur or preview lock. */
+
+/* Preview-lock institution directory cards */
+.vm-directory-locked{position:relative;overflow:hidden}
+.vm-directory-locked>*:not(.vm-directory-lock-overlay){filter:blur(4px);user-select:none}
+.vm-directory-locked .profile-actions,.vm-directory-locked .compare-check{pointer-events:none!important;filter:blur(3px);opacity:.45}
+.vm-directory-locked .profile-actions button,.vm-directory-locked .profile-actions a,.vm-directory-locked .compare-check input{pointer-events:none!important;cursor:not-allowed!important}
+.vm-directory-locked .profile-actions button,.vm-directory-locked .profile-actions a{opacity:.5}
+.vm-directory-lock-overlay{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:20px;background:rgba(248,247,255,.48);backdrop-filter:blur(1px);color:#172554;font-weight:800}
+.vm-directory-lock-overlay span{font-size:12px;font-weight:600;color:#526581}
+.vm-register-benefit{display:none!important}
+.vm-register-ad-carousel{width:100%;min-height:260px}
+.vm-register-ad-dots{position:absolute;z-index:4;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:7px}
+.vm-register-ad-dot{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:#ffffff80;cursor:pointer}
+.vm-register-ad-dot.is-active{width:22px;border-radius:99px;background:#fff}
+.vm-register-ad-caption a{pointer-events:none;opacity:.75;text-decoration:none}
+
 </style>
 <style>
 /* Three distinct product panels */
@@ -1408,6 +1424,12 @@ function renderColleges(items) {
       } catch {}
     }
     card.append(actions);
+    const lockOverlay = document.createElement("div");
+    lockOverlay.className = "vm-directory-lock-overlay";
+    lockOverlay.innerHTML = '<div>🔒 College details locked</div><span>Submit student details to unlock profiles and links</span>';
+    card.append(lockOverlay);
+    view.disabled = true;
+    if (actions.querySelectorAll("a").length) actions.querySelectorAll("a").forEach(link => { link.removeAttribute("href"); link.setAttribute("aria-disabled","true"); });
     const compareLabel = document.createElement("label");
     compareLabel.className = "compare-check";
     const compareInput = document.createElement("input");
