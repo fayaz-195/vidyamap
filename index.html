@@ -2230,6 +2230,8 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     searchForm.classList.remove('vm-search-locked');
    status.textContent='Saved! Your college search is now unlocked.';status.style.color='var(--green)';
    captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');
+   const nextPage=new URLSearchParams(location.search).get('next');
+   if(nextPage==='explore-colleges.html'||nextPage?.startsWith('explore-colleges.html?')){window.location.href='./'+nextPage;return;}
    document.getElementById('find')?.scrollIntoView({behavior:'smooth',block:'start'});
   }catch(err){status.textContent=err.message||'Could not save your details. Please try again.';status.style.color='var(--red)';button.disabled=false;button.textContent='Save details & start searching →';}
  });
