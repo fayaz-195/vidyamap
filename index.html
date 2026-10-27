@@ -2401,5 +2401,14 @@ main{overflow:visible!important}
 .vm-edu-card strong,.vm-edu-card small{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
 </style>
+<style id="vm-sponsored-scroll-fix">
+/* Sponsored announcement stays in normal page flow and its text moves horizontally. */
+.vm-sponsored-bar{position:relative!important;top:auto!important;left:auto!important;right:auto!important;z-index:101!important;width:100%!important;box-sizing:border-box!important;overflow:hidden!important;display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;white-space:nowrap!important}
+.vm-sponsored-bar .vm-sponsored-label{flex:0 0 auto!important}
+.vm-sponsored-bar .vm-sponsored-message{display:block!important;flex:0 0 auto!important;white-space:nowrap!important;animation:vmSponsoredTextScroll 28s linear infinite!important;will-change:transform}
+.vm-sponsored-bar:hover .vm-sponsored-message{animation-play-state:paused!important}
+@keyframes vmSponsoredTextScroll{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
+@media(prefers-reduced-motion:reduce){.vm-sponsored-bar .vm-sponsored-message{animation:none!important;transform:none!important;white-space:normal!important}}
+</style>
 </body>
 </html>
