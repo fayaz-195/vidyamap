@@ -130,13 +130,18 @@ document.getElementById("nextPage").addEventListener("click",()=>{if(page<Math.c
  document.getElementById("keyword").value=params.get("keyword")||"";
  document.getElementById("category").value=params.get("category")||"";
  document.getElementById("admissions").value=params.get("admissions")||"";
- const [cr,dr,mr]=await Promise.all([
-  db.from("colleges").select("id,name,status,description,category,website_url,email,phone,address,town,district_id,mandal_id,logo_path,admissions_open,scholarship_info").eq("status","verified").order("name").limit(1000),
+ const [dr,mr]=await Promise.all([
   db.from("districts").select("id,name,state_code").eq("is_active",true).order("name"),
   db.from("mandals").select("id,name,district_id").eq("is_active",true).order("name")
  ]);
- if(cr.error){statusEl.textContent="Verified college data could not be loaded. Please refresh and try again.";grid.innerHTML='<div class="empty">Unable to load the directory right now.</div>';console.error(cr.error);return}
- colleges=cr.data||[];districts=dr.data||[];mandals=mr.data||[];
+ if(dr.error||mr.error){console.warn("Location filters could not load",dr.error||mr.error)}
+ districts=dr.data||[];mandals=mr.data||[];
+ let from=0,more=true;
+ while(more){
+  const cr=await db.from("colleges").select("id,name,status,description,category,website_url,email,phone,address,town,district_id,mandal_id,logo_path,admissions_open,scholarship_info").eq("status","verified").order("name").range(from,from+999);
+  if(cr.error){statusEl.textContent="Verified college data could not be loaded. Please refresh and try again.";grid.innerHTML='<div class="empty">Unable to load the directory right now.</div>';console.error(cr.error);return}
+  const batch=cr.data||[];colleges.push(...batch);more=batch.length===1000;from+=batch.length;
+ }
  setOptions(districtSelect,districts,"All districts");updateMandals();
  if(params.get("district"))districtSelect.value=params.get("district");
  updateMandals();if(params.get("mandal"))mandalSelect.value=params.get("mandal");
