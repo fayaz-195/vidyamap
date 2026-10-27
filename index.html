@@ -809,7 +809,10 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 .vm-approved-ad-copy{padding:14px}.vm-approved-ad-copy h3{font-size:17px;line-height:1.3;margin:0 0 6px;color:#132d53}.vm-approved-ad-copy p{font-size:13px;color:#65718a;margin:0 0 9px}.vm-approved-ad-meta{font-size:11px;color:#7a3ba0;font-weight:800;margin-bottom:9px}.vm-approved-ad-link{display:inline-flex;padding:8px 12px;border-radius:9px;background:linear-gradient(120deg,#7823a0,#433fc0);color:white!important;font-size:12px;font-weight:800;text-decoration:none}
 .vm-approved-ad-empty{border:1px dashed #cfc4e5;border-radius:14px;padding:18px;color:#6a7287;background:#fbfaff;font-size:13px}
 @media(max-width:650px){.vm-approved-ad-slot{padding:22px 0}.vm-approved-ad-inner{padding:14px;border-radius:18px}.vm-approved-ad-track{grid-auto-columns:minmax(230px,84%)}.vm-approved-ad-media,.vm-approved-ad-card video{height:165px}}
-</style></style>
+<style id="vm-college-showcase-style">
+.vm-college-showcase{padding:56px 0;background:linear-gradient(130deg,#f3ebff,#edf5ff 58%,#fff8ec)}.vm-showcase-inner{width:min(1180px,92%);margin:auto}.vm-showcase-kicker{display:flex;justify-content:space-between;align-items:center;color:#722596;font-size:11px;font-weight:900;letter-spacing:1.7px}.vm-showcase-kicker span{padding:4px 9px;border-radius:99px;background:#fff;border:1px solid #dac8f1}.vm-college-showcase h2{color:#102b50;font-size:clamp(27px,4vw,40px);margin:12px 0 8px}.vm-college-showcase p{color:#63728b}.vm-showcase-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:16px;margin-top:22px}.vm-showcase-card{position:relative;min-height:280px;overflow:hidden;border-radius:22px;background:#21104c;box-shadow:0 15px 35px #202c4a22}.vm-showcase-card img{position:absolute;width:100%;height:100%;object-fit:cover;inset:0;transition:transform .45s}.vm-showcase-card:hover img{transform:scale(1.04)}.vm-showcase-card:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0a1c3ee8 0%,#101c3e40 60%,#101c3e00 100%)}.vm-showcase-overlay{position:absolute;z-index:1;left:20px;right:20px;bottom:18px;color:white}.vm-showcase-overlay span{font-size:10px;letter-spacing:1.4px;font-weight:900;color:#f6d86e}.vm-showcase-overlay h3{font-size:23px;line-height:1.2;margin:7px 0;color:#fff}.vm-showcase-overlay p{font-size:13px;color:#f1f3ff;margin:0}.vm-showcase-overlay b{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:99px;background:#ffffff24;border:1px solid #ffffff5c;font-size:11px}.vm-lead-reminder.is-visible{display:flex}
+@media(max-width:800px){.vm-showcase-grid{grid-template-columns:1fr 1fr}.vm-showcase-wide{grid-column:1/-1}}@media(max-width:520px){.vm-college-showcase{padding:38px 0}.vm-showcase-grid{grid-template-columns:1fr}.vm-showcase-wide{grid-column:auto}.vm-showcase-card,.vm-showcase-wide{min-height:260px}}
+</style></style></style>
 <style>
 /* Three distinct product panels */
 .vm-panel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;margin-top:30px}
@@ -1028,6 +1031,11 @@ body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7
 </main>
 
 
+<section class="vm-college-showcase" id="collegeShowcase"><div class="vm-showcase-inner"><div class="vm-showcase-kicker">VIDYAMAP · AD SHOWCASE PREVIEW <span>DEMO</span></div><h2>Discover colleges through their campus stories</h2><p>Sample visuals to preview how college promotions can look. Paid and approved campaigns appear in the live sponsored slots.</p><div class="vm-showcase-grid">
+<article class="vm-showcase-card vm-showcase-wide"><img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=85" alt="College campus building"><div class="vm-showcase-overlay"><span>COLLEGE SPOTLIGHT · DEMO</span><h3>Agastya Junior College</h3><p>Campus · Learning · Future pathways</p><b>Preview creative</b></div></article>
+<article class="vm-showcase-card"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85" alt="Students walking on campus"><div class="vm-showcase-overlay"><span>STUDENT LIFE · DEMO</span><h3>Your future starts here</h3><p>Student experience showcase</p></div></article>
+<article class="vm-showcase-card"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=85" alt="Students learning in a classroom"><div class="vm-showcase-overlay"><span>ACADEMICS · DEMO</span><h3>Learn with confidence</h3><p>Courses and classroom life</p></div></article>
+</div></div></section>
 <section class="feature-section vm-ad-only-slot" id="admissions">
  <div class="container">
   <div class="vm-ad-slot-heading"><span class="eyebrow">Sponsored · College promotions</span><span class="vm-ad-slot-badge">AD</span></div>
@@ -2206,12 +2214,19 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
  const reminder=document.getElementById('vmLeadReminder');
  const openLeadPopup=()=>{captureSection.hidden=false;captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');};
  const closeLeadPopup=()=>{captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');if(reminder)reminder.classList.add('is-visible');};
+ const params=new URLSearchParams(location.search);
+ const isCollegeRegistration=location.hash==='#register'||location.hash==='#contact';
+ const isExploreGate=params.get('next')==='explore-colleges.html'||(params.get('next')||'').startsWith('explore-colleges.html?')||location.hash==='#studentLeadCapture';
+ const dismissedKey='vidyamap_student_lead_popup_dismissed_v1';
+ const wasDismissed=()=>{try{return sessionStorage.getItem(dismissedKey)==='1'}catch{return false}};
  const saved=getSaved();
+ const installCloseButton=()=>{const card=form.querySelector('.eyebrow');if(card&&!form.querySelector('.vm-lead-close')){const close=document.createElement('button');close.type='button';close.className='vm-lead-close';close.setAttribute('aria-label','Close student details popup');close.title='Close';close.textContent='×';form.insertBefore(close,form.firstChild);close.addEventListener('click',()=>{try{sessionStorage.setItem(dismissedKey,'1')}catch{}closeLeadPopup()});}};
  if(saved&&saved.lead_id){document.body.classList.remove('vm-public-locked');setStudentGate(true);searchForm.classList.remove('vm-search-locked');captureSection.hidden=true;form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);status.textContent='Your details are saved for this session. You can now search colleges.';status.style.color='var(--green)';if(reminder)reminder.classList.remove('is-visible');}
  else {
-  document.body.classList.add('vm-public-locked');setStudentGate(false);searchForm.classList.add('vm-search-locked');captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');if(reminder)reminder.classList.remove('is-visible');
-  const card=form.querySelector('.eyebrow');
-  if(card&&!form.querySelector('.vm-lead-close')){const close=document.createElement('button');close.type='button';close.className='vm-lead-close';close.setAttribute('aria-label','Close student details popup');close.title='Close';close.textContent='×';form.insertBefore(close,form.firstChild);close.addEventListener('click',closeLeadPopup);}
+  document.body.classList.add('vm-public-locked');setStudentGate(false);searchForm.classList.add('vm-search-locked');
+  if(isCollegeRegistration){captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');if(reminder)reminder.classList.remove('is-visible');}
+  else if(isExploreGate||!wasDismissed()){captureSection.hidden=false;captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');if(reminder)reminder.classList.remove('is-visible');installCloseButton();}
+  else {captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');if(reminder)reminder.classList.add('is-visible');installCloseButton();}
  }
  document.getElementById('vmLeadReminderOpen')?.addEventListener('click',openLeadPopup);
  const districtSelect=document.getElementById('leadStudentDistrict');
