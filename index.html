@@ -682,6 +682,7 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 
 /* Verified institution cards are displayed normally; no blur or preview lock. */
 
+.vm-honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
 /* Accessibility and mobile polish */
 :focus-visible{outline:3px solid #76208f!important;outline-offset:3px}
 button:disabled,[aria-disabled="true"]{cursor:not-allowed}
@@ -929,7 +930,7 @@ img{max-width:100%}
 </div>
 </section>
 
-<section class="register vm-register-compact" id="register"><div class="container vm-register-shell"><div class="register-copy"><div class="eyebrow">College partnerships</div><h2>List your college</h2><p class="muted">Share a few details so the VidyaMap team can contact your institution about listings and admissions promotions.</p><div class="vm-register-ad-carousel" id="vmRegisterAdCarousel" aria-label="Featured college promotions"><div class="vm-register-ad-slide is-active"><div class="vm-register-ad-placeholder"><span>VIDYAMAP PROMOTIONS</span><strong>Promote your college here</strong><p>Approved college posters and videos will appear here automatically.</p></div></div><div class="vm-register-ad-dots" id="vmRegisterAdDots" aria-hidden="true"></div></div></div><form class="register-card vm-lead-design-only" id="registerForm"><div class="form-grid"><div class="field full"><label for="institution">College / Institution name *</label><input id="institution" required maxlength="150" placeholder="Enter institution name"></div><div class="field"><label for="contactName">Contact person *</label><input id="contactName" required maxlength="100" placeholder="Full name"></div><div class="field"><label for="contactDesignation">Designation *</label><select id="contactDesignation" required><option value="">Select designation</option><option>Founder</option><option>Chairman</option><option>Director</option><option>Principal</option><option>Admissions In-charge</option><option>Administrator</option><option>Other</option></select></div><div class="field"><label for="phone">Phone number *</label><input id="phone" required type="tel" maxlength="15" placeholder="Contact number"></div><div class="field"><label for="regCategory">Institution category *</label><select id="regCategory" required><option value="">Select category</option><option>School</option><option>Junior College</option><option>Degree College</option><option>Engineering</option><option>Medical</option><option>Coaching Centre</option><option>Polytechnic &amp; ITI</option><option>Other</option></select></div><div class="field"><label for="regState">State *</label><select id="regState" required><option value="">Select state</option></select></div><div class="field"><label for="regDistrict">District *</label><select id="regDistrict" required><option value="">Select district</option></select></div><div class="field"><label for="regMandal">Mandal / local area</label><select id="regMandal"><option value="">Select mandal (optional)</option></select></div><div class="field full"><label for="address">Institution address (optional)</label><input id="address" maxlength="250" placeholder="Town or local area"></div><div class="field full"><button class="btn" id="registerSubmit" type="submit" style="width:100%">Request a callback →</button><div class="note">No account or password is needed for this callback request.</div><div class="notice" id="formNotice" role="status"></div></div></div></form></div></section>
+<section class="register vm-register-compact" id="register"><div class="container vm-register-shell"><div class="register-copy"><div class="eyebrow">College partnerships</div><h2>List your college</h2><p class="muted">Share a few details so the VidyaMap team can contact your institution about listings and admissions promotions.</p><div class="vm-register-ad-carousel" id="vmRegisterAdCarousel" aria-label="Featured college promotions"><div class="vm-register-ad-slide is-active"><div class="vm-register-ad-placeholder"><span>VIDYAMAP PROMOTIONS</span><strong>Promote your college here</strong><p>Approved college posters and videos will appear here automatically.</p></div></div><div class="vm-register-ad-dots" id="vmRegisterAdDots" aria-hidden="true"></div></div></div><form class="register-card vm-lead-design-only" id="registerForm"><div class="vm-honeypot" aria-hidden="true"><label for="websiteTrap">Leave this field empty</label><input id="websiteTrap" name="website" type="text" tabindex="-1" autocomplete="off"></div><div class="form-grid"><div class="field full"><label for="institution">College / Institution name *</label><input id="institution" required maxlength="150" placeholder="Enter institution name"></div><div class="field"><label for="contactName">Contact person *</label><input id="contactName" required maxlength="100" placeholder="Full name"></div><div class="field"><label for="contactDesignation">Designation *</label><select id="contactDesignation" required><option value="">Select designation</option><option>Founder</option><option>Chairman</option><option>Director</option><option>Principal</option><option>Admissions In-charge</option><option>Administrator</option><option>Other</option></select></div><div class="field"><label for="phone">Phone number *</label><input id="phone" required type="tel" maxlength="15" placeholder="Contact number"></div><div class="field"><label for="regCategory">Institution category *</label><select id="regCategory" required><option value="">Select category</option><option>School</option><option>Junior College</option><option>Degree College</option><option>Engineering</option><option>Medical</option><option>Coaching Centre</option><option>Polytechnic &amp; ITI</option><option>Other</option></select></div><div class="field"><label for="regState">State *</label><select id="regState" required><option value="">Select state</option></select></div><div class="field"><label for="regDistrict">District *</label><select id="regDistrict" required><option value="">Select district</option></select></div><div class="field"><label for="regMandal">Mandal / local area</label><select id="regMandal"><option value="">Select mandal (optional)</option></select></div><div class="field full"><label for="address">Institution address (optional)</label><input id="address" maxlength="250" placeholder="Town or local area"></div><div class="field full"><button class="btn" id="registerSubmit" type="submit" style="width:100%">Request a callback →</button><div class="note">No account or password is needed for this callback request.</div><div class="notice" id="formNotice" role="status"></div></div></div></form></div></section>
 </main>
 
 
@@ -1574,25 +1575,58 @@ $("resetSearch").addEventListener("click", () => {
   }, 0);
 });
 
-$("registerForm").addEventListener("submit", ev => {
+$("registerForm").addEventListener("submit", async ev => {
   ev.preventDefault();
   const form = ev.currentTarget;
   const phone = $("phone");
-  const digits = (phone.value || "").replace(/\\D/g, "");
+  const digits = (phone.value || "").replace(/\D/g, "");
   phone.setCustomValidity("");
   if (digits.length < 10 || digits.length > 13) {
     phone.setCustomValidity("Enter a valid phone number with 10 to 13 digits.");
     phone.reportValidity();
     return;
   }
-  // Do not report a false success: the current database policy does not permit
-  // anonymous writes to college_registration_requests. A secure server endpoint
-  // must be configured before this form can create a real lead.
-  showNotice(
-    $("formNotice"),
-    "Your details have not been submitted yet because secure online submission is being configured. Please contact the VidyaMap team directly; do not submit sensitive information here.",
-    "error"
-  );
+
+  const button = $("registerSubmit");
+  button.disabled = true;
+  const originalText = button.textContent;
+  button.textContent = "Submitting…";
+  $("formNotice").style.display = "none";
+
+  const payload = {
+    institution_name: $("institution").value.trim(),
+    contact_name: $("contactName").value.trim(),
+    contact_designation: $("contactDesignation").value,
+    contact_phone: digits,
+    category: $("regCategory").value,
+    state_code: $("regState").value,
+    district_id: $("regDistrict").value,
+    mandal_id: $("regMandal").value || null,
+    address: $("address").value.trim() || null,
+    website: $("websiteTrap").value
+  };
+
+  try {
+    const response = await fetch(SUPABASE_URL + "/functions/v1/submit-college-callback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "apikey": SUPABASE_KEY },
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.ok) {
+      throw new Error(result.error || "Your request could not be submitted. Please try again later.");
+    }
+    showNotice($("formNotice"), "Callback request received. The VidyaMap team can review it shortly.", "success");
+    form.reset();
+    $("regDistrict").innerHTML = '<option value="">Select district</option>';
+    $("regMandal").innerHTML = '<option value="">Select mandal (optional)</option>';
+  } catch (error) {
+    console.error("Callback submission failed:", error);
+    showNotice($("formNotice"), error.message || "Unable to submit right now. Please try again later.", "error");
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
 });
 
 $("year").textContent = new Date().getFullYear();
