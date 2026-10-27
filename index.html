@@ -995,7 +995,24 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!import
 @media(max-width:850px){.hero-panel{min-height:430px!important}.hero-panel .vm-hero-image{min-height:430px;object-position:center}}
 @media(max-width:560px){.hero-panel{min-height:360px!important;border-radius:22px!important}.hero-panel .vm-hero-image{min-height:360px}}
 </style>
-</head>
+<style id="vm-benefit-row-alignment-fix">
+/* Keep both benefit strips in normal document flow; never float over the hero/audience strip. */
+.vm-hero-benefit-row{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr)!important;align-items:stretch!important;gap:18px!important;width:min(1420px,calc(100% - 48px))!important;max-width:1420px!important;margin:24px auto 30px!important;padding:0!important;position:relative!important;inset:auto!important;transform:none!important;clear:both!important;box-sizing:border-box!important}
+.vm-hero-benefit-row>.vm-audience-outer,.vm-hero-benefit-row>.vm-trust-outer{position:relative!important;display:block!important;inset:auto!important;float:none!important;transform:none!important;width:100%!important;min-width:0!important;max-width:none!important;height:auto!important;margin:0!important;padding:0!important;box-sizing:border-box!important}
+.vm-hero-benefit-row .vm-audience-strip{position:relative!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;width:100%!important;height:100%!important;min-height:100px!important;max-width:none!important;margin:0!important;padding:12px 8px!important;box-sizing:border-box!important;align-items:center!important}
+.vm-hero-benefit-row .vm-audience-item{min-width:0!important;gap:8px!important;padding:10px 8px!important}
+.vm-hero-benefit-row .vm-audience-item>span{width:34px!important;height:34px!important;flex:0 0 34px!important}
+.vm-hero-benefit-row .vm-audience-item strong{font-size:clamp(10px,.82vw,13px)!important;line-height:1.25!important;white-space:normal!important}
+.vm-hero-benefit-row .vm-audience-item small{font-size:clamp(9px,.7vw,11px)!important;line-height:1.3!important}
+.vm-hero-benefit-row .vm-trust-strip{position:relative!important;inset:auto!important;right:auto!important;bottom:auto!important;left:auto!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;align-items:stretch!important;width:100%!important;height:100%!important;min-height:100px!important;max-width:none!important;margin:0!important;padding:10px 8px!important;box-sizing:border-box!important;gap:0!important}
+.vm-hero-benefit-row .vm-trust-item{display:flex!important;min-width:0!important;align-items:center!important;gap:7px!important;padding:8px 7px!important;border-top:0!important;border-right:1px solid #ffffff70!important;border-bottom:0!important;box-sizing:border-box!important}
+.vm-hero-benefit-row .vm-trust-item:last-child{border-right:0!important}
+.vm-hero-benefit-row .vm-trust-icon{width:30px!important;height:30px!important;flex:0 0 30px!important;font-size:15px!important}
+.vm-hero-benefit-row .vm-trust-item strong{font-size:clamp(9px,.74vw,12px)!important;line-height:1.25!important;white-space:normal!important}
+.vm-hero-benefit-row .vm-trust-item small{font-size:clamp(8px,.64vw,10px)!important;line-height:1.25!important}
+@media(max-width:1100px){.vm-hero-benefit-row{grid-template-columns:1fr!important;width:min(900px,calc(100% - 36px))!important;gap:12px!important;margin:22px auto 28px!important}.vm-hero-benefit-row .vm-audience-strip,.vm-hero-benefit-row .vm-trust-strip{min-height:0!important}}
+@media(max-width:560px){.vm-hero-benefit-row{width:calc(100% - 28px)!important;gap:12px!important}.vm-hero-benefit-row .vm-audience-strip{grid-template-columns:1fr!important;padding:8px 12px!important}.vm-hero-benefit-row .vm-audience-item,.vm-hero-benefit-row .vm-audience-item+.vm-audience-item{border-left:0!important;border-top:1px solid #dce1f2!important;padding:10px 4px!important}.vm-hero-benefit-row .vm-audience-item:first-child{border-top:0!important}.vm-hero-benefit-row .vm-trust-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important}.vm-hero-benefit-row .vm-trust-item{padding:10px 7px!important;border-right:0!important}.vm-hero-benefit-row .vm-trust-item:nth-child(odd){border-right:1px solid #ffffff70!important}.vm-hero-benefit-row .vm-trust-item:nth-child(-n+2){border-bottom:1px solid #ffffff70!important}}
+</style></head>
 <body>
 <div class="announcement">Your Education Journey Starts Here · Telangana &amp; Andhra Pradesh</div>
 <header class="vm-shared-header">
