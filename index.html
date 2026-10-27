@@ -682,6 +682,21 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 
 /* Verified institution cards are displayed normally; no blur or preview lock. */
 
+.vm-honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+/* Accessibility and mobile polish */
+:focus-visible{outline:3px solid #76208f!important;outline-offset:3px}
+button:disabled,[aria-disabled="true"]{cursor:not-allowed}
+img{max-width:100%}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+@media(max-width:560px){
+  .container{padding-left:16px;padding-right:16px}
+  input,select,textarea,button{max-width:100%}
+  .form-grid{grid-template-columns:minmax(0,1fr)!important}
+}
+
 /* Preview-lock institution directory cards */
 .vm-directory-locked{position:relative;overflow:hidden}
 .vm-directory-locked>*:not(.vm-directory-lock-overlay){filter:blur(4px);user-select:none}
@@ -708,6 +723,73 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 .vm-demo-purple{background:linear-gradient(145deg,#172554,#76208f 65%,#a855f7)}
 .vm-demo-blue{background:linear-gradient(145deg,#0c4a6e,#2563eb 60%,#818cf8)}
 .vm-demo-gold{background:linear-gradient(145deg,#78350f,#c2410c 55%,#f59e0b)}
+
+ 
+/* Mobile-first usability pass: compact header, touch-friendly controls, readable cards */
+.vm-mobile-menu-toggle{display:none;align-items:center;justify-content:center;flex-direction:column;gap:5px;width:46px;height:46px;border:1px solid var(--border);border-radius:13px;background:#fff;box-shadow:0 5px 18px #102d5512;cursor:pointer}
+.vm-mobile-menu-toggle span{display:block;width:20px;height:2px;border-radius:4px;background:var(--navy);transition:transform .2s,opacity .2s}
+body.vm-menu-open .vm-mobile-menu-toggle span:first-child{transform:translateY(7px) rotate(45deg)}
+body.vm-menu-open .vm-mobile-menu-toggle span:nth-child(2){opacity:0}
+body.vm-menu-open .vm-mobile-menu-toggle span:last-child{transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:760px){
+  .announcement{padding:7px 12px;font-size:11px;line-height:1.4}
+  header{top:0}
+  .nav{min-height:68px!important;gap:10px;padding-top:7px;padding-bottom:7px;position:relative}
+  .brand img{height:44px!important;max-width:148px!important}
+  .vm-mobile-menu-toggle{display:flex;flex:0 0 46px}
+  .nav-links{display:none;position:absolute;left:0;right:0;top:calc(100% - 1px);z-index:100;flex-direction:column;align-items:stretch;gap:5px;padding:12px;background:#fff;border:1px solid var(--border);border-radius:0 0 18px 18px;box-shadow:0 18px 32px #102d5520}
+  body.vm-menu-open .nav-links{display:flex}
+  .nav-links a,.nav-links a:not(.btn){display:flex!important;align-items:center;min-height:46px;padding:11px 13px;border-radius:10px;font-size:14px}
+  .nav-links a.btn{justify-content:center;margin-top:3px}
+  .hero{padding:34px 0 48px}
+  .hero-grid{gap:22px}
+  h1{font-size:clamp(34px,9vw,46px);letter-spacing:-1px;line-height:1.08;margin:12px 0}
+  .hero-copy{font-size:15px;line-height:1.6}
+  .hero-actions{display:grid;grid-template-columns:1fr;gap:10px;margin:18px 0}
+  .hero-actions .btn{width:100%;min-height:48px}
+  .hero-panel{min-height:0;padding:22px;border-radius:18px}
+  .hero-panel h2{font-size:24px}
+  .panel-stat{padding:11px}
+  .search-wrap{margin-top:-22px}
+  .search-card,.register-card{padding:17px;border-radius:16px}
+  .search-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px}
+  .field label{font-size:13px}
+  .field input,.field select,.field textarea{min-height:48px;font-size:16px}
+  .actions{display:grid;grid-template-columns:1fr;gap:9px}
+  .actions .btn{width:100%;min-height:46px}
+  .section,.register{padding:42px 0}
+  .section h2,.register-copy h2{font-size:28px;line-height:1.2}
+  .cards,.categories,.feature-grid,.vm-panel-grid{grid-template-columns:minmax(0,1fr)!important}
+  .college-card,.category-card,.feature-card,.vm-panel-card{min-width:0;padding:17px}
+  .college-card h3{font-size:16px;overflow-wrap:anywhere}
+  .register-grid{gap:20px}
+  .form-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px}
+  .full{grid-column:auto}
+  .vm-ad-ticker{top:68px}
+  .ad-carousel-wrap{margin-top:16px}
+  .ad-campaign-card,.ad-campaign-grid .ad-slot-placeholder{flex-basis:84vw!important;width:84vw!important}
+  .ad-campaign-grid{gap:12px}
+  .vm-register-ad-carousel,.vm-register-ad-slide,.vm-register-ad-slide img,.vm-register-ad-slide video,.vm-register-ad-placeholder{min-height:190px;height:190px}
+  .vm-register-ad-placeholder{padding:20px}
+  .vm-register-ad-placeholder strong{font-size:21px}
+  .vm-lead-modal{padding:10px!important}
+  #studentLeadCapture.vm-lead-modal .container{max-height:calc(100dvh - 20px);width:100%}
+  .vm-lead-modal .search-card{padding:16px}
+  .compare-content,.profile-dialog{width:calc(100% - 20px)!important;max-width:none!important;max-height:calc(100dvh - 24px)!important;overflow:auto;padding:18px!important;border-radius:18px!important}
+  .compare-table-wrap{overflow-x:auto;max-width:100%}
+  .footer-main{flex-direction:column;gap:20px}
+  .footer-links{gap:10px 14px}
+  .btn{min-height:44px}
+  #directory,#find,#register,#services,#platformPanels{scroll-margin-top:86px}
+}
+@media(max-width:380px){
+  .container{width:94%}
+  .brand img{max-width:128px!important;height:40px!important}
+  .nav{gap:6px}
+  .vm-mobile-menu-toggle{width:42px;height:42px;flex-basis:42px}
+  h1{font-size:32px}
+  .panel-stats{grid-template-columns:1fr 1fr;gap:8px}
+}
 
 </style>
 <style>
@@ -739,7 +821,8 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
   <img src="./vidyamap-logo.png" alt="VidyaMap Logo"
        style="height:55px;width:auto;max-width:180px;object-fit:contain;">
 </a>
-<nav class="nav-links">
+<button class="vm-mobile-menu-toggle" type="button" aria-controls="vmPrimaryNav" aria-expanded="false" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
+<nav class="nav-links" id="vmPrimaryNav">
 <a href="#directory">Explore</a>
 <a href="#services">Marketing</a>
 <a class="btn" href="#register">Register College</a>
@@ -832,6 +915,21 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 <label for="course">Course / keyword</label>
 <input id="course" placeholder="e.g. MPC, NEET, B.Tech">
 </div>
+  <div class="field">
+    <label for="admissionFilter">Admissions</label>
+    <select id="admissionFilter">
+      <option value="">All verified colleges</option>
+      <option value="open">Admissions marked open</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="sortColleges">Sort results</label>
+    <select id="sortColleges">
+      <option value="name">Name (A–Z)</option>
+      <option value="admissions">Admissions open first</option>
+      <option value="recent">Recently verified first</option>
+    </select>
+  </div>
 </div>
 <div class="actions">
 <button class="btn" type="submit">Search institutions →</button>
@@ -900,7 +998,7 @@ header .brand img{height:66px!important;width:auto!important;max-width:300px!imp
 </div>
 </section>
 
-<section class="register vm-register-compact" id="register"><div class="container vm-register-shell"><div class="register-copy"><div class="eyebrow">College partnerships</div><h2>List your college</h2><p class="muted">Share a few details so the VidyaMap team can contact your institution about listings and admissions promotions.</p><div class="vm-register-ad-carousel" id="vmRegisterAdCarousel" aria-label="Featured college promotions"><div class="vm-register-ad-slide is-active"><div class="vm-register-ad-placeholder"><span>VIDYAMAP PROMOTIONS</span><strong>Promote your college here</strong><p>Approved college posters and videos will appear here automatically.</p></div></div><div class="vm-register-ad-dots" id="vmRegisterAdDots" aria-hidden="true"></div></div></div><form class="register-card vm-lead-design-only" id="registerForm"><div class="form-grid"><div class="field full"><label for="institution">College / Institution name *</label><input id="institution" required maxlength="150" placeholder="Enter institution name"></div><div class="field"><label for="contactName">Contact person *</label><input id="contactName" required maxlength="100" placeholder="Full name"></div><div class="field"><label for="contactDesignation">Designation *</label><select id="contactDesignation" required><option value="">Select designation</option><option>Founder</option><option>Chairman</option><option>Director</option><option>Principal</option><option>Admissions In-charge</option><option>Administrator</option><option>Other</option></select></div><div class="field"><label for="phone">Phone number *</label><input id="phone" required type="tel" maxlength="15" placeholder="Contact number"></div><div class="field"><label for="regCategory">Institution category *</label><select id="regCategory" required><option value="">Select category</option><option>School</option><option>Junior College</option><option>Degree College</option><option>Engineering</option><option>Medical</option><option>Coaching Centre</option><option>Polytechnic &amp; ITI</option><option>Other</option></select></div><div class="field"><label for="regState">State *</label><select id="regState" required><option value="">Select state</option></select></div><div class="field"><label for="regDistrict">District *</label><select id="regDistrict" required><option value="">Select district</option></select></div><div class="field"><label for="regMandal">Mandal / local area</label><select id="regMandal"><option value="">Select mandal (optional)</option></select></div><div class="field full"><label for="address">Institution address (optional)</label><input id="address" maxlength="250" placeholder="Town or local area"></div><div class="field full"><button class="btn" id="registerSubmit" type="submit" style="width:100%">Request a callback →</button><div class="note">No account or password is needed for this callback request.</div><div class="notice" id="formNotice" role="status"></div></div></div></form></div></section>
+<section class="register vm-register-compact" id="register"><div class="container vm-register-shell"><div class="register-copy"><div class="eyebrow">College partnerships</div><h2>List your college</h2><p class="muted">Share a few details so the VidyaMap team can contact your institution about listings and admissions promotions.</p><div class="vm-register-ad-carousel" id="vmRegisterAdCarousel" aria-label="Featured college promotions"><div class="vm-register-ad-slide is-active"><div class="vm-register-ad-placeholder"><span>VIDYAMAP PROMOTIONS</span><strong>Promote your college here</strong><p>Approved college posters and videos will appear here automatically.</p></div></div><div class="vm-register-ad-dots" id="vmRegisterAdDots" aria-hidden="true"></div></div></div><form class="register-card vm-lead-design-only" id="registerForm"><div class="vm-honeypot" aria-hidden="true"><label for="websiteTrap">Leave this field empty</label><input id="websiteTrap" name="website" type="text" tabindex="-1" autocomplete="off"></div><div class="form-grid"><div class="field full"><label for="institution">College / Institution name *</label><input id="institution" required maxlength="150" placeholder="Enter institution name"></div><div class="field"><label for="contactName">Contact person *</label><input id="contactName" required maxlength="100" placeholder="Full name"></div><div class="field"><label for="contactDesignation">Designation *</label><select id="contactDesignation" required><option value="">Select designation</option><option>Founder</option><option>Chairman</option><option>Director</option><option>Principal</option><option>Admissions In-charge</option><option>Administrator</option><option>Other</option></select></div><div class="field"><label for="phone">Phone number *</label><input id="phone" required type="tel" maxlength="15" placeholder="Contact number"></div><div class="field"><label for="regCategory">Institution category *</label><select id="regCategory" required><option value="">Select category</option><option>School</option><option>Junior College</option><option>Degree College</option><option>Engineering</option><option>Medical</option><option>Coaching Centre</option><option>Polytechnic &amp; ITI</option><option>Other</option></select></div><div class="field"><label for="regState">State *</label><select id="regState" required><option value="">Select state</option></select></div><div class="field"><label for="regDistrict">District *</label><select id="regDistrict" required><option value="">Select district</option></select></div><div class="field"><label for="regMandal">Mandal / local area</label><select id="regMandal"><option value="">Select mandal (optional)</option></select></div><div class="field full"><label for="address">Institution address (optional)</label><input id="address" maxlength="250" placeholder="Town or local area"></div><div class="field full"><button class="btn" id="registerSubmit" type="submit" style="width:100%">Request a callback →</button><div class="note">No account or password is needed for this callback request.</div><div class="notice" id="formNotice" role="status"></div></div></div></form></div></section>
 </main>
 
 
@@ -1007,6 +1105,48 @@ body.college-portal-mode #accountDashboard{display:block!important}
 .vm-panel-note{margin-top:20px;padding:15px 18px;border:1px solid var(--border);border-radius:14px;background:#ffffffb8;color:var(--muted);font-size:14px}
 @media(max-width:850px){.vm-panel-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.vm-panel-grid{grid-template-columns:1fr}.vm-panel-card{padding:22px}}
+
+/* Phase 2: mobile directory, ads and form usability */
+@media(max-width:760px){
+  #collegeGrid{grid-template-columns:minmax(0,1fr)!important;gap:14px!important}
+  #collegeGrid .college-card{width:100%;box-sizing:border-box;padding:15px!important;border-radius:17px!important;overflow:hidden}
+  #collegeGrid .college-top{display:flex;align-items:flex-start;gap:12px;min-width:0}
+  #collegeGrid .college-top>div:nth-child(2){flex:1;min-width:0}
+  #collegeGrid .college-logo-img,#collegeGrid .college-top>.logo{width:48px!important;height:48px!important;flex:0 0 48px;object-fit:contain}
+  #collegeGrid .college-card h3{font-size:15px!important;line-height:1.35;overflow-wrap:anywhere}
+  #collegeGrid .college-card p{font-size:13px;line-height:1.55}
+  #collegeGrid .vm-directory-lock-overlay{padding:12px;font-size:14px}
+  .ad-carousel-wrap{margin-top:16px;overflow:hidden}
+  .ad-campaign-grid{gap:12px;padding:6px 2px 16px}
+  .ad-campaign-card,.ad-campaign-grid .ad-slot-placeholder{flex-basis:82vw!important;width:82vw!important;max-width:340px;box-sizing:border-box}
+  .ad-campaign-media,.ad-campaign-video{width:100%;height:clamp(150px,48vw,220px);object-fit:cover;display:block}
+  .ad-campaign-body{padding:14px!important;overflow-wrap:anywhere}
+  .ad-campaign-body h3{font-size:16px;line-height:1.35}
+  .ad-campaign-body p{font-size:13px;line-height:1.5}
+  .ad-scroll-btn{width:40px;height:40px;min-width:40px}
+  #vmRegisterAdCarousel{min-height:220px;border-radius:16px;overflow:hidden}
+  .vm-register-ad-slide img,.vm-register-ad-slide video{width:100%;height:clamp(200px,60vw,300px);object-fit:cover}
+  .vm-register-ad-caption{padding:12px 14px;overflow-wrap:anywhere}
+  .vm-register-ad-caption strong{font-size:15px;line-height:1.35}
+  #studentLeadCapture.vm-lead-modal{overflow-y:auto;overscroll-behavior:contain;align-items:flex-start;padding:12px!important}
+  #studentLeadCapture.vm-lead-modal .container{margin:auto 0;max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain}
+  #studentLeadCapture input,#studentLeadCapture select,#studentLeadCapture textarea{font-size:16px!important}
+  #find input,#find select,#register input,#register select,#register textarea{min-width:0;width:100%;box-sizing:border-box}
+  #resultsCount{font-size:13px;line-height:1.5}
+  .compare-table-wrap{touch-action:pan-x}
+}
+@media(max-width:380px){
+  #collegeGrid .college-top{gap:9px}
+  #collegeGrid .college-logo-img,#collegeGrid .college-top>.logo{width:42px!important;height:42px!important;flex-basis:42px}
+  .ad-campaign-card,.ad-campaign-grid .ad-slot-placeholder{flex-basis:86vw!important;width:86vw!important}
+  .ad-campaign-body{padding:12px!important}
+  .vm-ad-ticker{gap:8px;padding:0 8px}
+  .vm-ad-ticker strong{padding:8px;font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  .ad-campaign-grid{animation:none!important;transform:none!important}
+}
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1482,6 +1622,8 @@ function search(event) {
   const selectedState = $("state").value;
   const selectedDistrict = $("district").value;
   const selectedMandal = $("searchMandal").value;
+  const admissionFilter = $("admissionFilter")?.value || "";
+  const sortMode = $("sortColleges")?.value || "name";
 
   const filtered = verifiedColleges.filter(c => {
     const d = districts.find(x => String(x.id) === String(c.district_id));
@@ -1496,7 +1638,19 @@ function search(event) {
     const keywordOK = !keyword || text.includes(keyword);
     const categoryOK = !category || (c.category ? c.category.toLowerCase().includes(category) : text.includes(category));
 
-    return stateOK && districtOK && mandalOK && keywordOK && categoryOK;
+    const admissionsOK = admissionFilter !== "open" || c.admissions_open === true;
+    return stateOK && districtOK && mandalOK && keywordOK && categoryOK && admissionsOK;
+  });
+
+  filtered.sort((a, b) => {
+    if (sortMode === "admissions") {
+      const diff = Number(b.admissions_open === true) - Number(a.admissions_open === true);
+      if (diff) return diff;
+    } else if (sortMode === "recent") {
+      const diff = new Date(b.verified_at || 0).getTime() - new Date(a.verified_at || 0).getTime();
+      if (diff) return diff;
+    }
+    return String(a.name || "").localeCompare(String(b.name || ""), undefined, { sensitivity: "base" });
   });
 
   renderColleges(filtered);
@@ -1524,14 +1678,65 @@ $("resetSearch").addEventListener("click", () => {
     $("searchMandal").value = "";
     $("categoryFilter").value = "";
     $("course").value = "";
+    $("admissionFilter").value = "";
+    $("sortColleges").value = "name";
     $("searchNotice").style.display = "none";
     renderColleges(verifiedColleges);
   }, 0);
 });
 
-$("registerForm").addEventListener("submit", ev => {
+$("registerForm").addEventListener("submit", async ev => {
   ev.preventDefault();
-  showNotice($("formNotice"), "The callback form design is ready. Email delivery and lead saving have not been connected yet.", "success");
+  const form = ev.currentTarget;
+  const phone = $("phone");
+  const digits = (phone.value || "").replace(/\D/g, "");
+  phone.setCustomValidity("");
+  if (digits.length < 10 || digits.length > 13) {
+    phone.setCustomValidity("Enter a valid phone number with 10 to 13 digits.");
+    phone.reportValidity();
+    return;
+  }
+
+  const button = $("registerSubmit");
+  button.disabled = true;
+  const originalText = button.textContent;
+  button.textContent = "Submitting…";
+  $("formNotice").style.display = "none";
+
+  const payload = {
+    institution_name: $("institution").value.trim(),
+    contact_name: $("contactName").value.trim(),
+    contact_designation: $("contactDesignation").value,
+    contact_phone: digits,
+    category: $("regCategory").value,
+    state_code: $("regState").value,
+    district_id: $("regDistrict").value,
+    mandal_id: $("regMandal").value || null,
+    address: $("address").value.trim() || null,
+    website: $("websiteTrap").value
+  };
+
+  try {
+    const response = await fetch(SUPABASE_URL + "/functions/v1/submit-college-callback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "apikey": SUPABASE_KEY },
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.ok) {
+      throw new Error(result.error || "Your request could not be submitted. Please try again later.");
+    }
+    showNotice($("formNotice"), "Callback request received. The VidyaMap team can review it shortly.", "success");
+    form.reset();
+    $("regDistrict").innerHTML = '<option value="">Select district</option>';
+    $("regMandal").innerHTML = '<option value="">Select mandal (optional)</option>';
+  } catch (error) {
+    console.error("Callback submission failed:", error);
+    showNotice($("formNotice"), error.message || "Unable to submit right now. Please try again later.", "error");
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
 });
 
 $("year").textContent = new Date().getFullYear();
@@ -1641,6 +1846,39 @@ async function initDashboard(){
     });actions.append(b);});
     row.append(info,actions);target.append(row);
    });
+   const leadHeading=document.createElement("h3");leadHeading.textContent="Public college callback leads";leadHeading.style.marginTop="28px";target.append(leadHeading);
+   const {data:publicLeads,error:publicLeadError}=await db.from("college_public_leads").select("id,institution_name,contact_name,contact_designation,contact_phone,category,state_code,district_id,mandal_id,address,status,created_at").order("created_at",{ascending:false}).limit(100);
+   if(publicLeadError){
+    const msg=document.createElement("p");msg.className="feature-note";msg.textContent="Callback leads could not be loaded. Check the admin table policy.";target.append(msg);
+   }else if(!publicLeads?.length){
+    const msg=document.createElement("p");msg.className="feature-note";msg.textContent="No public callback leads yet.";target.append(msg);
+   }else{
+    const [{data:leadDistricts},{data:leadMandals}]=await Promise.all([
+      db.from("districts").select("id,name"),
+      db.from("mandals").select("id,name")
+    ]);
+    const districtNames=new Map((leadDistricts||[]).map(x=>[x.id,x.name]));
+    const mandalNames=new Map((leadMandals||[]).map(x=>[x.id,x.name]));
+    for(const lead of publicLeads){
+      const row=document.createElement("div");row.className="dashboard-row";
+      const info=document.createElement("div");
+      const title=document.createElement("strong");title.textContent=lead.institution_name+" · "+lead.category;
+      const detail=document.createElement("div");detail.className="feature-note";
+      detail.textContent=[lead.contact_name,lead.contact_designation,lead.contact_phone,districtNames.get(lead.district_id),mandalNames.get(lead.mandal_id),lead.state_code,lead.address,new Date(lead.created_at).toLocaleString()].filter(Boolean).join(" · ");
+      info.append(title,detail);
+      const status=document.createElement("select");status.setAttribute("aria-label","Callback lead status");
+      [["pending","Pending"],["contacted","Contacted"],["closed","Closed"],["spam","Spam"]].forEach(([value,label])=>{const opt=document.createElement("option");opt.value=value;opt.textContent=label;status.append(opt);});
+      status.value=lead.status;
+      status.addEventListener("change",async()=>{
+        status.disabled=true;
+        const {error}=await db.from("college_public_leads").update({status:status.value}).eq("id",lead.id);
+        if(error){say("Could not update callback status: "+(error.message||"database error"),"error");status.value=lead.status;}
+        else{lead.status=status.value;say("Callback lead status updated.","success");}
+        status.disabled=false;
+      });
+      row.append(info,status);target.append(row);
+    }
+   }
    await loadAdApprovals(user);
   }
   async function loadAdApprovals(user){
@@ -1890,5 +2128,26 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
 <script>(async function initRegisterAdCarousel(){const root=document.getElementById('vmRegisterAdCarousel'),dots=document.getElementById('vmRegisterAdDots');if(!root||!window.supabase)return;try{const {data,error}=await db.from('college_ad_campaigns').select('id,title,description,media_type,media_url,click_url,starts_at,ends_at,payment_status,status').eq('status','approved').eq('payment_status','paid').order('created_at',{ascending:false}).limit(30);if(error)throw error;const now=new Date(),active=(data||[]).filter(c=>(!c.starts_at||new Date(c.starts_at)<=now)&&(!c.ends_at||new Date(c.ends_at)>=now)&&c.media_url);if(!active.length){
  const demo=[{eyebrow:'VIDYAMAP PROMOTIONS',title:'Promote your college here',copy:'Approved college posters and videos will appear in this space.',cls:'vm-demo-purple'},{eyebrow:'ADMISSIONS CAMPAIGNS',title:'Reach students in your area',copy:'Target selected districts and mandals after Founder approval.',cls:'vm-demo-blue'},{eyebrow:'POSTERS + VIDEOS',title:'Your college. More visibility.',copy:'Paid, approved campaigns rotate here automatically.',cls:'vm-demo-gold'}];
  const slides=[];demo.forEach(item=>{const slide=document.createElement('div');slide.className='vm-register-ad-slide';const panel=document.createElement('div');panel.className='vm-register-demo-panel '+item.cls;const mark=document.createElement('span');mark.className='vm-demo-eyebrow';mark.textContent=item.eyebrow;const title=document.createElement('strong');title.textContent=item.title;const copy=document.createElement('p');copy.textContent=item.copy;const badge=document.createElement('b');badge.textContent='VidyaMap · Find. Promote. Grow.';panel.append(mark,title,copy,badge);slide.append(panel);root.insertBefore(slide,dots);slides.push(slide);});dots.replaceChildren();let index=0;const buttons=slides.map((_,i)=>{const b=document.createElement('button');b.type='button';b.className='vm-register-ad-dot'+(i===0?' is-active':'');b.setAttribute('aria-label','Show promotion preview '+(i+1));b.addEventListener('click',()=>show(i));dots.append(b);return b;});function show(next){index=next;slides.forEach((el,i)=>el.classList.toggle('is-active',i===index));buttons.forEach((el,i)=>el.classList.toggle('is-active',i===index));}show(0);if(slides.length>1)setInterval(()=>{if(!document.hidden)show((index+1)%slides.length)},3500);return;}const slides=[];active.forEach(c=>{const slide=document.createElement('div');slide.className='vm-register-ad-slide';let media;if(c.media_type==='video'){media=document.createElement('video');media.src=c.media_url;media.muted=true;media.loop=true;media.autoplay=true;media.playsInline=true;media.preload='metadata';media.setAttribute('aria-label',c.title||'College video advertisement');}else{media=document.createElement('img');media.src=c.media_url;media.alt=c.title||'College advertisement';media.loading='lazy';}slide.append(media);const caption=document.createElement('div');caption.className='vm-register-ad-caption';const title=document.createElement('strong');title.textContent=c.title||'College promotion';caption.append(title);if(c.description){const p=document.createElement('p');p.textContent=c.description;caption.append(p);}if(c.click_url){try{const u=new URL(c.click_url);if(['http:','https:'].includes(u.protocol)){const a=document.createElement('a');a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent='View promotion →';caption.append(a);}}catch{}}slide.append(caption);root.insertBefore(slide,dots);slides.push(slide);});if(!slides.length)return;root.querySelectorAll('.vm-register-ad-placeholder').forEach(el=>el.closest('.vm-register-ad-slide')?.remove());dots.replaceChildren();let index=0;const buttons=slides.map((_,i)=>{const b=document.createElement('button');b.type='button';b.className='vm-register-ad-dot'+(i===0?' is-active':'');b.setAttribute('aria-label','Show promotion '+(i+1));b.addEventListener('click',()=>show(i));dots.append(b);return b;});function show(next){index=next;slides.forEach((el,i)=>el.classList.toggle('is-active',i===index));buttons.forEach((el,i)=>el.classList.toggle('is-active',i===index));}if(slides.length>1)setInterval(()=>{if(!document.hidden)show((index+1)%slides.length)},4000);}catch(e){console.warn('Registration ads carousel not available',e);}})();</script>
+<script>
+(function(){
+  const toggle=document.querySelector(".vm-mobile-menu-toggle");
+  const nav=document.getElementById("vmPrimaryNav");
+  if(!toggle||!nav)return;
+  function closeMenu(){
+    document.body.classList.remove("vm-menu-open");
+    toggle.setAttribute("aria-expanded","false");
+    toggle.setAttribute("aria-label","Open navigation menu");
+  }
+  toggle.addEventListener("click",function(){
+    const open=!document.body.classList.contains("vm-menu-open");
+    document.body.classList.toggle("vm-menu-open",open);
+    toggle.setAttribute("aria-expanded",String(open));
+    toggle.setAttribute("aria-label",open?"Close navigation menu":"Open navigation menu");
+  });
+  nav.querySelectorAll("a").forEach(function(link){link.addEventListener("click",closeMenu);});
+  document.addEventListener("keydown",function(event){if(event.key==="Escape")closeMenu();});
+  window.addEventListener("resize",function(){if(window.innerWidth>760)closeMenu();});
+})();
+</script>
 </body>
 </html>
