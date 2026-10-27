@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123B6D">
+<meta name="description" content="VidyaMap for colleges: showcase your institution, share admissions details, and explore digital promotion support.">
+<title>For Colleges | VidyaMap</title>
+<style>
+:root{--navy:#102d55;--purple:#76208f;--ink:#172b49;--muted:#64728d;--line:#e6e3f3}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.65;background:radial-gradient(circle at 8% 20%,#eee3ffb5,transparent 25rem),radial-gradient(circle at 90% 36%,#dceaffb5,transparent 25rem),linear-gradient(135deg,#fff,#f6f5ff)}
+a{text-decoration:none;color:inherit}.container{width:min(1180px,92%);margin:auto}
+.hero{padding:64px 0 42px}.eyebrow{font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--purple)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+h1{font-size:clamp(38px,5vw,62px);line-height:1.08;letter-spacing:-1.7px;color:var(--navy);margin:14px 0}
+.lead{font-size:18px;color:#526483;max-width:650px}
+.hero-art{position:relative;min-height:300px;border-radius:30px;padding:28px;background:linear-gradient(140deg,#102d55,#76208f);box-shadow:0 24px 60px #3b2a722e;color:#fff;overflow:hidden}
+.hero-art:before{content:"";position:absolute;width:280px;height:280px;right:-60px;top:-70px;border:1px solid #ffffff55;border-radius:50%;box-shadow:0 0 0 25px #ffffff0d,0 0 0 55px #ffffff09}
+.hero-art h2{position:relative;font-size:28px;line-height:1.2;max-width:330px}
+.bubbles{position:relative;display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.bubble{padding:10px 13px;border:1px solid #ffffff54;background:#ffffff18;border-radius:14px;font-size:12px;font-weight:800;backdrop-filter:blur(10px)}
+.section{padding:38px 0 68px}.section-title{text-align:center;max-width:720px;margin:0 auto 28px}.section-title h2{font-size:clamp(28px,4vw,40px);line-height:1.15;color:var(--navy);margin:8px 0}.section-title p{color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{background:#ffffffd9;border:1px solid #fff;border-radius:22px;padding:24px;box-shadow:0 14px 35px #30437412;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-5px);box-shadow:0 22px 42px #4b2d811c}
+.icon{width:52px;height:52px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(135deg,#f1e7ff,#e5edff);font-size:25px;margin-bottom:16px}
+.card h3{margin:0 0 8px;color:var(--navy);font-size:19px}.card p{margin:0;color:var(--muted);font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.step{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px}.step strong{display:block;color:var(--purple);font-size:13px;letter-spacing:1px;margin-bottom:6px}
+.cta{margin:0 auto 70px;padding:32px;border-radius:26px;background:linear-gradient(120deg,#102d55,#55228c);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:24px;box-shadow:0 20px 45px #3b2a7225}.cta h2{font-size:28px;line-height:1.2;margin:0 0 8px}.cta p{margin:0;color:#e4e7ff}.button{display:inline-flex;align-items:center;justify-content:center;padding:13px 18px;border-radius:13px;background:#fff;color:#55228c;font-weight:900;white-space:nowrap;box-shadow:0 8px 20px #0002}
+footer{padding:24px 0;background:#0b2142;color:#dce6f5;font-size:13px}
+@media(max-width:800px){.hero-grid{grid-template-columns:1fr}.hero{padding-top:40px}.cards{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}.cta{align-items:flex-start;flex-direction:column}}
+@media(max-width:540px){.cards{grid-template-columns:1fr}.hero-art{min-height:250px;padding:23px}.cta{padding:24px}.button{white-space:normal}}
+
+/* Shared responsive VidyaMap navigation styles */
+html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!important;overflow-x:hidden}
+.vm-shared-header{position:sticky;top:0;z-index:9999;overflow:visible;background:rgba(255,255,255,.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid #e4e3f2;box-shadow:0 10px 30px rgba(25,35,76,.10)}
+.vm-shared-nav{width:min(1380px,calc(100% - 36px));min-height:88px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.vm-shared-brand{display:flex;align-items:center;flex-shrink:0;padding:6px 10px;border-radius:16px;background:linear-gradient(145deg,#fff,#f4efff);box-shadow:0 7px 20px #45327a14}
+.vm-shared-brand img{display:block;width:auto;height:62px;max-width:210px;object-fit:contain}
+.vm-shared-links{display:flex;align-items:center;gap:8px}
+.vm-shared-links>a,.vm-shared-about{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 13px;border:1px solid transparent;border-radius:14px;background:#ffffffa8;color:#17345f;font-size:13px;font-weight:800;white-space:nowrap;transition:all .2s}
+.vm-shared-links>a:hover,.vm-shared-about:hover,.vm-shared-dropdown.is-current>.vm-shared-about{color:#fff;background:linear-gradient(120deg,#8b21c0,#4b36c7);box-shadow:0 8px 22px #692bae40;transform:translateY(-1px)}
+.vm-shared-register{color:#fff!important;background:linear-gradient(120deg,#8e1bc0,#5413a0)!important;box-shadow:0 9px 22px #70209b38!important;padding:13px 17px!important}
+.vm-shared-dropdown{position:relative}.vm-shared-about{cursor:pointer}
+.vm-shared-menu{display:none;position:absolute;top:calc(100% + 9px);left:0;min-width:250px;padding:9px;background:#fffffff7;border:1px solid #e5def7;border-radius:16px;box-shadow:0 18px 42px #19234c2e;backdrop-filter:blur(16px)}
+.vm-shared-menu a{display:block;padding:10px 12px;border-radius:10px;color:#17345f;font-size:13px;font-weight:650}
+.vm-shared-menu a:hover,.vm-shared-menu a[aria-current=page]{background:linear-gradient(100deg,#f2e8ff,#eaf0ff);color:#6520a0}
+.vm-shared-dropdown:hover .vm-shared-menu,.vm-shared-dropdown:focus-within .vm-shared-menu,.vm-shared-dropdown.is-open .vm-shared-menu{display:block}
+.vm-shared-links a[aria-current=page]{color:#fff;background:linear-gradient(120deg,#8b21c0,#4b36c7);box-shadow:0 8px 22px #692bae40}
+.vm-shared-toggle{display:none;border:1px solid #e4dcf8;border-radius:13px;background:linear-gradient(145deg,#fff,#f1eaff);color:#61209a;font-size:22px;width:46px;height:46px;cursor:pointer}
+@media(max-width:1000px){.vm-shared-nav{width:calc(100% - 24px);gap:10px}.vm-shared-brand img{height:52px;max-width:165px}.vm-shared-links{gap:4px}.vm-shared-links>a,.vm-shared-about{padding:10px 8px;font-size:12px}}
+@media(max-width:820px){.vm-shared-nav{min-height:74px}.vm-shared-toggle{display:block}.vm-shared-links{display:none;position:absolute;top:calc(100% + 8px);left:12px;right:12px;align-items:stretch;flex-direction:column;padding:13px;border:1px solid #e5def7;border-radius:18px;background:#fffffff7;box-shadow:0 18px 42px #19234c2e;backdrop-filter:blur(16px)}.vm-shared-links.is-open{display:flex}.vm-shared-links>a,.vm-shared-about{width:100%;justify-content:flex-start;font-size:14px;padding:12px}.vm-shared-dropdown{width:100%}.vm-shared-menu{position:static;min-width:0;margin:5px 0 8px 8px;box-shadow:none;background:#fbfaff}.vm-shared-register{justify-content:center!important}.vm-shared-brand img{height:48px;max-width:150px}}
+</style>
+</head><body>
+<header class="vm-shared-header">
+  <div class="vm-shared-nav">
+    <a class="vm-shared-brand" href="./index.html" aria-label="VidyaMap Home"><img src="./vidyamap-logo.png" alt="VidyaMap"></a>
+    <button class="vm-shared-toggle" type="button" aria-expanded="false" aria-controls="vmSharedLinks" aria-label="Toggle navigation">☰</button>
+    <nav class="vm-shared-links" id="vmSharedLinks" aria-label="Main navigation">
+      <a href="./index.html">Home</a>
+      <a href="./index.html#directory">Explore Colleges</a>
+      <a href="./marketing-services.html">Marketing Services</a>
+      <a href="./for-colleges.html" aria-current="page">For Colleges</a>
+      <div class="vm-shared-dropdown">
+        <a href="./about.html" class="vm-shared-about" aria-expanded="false">About <span>▾</span></a>
+        <div class="vm-shared-menu">
+          <a href="./about.html">About VidyaMap</a>
+          <a href="./our-mission.html">Our Mission</a>
+          <a href="./what-we-do.html">What We Do</a>
+          <a href="./our-vision.html">Our Vision</a>
+          <a href="./why-vidyamap.html">Why Choose VidyaMap?</a>
+          <a href="./founders.html">Founder — Shaik Mohammad Fayaz</a>
+        </div>
+      </div>
+      <a href="./index.html#contact">Contact</a>
+      <a class="vm-shared-register" href="./index.html#register">Register College</a>
+    </nav>
+  </div>
+</header>
+<main>
+<section class="hero"><div class="container hero-grid">
+<div><div class="eyebrow">VidyaMap · For Colleges</div><h1>Help the right students discover your college.</h1><p class="lead">Create a clear online presence for your institution. Share your courses, facilities, admissions information, and highlights with students exploring their next step.</p><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"><a class="button" href="./index.html#register">Register Your College →</a><a href="./marketing-services.html" style="display:inline-flex;align-items:center;font-weight:800;color:var(--navy)">Explore Marketing Services</a></div></div>
+<div class="hero-art"><div class="eyebrow" style="color:#e4c7ff">SHOWCASE · CONNECT · GROW</div><h2>Give students a better way to learn about your institution.</h2><div class="bubbles"><span class="bubble">🏫 College Profile</span><span class="bubble">📚 Courses &amp; Facilities</span><span class="bubble">🎓 Admissions Info</span><span class="bubble">📣 Digital Promotion</span></div></div>
+</div></section>
+<section class="section"><div class="container"><div class="section-title"><div class="eyebrow">Why join VidyaMap?</div><h2>Make your college easier to explore</h2><p>Present important information in a student-friendly way and help prospective applicants understand what your institution offers.</p></div>
+<div class="cards">
+<article class="card"><div class="icon">🏫</div><h3>Showcase Your Institution</h3><p>Share your college name, location, contact details, courses, facilities, and other useful information in one place.</p></article>
+<article class="card"><div class="icon">🎓</div><h3>Support Student Discovery</h3><p>Help students and families compare available options and find information they need before contacting your college.</p></article>
+<article class="card"><div class="icon">📣</div><h3>Promote Admissions</h3><p>Highlight admissions announcements, programme information, events, and institutional strengths with clear messaging.</p></article>
+<article class="card"><div class="icon">🎨</div><h3>Creative Campaigns</h3><p>Ask about posters, social media creatives, and campaign content tailored to your institution's goals.</p></article>
+<article class="card"><div class="icon">📱</div><h3>Digital Reach</h3><p>Explore WhatsApp outreach, Meta Ads, YouTube promotion, and website SEO through our marketing services.</p></article>
+<article class="card"><div class="icon">🤝</div><h3>Clear Next Steps</h3><p>Tell us what you want to share and our team can discuss suitable options and the information required.</p></article>
+</div></div></section>
+<section class="section" style="padding-top:0"><div class="container"><div class="section-title"><div class="eyebrow">Getting started</div><h2>Three simple steps</h2></div><div class="steps"><div class="step"><strong>01 · SHARE</strong><h3>Tell us about your college</h3><p>Provide your institution name, location, contact details, and the information you want students to see.</p></div><div class="step"><strong>02 · PREPARE</strong><h3>Organise your profile</h3><p>Prepare accurate course, facilities, admissions, and contact information for review.</p></div><div class="step"><strong>03 · CONNECT</strong><h3>Discuss promotion</h3><p>If you need wider reach, explore suitable creative and digital marketing options with VidyaMap.</p></div></div></div></section>
+<section class="container cta"><div><h2>Ready to introduce your college to students?</h2><p>Register your institution or contact VidyaMap to discuss the next step.</p></div><a class="button" href="./index.html#register">Register / Contact →</a></section>
+</main>
+<footer><div class="container">© VidyaMap · Find. Promote. Grow.</div></footer>
+<script id="vm-shared-navigation">
+(function(){const nav=document.getElementById('vmSharedLinks');if(!nav)return;const toggle=document.querySelector('.vm-shared-toggle');const drop=document.querySelector('.vm-shared-dropdown');const about=document.querySelector('.vm-shared-about');
+if(toggle)toggle.addEventListener('click',()=>{const open=nav.classList.toggle('is-open');toggle.setAttribute('aria-expanded',String(open));});
+if(about)about.addEventListener('click',e=>{if(window.matchMedia('(max-width:820px)').matches){e.preventDefault();const open=drop.classList.toggle('is-open');about.setAttribute('aria-expanded',String(open));}});
+document.addEventListener('click',e=>{if(drop&&!drop.contains(e.target)){drop.classList.remove('is-open');about?.setAttribute('aria-expanded','false')}if(toggle&&!nav.contains(e.target)&&!toggle.contains(e.target)){nav.classList.remove('is-open');toggle.setAttribute('aria-expanded','false')}});
+const current=location.pathname.split('/').pop()||'index.html';const hash=location.hash;let active=null;
+for(const a of nav.querySelectorAll('a[href]')){try{const u=new URL(a.href,location.href);if(u.pathname.split('/').pop()===current&&((current==='index.html'&&u.hash==='' )||(current!=='index.html'&&u.hash===''))){active=a;}if(current==='index.html'&&hash&&u.hash===hash)active=a;}catch(e){}}
+if(active){active.setAttribute('aria-current','page');const d=active.closest('.vm-shared-dropdown');if(d){d.classList.add('is-current');about?.setAttribute('aria-current','page');}const menuLink=active.closest('.vm-shared-menu');if(menuLink){about?.setAttribute('aria-current','page');}}
+})();
+</script>
+</body></html>
