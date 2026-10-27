@@ -2512,7 +2512,26 @@ main{overflow:visible!important}
 .vm-ad-slot-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}.vm-ad-slot-badge{display:inline-flex;align-items:center;justify-content:center;border:1px solid #d7c5f2;background:#fff;border-radius:999px;padding:5px 11px;color:#6f2395;font-size:11px;font-weight:900;letter-spacing:1px}
 .vm-ad-only-slot h2{font-size:clamp(28px,4vw,42px);line-height:1.15;max-width:780px;margin:8px 0}.vm-ad-stage{position:relative;margin-top:24px;padding:22px;border:1px solid #e1d5f6;border-radius:28px;background:#ffffffb8;box-shadow:0 22px 55px #39206c12;overflow:hidden}.vm-ad-stage-glow{position:absolute;right:-70px;top:-100px;width:250px;height:250px;border-radius:50%;background:#d9c4ff55;filter:blur(4px);pointer-events:none}.vm-ad-stage .ad-carousel-wrap{position:relative;z-index:1}.vm-ad-only-slot .ad-campaign-grid{scroll-snap-type:x mandatory}.vm-ad-only-slot .ad-campaign-grid>*{scroll-snap-align:start}.vm-ad-only-slot .vm-panel-note{font-size:12px;margin-top:14px}
 @media(max-width:600px){.vm-ad-only-slot{padding:42px 0}.vm-ad-stage{padding:12px;border-radius:20px}.vm-ad-slot-heading{align-items:flex-start}}
-</style>
+<style id="vm-brand-system">
+:root{--vm-navy:#102b50;--vm-purple:#76208f;--vm-blue:#2859a8;--vm-ice:#edf4ff;--vm-lilac:#f5edff;--vm-border:#d9dff1;--vm-text:#152b49;--vm-muted:#64728b}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{color:var(--vm-text);background:radial-gradient(ellipse at 8% 5%,#eee2ff75,transparent 30rem),radial-gradient(ellipse at 95% 24%,#dbeaff70,transparent 30rem),linear-gradient(135deg,#fff 0%,#f8f7ff 60%,#eff5ff 100%)}
+a,button,.btn{transition:transform .2s ease,box-shadow .2s ease,background .2s ease,border-color .2s ease}
+a:focus-visible,button:focus-visible{outline:3px solid #9a52bd;outline-offset:3px}
+.btn,button.btn,.button,.vm-shared-nav a{border-radius:999px!important}
+.btn:not(.secondary),.button:not(.secondary){background:linear-gradient(115deg,#78229a 0%,#4b43bd 55%,#2469bd 100%)!important;color:#fff!important;border:1px solid #ffffff80!important;box-shadow:0 8px 22px #56218b24}
+.btn.secondary,.btn-outline{background:linear-gradient(120deg,#fff,#f3f0ff)!important;color:#17345e!important;border:1px solid #d7d5f1!important;box-shadow:0 5px 14px #293e7410}
+.btn:hover,.button:hover{transform:translateY(-2px);box-shadow:0 12px 26px #53208e2c}
+input,select,textarea{border-radius:14px!important;border-color:var(--vm-border)!important;background:#ffffffeb!important;color:var(--vm-text)!important}
+input:focus,select:focus,textarea:focus{outline:3px solid #8b39ac28!important;border-color:#8a37aa!important}
+.card,.feature-card,.vm-approved-ad-inner,.search-panel,.hero-art,.step,.cta,.vm-ad-stage{border-radius:22px!important;box-shadow:0 14px 34px #243b6910}
+.vm-shared-header{background:#ffffffd9!important;border-bottom:1px solid #e5def4!important;box-shadow:0 8px 28px #182f5310!important;backdrop-filter:blur(18px)!important}
+.vm-shared-nav a[aria-current=page],.vm-shared-nav a.active{background:linear-gradient(115deg,#78229a,#3c59bb)!important;color:#fff!important;box-shadow:0 6px 18px #58218b24!important}
+.vm-approved-ad-slot{background:linear-gradient(115deg,#f4edff 0%,#edf4ff 56%,#fff8ed 100%)!important}
+.vm-approved-ad-inner{border:1px solid #e4d9f5!important;background:#ffffffd9!important}
+footer{background:linear-gradient(120deg,#0d2444,#26245d 65%,#42205f)!important;color:#e9edff!important}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+</style></style>
 <script id="vm-ask-query-script">
 (function(){
  const launcher=document.getElementById('vmAskLauncher'),panel=document.getElementById('vmAskPanel'),close=document.getElementById('vmAskClose'),form=document.getElementById('vmAskForm'),input=document.getElementById('vmAskInput'),messages=document.getElementById('vmAskMessages');
@@ -2633,6 +2652,16 @@ main{overflow:visible!important}
    });
   });
  }catch(err){console.warn("Approved ad slots unavailable",err);}
+})();
+</script><script id="vm-floating-brand-ui">
+(function(){
+ if(document.getElementById("vm-brand-floating-tools"))return;
+ const wrap=document.createElement("div");wrap.id="vm-brand-floating-tools";
+ wrap.innerHTML='<button type="button" class="vm-float-top" aria-label="Back to top" title="Back to top">↑</button>';
+ const style=document.createElement("style");style.textContent='#vm-brand-floating-tools .vm-float-top{position:fixed;right:22px;bottom:24px;z-index:9000;width:48px;height:48px;border:1px solid #ffffff9c;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#76208f,#3b59b7 70%,#2370c5);color:#fff;font-size:23px;font-weight:900;box-shadow:0 9px 25px #35205a3b;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s}#vm-brand-floating-tools .vm-float-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}#vm-brand-floating-tools .vm-float-top:hover{box-shadow:0 12px 28px #35205a52;transform:translateY(-2px)}@media(max-width:600px){#vm-brand-floating-tools .vm-float-top{right:14px;bottom:16px;width:44px;height:44px}}';
+ document.head.append(style);document.body.append(wrap);
+ const btn=wrap.querySelector("button");const update=()=>btn.classList.toggle("visible",window.scrollY>360);
+ window.addEventListener("scroll",update,{passive:true});btn.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));update();
 })();
 </script></body>
 </html>
