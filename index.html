@@ -1065,7 +1065,7 @@ html{scroll-behavior:smooth;scroll-padding-top:110px}body{overflow-y:auto!import
     </nav>
   </div>
 </header>
-<div class="vm-sponsored-bar"><span class="vm-sponsored-label">🔥 Sponsored</span><div class="vm-sponsored-message"><span><strong>SHOW YOUR COLLEGE HERE - VidyaMap</strong> · Promote your college with posters and videos　 |　 <strong>GET MORE ADMISSIONS</strong> · Digital Marketing for Colleges　 |　 WHATSAPP · META ADS · YOUTUBE ADS · WEBSITE SEO　 |　 Advertise with VidyaMap today</span></div></div>
+<div class="vm-sponsored-bar" aria-label="Scrolling sponsored college promotions"><span class="vm-sponsored-label">🔥 Sponsored</span><div class="vm-sponsored-message"><div class="vm-sponsored-track"><span><strong>SHOW YOUR COLLEGE HERE - VidyaMap</strong> · Promote your college with posters and videos　 |　 <strong>GET MORE ADMISSIONS</strong> · Digital Marketing for Colleges　 |　 WHATSAPP · META ADS · YOUTUBE ADS · WEBSITE SEO　 |　 Advertise with VidyaMap today</span><span aria-hidden="true"><strong>SHOW YOUR COLLEGE HERE - VidyaMap</strong> · Promote your college with posters and videos　 |　 <strong>GET MORE ADMISSIONS</strong> · Digital Marketing for Colleges　 |　 WHATSAPP · META ADS · YOUTUBE ADS · WEBSITE SEO　 |　 Advertise with VidyaMap today</span></div></div></div>
 <div class="vm-ad-ticker" id="vmAdTicker" hidden><strong>📣 Sponsored</strong><div class="vm-ticker-window"><div class="vm-ticker-track" id="vmTickerTrack"></div></div></div>
 
 <main>
@@ -2891,5 +2891,15 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
  section.section:not(#studentLeadCapture),section.feature-section,section.register{padding-block:44px!important}
  section.vm-approved-ad-slot{padding-block:26px!important}
 }
+</style><style id="vm-global-sponsored-ticker-css">
+.vm-sponsored-bar{position:relative;display:flex;align-items:center;gap:14px;min-height:44px;padding:6px 3%;overflow:hidden;background:#fff8ed;border-bottom:1px solid #f0e5d7;color:#152744;font-size:12px;line-height:1.35;z-index:8}
+.vm-sponsored-label{position:relative;z-index:2;flex:0 0 auto;background:#f3232b;color:#fff;font-weight:850;border-radius:7px;padding:8px 12px;white-space:nowrap}
+.vm-sponsored-message{flex:1;min-width:0;overflow:hidden;white-space:nowrap;mask-image:linear-gradient(90deg,transparent 0,#000 2%,#000 98%,transparent 100%)}
+.vm-sponsored-track{display:flex;align-items:center;width:max-content;white-space:nowrap;animation:vmSponsoredTickerMove 32s linear infinite}
+.vm-sponsored-track span{display:inline-block;padding-right:48px;white-space:nowrap}
+.vm-sponsored-bar:hover .vm-sponsored-track{animation-play-state:paused}
+@keyframes vmSponsoredTickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:600px){.vm-sponsored-bar{gap:9px;padding:6px 10px;min-height:40px}.vm-sponsored-label{padding:7px 9px;font-size:11px}.vm-sponsored-track{animation-duration:25s}.vm-sponsored-track span{padding-right:30px}}
+@media(prefers-reduced-motion:reduce){.vm-sponsored-track{animation:none!important}}
 </style></style></body>
 </html>
