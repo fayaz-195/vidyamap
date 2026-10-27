@@ -2330,12 +2330,12 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
 </script>
 
 <style id="vm-hero-image-final-fix">
-/* Keep legacy decorative pseudo-elements from covering the real hero artwork. */
-.hero-panel{position:relative!important;overflow:hidden!important;background:#5b45f2!important;padding:0!important;min-height:0!important;display:block!important}
+/* Show the entire education illustration without cropping it inside the hero. */
+.hero-panel{position:relative!important;overflow:hidden!important;background:transparent!important;padding:0!important;min-height:0!important;height:auto!important;display:block!important;border-radius:30px!important}
 .hero-panel::before,.hero-panel::after{display:none!important;content:none!important}
-.hero-panel .vm-hero-image{position:relative!important;z-index:2!important;display:block!important;width:100%!important;height:100%!important;min-height:0!important;aspect-ratio:1.62/1;object-fit:cover!important;object-position:center!important;border-radius:inherit!important}
-@media(max-width:850px){.hero-panel .vm-hero-image{aspect-ratio:1.45/1}}
-@media(max-width:560px){.hero-panel .vm-hero-image{aspect-ratio:1.5/1}}
+.hero-panel .vm-hero-image{position:relative!important;z-index:2!important;display:block!important;width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:2/1!important;object-fit:contain!important;object-position:center!important;border-radius:inherit!important}
+@media(max-width:850px){.hero-panel .vm-hero-image{aspect-ratio:2/1!important}}
+@media(max-width:560px){.hero-panel{border-radius:22px!important}.hero-panel .vm-hero-image{aspect-ratio:1.6/1!important}}
 </style>
 
 </body>
