@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123B6D">
+<meta name="description" content="Explore verified colleges and institutions on VidyaMap. Search by name, course, location keywords and admissions status.">
+<title>Explore Colleges | VidyaMap</title>
+<style>
+:root{--navy:#102d55;--purple:#76208f;--ink:#172b49;--muted:#64728d;--line:#e6e3f3;--green:#18794e;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.65;background:radial-gradient(circle at 8% 20%,#eee3ffb5,transparent 25rem),radial-gradient(circle at 90% 36%,#dceaffb5,transparent 25rem),linear-gradient(135deg,#fff,#f6f5ff)}
+a{text-decoration:none;color:inherit}.container{width:min(1180px,92%);margin:auto}
+.hero{padding:54px 0 30px}.eyebrow{font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--purple)}
+h1{font-size:clamp(36px,5vw,56px);line-height:1.08;letter-spacing:-1.5px;color:var(--navy);margin:12px 0}.lead{font-size:17px;color:#526483;max-width:760px}
+.search-panel{margin:14px auto 30px;padding:22px;background:#ffffffdf;border:1px solid #fff;border-radius:22px;box-shadow:0 15px 40px #30437415}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:6px;color:var(--navy)}input,select{width:100%;padding:12px 13px;border:1px solid #d9dfee;border-radius:11px;background:#fff;color:var(--ink);min-height:46px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:11px;padding:12px 17px;background:linear-gradient(120deg,#76208f,#4b36c7);color:#fff;font-weight:800;cursor:pointer}.btn.secondary{background:#fff;border:1px solid #d9dfee;color:var(--navy)}
+.status{color:var(--muted);font-size:14px;margin:18px 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;padding-bottom:70px}
+.card{background:#ffffffed;border:1px solid #fff;border-radius:20px;padding:21px;box-shadow:0 13px 30px #30437412;min-width:0}.top{display:flex;gap:13px;align-items:center;margin-bottom:12px}.logo{width:54px;height:54px;flex:0 0 54px;border-radius:15px;background:linear-gradient(135deg,#f1e7ff,#e5edff);display:grid;place-items:center;color:var(--purple);font-weight:900;overflow:hidden}.logo img{width:100%;height:100%;object-fit:contain}.card h2{font-size:18px;line-height:1.3;color:var(--navy);margin:0 0 5px;overflow-wrap:anywhere}.location{font-size:12px;color:var(--muted)}.pill{display:inline-block;background:#e7f7ef;color:#146c43;border-radius:99px;padding:4px 9px;font-size:11px;font-weight:900;margin:2px 0 10px}.card p{color:var(--muted);font-size:14px;margin:8px 0 15px}.card-actions{display:flex;gap:8px;flex-wrap:wrap}.card-actions a,.card-actions button{font-size:12px;padding:9px 11px}.empty{grid-column:1/-1;padding:35px;text-align:center;color:var(--muted);background:#ffffffb8;border:1px dashed #d9dfee;border-radius:18px}
+footer{padding:24px 0;background:#0b2142;color:#dce6f5;font-size:13px}
+@media(max-width:850px){.filters{grid-template-columns:1fr 1fr}.filters .field:first-child{grid-column:1/-1}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.filters,.grid{grid-template-columns:1fr}.filters .field:first-child{grid-column:auto}.hero{padding-top:38px}.search-panel{padding:16px}}
+</style></head><body>
+<header class="vm-shared-header">
+  <div class="vm-shared-nav">
+    <a class="vm-shared-brand" href="./index.html" aria-label="VidyaMap Home"><img src="./vidyamap-logo.png" alt="VidyaMap"></a>
+    <button class="vm-shared-toggle" type="button" aria-expanded="false" aria-controls="vmSharedLinks" aria-label="Toggle navigation">☰</button>
+    <nav class="vm-shared-links" id="vmSharedLinks" aria-label="Main navigation">
+      <a href="./index.html">Home</a>
+      <a href="./explore-colleges.html" aria-current="page">Explore Colleges</a>
+      <a href="./marketing-services.html">Marketing Services</a>
+      <a href="./for-colleges.html">For Colleges</a>
+      <div class="vm-shared-dropdown">
+        <a href="./about.html" class="vm-shared-about" aria-expanded="false">About <span>▾</span></a>
+        <div class="vm-shared-menu">
+          <a href="./about.html">About VidyaMap</a>
+          <a href="./our-mission.html">Our Mission</a>
+          <a href="./what-we-do.html">What We Do</a>
+          <a href="./our-vision.html">Our Vision</a>
+          <a href="./why-vidyamap.html">Why Choose VidyaMap?</a>
+          <a href="./founders.html">Founder — Shaik Mohammad Fayaz</a>
+        </div>
+      </div>
+      <a href="./index.html#contact">Contact</a>
+      <a class="vm-shared-register" href="./index.html#register">Register College</a>
+    </nav>
+  </div>
+</header>
+<main><section class="hero"><div class="container"><div class="eyebrow">VidyaMap · College Directory</div><h1>Explore verified colleges.</h1><p class="lead">Search approved institution listings, discover courses and facilities, and find contact details to help plan your next step. Only verified records are shown.</p>
+<form class="search-panel" id="searchForm"><div class="filters">
+<div class="field"><label for="keyword">College name / course / location</label><input id="keyword" placeholder="e.g. engineering, MPC, Hyderabad"></div>
+<div class="field"><label for="category">Institution type</label><select id="category"><option value="">All types</option><option>Junior College</option><option>Engineering</option><option>Medical</option><option>Degree College</option><option>Coaching Centre</option><option>Polytechnic</option><option>University</option></select></div>
+<div class="field"><label for="admissions">Admissions</label><select id="admissions"><option value="">All verified colleges</option><option value="open">Admissions marked open</option></select></div>
+</div><div class="actions"><button class="btn" type="submit">Search colleges →</button><button class="btn secondary" id="reset" type="reset">Reset filters</button></div></form>
+<div class="status" id="status" role="status">Loading verified institutions…</div><div class="grid" id="collegeGrid"><div class="empty">Loading colleges…</div></div></div></section></main>
+<footer><div class="container">© VidyaMap · Find. Promote. Grow.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+"use strict";
+const db=window.supabase.createClient("https://taxlvccrinehasexgvhv.supabase.co","sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA");
+const grid=document.getElementById("collegeGrid"),statusEl=document.getElementById("status");
+let colleges=[];
+function safeLink(raw){try{const u=new URL(raw);return ["https:","http:"].includes(u.protocol)?u.href:""}catch{return ""}}
+function render(items){
+ grid.innerHTML="";
+ statusEl.textContent=items.length+" verified institution(s)";
+ if(!items.length){grid.innerHTML='<div class="empty">No verified colleges match these filters yet. Try a different keyword or type.</div>';return}
+ items.forEach(c=>{
+  const card=document.createElement("article");card.className="card";
+  const top=document.createElement("div");top.className="top";
+  const logo=document.createElement("div");logo.className="logo";
+  const logoUrl=safeLink(c.logo_path||"");
+  if(logoUrl){const img=document.createElement("img");img.src=logoUrl;img.alt=(c.name||"College")+" logo";img.onerror=()=>{logo.textContent="VM"};logo.append(img)}else logo.textContent="VM";
+  const info=document.createElement("div"),h=document.createElement("h2"),loc=document.createElement("div");h.textContent=c.name||"Institution";loc.className="location";loc.textContent=[c.town,c.address].filter(Boolean).join(", ")||"Location not provided";info.append(h,loc);top.append(logo,info);card.append(top);
+  const pill=document.createElement("span");pill.className="pill";pill.textContent="✓ Verified listing";card.append(pill);
+  if(c.admissions_open===true){const open=document.createElement("span");open.className="pill";open.style.marginLeft="5px";open.textContent="Admissions open";card.append(open)}
+  const p=document.createElement("p");p.textContent=c.description||"View the institution's contact and website details.";card.append(p);
+  if(c.category){const cat=document.createElement("p");cat.textContent="Type: "+c.category;card.append(cat)}
+  const actions=document.createElement("div");actions.className="card-actions";
+  if(c.website_url){const href=safeLink(c.website_url);if(href){const a=document.createElement("a");a.className="btn secondary";a.href=href;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Website ↗";actions.append(a)}}
+  if(c.phone){const a=document.createElement("a");a.className="btn";a.href="tel:"+String(c.phone).replace(/[^+0-9]/g,"");a.textContent="Call college";actions.append(a)}
+  if(c.email){const a=document.createElement("a");a.className="btn secondary";a.href="mailto:"+c.email;a.textContent="Email";actions.append(a)}
+  card.append(actions);grid.append(card);
+ });
+}
+function search(){
+ const keyword=document.getElementById("keyword").value.trim().toLowerCase(),cat=document.getElementById("category").value.toLowerCase(),adm=document.getElementById("admissions").value;
+ const found=colleges.filter(c=>{
+  const text=[c.name,c.description,c.category,c.town,c.address,c.scholarship_info].filter(Boolean).join(" ").toLowerCase();
+  return (!keyword||text.includes(keyword))&&(!cat||(c.category||"").toLowerCase().includes(cat))&&(adm!=="open"||c.admissions_open===true);
+ });
+ render(found);
+}
+document.getElementById("searchForm").addEventListener("submit",e=>{e.preventDefault();search()});
+document.getElementById("reset").addEventListener("click",()=>setTimeout(()=>{document.getElementById("searchForm").reset();render(colleges)},0));
+(async()=>{
+ const {data,error}=await db.from("colleges").select("id,name,status,description,category,website_url,email,phone,address,town,logo_path,admissions_open,scholarship_info").eq("status","verified").order("name").limit(500);
+ if(error){statusEl.textContent="Verified college data could not be loaded. Please refresh and try again.";grid.innerHTML='<div class="empty">Unable to load the directory right now.</div>';console.error(error);return}
+ colleges=data||[];render(colleges);
+})();
+</script></body></html>
