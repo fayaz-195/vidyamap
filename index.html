@@ -1105,6 +1105,48 @@ body.college-portal-mode #accountDashboard{display:block!important}
 .vm-panel-note{margin-top:20px;padding:15px 18px;border:1px solid var(--border);border-radius:14px;background:#ffffffb8;color:var(--muted);font-size:14px}
 @media(max-width:850px){.vm-panel-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.vm-panel-grid{grid-template-columns:1fr}.vm-panel-card{padding:22px}}
+
+/* Phase 2: mobile directory, ads and form usability */
+@media(max-width:760px){
+  #collegeGrid{grid-template-columns:minmax(0,1fr)!important;gap:14px!important}
+  #collegeGrid .college-card{width:100%;box-sizing:border-box;padding:15px!important;border-radius:17px!important;overflow:hidden}
+  #collegeGrid .college-top{display:flex;align-items:flex-start;gap:12px;min-width:0}
+  #collegeGrid .college-top>div:nth-child(2){flex:1;min-width:0}
+  #collegeGrid .college-logo-img,#collegeGrid .college-top>.logo{width:48px!important;height:48px!important;flex:0 0 48px;object-fit:contain}
+  #collegeGrid .college-card h3{font-size:15px!important;line-height:1.35;overflow-wrap:anywhere}
+  #collegeGrid .college-card p{font-size:13px;line-height:1.55}
+  #collegeGrid .vm-directory-lock-overlay{padding:12px;font-size:14px}
+  .ad-carousel-wrap{margin-top:16px;overflow:hidden}
+  .ad-campaign-grid{gap:12px;padding:6px 2px 16px}
+  .ad-campaign-card,.ad-campaign-grid .ad-slot-placeholder{flex-basis:82vw!important;width:82vw!important;max-width:340px;box-sizing:border-box}
+  .ad-campaign-media,.ad-campaign-video{width:100%;height:clamp(150px,48vw,220px);object-fit:cover;display:block}
+  .ad-campaign-body{padding:14px!important;overflow-wrap:anywhere}
+  .ad-campaign-body h3{font-size:16px;line-height:1.35}
+  .ad-campaign-body p{font-size:13px;line-height:1.5}
+  .ad-scroll-btn{width:40px;height:40px;min-width:40px}
+  #vmRegisterAdCarousel{min-height:220px;border-radius:16px;overflow:hidden}
+  .vm-register-ad-slide img,.vm-register-ad-slide video{width:100%;height:clamp(200px,60vw,300px);object-fit:cover}
+  .vm-register-ad-caption{padding:12px 14px;overflow-wrap:anywhere}
+  .vm-register-ad-caption strong{font-size:15px;line-height:1.35}
+  #studentLeadCapture.vm-lead-modal{overflow-y:auto;overscroll-behavior:contain;align-items:flex-start;padding:12px!important}
+  #studentLeadCapture.vm-lead-modal .container{margin:auto 0;max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain}
+  #studentLeadCapture input,#studentLeadCapture select,#studentLeadCapture textarea{font-size:16px!important}
+  #find input,#find select,#register input,#register select,#register textarea{min-width:0;width:100%;box-sizing:border-box}
+  #resultsCount{font-size:13px;line-height:1.5}
+  .compare-table-wrap{touch-action:pan-x}
+}
+@media(max-width:380px){
+  #collegeGrid .college-top{gap:9px}
+  #collegeGrid .college-logo-img,#collegeGrid .college-top>.logo{width:42px!important;height:42px!important;flex-basis:42px}
+  .ad-campaign-card,.ad-campaign-grid .ad-slot-placeholder{flex-basis:86vw!important;width:86vw!important}
+  .ad-campaign-body{padding:12px!important}
+  .vm-ad-ticker{gap:8px;padding:0 8px}
+  .vm-ad-ticker strong{padding:8px;font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  .ad-campaign-grid{animation:none!important;transform:none!important}
+}
+
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
