@@ -500,6 +500,42 @@ main.wrap:has(#dashboardView:not(.hidden)){display:block!important;box-sizing:bo
 .sidebar-account-menu .sidebar-signout{color:#ffd6d6;border-top:1px solid #ffffff20;border-radius:0 0 8px 8px;margin-top:4px}
 .sidebar-account-menu .sidebar-signout:hover{background:#a92f4a;color:#fff}
 
+
+/* Collapsible sidebar / compact icon rail */
+.sidebar-collapse-toggle{display:flex;align-items:center;justify-content:flex-start;gap:10px;width:100%;min-height:38px;padding:7px 10px;margin:0 0 5px;border:1px solid #ffffff2c;border-radius:10px;background:#ffffff0d;color:#f6f2ff;font-size:11px;font-weight:800;text-align:left}
+.sidebar-collapse-toggle:hover{background:#ffffff1c;border-color:#ffffff55}
+.collapse-toggle-icon{display:grid;place-items:center;flex:0 0 22px;width:22px;height:22px;border-radius:7px;background:#ffffff18;color:#ffe3a1;font-size:22px;line-height:1}
+.collapse-toggle-label{white-space:nowrap}
+@media(min-width:761px){
+ #dashboardView .admin-layout:has(.admin-sidebar.is-collapsed){grid-template-columns:76px minmax(0,1fr)!important}
+ #dashboardView .admin-sidebar.is-collapsed{padding:10px 8px!important;align-items:stretch}
+ #dashboardView .admin-sidebar.is-collapsed .sidebar-label,
+ #dashboardView .admin-sidebar.is-collapsed .nav-group-label,
+ #dashboardView .admin-sidebar.is-collapsed .nav-group-chevron,
+ #dashboardView .admin-sidebar.is-collapsed .nav-submenu,
+ #dashboardView .admin-sidebar.is-collapsed .sidebar-account-copy,
+ #dashboardView .admin-sidebar.is-collapsed .sidebar-account-chevron,
+ #dashboardView .admin-sidebar.is-collapsed .collapse-toggle-label{display:none!important}
+ #dashboardView .admin-sidebar.is-collapsed .nav-item{justify-content:center;gap:0;padding:10px 4px!important;font-size:0!important;min-height:42px}
+ #dashboardView .admin-sidebar.is-collapsed .nav-ico{margin:0!important;font-size:14px!important}
+ #dashboardView .admin-sidebar.is-collapsed .sidebar-account-card{justify-content:center;padding:8px!important}
+ #dashboardView .admin-sidebar.is-collapsed .sidebar-account-avatar{margin:0!important}
+ #dashboardView .admin-sidebar.is-collapsed .sidebar-account-menu{left:66px;bottom:0;top:auto;min-width:190px;z-index:30}
+ #dashboardView .admin-sidebar.is-collapsed .sidebar-collapse-toggle{justify-content:center;padding:7px 4px}
+ #dashboardView .admin-sidebar.is-collapsed .collapse-toggle-icon{transform:rotate(180deg)}
+}
+@media(max-width:760px){
+ .sidebar-collapse-toggle{grid-column:1/-1}
+ #dashboardView .admin-sidebar.is-collapsed{display:flex!important}
+ #dashboardView .admin-sidebar.is-collapsed .sidebar-label,
+ #dashboardView .admin-sidebar.is-collapsed .nav-group-label,
+ #dashboardView .admin-sidebar.is-collapsed .nav-group-chevron,
+ #dashboardView .admin-sidebar.is-collapsed .nav-submenu,
+ #dashboardView .admin-sidebar.is-collapsed .sidebar-account-copy{display:none!important}
+ #dashboardView .admin-sidebar.is-collapsed .nav-item{justify-content:center;font-size:0!important}
+ #dashboardView .admin-sidebar.is-collapsed .nav-ico{font-size:14px!important}
+}
+
 </style>
 </head>
 <body>
@@ -538,6 +574,7 @@ main.wrap:has(#dashboardView:not(.hidden)){display:block!important;box-sizing:bo
   <section id="dashboardView" class="hidden">
     <div class="admin-layout">
       <aside class="admin-sidebar" aria-label="Admin navigation">
+        <button type="button" class="sidebar-collapse-toggle" id="sidebarCollapseToggle" aria-label="Collapse sidebar" aria-expanded="true" title="Collapse sidebar"><span class="collapse-toggle-icon">‹</span><span class="collapse-toggle-label">Collapse menu</span></button>
         <div class="sidebar-label">Workspace</div>
         <a class="nav-item" data-page="overview" href="admin.html?page=overview"><span class="nav-ico">⌂</span>Overview</a>
         <details class="nav-group" id="institutionsNavGroup">
@@ -1041,6 +1078,19 @@ document.addEventListener('click',event=>{
   applyPageView();
 },true);
 window.addEventListener('popstate',applyPageView);
+
+document.getElementById('sidebarCollapseToggle')?.addEventListener('click',()=>{
+ const sidebar=document.querySelector('#dashboardView .admin-sidebar');
+ const toggle=document.getElementById('sidebarCollapseToggle');
+ if(!sidebar||!toggle)return;
+ const collapsed=sidebar.classList.toggle('is-collapsed');
+ toggle.setAttribute('aria-expanded',String(!collapsed));
+ toggle.setAttribute('aria-label',collapsed?'Expand sidebar':'Collapse sidebar');
+ toggle.title=collapsed?'Expand sidebar':'Collapse sidebar';
+ const label=toggle.querySelector('.collapse-toggle-label');
+ if(label)label.textContent=collapsed?'Expand menu':'Collapse menu';
+});
+
 
 
 $('refreshAnalytics')?.addEventListener('click',loadNextgenAnalytics);$('applyAnalyticsRange')?.addEventListener('click',loadNextgenAnalytics);$('resetAnalyticsRange')?.addEventListener('click',()=>{if($('analyticsFrom'))$('analyticsFrom').value='';if($('analyticsTo'))$('analyticsTo').value='';loadNextgenAnalytics();});$('refreshCrm')?.addEventListener('click',loadCrm);$('refreshTeam')?.addEventListener('click',loadTeam);$('refreshHealth')?.addEventListener('click',loadHealth);$('askAssistant')?.addEventListener('click',answerAssistant);$('exportEnquiries')?.addEventListener('click',()=>exportReport('student_enquiries','id,student_name,phone,email,status,source,created_at','vidyamap-enquiries.csv','created_at'));$('exportAudit')?.addEventListener('click',()=>exportReport('audit_logs','id,action,entity_type,entity_id,created_at','vidyamap-audit.csv','created_at'));document.addEventListener('click',e=>{const crm=e.target.closest('[data-save-crm]');if(crm){saveCrmRow(crm.dataset.saveCrm,crm);return;}const delStaff=e.target.closest('[data-delete-staff]');if(delStaff){deleteStaffAccount(delStaff.dataset.deleteStaff,delStaff);return;}const staff=e.target.closest('[data-save-staff]');if(staff){saveStaffAccess(staff.dataset.saveStaff,staff);return;}const team=e.target.closest('[data-save-team]');if(team)saveTeamRow(team.dataset.saveTeam,team);});
