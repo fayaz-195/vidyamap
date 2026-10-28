@@ -2376,14 +2376,16 @@ async function loadPackages(){
 async function loadAdmissionHighlights(){
  const grid=document.getElementById("admissionHighlights");if(!grid)return;
  const {data,error}=await db.from("colleges").select("id,name,category,admissions_open,admission_deadline,scholarship_info").eq("status","verified").order("name").limit(6);
- if(error||!data?.length)return;
+ if(error)return;
  grid.innerHTML="";
+ if(!data?.length){const empty=document.createElement("p");empty.className="muted";empty.textContent="Verified college listings will appear here soon.";grid.append(empty);return;}
  data.forEach(c=>{
   const card=document.createElement("article");card.className="feature-card";
-  const status=document.createElement("span");status.className="status-pill";status.textContent=c.admissions_open?"Admissions open*":"Verified listing";
+  const status=document.createElement("span");status.className="status-pill";status.textContent=c.admissions_open?"Admissions open":"Admissions closed";status.setAttribute("aria-label",status.textContent);
   const h=document.createElement("h3");h.textContent=c.name;
-  const p=document.createElement("p");p.textContent=c.scholarship_info||"Contact the institution for current admissions and scholarship details.";
-  const a=document.createElement("a");a.className="btn btn-outline";a.href="#directory";a.textContent="Find in directory";
+  const details=[];if(c.category)details.push(c.category);if(c.admission_deadline)details.push("Deadline: "+c.admission_deadline);
+  const p=document.createElement("p");p.textContent=c.scholarship_info||details.join(" · ")||"Contact the institution for current admissions and scholarship details.";
+  const a=document.createElement("a");a.className="btn btn-outline";a.href="./explore-colleges.html";a.textContent="View college details";
   card.append(status,h,p,a);grid.append(card);
  });
 }
