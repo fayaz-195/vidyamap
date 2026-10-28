@@ -569,7 +569,7 @@ async function loadOverviewInsights(auditRows){
 }
 function renderOverviewData(base,extras){
 const val=v=>v===null||v===undefined?'—':String(v);
-$('overviewCollegeLeads').textContent=val(extras[5]);$('overviewStudentLeads').textContent=extras[6]===null?'Error':val(extras[6]);$('overviewSearches').textContent=extras[7]===null?'Error':val(extras[7]);$('overviewMarketing').textContent=val(extras[8]);
+if($('overviewCollegeLeads'))$('overviewCollegeLeads').textContent=val(extras[5]);if($('overviewStudentLeads'))$('overviewStudentLeads').textContent=extras[6]===null?'Error':val(extras[6]);if($('overviewSearches'))$('overviewSearches').textContent=extras[7]===null?'Error':val(extras[7]);if($('overviewMarketing'))$('overviewMarketing').textContent=val(extras[8]);
 if($('actionVerifiedCount'))$('actionVerifiedCount').textContent=val(base[1]);
 if($('actionPendingCount'))$('actionPendingCount').textContent=val(base[2]);
 if($('actionEnquiryCount'))$('actionEnquiryCount').textContent=val(extras[6]);
