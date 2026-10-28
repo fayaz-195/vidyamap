@@ -2510,7 +2510,7 @@ async function initDashboard(){
     if(c.media_type==="video"){const v=document.createElement("video");v.src=window.vmSafeAdMediaUrl(c.media_url,c.media_type);v.controls=true;v.preload="metadata";v.playsInline=true;v.className="ad-review-media";info.append(v);}
     else{const im=document.createElement("img");im.src=window.vmSafeAdMediaUrl(c.media_url,c.media_type);im.alt=c.title;im.loading="lazy";im.className="ad-review-media";info.append(im);}
     const actions=document.createElement("div");actions.className="ad-review-actions";
-    const preview=document.createElement("a");preview.href=c.media_url;preview.target="_blank";preview.rel="noopener noreferrer";preview.className="btn btn-outline";preview.textContent="Open media";actions.append(preview);
+    const safePreview=window.vmSafeAdMediaUrl(c.media_url,c.media_type);if(safePreview){const preview=document.createElement("a");preview.href=safePreview;preview.target="_blank";preview.rel="noopener noreferrer";preview.className="btn btn-outline";preview.textContent="Open media";actions.append(preview);}
     if(c.payment_status!=="paid" && c.status!=="rejected"){
      const pay=document.createElement("button");pay.type="button";pay.className="btn btn-outline";pay.textContent="Verify payment received";pay.addEventListener("click",async()=>{
       const ref=prompt("Enter payment reference / UTR (required):");if(!ref||!ref.trim())return;
