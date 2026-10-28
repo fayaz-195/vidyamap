@@ -180,6 +180,48 @@ tbody tr:hover td{background:#faf9ff}
 @media(max-width:850px){#overviewContent .overview-action-centre{grid-template-columns:1fr}}
 @media(max-width:520px){#overviewContent .overview-action-centre{gap:10px;margin:14px 0 18px}#overviewContent .action-panel-head{padding:17px 15px 10px}#overviewContent .quick-action-grid{padding:5px 12px 14px;gap:8px}#overviewContent .quick-action{padding:11px;gap:8px}#overviewContent .quick-action-icon{width:32px;height:32px;flex-basis:32px;border-radius:10px}#overviewContent .quick-action strong{font-size:10px}#overviewContent .quick-action small{font-size:9px}#overviewContent .overview-health-panel{padding:17px}}
 
+
+/* Creative college account workspace */
+#createCollege{overflow:hidden;border:1px solid #e2e6f2;box-shadow:0 18px 45px #1d27500b}
+#createCollege>.section-head{border-bottom:0;padding:26px 28px 8px;align-items:flex-start}
+#createCollege>.section-head>div h2{font:800 20px Manrope,sans-serif;letter-spacing:-.8px;color:#1b2440}
+#createCollege>.section-head>div p{max-width:660px;font-size:12px;line-height:1.7;margin-top:7px}
+#createCollege .create-college-banner{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20px;margin:10px 22px 0;padding:24px 25px;border-radius:20px;overflow:hidden;color:#fff;background:radial-gradient(circle at 85% 0%,#a18cff 0,transparent 32%),linear-gradient(115deg,#171d3c,#33236f 62%,#6247e8)}
+#createCollege .create-college-banner:after{content:"＋";position:absolute;right:17%;top:-50px;font:900 180px/1 Manrope,sans-serif;color:#ffffff0a;pointer-events:none}
+#createCollege .create-college-banner-copy{position:relative;z-index:1;max-width:540px}
+#createCollege .create-college-kicker{display:inline-flex;align-items:center;gap:7px;color:#d4ccff;font-size:9px;font-weight:900;letter-spacing:1.7px;text-transform:uppercase}
+#createCollege .create-college-kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:#72e2b0}
+#createCollege .create-college-banner h3{margin:9px 0 7px;color:#fff;font:800 clamp(20px,2.2vw,27px)/1.2 Manrope,sans-serif;letter-spacing:-.9px}
+#createCollege .create-college-banner p{margin:0;color:#d9d9f3;font-size:11px;line-height:1.7}
+#createCollege .create-college-banner-mark{position:relative;z-index:1;display:grid;place-items:center;flex:0 0 68px;width:68px;height:68px;border:1px solid #ffffff36;border-radius:22px;background:#ffffff14;color:#fff;font-size:32px;box-shadow:inset 0 1px #ffffff22}
+#createCollege .create-college-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:18px 22px 0}
+#createCollege .create-college-step{display:flex;align-items:center;gap:10px;min-width:0;padding:12px;border:1px solid #e9ecf5;border-radius:14px;background:linear-gradient(145deg,#fff,#fafbff)}
+#createCollege .create-college-step-number{display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;border-radius:10px;background:#f0edff;color:#6847f5;font-size:11px;font-weight:900}
+#createCollege .create-college-step strong{display:block;font-size:10px;color:#29334e}
+#createCollege .create-college-step small{display:block;margin-top:3px;color:#8993aa;font-size:9px;line-height:1.4}
+#createCollege #createCollegeForm{padding:21px 22px 23px;border:1px solid #e8ebf4;border-radius:19px;background:#fff}
+#createCollege .create-form-section-label{display:flex;align-items:center;gap:9px;margin:0 0 2px;color:#27324f;font:800 13px Manrope,sans-serif}
+#createCollege .create-form-section-label span{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:#f0edff;color:#6847f5;font-size:13px}
+#createCollege .create-form-section-hint{margin:0 0 8px 37px;color:#929bb0;font-size:10px}
+#createCollege .form-grid{gap:6px 18px}
+#createCollege .field{margin-top:14px}
+#createCollege .field label{font-size:10px;letter-spacing:.15px;color:#58647e}
+#createCollege .field input,#createCollege .field select{min-height:45px;padding:12px 13px;border:1px solid #e0e5f0;border-radius:12px;background:#fbfcff;font-size:12px;transition:border-color .18s,box-shadow .18s,background .18s}
+#createCollege .field input:focus,#createCollege .field select:focus{border-color:#a394ff;background:#fff;box-shadow:0 0 0 4px #6847f512;outline:0}
+#createCollege .field.full{margin-top:19px;padding:16px;border:1px solid #e7e4fb;border-radius:15px;background:linear-gradient(120deg,#faf9ff,#f7faff)}
+#createCollege .field.full label{color:#4c3ca5}
+#createCollege .create-password-note{display:flex;align-items:flex-start;gap:8px;margin:9px 0 0;color:#777f98;font-size:10px;line-height:1.6}
+#createCollege .create-password-note span{color:#6847f5;font-weight:900}
+#createCollege .create-form-footer{margin-top:18px;padding-top:17px;border-top:1px solid #edf0f6}
+#createCollege .create-security-note{display:flex;align-items:flex-start;gap:10px;padding:12px 13px;border-radius:12px;background:#f7f8fc;color:#737e96;font-size:10px;line-height:1.65}
+#createCollege .create-security-note strong{color:#39445f}
+#createCollege .create-security-icon{flex:0 0 28px;display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:#e9f8f0;color:#147c56;font-size:13px}
+#createCollege .create-form-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+#createCollege #createCollegeSubmit{min-height:43px;padding:12px 18px;background:linear-gradient(110deg,#6847f5,#5134d5);box-shadow:0 8px 18px #6847f526}
+#createCollege #createCollegeSubmit:hover{box-shadow:0 11px 24px #6847f533}
+#createCollege #createdCollegeResult{box-shadow:0 10px 24px #137b5510}
+@media(max-width:600px){#createCollege>.section-head{padding:20px 16px 7px}#createCollege .create-college-banner{margin:8px 12px 0;padding:19px 17px}#createCollege .create-college-banner-mark{flex-basis:48px;width:48px;height:48px;border-radius:15px;font-size:24px}#createCollege .create-college-steps{padding:12px 12px 0;gap:7px}#createCollege .create-college-step{display:block;padding:10px 8px}#createCollege .create-college-step-number{margin-bottom:7px}#createCollege .create-college-step strong{font-size:9px}#createCollege .create-college-step small{font-size:8px}#createCollege #createCollegeForm{padding:16px 13px;border-radius:15px}#createCollege .create-form-actions .btn{width:100%}}
+
 </style>
 </head>
 <body>
@@ -286,9 +328,12 @@ tbody tr:hover td{background:#faf9ff}
         <div id="requestsArea" class="loading">Loading requests…</div>
       </section>
       <section id="createCollege" class="panel section-panel admin-page-view">
-        <div class="section-head"><div><h2>Create college account</h2><p>Only platform admins can create college logins. The listing stays pending until separately verified.</p></div></div>
-        <div style="padding:22px">
+        <div class="section-head"><div><div class="eyebrow">INSTITUTION ONBOARDING</div><h2>Create college account</h2><p>Set up secure access for an authorised institution contact. New listings remain pending until separately verified.</p></div><span class="status verified">Admin only</span></div>
+        <div class="create-college-banner"><div class="create-college-banner-copy"><span class="create-college-kicker">New institution setup</span><h3>Bring another institution into VIDYAMAP.</h3><p>Create its login, connect its institution details and keep approval under your control — all from one guided workspace.</p></div><div class="create-college-banner-mark" aria-hidden="true">＋</div></div>
+        <div class="create-college-steps" aria-label="Account creation steps"><div class="create-college-step"><span class="create-college-step-number">01</span><span><strong>Institution details</strong><small>Name, category and district</small></span></div><div class="create-college-step"><span class="create-college-step-number">02</span><span><strong>Contact & access</strong><small>Authorised contact and login</small></span></div><div class="create-college-step"><span class="create-college-step-number">03</span><span><strong>Review & approve</strong><small>Listing stays pending</small></span></div></div>
+        <div style="padding:20px 22px 22px">
           <form id="createCollegeForm">
+            <div class="create-form-section-label"><span>▦</span>Institution profile</div><p class="create-form-section-hint">Add the official institution information first.</p>
             <div class="form-grid">
               <div class="field"><label for="newCollegeName">College / institution name *</label><input id="newCollegeName" required maxlength="150" autocomplete="organization" placeholder="e.g. New Masterminds Junior College"></div>
               <div class="field"><label for="newCollegeContact">Contact person name *</label><input id="newCollegeContact" required maxlength="100" autocomplete="name" placeholder="Principal / administrator"></div>
@@ -298,10 +343,10 @@ tbody tr:hover td{background:#faf9ff}
               <div class="field"><label for="newCollegeDistrict">District *</label><select id="newCollegeDistrict" required><option value="">Loading districts…</option></select></div>
               <div class="field"><label for="newCollegeWebsite">Website (optional)</label><input id="newCollegeWebsite" type="url" maxlength="250" placeholder="https://"></div>
               <div class="field"><label for="newCollegeAddress">Address (optional)</label><input id="newCollegeAddress" maxlength="250" placeholder="Town / address"></div>
-              <div class="field full"><label for="newCollegePassword">Temporary login password * (minimum 10 characters)</label><input id="newCollegePassword" type="password" required minlength="10" maxlength="72" autocomplete="new-password" placeholder="Set a temporary password for the college"></div>
+              <div class="field full"><label for="newCollegePassword">Temporary login password * (minimum 10 characters)</label><input id="newCollegePassword" type="password" required minlength="10" maxlength="72" autocomplete="new-password" placeholder="Set a temporary password for the college"><p class="create-password-note"><span>✦</span> Use a unique temporary password. Share it only with the authorised college contact through a secure channel.</p></div>
             </div>
-            <p class="footer-note">Give the login email and temporary password to the authorised college contact through a secure channel. Do not reuse the same password for multiple colleges. The college listing will remain pending until approved in Institution listings.</p>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px"><button class="btn" id="createCollegeSubmit" type="submit">Create college account</button><button class="btn secondary" type="reset">Clear form</button></div>
+            <div class="create-form-footer"><div class="create-security-note"><span class="create-security-icon">✓</span><span><strong>Secure onboarding.</strong> Creating the login does not publish or verify the institution. The listing stays pending until you approve it in Institution listings.</span></div>
+            <div class="create-form-actions"><button class="btn" id="createCollegeSubmit" type="submit">＋ Create college account</button><button class="btn secondary" type="reset">Clear form</button></div></div>
             <div id="createCollegeNotice" class="notice hidden" role="status" aria-live="polite"></div>
           </form>
           <div id="createdCollegeResult" class="hidden" style="margin-top:18px;padding:16px;border:1px solid #cceedd;border-radius:14px;background:#f1fbf5"></div>
