@@ -423,12 +423,15 @@ function applyPageView(){const allowed=['overview','registrations','createColleg
 document.addEventListener('click',event=>{
   const link=event.target.closest('a[href]');
   if(!link)return;
-  let url;
-  try{url=new URL(link.href,window.location.href);}catch(_){return;}
-  if(url.origin!==window.location.origin||url.pathname!==window.location.pathname||!url.searchParams.has('page'))return;
+  const rawHref=link.getAttribute('href')||'';
+  if(!/^(?:\.\/)?admin\.html\?page=/.test(rawHref))return;
   event.preventDefault();
-  if(url.searchParams.get('page')==='campaigns')url.searchParams.set('page','overview');
-  window.history.pushState({},'',url.pathname+url.search+url.hash);
+  const params=new URLSearchParams(rawHref.split('?')[1]||'');
+  let page=params.get('page')||'overview';
+  if(page==='campaigns')page='overview';
+  params.set('page',page);
+  const nextUrl=window.location.pathname+'?'+params.toString();
+  window.history.pushState({},'',nextUrl);
   applyPageView();
 });
 window.addEventListener('popstate',applyPageView);
