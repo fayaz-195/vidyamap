@@ -10,6 +10,18 @@
 @media(max-width:1080px){.shell{grid-template-columns:205px 1fr}.stats{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}}
 @media(max-width:720px){.shell{display:block}.sidebar{padding:12px}.brand{padding:0 5px 12px}.space,.navlabel,.sidefoot{display:none}.nav{display:flex;overflow:auto;gap:4px}.nav a{white-space:nowrap;padding:8px 10px;font-size:10px}.count{display:none}.topbar{height:58px;padding:0 13px}.search{width:40vw}.content{padding:22px 12px 32px}.intro{display:block}.date{text-align:left;margin-top:12px}.stats{gap:9px}.stat{padding:13px;border-radius:14px}.value{font-size:27px}.bottom{grid-template-columns:1fr}.panelhead{padding:14px}.notice{font-size:10px}}
 @media(max-width:410px){.search{display:none}.value{font-size:24px}.stat{padding:11px}.hint{font-size:9px}}
+
+/* VIDYAMAP unified brand system + accessible text contrast */
+:root{--vm-brand-navy:#123b6d;--vm-brand-purple:#76208f;--vm-text:#172b43;--vm-muted:#4d5d73;--vm-border:#dfe6ef;--vm-surface:#fff}
+body{color:var(--vm-text)}
+p,li,small,.muted,.subtitle,.description,.sub,.help-text{color:var(--vm-muted)}
+h1,h2,h3,h4,h5,h6{color:var(--vm-text)}
+input,select,textarea{color:#172b43}
+input::placeholder,textarea::placeholder{color:#6b778b;opacity:1}
+button,.btn,.button,[type=submit]{transition:background-color .18s ease,border-color .18s ease}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #9b82e8!important;outline-offset:2px}
+footer,footer p,footer li,footer small,footer h2,footer h3,footer a{color:#f5f7ff}
+
 </style>
 </head>
 <body><div class="shell"><aside class="sidebar">
