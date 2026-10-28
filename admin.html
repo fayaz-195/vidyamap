@@ -351,8 +351,9 @@ async function loadDashboard(){
     safeSelect('student_search_activity','id,lead_id,event_type,query_text,search_filters,college_id,college_name,created_at',q=>q.order('created_at',{ascending:false}).limit(300)),
     safeCountRows('college_public_leads'),safeCountRows('student_enquiries'),safeCountRows('student_search_activity'),safeCountRows('campaigns')
   ]).then(extras=>{renderMarketing(extras[0]);renderPublicLeads(extras[1]);renderEnquirySummary(extras[2]);renderAudit(extras[3]);renderSearchActivity(extras[4]);return extras;}).catch(error=>{showNotice(dashboardNotice,'Some dashboard data could not load: '+(error.message||'database error'),true);return [];});
-  const base=await Promise.all([...core,...counts]);const extras=await extrasPromise;
-  if(extras.length){renderOverviewData(base.slice(0,7),extras);renderAdminNotifications(base.slice(0,7),extras);}
+  const settled=await Promise.all([...core,...counts]);const extras=await extrasPromise;
+  const base=[settled[3],settled[4],settled[5],settled[6],settled[0],settled[1],settled[2]];
+  if(extras.length){renderOverviewData(base,extras);renderAdminNotifications(base,extras);}
   loadNextgenAnalytics();loadCrm();loadTeam();loadHealth();
   window.setTimeout(()=>[['requestsArea','Registration requests'],['campaignsArea','College ad campaigns'],['collegesArea','Institution listings'],['enquirySummaryArea','Student enquiries'],['searchActivityArea','Student search activity']].forEach(([id,label])=>{const el=$(id);if(el&&/Loading/.test(el.textContent||''))el.innerHTML=empty(label+' did not respond. Check the database connection or permissions.');}),12000);
 }
