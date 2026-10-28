@@ -222,6 +222,15 @@ tbody tr:hover td{background:#faf9ff}
 #createCollege #createdCollegeResult{box-shadow:0 10px 24px #137b5510}
 @media(max-width:600px){#createCollege>.section-head{padding:20px 16px 7px}#createCollege .create-college-banner{margin:8px 12px 0;padding:19px 17px}#createCollege .create-college-banner-mark{flex-basis:48px;width:48px;height:48px;border-radius:15px;font-size:24px}#createCollege .create-college-steps{padding:12px 12px 0;gap:7px}#createCollege .create-college-step{display:block;padding:10px 8px}#createCollege .create-college-step-number{margin-bottom:7px}#createCollege .create-college-step strong{font-size:9px}#createCollege .create-college-step small{font-size:8px}#createCollege #createCollegeForm{padding:16px 13px;border-radius:15px}#createCollege .create-form-actions .btn{width:100%}}
 
+
+/* Give the create-college workflow the full dashboard width instead of one half of the two-column section grid. */
+#createCollege{grid-column:1/-1;width:100%;min-width:0}
+#createCollege .create-college-banner-copy{max-width:760px}
+#createCollege .create-college-steps{grid-template-columns:repeat(3,minmax(0,1fr))}
+#createCollege #createCollegeForm{width:100%}
+#createCollege .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px;row-gap:4px}
+#createCollege .field.full{grid-column:1/-1}
+@media(max-width:650px){#createCollege .form-grid{grid-template-columns:minmax(0,1fr)}#createCollege .field.full{grid-column:auto}}
 </style>
 </head>
 <body>
