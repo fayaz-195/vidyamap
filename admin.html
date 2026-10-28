@@ -580,6 +580,11 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
   #dashboardView .admin-sidebar{top:112px!important;max-height:calc(100vh - 128px)!important;z-index:1!important;scroll-margin-top:112px!important}
   #dashboardView .dashboard-main{scroll-padding-top:16px!important}
 }
+/* Keep the sidebar fixed below the logo/header; hide the visible scrollbar */
+@media(min-width:761px){
+  #dashboardView .admin-sidebar{position:sticky!important;top:112px!important;align-self:start!important;max-height:calc(100vh - 124px)!important;overflow-y:auto!important;overflow-x:hidden!important;scrollbar-width:none!important;-ms-overflow-style:none!important}
+  #dashboardView .admin-sidebar::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+}
 /* Prominent VIDYAMAP logo: enlarge the actual mark, not its white frame */
 .topbar{min-height:90px!important;height:auto!important;padding-top:8px!important;padding-bottom:8px!important}
 .topbar .brand{gap:12px!important}
@@ -1167,6 +1172,22 @@ document.addEventListener('click',event=>{
   applyPageView();
 },true);
 window.addEventListener('popstate',applyPageView);
+
+/* Navigation dropdowns are mutually exclusive */
+document.querySelectorAll('#dashboardView .admin-sidebar details.nav-group').forEach(group=>{
+  group.addEventListener('click',event=>{
+    const summary=event.target.closest('summary.nav-group-toggle');
+    if(!summary)return;
+    if(!group.open){
+      document.querySelectorAll('#dashboardView .admin-sidebar details.nav-group').forEach(other=>{if(other!==group)other.open=false;});
+      document.getElementById('sidebarAccountMenu')?.classList.add('hidden');
+      document.getElementById('sidebarAccountToggle')?.setAttribute('aria-expanded','false');
+    }
+  });
+});
+document.querySelectorAll('#dashboardView .admin-sidebar .nav-subitem').forEach(link=>{
+  link.addEventListener('click',()=>{const parent=link.closest('details.nav-group');if(parent)parent.open=false;});
+});
 
 document.getElementById('sidebarCollapseToggle')?.addEventListener('click',()=>{
  const sidebar=document.querySelector('#dashboardView .admin-sidebar');
