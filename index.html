@@ -2177,16 +2177,25 @@ async function loadColleges() {
   renderColleges(verifiedColleges);
 }
 
-function search(event) {
+async function search(event) {
   if (event) event.preventDefault();
 
-  // Send institution searches to the dedicated verified-college directory.
+  // Record the search preferences so authorized admins can understand student demand.
   const directoryParams = new URLSearchParams();
   if ($("course").value.trim()) directoryParams.set("keyword", $("course").value.trim());
   if ($("categoryFilter").value.trim()) directoryParams.set("category", $("categoryFilter").value.trim());
   if ($("district").value) directoryParams.set("district", $("district").value);
   if ($("searchMandal").value) directoryParams.set("mandal", $("searchMandal").value);
   if ($("admissionFilter")?.value) directoryParams.set("admissions", $("admissionFilter").value);
+  try {
+    const lead = JSON.parse(sessionStorage.getItem("vidyamap_public_student_lead_v1") || "null");
+    await db.rpc("record_student_search_activity", {
+      p_lead_id: lead?.lead_id || null,
+      p_event_type: "search",
+      p_query_text: $("course").value.trim() || directoryParams.get("keyword") || null,
+      p_search_filters: {category: $("categoryFilter").value || "", district_id: $("district").value || "", mandal_id: $("searchMandal").value || "", admissions: $("admissionFilter")?.value || "", state: $("state")?.value || ""}
+    });
+  } catch (trackingError) { console.warn("Search activity tracking unavailable", trackingError); }
   window.location.href = "./explore-colleges.html" + (directoryParams.toString() ? "?" + directoryParams.toString() : "");
   return;
 
