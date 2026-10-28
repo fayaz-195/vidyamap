@@ -69,6 +69,30 @@ tbody tr:hover{background:#faf9ff}
 
 @media(max-width:520px){.topbar{height:64px;padding:0 13px}.brand{font-size:15px}.mark{width:35px;height:35px}.pill{font-size:10px;padding:6px 8px}.wrap{padding:22px 12px 35px}.login-area{margin:4vh auto;padding:22px}.stats{gap:9px}.stat{padding:13px;border-radius:14px}.stat strong{font-size:27px}.stat-top{font-size:10px}.stat-icon{width:29px;height:29px}.section-head{padding:14px}.section-head h2{font-size:13px}.btn{padding:9px 10px;font-size:10px}}
 
+/* Overview priority alerts, activity feed and trend comparisons */
+.overview-insights-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:16px;margin:0 0 18px}
+.overview-insight-panel{min-width:0;padding:20px 21px}
+.overview-insight-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.overview-insight-head h2{font-family:Manrope,sans-serif;font-size:16px;margin:5px 0}
+.overview-insight-head p{font-size:11px;color:var(--muted);margin:0}
+.overview-performance{display:grid;gap:12px}
+.overview-trend-group{border:1px solid #e9ecf5;border-radius:13px;padding:12px}
+.overview-trend-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;font-weight:850;margin-bottom:10px}
+.overview-trend-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.overview-trend-metric{background:#f8f9fd;border-radius:10px;padding:10px}
+.overview-trend-metric small{display:block;color:#8791a8;font-size:10px}
+.overview-trend-metric strong{display:block;font-size:23px;letter-spacing:-.6px;margin-top:3px}
+.overview-trend-change{font-size:10px;font-weight:850;white-space:nowrap}
+.overview-trend-change.up{color:#137b55}.overview-trend-change.down{color:#b52e43}.overview-trend-change.flat{color:#7c879f}
+.overview-activity-list{display:grid}
+.overview-activity-item{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;padding:12px 0;border-bottom:1px solid #eef0f7}
+.overview-activity-item:last-child{border-bottom:0}
+.overview-activity-icon{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#f0edff;color:#6847f5;font-weight:900}
+.overview-activity-item strong{display:block;font-size:11px;overflow-wrap:anywhere}
+.overview-activity-item small{display:block;color:#8992a8;font-size:10px;margin-top:4px;line-height:1.5}
+.overview-insight-empty{padding:18px 8px;text-align:center;color:#8791a8;font-size:11px}
+@media(max-width:900px){.overview-insights-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.overview-insight-panel{padding:15px}.overview-insight-head{flex-wrap:wrap}.overview-trend-metric strong{font-size:20px}}
 /* Distinct VIDYAMAP command-centre overview */
 #overviewContent{--overview-ink:#f7f8ff}
 #overviewContent #overview.dashboard-hero{position:relative;overflow:hidden;align-items:center;padding:30px 32px;border-radius:25px;background:radial-gradient(circle at 85% 10%,#8d7aff 0,transparent 28%),linear-gradient(120deg,#171a3b 0%,#30216e 55%,#6549e8 100%);color:#fff;box-shadow:0 20px 45px #30216e24}
@@ -329,7 +353,7 @@ tbody tr:hover td{background:#faf9ff}
               <a class="quick-action" href="admin.html?page=enquirySummary"><span class="quick-action-icon">♙</span><span><strong>Student enquiries</strong><small>Review leads and follow-ups</small></span><span class="quick-action-arrow">↗</span></a>
               <a class="quick-action" href="admin.html?page=analytics"><span class="quick-action-icon">▥</span><span><strong>Open analytics</strong><small>Explore trends and performance</small></span><span class="quick-action-arrow">↗</span></a>
             </div>
-            <div class="attention-heading"><strong>Needs attention</strong><span>Live pending work</span></div><div id="overviewNeedsAttention" class="overview-needs-attention"><div class="attention-placeholder">Checking outstanding tasks…</div></div>
+            <div class="attention-heading"><strong>Priority alerts</strong><span>Live pending work</span></div><div id="overviewNeedsAttention" class="overview-needs-attention"><div class="attention-placeholder">Checking outstanding tasks…</div></div>
           </div>
           <aside class="overview-health-panel">
             <div class="overview-health-title"><span class="overview-health-icon">✦</span>Workspace snapshot</div>
@@ -339,6 +363,16 @@ tbody tr:hover td{background:#faf9ff}
             <div class="health-metric"><span>Student enquiries</span><strong id="actionEnquiryCount">—</strong></div>
             <div class="overview-hint">Counts refresh with the dashboard. Data that is unavailable will remain marked as an error or dash rather than being guessed.</div>
           </aside>
+        </section>
+        <section class="overview-insights-grid" aria-label="Admin insights">
+          <article class="panel overview-insight-panel">
+            <div class="overview-insight-head"><div><span class="eyebrow">LIVE DATABASE</span><h2>Performance trends</h2><p>Compare recent activity with the previous period.</p></div><a class="overview-link" href="admin.html?page=analytics">Full analytics ↗</a></div>
+            <div id="overviewPerformanceTrends" class="overview-performance"><div class="loading">Calculating 7-day and 30-day trends…</div></div>
+          </article>
+          <article class="panel overview-insight-panel">
+            <div class="overview-insight-head"><div><span class="eyebrow">AUDIT LOG</span><h2>Recent admin activity</h2><p>Latest recorded administrative actions.</p></div><a class="overview-link" href="admin.html?page=auditlogs">View audit log ↗</a></div>
+            <div id="overviewRecentActivity"><div class="loading">Loading audit activity…</div></div>
+          </article>
         </section>
         <div id="overviewDataArea" class="panel" style="padding:18px;margin-bottom:18px"><p class="sub">Latest records from each section will appear here.</p></div>
         </div>
@@ -492,6 +526,47 @@ $('notificationList').innerHTML=rows.length?rows.slice(0,25).map(x=>'<a class="n
 $('notificationBell').addEventListener('click',()=>{const panel=$('notificationPanel');const open=panel.classList.contains('hidden');panel.classList.toggle('hidden',!open);$('notificationBell').setAttribute('aria-expanded',String(open));if(open){const all=JSON.parse(localStorage.getItem(notificationReadKey)||'[]');document.querySelectorAll('#notificationList .notification-item').forEach(a=>{const title=a.querySelector('strong')?.textContent||'';});}});
 $('markNotificationsRead').addEventListener('click',()=>{const keys=Array.from(document.querySelectorAll('#notificationList .notification-item')).map(a=>{const href=a.getAttribute('href');const title=a.querySelector('strong')?.textContent||'';return title+'|'+href;});const allKeys=window.vidyamapAdminNotificationKeys||[];localStorage.setItem(notificationReadKey,JSON.stringify(allKeys));const badge=$('notificationBadge');badge.classList.add('hidden');$('notificationSummary').textContent='You’re all caught up';document.querySelectorAll('#notificationList .notification-item').forEach(a=>a.classList.add('read'));});
 document.addEventListener('click',e=>{if(!e.target.closest('.notification-wrap')){$('notificationPanel').classList.add('hidden');$('notificationBell').setAttribute('aria-expanded','false');}});
+async function loadOverviewInsights(auditRows){
+ const trendArea=$('overviewPerformanceTrends'),activityArea=$('overviewRecentActivity');
+ if(activityArea){
+  const rows=(auditRows||[]).filter(x=>x&&x.created_at).slice(0,6);
+  activityArea.innerHTML=rows.length?'<div class="overview-activity-list">'+rows.map(x=>{
+   const action=String(x.action||'Admin action').replaceAll('_',' ');
+   const entity=[x.entity_type,x.entity_id?String(x.entity_id).slice(0,8):''].filter(Boolean).join(' · ');
+   const date=new Date(x.created_at);
+   return '<div class="overview-activity-item"><span class="overview-activity-icon">↻</span><span><strong>'+esc(action)+'</strong><small>'+esc(entity||'System event')+' · '+esc(Number.isNaN(date.getTime())?'Time unavailable':date.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}))+'</small></span></div>';
+  }).join('')+'</div>':'<div class="overview-insight-empty">No audit events available, or audit-log access is restricted.</div>';
+ }
+ if(!trendArea)return;
+ const now=new Date();
+ const startDays=days=>new Date(now.getTime()-days*86400000);
+ const countWindow=async(table,days,previous=false)=>{
+  const end=previous?startDays(days):now;
+  const start=previous?startDays(days*2):startDays(days);
+  return countRows(table,q=>q.gte('created_at',start.toISOString()).lt('created_at',end.toISOString()));
+ };
+ const pct=(current,previous)=>{
+  if(previous===0)return current===0?{label:'No change',cls:'flat'}:{label:'New activity',cls:'up'};
+  const change=Math.round((current-previous)/previous*100);
+  return {label:(change>0?'+':'')+change+'%',cls:change>0?'up':change<0?'down':'flat'};
+ };
+ try{
+  const pairs=await Promise.all([
+   countWindow('student_enquiries',7),countWindow('student_enquiries',7,true),
+   countWindow('student_search_activity',7),countWindow('student_search_activity',7,true),
+   countWindow('student_enquiries',30),countWindow('student_enquiries',30,true),
+   countWindow('student_search_activity',30),countWindow('student_search_activity',30,true)
+  ]);
+  const groups=[
+   {name:'Student enquiries',icon:'♙',d7:pairs[0],p7:pairs[1],d30:pairs[4],p30:pairs[5]},
+   {name:'Student searches',icon:'⌕',d7:pairs[2],p7:pairs[3],d30:pairs[6],p30:pairs[7]}
+  ];
+  trendArea.innerHTML=groups.map(g=>{
+   const c7=pct(g.d7,g.p7),c30=pct(g.d30,g.p30);
+   return '<div class="overview-trend-group"><div class="overview-trend-title"><span>'+g.icon+' '+g.name+'</span><span class="overview-trend-change '+c30.cls+'">30d '+esc(c30.label)+'</span></div><div class="overview-trend-metrics"><div class="overview-trend-metric"><small>Last 7 days</small><strong>'+g.d7.toLocaleString('en-IN')+'</strong><small><span class="overview-trend-change '+c7.cls+'">'+esc(c7.label)+'</span> vs previous 7 days</small></div><div class="overview-trend-metric"><small>Last 30 days</small><strong>'+g.d30.toLocaleString('en-IN')+'</strong><small><span class="overview-trend-change '+c30.cls+'">'+esc(c30.label)+'</span> vs previous 30 days</small></div></div></div>';
+  }).join('')+'<div class="overview-insight-empty">Counts use database created_at timestamps; comparisons are equal-length periods.</div>';
+ }catch(e){trendArea.innerHTML='<div class="overview-insight-empty">Performance trends unavailable: '+esc(e.message||'database query failed')+'</div>';}
+}
 function renderOverviewData(base,extras){
 const val=v=>v===null||v===undefined?'—':String(v);
 $('overviewCollegeLeads').textContent=val(extras[5]);$('overviewStudentLeads').textContent=extras[6]===null?'Error':val(extras[6]);$('overviewSearches').textContent=extras[7]===null?'Error':val(extras[7]);$('overviewMarketing').textContent=val(extras[8]);
@@ -509,7 +584,7 @@ const sections=[
 ];
 const uniquePreviewItems=items=>{const seen=new Set();return items.filter(item=>{const key=item.map(v=>String(v??'').trim().toLowerCase()).join('|');if(seen.has(key))return false;seen.add(key);return true;});};
 $('overviewDataArea').innerHTML=sections.map(s=>{const items=uniquePreviewItems(s.items);return '<div class="overview-module"><div class="overview-module-head"><div class="overview-module-title"><span class="overview-module-icon">'+esc(s.icon)+'</span><span><strong>'+esc(s.name)+'</strong><small>'+esc(s.hint)+'</small></span></div><span class="overview-count">'+esc(val(s.count))+' records</span><a class="overview-link" href="'+s.href+'">Open section ↗</a></div>'+(items.length?'<div class="overview-records">'+items.map(it=>'<span class="overview-record">'+it.map(v=>esc(v||'—')).join(' · ')+'</span>').join('')+'</div>':'<small class="overview-empty">No recent records, or data access is restricted.</small>')+'</div>';}).join('');
- const attention=$('overviewNeedsAttention');if(attention){const ads=(base[5]?.data||[]).filter(x=>['pending','pending_review','unpaid'].includes(String(x.status||'').toLowerCase())||['pending','unpaid'].includes(String(x.payment_status||'').toLowerCase())).length;const institutions=(base[6]?.data||[]).filter(x=>String(x.status||'').toLowerCase()==='pending').length;const callbacks=(extras[1]?.data||[]).filter(x=>String(x.status||'pending').toLowerCase()==='pending').length;const now=Date.now();const overdue=(extras[2]?.data||[]).filter(x=>x.follow_up_at&&new Date(x.follow_up_at).getTime()<now&&!['admission_completed','not_interested'].includes(String(x.status||'').toLowerCase())).length;const tasks=[{label:'Registration reviews',detail:'Pending requests',count:typeof base[2]==='number'?val(base[2]):'—',href:'admin.html?page=registrations'},{label:'Ad approvals & payments',detail:'Latest loaded ad records',count:ads,href:'admin.html?page=marketing'},{label:'Callback requests',detail:'Pending in latest loaded records',count:callbacks,href:'admin.html?page=publicleads'},{label:'Overdue student follow-ups',detail:'Latest loaded enquiries',count:overdue,href:'admin.html?page=crm'},{label:'Institution verification',detail:'Pending in directory records',count:institutions,href:'admin.html?page=institutions'}];attention.innerHTML=tasks.map(t=>'<a class="attention-item" data-level="'+(Number(t.count)===0?'clear':'attention')+'" href="'+t.href+'"><span class="attention-count">'+esc(t.count)+'</span><span class="attention-copy"><strong>'+esc(t.label)+'</strong><small>'+esc(t.detail)+'</small></span><span class="attention-arrow">↗</span></a>').join('');}
+ loadOverviewInsights(extras[3]?.data||[]);\n const attention=$('overviewNeedsAttention');if(attention){const ads=(base[5]?.data||[]).filter(x=>['pending','pending_review','unpaid'].includes(String(x.status||'').toLowerCase())||['pending','unpaid'].includes(String(x.payment_status||'').toLowerCase())).length;const institutions=(base[6]?.data||[]).filter(x=>String(x.status||'').toLowerCase()==='pending').length;const callbacks=(extras[1]?.data||[]).filter(x=>String(x.status||'pending').toLowerCase()==='pending').length;const now=Date.now();const overdue=(extras[2]?.data||[]).filter(x=>x.follow_up_at&&new Date(x.follow_up_at).getTime()<now&&!['admission_completed','not_interested'].includes(String(x.status||'').toLowerCase())).length;const tasks=[{label:'Registration reviews',detail:'Pending requests',count:typeof base[2]==='number'?val(base[2]):'—',href:'admin.html?page=registrations'},{label:'Ad approvals & payments',detail:'Latest loaded ad records',count:ads,href:'admin.html?page=marketing'},{label:'Callback requests',detail:'Pending in latest loaded records',count:callbacks,href:'admin.html?page=publicleads'},{label:'Overdue student follow-ups',detail:'Latest loaded enquiries',count:overdue,href:'admin.html?page=crm'},{label:'Institution verification',detail:'Pending in directory records',count:institutions,href:'admin.html?page=institutions'}];attention.innerHTML=tasks.map(t=>'<a class="attention-item" data-level="'+(Number(t.count)===0?'clear':'attention')+'" href="'+t.href+'"><span class="attention-count">'+esc(t.count)+'</span><span class="attention-copy"><strong>'+esc(t.label)+'</strong><small>'+esc(t.detail)+'</small></span><span class="attention-arrow">↗</span></a>').join('');}
 
 }
 function renderRequests(result){const area=$('requestsArea');if(result.error){area.innerHTML=empty('Registration requests are not available.');return;}if(!result.data||!result.data.length){area.innerHTML=empty('No registration requests yet.');return;}area.innerHTML='<div class="table-wrap"><table><thead><tr><th>Institution</th><th>Status</th><th>Submitted</th><th>Action</th></tr></thead><tbody>'+result.data.map(r=>'<tr><td><strong>'+esc(r.college_name)+'</strong><small>'+esc(r.contact_name)+'</small></td><td>'+statusTag(r.status)+'</td><td>'+esc(new Date(r.created_at).toLocaleDateString())+'</td><td><div class="row-actions">'+(r.status==='pending'?'<button class="btn" data-review="approved" data-id="'+esc(r.id)+'">Approve</button><button class="btn danger" data-review="rejected" data-id="'+esc(r.id)+'">Reject</button>':'—')+'</div></td></tr>').join('')+'</tbody></table></div>';}
