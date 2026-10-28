@@ -129,6 +129,59 @@ button.primary:hover,.btn-primary:hover,.primary-btn:hover{filter:brightness(1.1
 @media(max-width:700px){.form-grid,.college-directory-breakdowns{grid-template-columns:1fr}.create-college-banner{margin:12px;padding:17px}.create-college-banner-mark{width:44px;height:44px;flex-basis:44px;font-size:24px}.create-college-banner h3{font-size:17px}.staff-fields,.staff-permission-grid{grid-template-columns:1fr}.staff-form-footer{align-items:stretch;flex-direction:column}.staff-form-footer .btn{width:100%}.college-directory-stats{grid-template-columns:1fr 1fr}.overview-records{grid-template-columns:1fr}.section-head{align-items:flex-start}.section-head .btn{flex-shrink:0}}
 
 /* VIDYAMAP overview: clean clinical-grade dashboard inspired by the supplied reference */
+
+/* Royal Blue + Royal Purple dashboard palette requested by owner */
+:root{--vm-teal:#173b8f;--vm-teal-dark:#101f55;--vm-teal-soft:#eee7fb;--vm-canvas:#f4f5fb;--vm-card:#fff;--vm-ink:#20243b;--vm-muted:#737b94;--vm-border:#e4e5f0;--vm-purple:#55258f;--vm-purple-bright:#6a35b3;--vm-blue:#204da5}
+body{background:var(--vm-canvas)!important;color:var(--vm-ink)}
+.topbar{background:#fff!important;border-bottom:1px solid #e3e5f0!important}
+.topbar .brand-caption{color:#d0b5ff!important}
+.topbar .brand img{background:#fff!important;border:1px solid #c7a96b!important;border-radius:10px!important;padding:3px 8px!important}
+.topbar .pill{background:#fff!important;border-color:#e2e5f0!important;color:#52607d!important}
+.btn{background:linear-gradient(110deg,#204da5,#55258f)!important;color:#fff!important;border-color:#4b3698!important;box-shadow:none!important}
+.btn:hover{background:linear-gradient(110deg,#173b8f,#6a35b3)!important;transform:translateY(-1px)}
+.btn.secondary{background:#fff!important;color:#29345a!important;border:1px solid #dfe2ef!important}
+.btn.secondary:hover{background:#f5f1fc!important;border-color:#bca8e7!important}
+.eyebrow{color:#6033a0!important}
+.panel,.action-panel,.overview-health-panel,.overview-insight-panel{background:#fff!important;border:1px solid var(--vm-border)!important;border-radius:13px!important;box-shadow:0 2px 8px #172b5b0b!important}
+.admin-sidebar{background:linear-gradient(180deg,#101f55 0%,#26165f 55%,#35145f 100%)!important;border:1px solid #4a3483!important;border-radius:0 14px 14px 0!important;color:#fff!important}
+.admin-sidebar .sidebar-label{color:#c8b9ef!important}
+.admin-sidebar .nav-item{color:#e8e5fa!important;border-radius:8px!important;font-weight:650!important}
+.admin-sidebar .nav-item:hover{background:#ffffff16!important;color:#fff!important}
+.admin-sidebar .nav-item.active{background:linear-gradient(100deg,#204da5,#6530a0)!important;color:#fff!important;box-shadow:inset 3px 0 #e3c98f!important;border-color:#8d73c9!important}
+.admin-sidebar .nav-ico{background:#ffffff18!important;color:#e2cbff!important;border-radius:7px!important}
+.admin-sidebar .nav-item.active .nav-ico{background:#ffffff24!important;color:#fff!important}
+.admin-sidebar .sidebar-tip{background:#ffffff0b!important;border-color:#ffffff24!important;color:#d9d5ef!important}
+#dashboardView .dashboard-hero{display:flex;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(118deg,#142f79 0%,#34227e 54%,#55258f 100%)!important;color:#fff!important;border:1px solid #7159b4!important;border-radius:14px!important;padding:24px 26px!important;margin-bottom:16px!important}
+#dashboardView .dashboard-hero h1{color:#fff!important;font-size:clamp(25px,2.5vw,34px)!important;letter-spacing:-1px!important}
+#dashboardView .dashboard-hero .sub{color:#e3e7ff!important}
+#dashboardView .dashboard-hero .eyebrow{color:#e3c98f!important}
+#dashboardView .stats{gap:14px;margin:16px 0 18px}
+#dashboardView .stat{border-radius:13px!important;border-top:3px solid #6530a0!important;padding:17px 18px!important}
+#dashboardView .stat:after{background:#f0eafd!important}
+#dashboardView .stat-icon{background:#eee7fb!important;color:#55258f!important}
+#dashboardView .stat:nth-child(2) .stat-icon{background:#e4f6ee!important;color:#138052!important}
+#dashboardView .stat:nth-child(3) .stat-icon{background:#fff2d9!important;color:#a76008!important}
+#dashboardView .stat:nth-child(4) .stat-icon{background:#e8efff!important;color:#204da5!important}
+#dashboardView .stat strong{font-size:30px!important;color:#20243b!important}
+.admin-smart-search .searchbox,.admin-smart-search select{border-color:#dfe2ef!important;border-radius:9px!important}
+.quick-action{background:#fff!important;border-color:#e5e6f1!important;border-radius:11px!important}
+.quick-action:hover{border-color:#a18bd7!important;box-shadow:0 5px 15px #35207812!important}
+.quick-action-icon,.overview-health-icon{background:#eee7fb!important;color:#55258f!important}
+.quick-action strong,.action-panel-head h2,.overview-health-title,.overview-insight-head h2{color:#253052!important}
+.quick-action-arrow,.overview-link{color:#6033a0!important}
+.live-chip{background:#e8f7f0!important;color:#247c59!important}
+.attention-heading{border-color:#e8e9f2!important}
+.overview-needs-attention a,.overview-needs-attention .attention-item{background:#fbfaff!important;border-color:#e5e2f0!important;color:#414b6a!important}
+.overview-hint{background:#f4effb!important;color:#685887!important}
+.health-metric{border-color:#e9eaf2!important;color:#69728c!important}
+.health-metric strong{color:#253052!important}
+.overview-insight-head{border-color:#e6e7f0!important}
+.overview-trend-metric{background:#f7f5fc!important}
+.overview-trend-title{color:#343b5c!important}
+.overview-trend-change{background:#e8f7f0!important;color:#247c59!important}
+.section-head{background:#fff!important}
+.status{background:#eee7fb!important;color:#6033a0!important}
+
 :root{--vm-teal:#137f80;--vm-teal-dark:#096b70;--vm-teal-soft:#e1f2f0;--vm-canvas:#f7f7f4;--vm-card:#fff;--vm-ink:#202827;--vm-muted:#737c7a;--vm-border:#e5e8e4}
 body{background:var(--vm-canvas)!important;color:var(--vm-ink)}
 .topbar{background:#fbfaf7!important;border-bottom:1px solid #e5e4df!important;box-shadow:none!important}
