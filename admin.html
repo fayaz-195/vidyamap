@@ -314,11 +314,23 @@ function cellText(value){return value==null||value===''?'—':String(value);}
 function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function statusTag(value){const v=cellText(value);return '<span class="status '+esc(v.toLowerCase())+'">'+esc(v.replace(/_/g,' '))+'</span>';}
 function empty(message){return '<div class="empty">'+esc(message)+'</div>';}
+async function loadEnquiryPanels(){
+  const enquiryArea=$('enquirySummaryArea'),searchArea=$('searchActivityArea');
+  if(enquiryArea)enquiryArea.innerHTML='<div class="loading">Loading student leads and enquiries…</div>';
+  if(searchArea)searchArea.innerHTML='<div class="loading">Loading search activity…</div>';
+  const fetchPanel=async(table,columns,configure)=>{try{let q=client.from(table).select(columns);if(configure)q=configure(q);const {data,error}=await withQueryTimeout(q,10000);if(error)throw error;return {data:data||[],error:null};}catch(error){return {data:[],error};}};
+  const [enquiries,activity]=await Promise.all([
+    fetchPanel('student_enquiries','id,student_name,phone,email,district_id,town,course_id,course_name,academic_year,message,contact_consent,source,created_at,status,follow_up_at,assigned_to',q=>q.order('created_at',{ascending:false}).limit(300)),
+    fetchPanel('student_search_activity','id,lead_id,event_type,query_text,search_filters,college_id,college_name,created_at',q=>q.order('created_at',{ascending:false}).limit(300))
+  ]);
+  renderEnquirySummary(enquiries);renderSearchActivity(activity);
+}
 function withQueryTimeout(promise,ms=8000){return Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error('Database request timed out after '+Math.round(ms/1000)+' seconds')),ms))]);}
 async function countRows(table,filters){let q=client.from(table).select('id',{count:'exact',head:true});if(filters)filters(q);const {count,error}=await withQueryTimeout(q);if(error)throw error;return count||0;}
 async function safeCountRows(table){try{return await countRows(table);}catch(_){return null;}}
 async function loadDashboard(){
   hideNotice(dashboardNotice);
+  loadEnquiryPanels();
   ['requestsArea','campaignsArea','collegesArea'].forEach(id=>$(id).textContent='Loading…');
   const countSafe=async(table,filters)=>{try{return await countRows(table,filters);}catch(error){return {error};}};
   const selectSafe=async(table,columns,configure)=>{try{let q=client.from(table).select(columns);if(configure)q=configure(q);const {data,error}=await withQueryTimeout(q);return {data:data||[],error:error||null};}catch(error){return {data:[],error};}};
