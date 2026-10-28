@@ -421,11 +421,14 @@ async function exportReport(table,columns,file,dateCol){const note=$('reportNoti
 function applyPageView(){const allowed=['overview','registrations','createCollege','institutions','marketing','publicleads','enquirySummary','auditlogs','analytics','crm','team','health','assistant','reports'];const params=new URLSearchParams(window.location.search);const requested=params.get('page')||'overview';const active=requested==='campaigns'?'overview':(allowed.includes(requested)?requested:'overview');document.querySelectorAll('.admin-page-view').forEach(section=>section.classList.toggle('page-hidden',section.id!==(active==='overview'?'overviewContent':active)));document.querySelectorAll('.admin-sidebar [data-page]').forEach(link=>link.classList.toggle('active',link.dataset.page===active));const titles={overview:'Overview',registrations:'College registrations',createCollege:'Create college account',institutions:'Institution listings',marketing:'Marketing campaigns',publicleads:'College callback requests',enquirySummary:'Student enquiries',auditlogs:'Audit logs',analytics:'Advanced analytics',crm:'Enquiry CRM',team:'Team & permissions',health:'Security & health',assistant:'Admin assistant',reports:'Reports & exports'};document.title='VIDYAMAP Admin · '+titles[active];}
 
 document.addEventListener('click',event=>{
-  const link=event.target.closest('.admin-sidebar a.nav-item[data-page]');
+  const link=event.target.closest('a[href]');
   if(!link)return;
+  let url;
+  try{url=new URL(link.getAttribute('href'),window.location.href);}catch(_){return;}
+  if(url.origin!==window.location.origin||url.pathname!==window.location.pathname||!url.searchParams.has('page'))return;
   event.preventDefault();
   event.stopImmediatePropagation();
-  let page=link.dataset.page||'overview';
+  let page=url.searchParams.get('page')||'overview';
   if(page==='campaigns')page='overview';
   const nextUrl=window.location.pathname+'?page='+encodeURIComponent(page);
   if(window.location.pathname+window.location.search!==nextUrl)window.history.pushState({},'',nextUrl);
