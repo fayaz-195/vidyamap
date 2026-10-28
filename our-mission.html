@@ -240,4 +240,16 @@ body{height:auto!important;min-height:100vh!important;overflow-x:clip!important;
 .vm-ad-ticker{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:100%!important;z-index:2!important;margin:0!important}
 #studentLeadCapture.vm-lead-modal{position:fixed!important;inset:0!important;overflow-y:auto!important}
 #studentLeadCapture.vm-lead-modal .container{max-height:calc(100dvh - 24px)!important;overflow-y:auto!important}
+
+/* VIDYAMAP unified brand system + accessible text contrast */
+:root{--vm-brand-navy:#123b6d;--vm-brand-purple:#76208f;--vm-text:#172b43;--vm-muted:#4d5d73;--vm-border:#dfe6ef;--vm-surface:#fff}
+body{color:var(--vm-text)}
+p,li,small,.muted,.subtitle,.description,.sub,.help-text{color:var(--vm-muted)}
+h1,h2,h3,h4,h5,h6{color:var(--vm-text)}
+input,select,textarea{color:#172b43}
+input::placeholder,textarea::placeholder{color:#6b778b;opacity:1}
+button,.btn,.button,[type=submit]{transition:background-color .18s ease,border-color .18s ease}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #9b82e8!important;outline-offset:2px}
+footer,footer p,footer li,footer small,footer h2,footer h3,footer a{color:#f5f7ff}
+
 </style></body></html>
