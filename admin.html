@@ -265,6 +265,26 @@ body{background:var(--vm-canvas)!important;color:var(--vm-ink)}
 .admin-sidebar .nav-subitem.active{background:#ffffff18;color:#fff;border-color:#ffffff2b;box-shadow:inset 2px 0 #e3c98f}
 .admin-sidebar .nav-subdot{width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:#a997df}
 .admin-sidebar .nav-subitem.active .nav-subdot{background:#e3c98f;box-shadow:0 0 0 3px #e3c98f22}
+
+/* FINAL OVERRIDE: remove every remaining teal/green dashboard accent */
+:root{--vm-teal:#204da5!important;--vm-teal-dark:#101f55!important;--vm-teal-soft:#eee7fb!important;--vm-purple:#55258f!important;--vm-purple-bright:#6a35b3!important}
+#dashboardView .eyebrow,.eyebrow{color:#6033a0!important}
+#dashboardView .dashboard-hero{background:linear-gradient(115deg,#142f79 0%,#2b2379 52%,#55258f 100%)!important;border-color:#7257b8!important}
+#dashboardView .dashboard-hero .eyebrow{color:#e3c98f!important}
+#dashboardView .stat-icon,#dashboardView .quick-action-icon,#dashboardView .overview-health-icon{background:#eee7fb!important;color:#55258f!important}
+#dashboardView .stat:nth-child(2) .stat-icon{background:#e8e9ff!important;color:#3e49a4!important}
+#dashboardView .stat:nth-child(3) .stat-icon{background:#f0e7fc!important;color:#6a35a0!important}
+#dashboardView .stat:nth-child(4) .stat-icon{background:#e8efff!important;color:#204da5!important}
+#dashboardView .quick-action:hover{border-color:#a18bd7!important;box-shadow:0 5px 15px #35207812!important}
+#dashboardView .quick-action-arrow,#dashboardView .overview-link{color:#6033a0!important}
+#dashboardView .live-chip{background:#eee7fb!important;color:#55258f!important}
+#dashboardView .overview-hint{background:#f4effb!important;color:#685887!important}
+#dashboardView .overview-trend-metric{background:#f7f5fc!important}
+#dashboardView .overview-trend-change{background:#eee7fb!important;color:#55258f!important}
+#dashboardView .status{background:#eee7fb!important;color:#6033a0!important}
+#dashboardView .overview-needs-attention a:hover{border-color:#a18bd7!important;background:#f8f5ff!important}
+#dashboardView .admin-sidebar .nav-item.active{background:linear-gradient(100deg,#204da5,#6530a0)!important;color:#fff!important}
+#dashboardView .admin-sidebar .nav-subitem.active{color:#fff!important}
 </style>
 </head>
 <body>
