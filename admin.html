@@ -420,6 +420,17 @@ async function exportReport(table,columns,file,dateCol){const note=$('reportNoti
 
 function applyPageView(){const allowed=['overview','registrations','createCollege','institutions','marketing','publicleads','enquirySummary','auditlogs','analytics','crm','team','health','assistant','reports'];const params=new URLSearchParams(window.location.search);const requested=params.get('page')||'overview';const active=requested==='campaigns'?'overview':(allowed.includes(requested)?requested:'overview');document.querySelectorAll('.admin-page-view').forEach(section=>section.classList.toggle('page-hidden',section.id!==(active==='overview'?'overviewContent':active)));document.querySelectorAll('.admin-sidebar [data-page]').forEach(link=>link.classList.toggle('active',link.dataset.page===active));const titles={overview:'Overview',registrations:'College registrations',createCollege:'Create college account',institutions:'Institution listings',marketing:'Marketing campaigns',publicleads:'College callback requests',enquirySummary:'Student enquiries',auditlogs:'Audit logs',analytics:'Advanced analytics',crm:'Enquiry CRM',team:'Team & permissions',health:'Security & health',assistant:'Admin assistant',reports:'Reports & exports'};document.title='VIDYAMAP Admin · '+titles[active];}
 
+document.querySelectorAll('.admin-sidebar a.nav-item[data-page]').forEach(link=>link.addEventListener('click',event=>{
+  const url=new URL(link.href,window.location.href);
+  if(url.origin!==window.location.origin||url.pathname!==window.location.pathname)return;
+  event.preventDefault();
+  if(url.searchParams.get('page')==='campaigns')url.searchParams.set('page','overview');
+  window.history.pushState({},'',url.pathname+url.search+url.hash);
+  applyPageView();
+}));
+window.addEventListener('popstate',applyPageView);
+
+
 $('refreshAnalytics')?.addEventListener('click',loadNextgenAnalytics);$('refreshCrm')?.addEventListener('click',loadCrm);$('refreshTeam')?.addEventListener('click',loadTeam);$('refreshHealth')?.addEventListener('click',loadHealth);$('askAssistant')?.addEventListener('click',answerAssistant);$('exportEnquiries')?.addEventListener('click',()=>exportReport('student_enquiries','id,student_name,phone,email,status,source,created_at','vidyamap-enquiries.csv','created_at'));$('exportAudit')?.addEventListener('click',()=>exportReport('audit_logs','id,action,entity_type,entity_id,created_at','vidyamap-audit.csv','created_at'));document.addEventListener('click',e=>{const crm=e.target.closest('[data-save-crm]');if(crm){saveCrmRow(crm.dataset.saveCrm,crm);return;}const team=e.target.closest('[data-save-team]');if(team)saveTeamRow(team.dataset.saveTeam,team);});
 $('exportBtn').addEventListener('click',()=>{const rows=[['Section','Record','Status','Details']];[['Registrations','requestsArea'],['Ad campaigns','campaignsArea'],['Institutions','collegesArea']].forEach(([section,id])=>{const area=$(id);area.querySelectorAll('tbody tr').forEach(tr=>{const cells=[...tr.querySelectorAll('td')].map(td=>td.innerText.replace(/\s+/g,' ').trim());rows.push([section,...cells]);});});const csv=rows.map(row=>row.map(value=>'"'+String(value??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='vidyamap-admin-export.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);});
 
