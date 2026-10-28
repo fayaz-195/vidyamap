@@ -12,6 +12,19 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://fayaz-195.github.io/vidyamap/">
 <title>VidyaMap | WhatsApp Promotions, Meta Ads, YouTube Ads &amp; SEO</title>
+<script>
+// Send Supabase password-recovery callbacks from the public home page to the admin reset form.
+(function(){
+  try {
+    var hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    var queryParams = new URLSearchParams(window.location.search);
+    var recovery = hashParams.get('type') === 'recovery' || queryParams.get('type') === 'recovery';
+    if (recovery) {
+      window.location.replace(new URL('admin.html', window.location.href).pathname + window.location.search + window.location.hash);
+    }
+  } catch (_) {}
+})();
+</script>
 
 <style>
 :root {
