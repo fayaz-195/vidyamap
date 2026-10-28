@@ -834,7 +834,7 @@ function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,c=>({
 function statusTag(value){const v=cellText(value);return '<span class="status '+esc(v.toLowerCase())+'">'+esc(v.replace(/_/g,' '))+'</span>';}
 function empty(message){return '<div class="empty">'+esc(message)+'</div>';}
 async let enquiryFilterState={state:'',district:'',course:'',category:''};
-function loadEnquiryPanels(){
+async function loadEnquiryPanels(){
   const enquiryArea=$('enquirySummaryArea'),searchArea=$('searchActivityArea');
   if(enquiryArea)enquiryArea.innerHTML='<div class="loading">Loading student leads and enquiries…</div>';
   if(searchArea)searchArea.innerHTML='<div class="loading">Loading search activity…</div>';
