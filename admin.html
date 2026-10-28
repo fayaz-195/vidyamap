@@ -453,6 +453,12 @@ main.wrap:has(#dashboardView:not(.hidden)){display:block!important;box-sizing:bo
  #dashboardView .admin-layout{grid-template-columns:minmax(0,1fr)!important}
 }
 
+
+/* Keep hidden admin views hidden; prevent dashboard showing under signed-out login */
+#dashboardView.hidden{display:none!important}
+#loginView.hidden,#recoveryView.hidden{display:none!important}
+#dashboardView:not(.hidden){display:block!important}
+
 </style>
 </head>
 <body>
