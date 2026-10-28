@@ -346,7 +346,7 @@ async function loadDashboard(){
   const extrasPromise=Promise.all([
     safeSelect('campaigns','id,name,channel,status,budget_inr,submitted_at,scheduled_at,created_at',q=>q.order('created_at',{ascending:false}).limit(30)),
     safeSelect('college_public_leads','id,institution_name,contact_name,contact_designation,contact_phone,category,state_code,district_id,address,status,created_at',q=>q.order('created_at',{ascending:false}).limit(30)),
-    safeSelect('student_enquiries','id,student_name,phone,email,district_id,town,course_id,course_name,academic_year,message,contact_consent,source,created_at,status,follow_up_at,assigned_to,district:districts(name),course:courses(name)',q=>q.order('created_at',{ascending:false}).limit(300)),
+    safeSelect('student_enquiries','id,student_name,phone,email,district_id,town,course_id,course_name,academic_year,message,contact_consent,source,created_at,status,follow_up_at,assigned_to',q=>q.order('created_at',{ascending:false}).limit(300)),
     safeSelect('audit_logs','id,action,entity_type,entity_id,created_at',q=>q.order('created_at',{ascending:false}).limit(30)),
     safeSelect('student_search_activity','id,lead_id,event_type,query_text,search_filters,college_id,college_name,created_at',q=>q.order('created_at',{ascending:false}).limit(300)),
     safeCountRows('college_public_leads'),safeCountRows('student_enquiries'),safeCountRows('student_search_activity'),safeCountRows('campaigns')
