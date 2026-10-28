@@ -331,26 +331,7 @@ body{background:var(--vm-canvas)!important;color:var(--vm-ink)}
  #dashboardView .panel{border-radius:13px!important}
 }
 
-/* VIDYAMAP accessibility: strong, consistent text contrast on every admin view */
-body{color:#18213b}
-.admin-page-view{color:#18213b}
-.admin-page-view h1,.admin-page-view h2,.admin-page-view h3,.admin-page-view h4,.admin-page-view strong{color:#18213b}
-.admin-page-view p,.admin-page-view li,.admin-page-view label,.admin-page-view small,.admin-page-view .sub,.admin-page-view .muted,.admin-page-view .description{color:#56627b}
-.dashboard-hero{background:linear-gradient(115deg,#172f83 0%,#4b2388 100%)!important;border:1px solid #4b2388!important}
-.dashboard-hero h1,.dashboard-hero .hero-copy h1{color:#fff!important;text-shadow:0 1px 1px #11182735}
-.dashboard-hero p,.dashboard-hero .sub{color:#f1edff!important}
-.dashboard-hero .eyebrow{color:#ffdc8a!important}
-.dashboard-hero .btn.secondary{background:#fff!important;color:#1d2a50!important;border-color:#fff!important}
-.admin-sidebar,.admin-sidebar *{color:#35405a}
-.admin-sidebar .nav-item.active,.admin-sidebar .nav-item.active *{color:#fff!important}
-.admin-page-view .panel,.admin-page-view .section-panel,.admin-page-view .action-panel,.admin-page-view .overview-health-panel,.admin-page-view .overview-insight-panel{color:#18213b}
-.admin-page-view th{color:#59647c!important}
-.admin-page-view td,.admin-page-view td strong{color:#28334d}
-.admin-page-view td small{color:#65708a!important}
-.admin-page-view input,.admin-page-view select,.admin-page-view textarea{color:#18213b!important;background:#fff!important}
-.admin-page-view input::placeholder,.admin-page-view textarea::placeholder{color:#737e96!important;opacity:1}
-.admin-page-view a:not(.btn):not(.nav-item){color:#4930a8}
-.admin-page-view .status{font-weight:800}
+
 </style>
 </head>
 <body>
@@ -842,7 +823,23 @@ function drawCrm(){
    return true;
  });
  const overdue=vmCrmRows.filter(isOverdue).length,today=vmCrmRows.filter(isToday).length,unassigned=vmCrmRows.filter(x=>!x.assigned_to).length;
- const styles='<style>.vm-crm-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:16px 18px 8px}.vm-crm-kpi{border:1px solid #e6eaf3;border-radius:13px;background:#fff;padding:13px 15px}.vm-crm-kpi span{display:block;color:#7e89a4;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px}.vm-crm-kpi strong{display:block;color:#202944;font-size:24px;margin-top:4px}.vm-crm-tools{display:flex;gap:9px;flex-wrap:wrap;padding:12px 18px}.vm-crm-tools input,.vm-crm-tools select{min-height:38px;border:1px solid #dfe4f0;border-radius:9px;padding:7px 10px;background:#fff;color:#202944;font:inherit}.vm-crm-tools input{flex:1;min-width:190px}.vm-crm-result{padding:0 18px 10px;color:#7f89a0;font-size:11px}@media(max-width:700px){.vm-crm-kpis{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px}.vm-crm-tools{padding:10px 12px}.vm-crm-result{padding:0 12px 10px}}</style>';
+ const styles='<style>.vm-crm-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:16px 18px 8px}.vm-crm-kpi{border:1px solid #e6eaf3;border-radius:13px;background:#fff;padding:13px 15px}.vm-crm-kpi span{display:block;color:#7e89a4;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px}.vm-crm-kpi strong{display:block;color:#202944;font-size:24px;margin-top:4px}.vm-crm-tools{display:flex;gap:9px;flex-wrap:wrap;padding:12px 18px}.vm-crm-tools input,.vm-crm-tools select{min-height:38px;border:1px solid #dfe4f0;border-radius:9px;padding:7px 10px;background:#fff;color:#202944;font:inherit}.vm-crm-tools input{flex:1;min-width:190px}.vm-crm-result{padding:0 18px 10px;color:#7f89a0;font-size:11px}@media(max-width:700px){.vm-crm-kpis{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px}.vm-crm-tools{padding:10px 12px}.vm-crm-result{padding:0 12px 10px}}
+/* FINAL contrast overrides — deliberately last so every admin section inherits readable colours */
+body,.admin-page-view{color:#18213b!important}
+.admin-page-view h1,.admin-page-view h2,.admin-page-view h3,.admin-page-view h4{color:#18213b!important}
+.admin-page-view p,.admin-page-view li,.admin-page-view label,.admin-page-view small,.admin-page-view .sub,.admin-page-view .muted,.admin-page-view .description{color:#505d75!important}
+#dashboardView .dashboard-hero{background:linear-gradient(115deg,#172f83 0%,#4b2388 100%)!important;border:1px solid #4b2388!important}
+#dashboardView .dashboard-hero h1,#dashboardView .dashboard-hero .hero-copy h1{color:#fff!important;text-shadow:0 1px 1px #11182735!important}
+#dashboardView .dashboard-hero p,#dashboardView .dashboard-hero .sub{color:#f1edff!important}
+#dashboardView .dashboard-hero .eyebrow{color:#ffdc8a!important}
+#dashboardView .dashboard-hero .btn.secondary{background:#fff!important;color:#1d2a50!important;border-color:#fff!important}
+.admin-sidebar .nav-item.active,.admin-sidebar .nav-item.active *{color:#fff!important}
+.admin-page-view th{color:#59647c!important}
+.admin-page-view td,.admin-page-view td strong{color:#28334d!important}
+.admin-page-view td small{color:#65708a!important}
+.admin-page-view input,.admin-page-view select,.admin-page-view textarea{color:#18213b!important;background:#fff!important}
+.admin-page-view input::placeholder,.admin-page-view textarea::placeholder{color:#737e96!important;opacity:1!important}
+</style>';
  const kpis='<div class="vm-crm-kpis"><div class="vm-crm-kpi"><span>Loaded enquiries</span><strong>'+vmCrmRows.length+'</strong></div><div class="vm-crm-kpi"><span>Follow-up overdue</span><strong>'+overdue+'</strong></div><div class="vm-crm-kpi"><span>Follow-up today</span><strong>'+today+'</strong></div><div class="vm-crm-kpi"><span>Unassigned</span><strong>'+unassigned+'</strong></div></div>';
  const tools='<div class="vm-crm-tools"><input id="crmSearch" type="search" placeholder="Search student, phone, course or district…" value="'+esc(term)+'" aria-label="Search enquiries"><select id="crmStageFilter" aria-label="Filter by pipeline stage"><option value="all">All stages</option>'+['new','contacted','interested','admission_completed','not_interested'].map(v=>'<option value="'+v+'" '+(stage===v?'selected':'')+'>'+v.replaceAll('_',' ')+'</option>').join('')+'</select><select id="crmFollowFilter" aria-label="Filter by follow-up"><option value="all" '+(follow==='all'?'selected':'')+'>All follow-ups</option><option value="overdue" '+(follow==='overdue'?'selected':'')+'>Overdue</option><option value="today" '+(follow==='today'?'selected':'')+'>Due today</option><option value="scheduled" '+(follow==='scheduled'?'selected':'')+'>Scheduled</option><option value="unassigned" '+(follow==='unassigned'?'selected':'')+'>Unassigned</option></select></div>';
  const table=visible.length?'<div class="table-wrap"><table><thead><tr><th>Student</th><th>Course / district</th><th>Pipeline stage</th><th>Follow-up</th><th>Assigned to</th><th>Action</th></tr></thead><tbody>'+visible.map(x=>'<tr data-crm-row="'+esc(x.id)+'"><td><strong>'+esc(x.student_name)+'</strong><small>'+esc(x.phone)+' · '+esc(x.email||'No email')+'</small></td><td>'+esc(x.course_name||'—')+'<small>'+esc(x.district?.name||x.town||'District not set')+'</small></td><td><select data-crm-status>'+['new','contacted','interested','admission_completed','not_interested'].map(v=>'<option value="'+v+'" '+((x.status||'new')===v?'selected':'')+'>'+v.replaceAll('_',' ')+'</option>').join('')+'</select></td><td><input data-crm-followup type="datetime-local" value="'+(x.follow_up_at?new Date(x.follow_up_at).toISOString().slice(0,16):'')+'" aria-label="Follow-up date"></td><td><select data-crm-assignee><option value="">Unassigned</option>'+window.vmCrmAssignees.map(p=>'<option value="'+esc(p.id)+'" '+(x.assigned_to===p.id?'selected':'')+'>'+esc(p.full_name||p.id.slice(0,8))+' · '+esc(p.role)+'</option>').join('')+'</select></td><td><button class="btn" data-save-crm="'+esc(x.id)+'">Save</button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No enquiries match these filters.</div>';
