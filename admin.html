@@ -503,6 +503,47 @@ tbody tr:hover td{background:#f5f4ff!important}
 }
 @media(prefers-reduced-motion:reduce){#dashboardView .admin-page-view:not(.page-hidden){animation:none}}
 
+
+/* VIDYAMAP signature floating interface — all admin sections */
+body:before,body:after{content:"";position:fixed;pointer-events:none;z-index:-1;border-radius:50%;filter:blur(2px);opacity:.55;animation:vmFloatOrb 17s ease-in-out infinite alternate}
+body:before{width:360px;height:360px;top:16%;left:-190px;background:radial-gradient(circle at 60% 40%,#9b8bff55,transparent 68%)}
+body:after{width:440px;height:440px;right:-240px;bottom:-100px;background:radial-gradient(circle at 40% 40%,#54d5d455,transparent 67%);animation-delay:-8s}
+@keyframes vmFloatOrb{0%{transform:translate3d(0,0,0) scale(.95)}50%{transform:translate3d(24px,-20px,0) scale(1.04)}100%{transform:translate3d(-12px,22px,0) scale(1)}}
+#dashboardView .dashboard-main{position:relative;isolation:isolate}
+#dashboardView .dashboard-main:before{content:"";position:absolute;z-index:-1;pointer-events:none;top:140px;right:-20px;width:190px;height:190px;border:1px solid #7f78e51c;border-radius:42% 58% 65% 35%;transform:rotate(22deg);box-shadow:0 0 0 20px #7f78e508,0 0 0 42px #7f78e505;animation:vmSlowSpin 35s linear infinite}
+@keyframes vmSlowSpin{to{transform:rotate(382deg)}}
+#dashboardView .dashboard-hero{transform:translateZ(0);transition:transform .35s,box-shadow .35s!important}
+#dashboardView .dashboard-hero:before{animation:vmHeroGlow 9s ease-in-out infinite alternate}
+@keyframes vmHeroGlow{from{transform:translate3d(0,0,0) scale(.92);opacity:.75}to{transform:translate3d(-22px,18px,0) scale(1.12);opacity:1}}
+#dashboardView .dashboard-hero .hero-copy{position:relative;z-index:1}
+#dashboardView .dashboard-hero .eyebrow:before{content:"";display:inline-block;width:7px;height:7px;margin-right:9px;vertical-align:1px;border-radius:50%;background:#54e6c3;box-shadow:0 0 0 5px #54e6c326,0 0 16px #54e6c3a6}
+#dashboardView .stat,#dashboardView .panel,#dashboardView .section-panel,#dashboardView .action-panel,#dashboardView .overview-health-panel{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease!important}
+#dashboardView .stat:hover{transform:translateY(-6px)!important;box-shadow:0 22px 38px #27365c17!important}
+#dashboardView .stat:nth-child(1):hover{box-shadow:0 22px 38px #6a54e521!important}
+#dashboardView .stat:nth-child(2):hover{box-shadow:0 22px 38px #1bb78720!important}
+#dashboardView .stat:nth-child(3):hover{box-shadow:0 22px 38px #f2ad4220!important}
+#dashboardView .stat:nth-child(4):hover{box-shadow:0 22px 38px #5291f220!important}
+#dashboardView .section-panel:hover,#dashboardView .action-panel:hover,#dashboardView .overview-health-panel:hover{box-shadow:0 20px 45px #27365c12!important}
+#dashboardView .admin-sidebar .nav-item{transition:transform .22s ease,background .22s ease,box-shadow .22s ease!important}
+#dashboardView .admin-sidebar .nav-item:hover{transform:translateX(4px)!important}
+#dashboardView .admin-sidebar .nav-item.active:after{content:"";position:absolute;right:9px;top:50%;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px #ffffff23;transform:translateY(-50%)}
+#dashboardView .admin-sidebar .nav-item.active .nav-ico{box-shadow:0 0 0 4px #ffffff13}
+#dashboardView .section-panel>.section-head{position:relative;overflow:hidden}
+#dashboardView .section-panel>.section-head:after{content:"";position:absolute;right:-38px;top:-56px;width:145px;height:125px;border-radius:48%;background:radial-gradient(circle at 35% 55%,#b4a8ff3d,transparent 66%);pointer-events:none}
+#dashboardView .section-panel>.section-head>*{position:relative;z-index:1}
+#dashboardView .section-panel .table-wrap{box-shadow:0 6px 20px #26365b06}
+#dashboardView .section-panel tbody tr{transition:background .15s,transform .15s}
+#dashboardView .section-panel tbody tr:hover{transform:translateX(2px)}
+#dashboardView .section-panel .btn{transition:transform .18s,box-shadow .18s,filter .18s!important}
+#dashboardView .section-panel .btn:hover{transform:translateY(-2px)!important;box-shadow:0 9px 20px #6044e326!important}
+#dashboardView .section-panel .college-directory-stat:hover,#dashboardView .section-panel .vm-analytics-panel:hover,#dashboardView .section-panel .staff-member-card:hover{transform:translateY(-3px);box-shadow:0 17px 34px #27365c10!important}
+#dashboardView .section-panel .staff-member-card{transition:transform .2s,box-shadow .2s!important}
+#dashboardView .section-panel input,#dashboardView .section-panel select,#dashboardView .section-panel textarea{transition:border-color .16s,box-shadow .16s,background .16s}
+#dashboardView .toolbar.admin-smart-search{backdrop-filter:blur(12px)}
+#dashboardView .overview-record,#dashboardView .quick-action{transition:transform .2s ease,box-shadow .2s ease!important}
+#dashboardView .overview-record:hover,#dashboardView .quick-action:hover{transform:translateY(-3px)!important;box-shadow:0 12px 24px #27365c10!important}
+@media(prefers-reduced-motion:reduce){body:before,body:after,#dashboardView .dashboard-main:before,#dashboardView .dashboard-hero:before{animation:none!important}#dashboardView .stat,#dashboardView .panel,#dashboardView .section-panel,#dashboardView .action-panel,#dashboardView .overview-health-panel,#dashboardView .admin-sidebar .nav-item{transition:none!important}}
+
 </style>
 </head>
 <body>
