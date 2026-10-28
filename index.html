@@ -2637,6 +2637,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
    if(!document.getElementById('leadStudentConsent').checked)throw new Error('Please agree to the consent to continue.');
    const {data:leadId,error}=await db.rpc('capture_student_lead',{p_student_name:name,p_phone:phone,p_district_id:districtId,p_course_name:course,p_contact_consent:true});
    if(error)throw error;
+   if(leadId && course){const {error:courseSaveError}=await db.rpc('save_student_lead_course',{p_lead_id:leadId,p_course_name:course});if(courseSaveError)console.warn('Student course could not be saved',courseSaveError);}
    const lead={lead_id:leadId,student_name:name,phone:phone,district_id:districtId,course_name:course,saved_at:new Date().toISOString()};
    sessionStorage.setItem(savedKey,JSON.stringify(lead));
    form.querySelectorAll('input,select,button').forEach(el=>el.disabled=true);
