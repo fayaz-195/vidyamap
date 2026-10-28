@@ -14,12 +14,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Validate every public HTML page and inline JavaScript
+      - name: Validate site HTML pages and inline JavaScript
         run: |
           node <<'NODE'
           const fs = require('fs');
           const vm = require('vm');
-          const pages = fs.readdirSync('.').filter(name => name.endsWith('.html')).sort();
+          const pages = fs.readdirSync('.').filter(name => name.endsWith('.html') && !/^google[0-9a-f]+\.html$/i.test(name)).sort();
           let failures = 0;
           const check = (condition, message) => {
             if (!condition) {
