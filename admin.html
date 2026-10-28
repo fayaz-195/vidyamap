@@ -574,7 +574,7 @@ main.wrap:has(#dashboardView:not(.hidden)){display:block!important;box-sizing:bo
   <section id="dashboardView" class="hidden">
     <div class="admin-layout">
       <aside class="admin-sidebar" aria-label="Admin navigation">
-        <button type="button" class="sidebar-collapse-toggle" id="sidebarCollapseToggle" aria-label="Collapse sidebar" aria-expanded="true" title="Collapse sidebar"><span class="collapse-toggle-icon">‹</span><span class="collapse-toggle-label">Collapse menu</span></button>
+        <button type="button" class="sidebar-collapse-toggle" id="sidebarCollapseToggle" aria-label="Collapse sidebar" aria-expanded="true" title="Collapse sidebar"><span class="collapse-toggle-icon" aria-hidden="true">‹</span></button>
         <div class="sidebar-label">Workspace</div>
         <a class="nav-item" data-page="overview" href="admin.html?page=overview"><span class="nav-ico">⌂</span>Overview</a>
         <details class="nav-group" id="institutionsNavGroup">
@@ -1087,8 +1087,7 @@ document.getElementById('sidebarCollapseToggle')?.addEventListener('click',()=>{
  toggle.setAttribute('aria-expanded',String(!collapsed));
  toggle.setAttribute('aria-label',collapsed?'Expand sidebar':'Collapse sidebar');
  toggle.title=collapsed?'Expand sidebar':'Collapse sidebar';
- const label=toggle.querySelector('.collapse-toggle-label');
- if(label)label.textContent=collapsed?'Expand menu':'Collapse menu';
+
 });
 
 
