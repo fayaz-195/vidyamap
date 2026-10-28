@@ -67,6 +67,50 @@ tbody tr:hover{background:#faf9ff}
 @media(max-width:520px){.topbar{height:64px}.wrap{padding:18px 11px 30px}.stats{gap:9px;margin:15px 0}.stat{padding:13px;border-radius:15px}.stat strong{font-size:28px}.hero-copy h1{font-size:28px}.searchbox{min-width:100%;max-width:none}.hero-actions{width:100%}.hero-actions .btn{flex:1}.section-head{padding:14px}.section-head h2{font-size:13px}}
 
 @media(max-width:520px){.topbar{height:64px;padding:0 13px}.brand{font-size:15px}.mark{width:35px;height:35px}.pill{font-size:10px;padding:6px 8px}.wrap{padding:22px 12px 35px}.login-area{margin:4vh auto;padding:22px}.stats{gap:9px}.stat{padding:13px;border-radius:14px}.stat strong{font-size:27px}.stat-top{font-size:10px}.stat-icon{width:29px;height:29px}.section-head{padding:14px}.section-head h2{font-size:13px}.btn{padding:9px 10px;font-size:10px}}
+
+/* Distinct VIDYAMAP command-centre overview */
+#overviewContent{--overview-ink:#f7f8ff}
+#overviewContent #overview.dashboard-hero{position:relative;overflow:hidden;align-items:center;padding:30px 32px;border-radius:25px;background:radial-gradient(circle at 85% 10%,#8d7aff 0,transparent 28%),linear-gradient(120deg,#171a3b 0%,#30216e 55%,#6549e8 100%);color:#fff;box-shadow:0 20px 45px #30216e24}
+#overviewContent #overview.dashboard-hero:after{content:"V";position:absolute;right:10%;top:-70px;font:900 250px/1 Manrope,sans-serif;color:#ffffff0a;pointer-events:none}
+#overviewContent #overview .eyebrow{color:#c9c0ff;letter-spacing:2.5px}
+#overviewContent #overview h1{color:#fff;font-size:clamp(30px,3.5vw,44px);letter-spacing:-1.8px}
+#overviewContent #overview .sub{color:#d7d6f2;max-width:520px}
+#overviewContent #overview .hero-copy,#overviewContent #overview .hero-actions{position:relative;z-index:1}
+#overviewContent #overview .btn{border:1px solid #ffffff2e;background:#fff;color:#37277d;box-shadow:0 5px 16px #08051b22}
+#overviewContent #overview .btn.secondary{background:#ffffff12;color:#fff;border-color:#ffffff38}
+#overviewContent .toolbar{margin-top:19px}
+#overviewContent .stats{gap:13px}
+#overviewContent .stat{border-radius:19px;border-color:#e7e7f3;box-shadow:0 9px 25px #23204b08}
+#overviewContent .stat:nth-child(1){border-top:3px solid #7657f5}
+#overviewContent .stat:nth-child(2){border-top:3px solid #1eaa80}
+#overviewContent .stat:nth-child(3){border-top:3px solid #f2a43a}
+#overviewContent .stat:nth-child(4){border-top:3px solid #4e8de9}
+#overviewContent #overviewAllCounts .stat{background:linear-gradient(145deg,#fff,#faf9ff);min-height:145px}
+#overviewContent #overviewAllCounts .stat-top{font-size:11px;line-height:1.4;min-height:30px}
+#overviewContent #overviewAllCounts .stat strong{font-size:38px;color:#34246f}
+#overviewContent #overviewAllCounts .stat small a{color:#6847f5;font-weight:800;text-decoration:none}
+#overviewContent #overviewAllCounts .stat small a:hover{text-decoration:underline}
+#overviewContent .section-head{border:0;padding:20px 2px 12px}
+#overviewContent .section-head h2{font-size:17px}
+#overviewDataArea{border-radius:22px;border-color:#e5e7f1;box-shadow:0 12px 35px #22204b08;padding:8px 22px!important}
+#overviewDataArea .overview-module{padding:17px 0;border-bottom:1px solid #eef0f7}
+#overviewDataArea .overview-module:last-child{border-bottom:0}
+#overviewDataArea .overview-module-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#overviewDataArea .overview-module-title{display:flex;align-items:center;gap:11px}
+#overviewDataArea .overview-module-icon{display:grid;place-items:center;width:37px;height:37px;border-radius:12px;background:#f0edff;color:#6847f5;font-size:16px;font-weight:900}
+#overviewDataArea .overview-module:nth-child(2) .overview-module-icon{background:#e4f8ef;color:#137b55}
+#overviewDataArea .overview-module:nth-child(3) .overview-module-icon{background:#fff1dc;color:#a76008}
+#overviewDataArea .overview-module:nth-child(4) .overview-module-icon{background:#eaf1ff;color:#3868c5}
+#overviewDataArea .overview-module-title strong{font-size:13px;display:block}
+#overviewDataArea .overview-module-title small{font-size:10px;color:#8a93a8}
+#overviewDataArea .overview-count{font-size:10px;font-weight:850;color:#5b43d1;background:#f0edff;padding:6px 9px;border-radius:99px}
+#overviewDataArea .overview-link{font-size:11px;font-weight:850;color:#6847f5;text-decoration:none}
+#overviewDataArea .overview-link:hover{text-decoration:underline}
+#overviewDataArea .overview-records{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0 48px}
+#overviewDataArea .overview-record{padding:9px 11px;background:#f7f8fc;border:1px solid #eef0f7;border-radius:11px;font-size:11px;line-height:1.5;color:#4c5670;max-width:100%}
+#overviewDataArea .overview-empty{display:block;color:#929bb0;margin:10px 0 0 48px;font-size:11px}
+@media(max-width:700px){#overviewContent #overview.dashboard-hero{padding:23px 20px;border-radius:20px}#overviewContent #overview .hero-actions{width:100%}#overviewContent #overview .hero-actions .btn{flex:1}#overviewDataArea{padding:7px 14px!important}#overviewDataArea .overview-records,#overviewDataArea .overview-empty{margin-left:0}}
+
 </style>
 </head>
 <body>
@@ -119,9 +163,9 @@ tbody tr:hover{background:#faf9ff}
       <div class="dashboard-main">
         <div id="overviewContent" class="admin-page-view">
         <div id="overview" class="dashboard-hero">
-          <div class="hero-copy"><div class="eyebrow">Operations overview</div>
-          <h1>Good to see you, team.</h1>
-          <p class="sub">Your institution directory and campaign operations at a glance.</p></div>
+          <div class="hero-copy"><div class="eyebrow">VIDYAMAP COMMAND CENTRE</div>
+          <h1>Your platform, at a glance.</h1>
+          <p class="sub">A live pulse of institutions, student interest, callbacks and campaigns — all in one workspace.</p></div>
           <div class="hero-actions"><button class="btn secondary" id="exportBtn" type="button">Export CSV</button><button class="btn" id="refreshAll" type="button">↻ Refresh all</button></div>
         </div>
         <div class="toolbar"><label class="searchbox"><span>⌕</span><input id="dashboardSearch" type="search" placeholder="Search registrations, campaigns, institutions…" aria-label="Search dashboard records"></label><span class="toolbar-note">Search filters visible records below</span></div>
@@ -132,7 +176,7 @@ tbody tr:hover{background:#faf9ff}
       <article class="panel stat"><div class="stat-top"><span>Registration queue</span><span class="stat-icon">◷</span></div><strong id="requestCount">—</strong><small>Waiting for review</small></article>
       <article class="panel stat"><div class="stat-top"><span>Ad campaigns</span><span class="stat-icon">▣</span></div><strong id="campaignCount">—</strong><small>All campaign records</small></article>
     </div>
-        <div class="section-head" style="margin-top:18px"><div><h2>All pages — data summary</h2><p>Records available across the admin sections</p></div></div>
+        <div class="section-head" style="margin-top:18px"><div><h2>Workspace pulse</h2><p>Live totals across every admin area, with the latest records and quick links</p></div></div>
         <div class="stats" id="overviewAllCounts">
           <article class="panel stat"><div class="stat-top">College callback requests</div><strong id="overviewCollegeLeads">—</strong><small><a href="admin.html?page=publicleads">Open college requests →</a></small></article>
           <article class="panel stat"><div class="stat-top">Student enquiries</div><strong id="overviewStudentLeads">—</strong><small><a href="admin.html?page=enquirySummary">Open student enquiries →</a></small></article>
@@ -210,14 +254,15 @@ function renderOverviewData(base,extras){
 const val=v=>v===null||v===undefined?'—':String(v);
 $('overviewCollegeLeads').textContent=val(extras[5]);$('overviewStudentLeads').textContent=val(extras[6]);$('overviewSearches').textContent=val(extras[7]);$('overviewMarketing').textContent=val(extras[8]);
 const sections=[
-{name:'College registrations',count:base[2],href:'admin.html?page=registrations',items:(base[4]?.data||[]).slice(0,3).map(x=>[x.college_name,x.status,new Date(x.created_at).toLocaleDateString()])},
-{name:'Poster & video ads',count:base[3],href:'admin.html?page=campaigns',items:(base[5]?.data||[]).slice(0,3).map(x=>[x.title,x.status,x.payment_status])},
-{name:'Institution listings',count:base[0],href:'admin.html?page=institutions',items:(base[6]?.data||[]).slice(0,3).map(x=>[x.name,x.status,x.category])},
-{name:'College callback requests',count:extras[5],href:'admin.html?page=publicleads',items:(extras[1]?.data||[]).slice(0,3).map(x=>[x.institution_name,x.contact_name,x.status])},
-{name:'Student enquiries',count:extras[6],href:'admin.html?page=enquirySummary',items:(extras[2]?.data||[]).slice(0,3).map(x=>[x.student_name,x.course_name||x.course?.name||x.course_id||'Course not recorded',new Date(x.created_at).toLocaleDateString()])},
-{name:'Student search activity',count:extras[7],href:'admin.html?page=enquirySummary',items:(extras[4]?.data||[]).slice(0,3).map(x=>[x.query_text||'No keyword',x.event_type,new Date(x.created_at).toLocaleDateString()])},
-{name:'Marketing campaigns',count:extras[8],href:'admin.html?page=marketing',items:(extras[0]?.data||[]).slice(0,3).map(x=>[x.name,x.channel,x.status])}];
-$('overviewDataArea').innerHTML=sections.map(s=>'<div style="padding:13px 2px;border-bottom:1px solid #eef1f7"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><strong>'+esc(s.name)+'</strong><span class="status">'+esc(val(s.count))+' records</span><a href="'+s.href+'" style="color:#6847f5;font-size:11px;font-weight:800">View page →</a></div>'+(s.items.length?'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:9px">'+s.items.map(it=>'<span style="padding:7px 10px;background:#f7f8fc;border-radius:9px;font-size:11px">'+it.map(v=>esc(v||'—')).join(' · ')+'</span>').join('')+'</div>':'<small style="display:block;color:#7c879f;margin-top:7px">No recent records available or data access is restricted.</small>')+'</div>').join('');
+{icon:'▤',name:'College registrations',hint:'Review & approve institutions',count:base[2],href:'admin.html?page=registrations',items:(base[4]?.data||[]).slice(0,3).map(x=>[x.college_name,x.status,new Date(x.created_at).toLocaleDateString()])},
+{icon:'▶',name:'Poster & video ads',hint:'Creative approvals and subscriptions',count:base[3],href:'admin.html?page=campaigns',items:(base[5]?.data||[]).slice(0,3).map(x=>[x.title,x.status,x.payment_status])},
+{icon:'▦',name:'Institution listings',hint:'Directory and verification status',count:base[0],href:'admin.html?page=institutions',items:(base[6]?.data||[]).slice(0,3).map(x=>[x.name,x.status,x.category])},
+{icon:'☎',name:'College callback requests',hint:'Institutions asking to be contacted',count:extras[5],href:'admin.html?page=publicleads',items:(extras[1]?.data||[]).slice(0,3).map(x=>[x.institution_name,x.contact_name,x.status])},
+{icon:'♙',name:'Student enquiries',hint:'Student details and course interests',count:extras[6],href:'admin.html?page=enquirySummary',items:(extras[2]?.data||[]).slice(0,3).map(x=>[x.student_name,x.course_name||x.course?.name||x.course_id||'Course not recorded',new Date(x.created_at).toLocaleDateString()])},
+{icon:'⌕',name:'Student search activity',hint:'Recent searches and selected filters',count:extras[7],href:'admin.html?page=enquirySummary',items:(extras[4]?.data||[]).slice(0,3).map(x=>[x.query_text||'No keyword',x.event_type,new Date(x.created_at).toLocaleDateString()])},
+{icon:'↗',name:'Marketing campaigns',hint:'Channels, budgets and campaign status',count:extras[8],href:'admin.html?page=marketing',items:(extras[0]?.data||[]).slice(0,3).map(x=>[x.name,x.channel,x.status])}
+];
+$('overviewDataArea').innerHTML=sections.map(s=>'<div class="overview-module"><div class="overview-module-head"><div class="overview-module-title"><span class="overview-module-icon">'+esc(s.icon)+'</span><span><strong>'+esc(s.name)+'</strong><small>'+esc(s.hint)+'</small></span></div><span class="overview-count">'+esc(val(s.count))+' records</span><a class="overview-link" href="'+s.href+'">Open section ↗</a></div>'+(s.items.length?'<div class="overview-records">'+s.items.map(it=>'<span class="overview-record">'+it.map(v=>esc(v||'—')).join(' · ')+'</span>').join('')+'</div>':'<small class="overview-empty">No recent records, or data access is restricted.</small>')+'</div>').join('');
 }
 function renderRequests(result){const area=$('requestsArea');if(result.error){area.innerHTML=empty('Registration requests are not available.');return;}if(!result.data||!result.data.length){area.innerHTML=empty('No registration requests yet.');return;}area.innerHTML='<div class="table-wrap"><table><thead><tr><th>Institution</th><th>Status</th><th>Submitted</th><th>Action</th></tr></thead><tbody>'+result.data.map(r=>'<tr><td><strong>'+esc(r.college_name)+'</strong><small>'+esc(r.contact_name)+'</small></td><td>'+statusTag(r.status)+'</td><td>'+esc(new Date(r.created_at).toLocaleDateString())+'</td><td><div class="row-actions">'+(r.status==='pending'?'<button class="btn" data-review="approved" data-id="'+esc(r.id)+'">Approve</button><button class="btn danger" data-review="rejected" data-id="'+esc(r.id)+'">Reject</button>':'—')+'</div></td></tr>').join('')+'</tbody></table></div>';}
 function toLocalInputValue(value){if(!value)return '';const d=new Date(value);if(Number.isNaN(d.getTime()))return '';const pad=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes());}
