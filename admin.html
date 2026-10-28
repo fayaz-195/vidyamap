@@ -12,6 +12,8 @@
 :root{color-scheme:light;--ink:#18213b;--muted:#76809a;--line:#e5e9f2;--paper:#f4f6fb;--purple:#6044e3;--purple2:#4b32bd;--green:#137b55;--amber:#a76008;--red:#b52e43}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}.shell{min-height:100vh}.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);position:sticky;top:0;z-index:5}.brand{display:flex;align-items:center;gap:11px;font-size:18px;font-weight:850;letter-spacing:-.5px}.mark{display:grid;place-items:center;width:40px;height:40px;border-radius:13px;color:#fff;background:linear-gradient(140deg,#927aff,#5034d0);font-weight:900;box-shadow:0 7px 18px #6044e32c}.brand small{display:block;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:800}.top-actions{display:flex;align-items:center;gap:10px}.pill{font-size:11px;border:1px solid var(--line);padding:7px 11px;border-radius:99px;color:var(--muted);background:#fff}.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:750;font-size:12px;background:var(--purple);color:#fff;transition:.18s}.btn:hover{background:var(--purple2);transform:translateY(-1px)}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}.btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}.btn.secondary:hover{background:#f6f4ff;border-color:#d5ccff}.btn.danger{background:#fff;color:var(--red);border:1px solid #f1cbd2}.wrap{max-width:1420px;margin:auto;padding:32px clamp(15px,3.5vw,45px) 55px}.eyebrow{text-transform:uppercase;letter-spacing:1.8px;font-size:10px;font-weight:850;color:var(--purple)}h1,h2,h3,p{margin-top:0}h1,h2,h3{letter-spacing:-.7px}h1{font-size:clamp(27px,3.2vw,38px);line-height:1.15;margin:8px 0}h2{font-size:15px;margin:0;font-weight:850}.sub{color:var(--muted);margin-bottom:0;font-size:13px}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px #202c4a0a}.login-area{max-width:460px;margin:7vh auto;padding:30px}.login-area h1{font-size:32px}.field{margin-top:18px}.field label{display:block;font-size:11px;font-weight:800;margin-bottom:7px;color:#4f5b75}.field input{width:100%;padding:12px 13px;border:1px solid #dfe4ef;border-radius:11px;background:#fbfcff;color:var(--ink);outline:none;font-size:13px}.field input:focus{border-color:#8f7af2;box-shadow:0 0 0 3px #6044e31a}.notice{margin-top:16px;padding:12px 14px;border-radius:11px;background:#edf9f2;color:#176b4e;font-size:12px;border:1px solid #cceedd}.notice.error{background:#fff0f2;color:#a32139;border-color:#f2ccd3}.small-link{border:0;background:transparent;padding:0;color:var(--purple);font-weight:800;font-size:12px}.footer-note{font-size:11px;line-height:1.6;color:var(--muted);margin:20px 0 0}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:22px 0}.stat{padding:18px 19px;position:relative;overflow:hidden}.stat:after{content:"";position:absolute;width:85px;height:85px;right:-30px;bottom:-44px;background:#f0edff;border-radius:50%}.stat-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:750;color:var(--muted)}.stat-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#eeeaff;color:var(--purple);font-size:16px}.stat:nth-child(2) .stat-icon{background:#e2f8ed;color:#138052}.stat:nth-child(3) .stat-icon{background:#fff2d9;color:#a76008}.stat:nth-child(4) .stat-icon{background:#e9f1ff;color:#3868c5}.stat strong{display:block;font-size:32px;letter-spacing:-1.3px;margin:11px 0 0;position:relative;z-index:1}.stat small{font-size:10px;color:var(--muted)}.section-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:16px;margin-bottom:16px}.section-panel{overflow:hidden;margin-bottom:16px}.section-grid .section-panel{margin:0}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 19px;border-bottom:1px solid var(--line)}.section-head p{font-size:11px;color:var(--muted);margin:4px 0 0}.loading,.empty{padding:30px 20px;text-align:center;color:var(--muted);font-size:12px}.table-wrap{overflow-x:auto;padding:0 14px 10px}table{width:100%;border-collapse:collapse;text-align:left;white-space:nowrap}th{padding:14px 10px;font-size:9px;letter-spacing:1px;color:#929bb0;border-bottom:1px solid var(--line)}td{padding:14px 10px;font-size:11px;border-bottom:1px solid #eef1f7}tbody tr:last-child td{border-bottom:0}td strong{font-size:11px}td small{display:block;font-size:10px;color:var(--muted);margin-top:3px}.status{display:inline-flex;padding:5px 8px;border-radius:99px;font-size:9px;font-weight:850;background:#f0edff;color:#6550bd}.status.verified,.status.approved,.status.paid{background:#e3f8ee;color:#147c56}.status.pending,.status.unpaid{background:#fff2d9;color:#a66a08}.status.rejected,.status.failed{background:#fff0f2;color:#ad2a42}.row-actions{display:flex;gap:5px}.row-actions .btn{padding:7px 9px;font-size:10px}.footer-note{max-width:900px}.section-full{margin-top:0}
 
+.admin-page-view.page-hidden{display:none!important}
+.admin-sidebar .nav-item.active{background:linear-gradient(110deg,#eeeaff,#f7f5ff);color:#583bd7;box-shadow:inset 3px 0 #6847f5}
 /* VIDYAMAP Admin refresh */
 :root{--ink:#17213a;--muted:#7c879f;--line:#e6eaf3;--paper:#f5f7fc;--purple:#6847f5;--purple2:#5234d8}
 body{background:#f5f7fc;font-family:"DM Sans",Inter,system-ui,sans-serif}
@@ -22,7 +24,7 @@ body{background:#f5f7fc;font-family:"DM Sans",Inter,system-ui,sans-serif}
 .admin-layout{display:grid;grid-template-columns:218px minmax(0,1fr);gap:26px;align-items:start}
 .admin-sidebar{position:sticky;top:98px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px 12px;box-shadow:0 12px 30px #18213b08}
 .sidebar-label{padding:9px 12px 8px;color:#9aa3b7;font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}
-.nav-item{display:flex;align-items:center;gap:11px;width:100%;border:0;background:transparent;color:#68748e;padding:11px 12px;border-radius:12px;text-align:left;font-size:12px;font-weight:750;margin:2px 0;transition:.18s}
+.nav-item{display:flex;align-items:center;gap:11px;width:100%;border:0;background:transparent;color:#68748e;padding:11px 12px;border-radius:12px;text-align:left;text-decoration:none;font-size:12px;font-weight:750;margin:2px 0;transition:.18s}
 .nav-item:hover{background:#f5f2ff;color:var(--purple)}
 .nav-item.active{background:linear-gradient(110deg,#eeeaff,#f7f5ff);color:#583bd7;box-shadow:inset 3px 0 #6847f5}
 .nav-ico{width:23px;height:23px;border-radius:8px;display:grid;place-items:center;background:#f2f4f9;font-size:13px}
@@ -104,17 +106,18 @@ tbody tr:hover{background:#faf9ff}
     <div class="admin-layout">
       <aside class="admin-sidebar" aria-label="Admin navigation">
         <div class="sidebar-label">Workspace</div>
-        <button class="nav-item active" type="button" data-target="overview"><span class="nav-ico">⌂</span>Overview</button>
-        <button class="nav-item" type="button" data-target="registrations"><span class="nav-ico">▤</span>Registrations</button>
-        <button class="nav-item" type="button" data-target="campaigns"><span class="nav-ico">▣</span>Ad campaigns</button>
-        <button class="nav-item" type="button" data-target="institutions"><span class="nav-ico">▦</span>Institutions</button>
-        <button class="nav-item" type="button" data-target="marketing"><span class="nav-ico">◉</span>Marketing campaigns</button>
-        <button class="nav-item" type="button" data-target="publicleads"><span class="nav-ico">♧</span>Public leads</button>
-        <button class="nav-item" type="button" data-target="enquirySummary"><span class="nav-ico">◎</span>Enquiry overview</button>
-        <button class="nav-item" type="button" data-target="auditlogs"><span class="nav-ico">☷</span>Audit logs</button>
-        <div class="sidebar-tip"><strong>Admin workspace</strong><br>Review submissions, monitor campaigns, and manage institution listings from one place.</div>
+        <a class="nav-item" data-page="overview" href="admin.html?page=overview"><span class="nav-ico">⌂</span>Overview</a>
+        <a class="nav-item" data-page="registrations" href="admin.html?page=registrations"><span class="nav-ico">▤</span>College registrations</a>
+        <a class="nav-item" data-page="campaigns" href="admin.html?page=campaigns"><span class="nav-ico">▣</span>Poster & video ads</a>
+        <a class="nav-item" data-page="institutions" href="admin.html?page=institutions"><span class="nav-ico">▦</span>Institution listings</a>
+        <a class="nav-item" data-page="marketing" href="admin.html?page=marketing"><span class="nav-ico">◉</span>Marketing campaigns</a>
+        <a class="nav-item" data-page="publicleads" href="admin.html?page=publicleads"><span class="nav-ico">♧</span>Public institution leads</a>
+        <a class="nav-item" data-page="enquirySummary" href="admin.html?page=enquirySummary"><span class="nav-ico">◎</span>Enquiry overview</a>
+        <a class="nav-item" data-page="auditlogs" href="admin.html?page=auditlogs"><span class="nav-ico">☷</span>Audit logs</a>
+        <div class="sidebar-tip"><strong>Admin workspace</strong><br>Each section opens as its own page. Use the navigation to switch between workflows.</div>
       </aside>
       <div class="dashboard-main">
+        <div id="overviewContent" class="admin-page-view">
         <div id="overview" class="dashboard-hero">
           <div class="hero-copy"><div class="eyebrow">Operations overview</div>
           <h1>Good to see you, team.</h1>
@@ -130,32 +133,33 @@ tbody tr:hover{background:#faf9ff}
       <article class="panel stat"><div class="stat-top"><span>Ad campaigns</span><span class="stat-icon">▣</span></div><strong id="campaignCount">—</strong><small>All campaign records</small></article>
     </div>
     <div class="section-grid">
-      <section id="registrations" class="panel section-panel">
+          </div>
+    <section id="registrations" class="panel section-panel admin-page-view">
         <div class="section-head"><div><h2>College registrations</h2><p>Review submitted institution requests</p></div><button class="btn secondary" id="refreshRequests" type="button">Refresh</button></div>
         <div id="requestsArea" class="loading">Loading requests…</div>
       </section>
-      <section id="campaigns" class="panel section-panel">
+      <section id="campaigns" class="panel section-panel admin-page-view">
         <div class="section-head"><div><h2>Ad campaigns</h2><p>Check approval and payment status</p></div><button class="btn secondary" id="refreshCampaigns" type="button">Refresh</button></div>
         <div id="campaignsArea" class="loading">Loading campaigns…</div>
       </section>
     </div>
-    <section id="institutions" class="panel section-panel section-full">
+    <section id="institutions" class="panel section-panel admin-page-view section-full">
       <div class="section-head"><div><h2>Institution listings</h2><p>Public directory details, admission status and verification</p></div><button class="btn secondary" id="refreshColleges" type="button">Refresh</button></div>
       <div id="collegesArea" class="loading">Loading institutions…</div>
     </section>
-    <section id="marketing" class="panel section-panel section-full">
+    <section id="marketing" class="panel section-panel admin-page-view section-full">
       <div class="section-head"><div><h2>Marketing campaigns</h2><p>WhatsApp, Meta and Google campaigns — review queue and schedule status</p></div><button class="btn secondary" id="refreshMarketing" type="button">Refresh</button></div>
       <div id="marketingArea" class="loading">Loading marketing campaigns…</div>
     </section>
-    <section id="publicleads" class="panel section-panel section-full">
+    <section id="publicleads" class="panel section-panel admin-page-view section-full">
       <div class="section-head"><div><h2>Public institution leads</h2><p>Track public “Promote your institution” form submissions</p></div><button class="btn secondary" id="refreshLeads" type="button">Refresh</button></div>
       <div id="publicLeadsArea" class="loading">Loading public leads…</div>
     </section>
-    <section id="enquirySummary" class="panel section-panel section-full">
+    <section id="enquirySummary" class="panel section-panel admin-page-view section-full">
       <div class="section-head"><div><h2>Student enquiry overview</h2><p>Privacy-first totals and consent coverage; personal contact details are not shown here</p></div><button class="btn secondary" id="refreshEnquiries" type="button">Refresh</button></div>
       <div id="enquirySummaryArea" class="loading">Loading enquiry summary…</div>
     </section>
-    <section id="auditlogs" class="panel section-panel section-full">
+    <section id="auditlogs" class="panel section-panel admin-page-view section-full">
       <div class="section-head"><div><h2>Recent audit activity</h2><p>Administrative action history, when available</p></div><button class="btn secondary" id="refreshAudit" type="button">Refresh</button></div>
       <div id="auditArea" class="loading">Loading audit logs…</div>
     </section>
@@ -180,7 +184,7 @@ function hideNotice(el){el.textContent='';el.classList.add('hidden');el.classLis
 function setBusy(button,busy,label){button.disabled=busy;if(busy){button.dataset.oldLabel=button.textContent;button.textContent=label||'Please wait…';}else{button.textContent=button.dataset.oldLabel||button.textContent;}}
 function showLogin(message,isError){dashboardView.classList.add('hidden');loginView.classList.remove('hidden');$('signOutBtn').classList.add('hidden');$('accountPill').textContent='Secure staff area';if(message)showNotice(loginNotice,message,isError);}
 function showRecovery(message){recoveryMode=true;currentUser=null;loginView.classList.add("hidden");dashboardView.classList.add("hidden");$("recoveryView").classList.remove("hidden");$("signOutBtn").classList.add("hidden");$("accountPill").textContent="Password reset";if(message)showNotice($("recoveryNotice"),message,false);}
-function showDashboard(user){recoveryMode=false;$("recoveryView").classList.add("hidden");currentUser=user;loginView.classList.add('hidden');dashboardView.classList.remove('hidden');$('signOutBtn').classList.remove('hidden');$('accountPill').textContent=user.email||'Authenticated admin';hideNotice(loginNotice);loadDashboard();}
+function showDashboard(user){recoveryMode=false;$("recoveryView").classList.add("hidden");currentUser=user;loginView.classList.add('hidden');dashboardView.classList.remove('hidden');$('signOutBtn').classList.remove('hidden');$('accountPill').textContent=user.email||'Authenticated admin';hideNotice(loginNotice);applyPageView();loadDashboard();}
 async function ensurePlatformAdmin(user){const {data,error}=await client.from('profiles').select('id,full_name,role,is_active').eq('id',user.id).maybeSingle();if(error)throw error;if(!data||data.role!=='platform_admin'||data.is_active!==true)throw new Error('This account is not an active VIDYAMAP platform administrator. Ask an existing platform admin to authorize your account.');return data;}
 function cellText(value){return value==null||value===''?'—':String(value);}
 function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -216,7 +220,8 @@ $('refreshRequests').addEventListener('click',loadDashboard);$('refreshCampaigns
 $('refreshAll').addEventListener('click',loadDashboard);
 $('refreshMarketing').addEventListener('click',loadDashboard);$('refreshLeads').addEventListener('click',loadDashboard);$('refreshEnquiries').addEventListener('click',loadDashboard);$('refreshAudit').addEventListener('click',loadDashboard);
 $('dashboardSearch').addEventListener('input',()=>{const term=$('dashboardSearch').value.trim().toLowerCase();document.querySelectorAll('#dashboardView tbody tr').forEach(row=>{row.style.display=row.textContent.toLowerCase().includes(term)?'':'none';});});
-document.querySelectorAll('[data-target]').forEach(button=>button.addEventListener('click',()=>{const target=$(button.dataset.target);if(target)target.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('[data-target]').forEach(item=>item.classList.toggle('active',item===button));}));
+function applyPageView(){const allowed=['overview','registrations','campaigns','institutions','marketing','publicleads','enquirySummary','auditlogs'];const params=new URLSearchParams(window.location.search);const requested=params.get('page')||'overview';const active=allowed.includes(requested)?requested:'overview';document.querySelectorAll('.admin-page-view').forEach(section=>section.classList.toggle('page-hidden',section.id!==(active==='overview'?'overviewContent':active)));document.querySelectorAll('.admin-sidebar [data-page]').forEach(link=>link.classList.toggle('active',link.dataset.page===active));const titles={overview:'Overview',registrations:'College registrations',campaigns:'Poster & video ads',institutions:'Institution listings',marketing:'Marketing campaigns',publicleads:'Public institution leads',enquirySummary:'Student enquiry overview',auditlogs:'Audit logs'};document.title='VIDYAMAP Admin · '+titles[active];}
+
 $('exportBtn').addEventListener('click',()=>{const rows=[['Section','Record','Status','Details']];[['Registrations','requestsArea'],['Ad campaigns','campaignsArea'],['Institutions','collegesArea']].forEach(([section,id])=>{const area=$(id);area.querySelectorAll('tbody tr').forEach(tr=>{const cells=[...tr.querySelectorAll('td')].map(td=>td.innerText.replace(/\s+/g,' ').trim());rows.push([section,...cells]);});});const csv=rows.map(row=>row.map(value=>'"'+String(value??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='vidyamap-admin-export.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);});
 
 document.addEventListener('click',event=>{const button=event.target.closest('[data-review]');if(button){reviewRequest(button.dataset.id,button.dataset.review,button);return;}const campaign=event.target.closest('[data-marketing-review]');if(campaign){updateMarketing(campaign.dataset.id,campaign.dataset.marketingReview,campaign);return;}const collegeVerify=event.target.closest('[data-college-verify]');if(collegeVerify){updateCollegeListing(collegeVerify.dataset.id,'status',collegeVerify.dataset.collegeVerify,collegeVerify);return;}const admissions=event.target.closest('[data-admissions]');if(admissions){updateCollegeListing(admissions.dataset.id,'admissions_open',admissions.dataset.admissions==='true',admissions);return;}const collegeAd=event.target.closest('[data-college-ad-status]');if(collegeAd){updateCollegeAd(collegeAd.dataset.id,'status',collegeAd.dataset.collegeAdStatus,collegeAd);return;}const payment=event.target.closest('[data-payment-status]');if(payment){updateCollegeAd(payment.dataset.id,'payment_status',payment.dataset.paymentStatus,payment);return;}const lead=event.target.closest('[data-lead-status]');if(lead)updateLead(lead.dataset.id,lead.dataset.leadStatus,lead);});
