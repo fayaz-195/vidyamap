@@ -481,6 +481,25 @@ main.wrap:has(#dashboardView:not(.hidden)){display:block!important;box-sizing:bo
 #dashboardView .sidebar-account-role{font-size:10px;color:#ffe3a1;font-weight:750}
 @media(max-width:760px){#dashboardView .admin-sidebar{min-height:0!important}.sidebar-account-card{grid-column:1/-1}}
 
+
+/* Sidebar account menu replaces the old workspace tip */
+.admin-sidebar .sidebar-tip{display:none!important}
+.sidebar-account-wrap{position:relative;margin-top:auto;padding-top:12px}
+.sidebar-account-card{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:11px 10px;border:1px solid #ffffff35;border-radius:13px;background:#ffffff12;color:#fff;cursor:pointer;font:inherit}
+.sidebar-account-card:hover,.sidebar-account-card[aria-expanded="true"]{background:#ffffff20;border-color:#c8b8ff}
+.sidebar-account-avatar{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:#d6f4e8;color:#155d4b;font-size:12px;font-weight:900}
+.sidebar-account-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}
+.sidebar-account-name{font-size:12px;font-weight:850;color:#fff;overflow-wrap:anywhere}
+.sidebar-account-email{font-size:10px;color:#e1ddfa;overflow-wrap:anywhere}
+.sidebar-account-role{font-size:9px;color:#ffe3a1;font-weight:750}
+.sidebar-account-chevron{color:#ffe3a1;font-size:16px}
+.sidebar-account-menu{margin-top:7px;padding:7px;border:1px solid #ffffff30;border-radius:12px;background:#171746;box-shadow:0 10px 24px #080a252e}
+.sidebar-menu-label{padding:6px 9px 8px;color:#c8b8ff;font-size:9px;font-weight:850;letter-spacing:1px;text-transform:uppercase}
+.sidebar-account-menu button{display:block;width:100%;text-align:left;padding:10px;border:0;border-radius:8px;background:transparent;color:#f5f3ff;font:650 11px/1.4 Inter,system-ui,sans-serif;cursor:pointer}
+.sidebar-account-menu button:hover{background:#ffffff18;color:#fff}
+.sidebar-account-menu .sidebar-signout{color:#ffd6d6;border-top:1px solid #ffffff20;border-radius:0 0 8px 8px;margin-top:4px}
+.sidebar-account-menu .sidebar-signout:hover{background:#a92f4a;color:#fff}
+
 </style>
 </head>
 <body>
@@ -554,8 +573,7 @@ main.wrap:has(#dashboardView:not(.hidden)){display:block!important;box-sizing:bo
             <a class="nav-subitem" data-page="assistant" href="admin.html?page=assistant"><span class="nav-subdot"></span>Admin assistant</a>
           </div>
         </details>
-        <div class="sidebar-tip"><strong>Admin workspace</strong><br>Each section opens as its own page. Use the navigation to switch between workflows.</div>
-        <div class="sidebar-account-card" id="sidebarAccountCard" aria-label="Signed-in account"><span class="sidebar-account-avatar" id="sidebarAccountAvatar">A</span><span class="sidebar-account-copy"><span class="sidebar-account-name" id="sidebarAccountName">Admin account</span><span class="sidebar-account-email" id="sidebarAccountEmail">Sign in to view account</span><span class="sidebar-account-role" id="sidebarAccountRole">Team account</span></span></div>
+        <div class="sidebar-account-wrap" id="sidebarAccountWrap"><button class="sidebar-account-card" id="sidebarAccountToggle" type="button" aria-expanded="false" aria-controls="sidebarAccountMenu"><span class="sidebar-account-avatar" id="sidebarAccountAvatar">A</span><span class="sidebar-account-copy"><span class="sidebar-account-name" id="sidebarAccountName">Admin account</span><span class="sidebar-account-email" id="sidebarAccountEmail">Sign in to view account</span><span class="sidebar-account-role" id="sidebarAccountRole">Team account</span></span><span class="sidebar-account-chevron" aria-hidden="true">⌃</span></button><div class="sidebar-account-menu hidden" id="sidebarAccountMenu"><div class="sidebar-menu-label">Account options</div><button type="button" id="sidebarAccountDetailsBtn">Account details</button><button type="button" id="sidebarSignOutBtn" class="sidebar-signout">↪ Sign out</button></div></div>
       </aside>
       <div class="dashboard-main">
         <div id="overviewContent" class="admin-page-view">
