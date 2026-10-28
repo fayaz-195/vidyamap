@@ -574,6 +574,12 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
 #passwordChangeView{max-width:480px!important;margin:5vh auto!important;padding:28px!important}#passwordChangeView .field{margin-top:15px}@media(max-width:520px){#passwordChangeView{margin:3vh 12px!important;padding:22px!important}}body.vm-dark-mode #passwordChangeView{background:#182138!important;color:#e8ecf7!important;border-color:#303a55!important}
 
 
+/* Keep the header/logo above the sidebar while scrolling */
+.topbar{position:sticky!important;top:0!important;z-index:100!important}
+@media(min-width:761px){
+  #dashboardView .admin-sidebar{top:112px!important;max-height:calc(100vh - 128px)!important;z-index:1!important;scroll-margin-top:112px!important}
+  #dashboardView .dashboard-main{scroll-padding-top:16px!important}
+}
 /* Prominent VIDYAMAP logo: enlarge the actual mark, not its white frame */
 .topbar{min-height:90px!important;height:auto!important;padding-top:8px!important;padding-bottom:8px!important}
 .topbar .brand{gap:12px!important}
