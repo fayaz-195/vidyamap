@@ -402,7 +402,7 @@ finally{button.disabled=false;button.textContent='Create college account';}
 });
 $('createCollegeForm').addEventListener('reset',()=>setTimeout(()=>{$('createdCollegeResult').classList.add('hidden');},0));
 loadCollegeDistrictOptions();
-$('refreshRequests').addEventListener('click',loadDashboard);$('refreshCampaigns').addEventListener('click',loadDashboard);$('refreshColleges').addEventListener('click',loadDashboard);
+$('refreshRequests')?.addEventListener('click',loadDashboard);$('refreshCampaigns')?.addEventListener('click',loadDashboard);$('refreshColleges')?.addEventListener('click',loadDashboard);
 $('refreshAll').addEventListener('click',loadDashboard);
 $('refreshMarketing').addEventListener('click',loadDashboard);$('refreshLeads').addEventListener('click',loadDashboard);$('refreshEnquiries').addEventListener('click',loadDashboard);$('refreshAudit').addEventListener('click',loadDashboard);
 $('dashboardSearch').addEventListener('input',()=>{const term=$('dashboardSearch').value.trim().toLowerCase();document.querySelectorAll('#dashboardView tbody tr').forEach(row=>{row.style.display=row.textContent.toLowerCase().includes(term)?'':'none';});});
