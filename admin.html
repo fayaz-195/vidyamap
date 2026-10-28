@@ -11,7 +11,59 @@
 <style>
 :root{color-scheme:light;--ink:#18213b;--muted:#76809a;--line:#e5e9f2;--paper:#f4f6fb;--purple:#6044e3;--purple2:#4b32bd;--green:#137b55;--amber:#a76008;--red:#b52e43}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}.shell{min-height:100vh}.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);position:sticky;top:0;z-index:5}.brand{display:flex;align-items:center;gap:11px;font-size:18px;font-weight:850;letter-spacing:-.5px}.mark{display:grid;place-items:center;width:40px;height:40px;border-radius:13px;color:#fff;background:linear-gradient(140deg,#927aff,#5034d0);font-weight:900;box-shadow:0 7px 18px #6044e32c}.brand small{display:block;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:800}.top-actions{display:flex;align-items:center;gap:10px}.pill{font-size:11px;border:1px solid var(--line);padding:7px 11px;border-radius:99px;color:var(--muted);background:#fff}.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:750;font-size:12px;background:var(--purple);color:#fff;transition:.18s}.btn:hover{background:var(--purple2);transform:translateY(-1px)}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}.btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}.btn.secondary:hover{background:#f6f4ff;border-color:#d5ccff}.btn.danger{background:#fff;color:var(--red);border:1px solid #f1cbd2}.wrap{max-width:1420px;margin:auto;padding:32px clamp(15px,3.5vw,45px) 55px}.eyebrow{text-transform:uppercase;letter-spacing:1.8px;font-size:10px;font-weight:850;color:var(--purple)}h1,h2,h3,p{margin-top:0}h1,h2,h3{letter-spacing:-.7px}h1{font-size:clamp(27px,3.2vw,38px);line-height:1.15;margin:8px 0}h2{font-size:15px;margin:0;font-weight:850}.sub{color:var(--muted);margin-bottom:0;font-size:13px}.panel{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px #202c4a0a}.login-area{max-width:460px;margin:7vh auto;padding:30px}.login-area h1{font-size:32px}.field{margin-top:18px}.field label{display:block;font-size:11px;font-weight:800;margin-bottom:7px;color:#4f5b75}.field input{width:100%;padding:12px 13px;border:1px solid #dfe4ef;border-radius:11px;background:#fbfcff;color:var(--ink);outline:none;font-size:13px}.field input:focus{border-color:#8f7af2;box-shadow:0 0 0 3px #6044e31a}.notice{margin-top:16px;padding:12px 14px;border-radius:11px;background:#edf9f2;color:#176b4e;font-size:12px;border:1px solid #cceedd}.notice.error{background:#fff0f2;color:#a32139;border-color:#f2ccd3}.small-link{border:0;background:transparent;padding:0;color:var(--purple);font-weight:800;font-size:12px}.footer-note{font-size:11px;line-height:1.6;color:var(--muted);margin:20px 0 0}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:22px 0}.stat{padding:18px 19px;position:relative;overflow:hidden}.stat:after{content:"";position:absolute;width:85px;height:85px;right:-30px;bottom:-44px;background:#f0edff;border-radius:50%}.stat-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:750;color:var(--muted)}.stat-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#eeeaff;color:var(--purple);font-size:16px}.stat:nth-child(2) .stat-icon{background:#e2f8ed;color:#138052}.stat:nth-child(3) .stat-icon{background:#fff2d9;color:#a76008}.stat:nth-child(4) .stat-icon{background:#e9f1ff;color:#3868c5}.stat strong{display:block;font-size:32px;letter-spacing:-1.3px;margin:11px 0 0;position:relative;z-index:1}.stat small{font-size:10px;color:var(--muted)}.section-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:16px;margin-bottom:16px}.section-panel{overflow:hidden;margin-bottom:16px}.section-grid .section-panel{margin:0}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 19px;border-bottom:1px solid var(--line)}.section-head p{font-size:11px;color:var(--muted);margin:4px 0 0}.loading,.empty{padding:30px 20px;text-align:center;color:var(--muted);font-size:12px}.table-wrap{overflow-x:auto;padding:0 14px 10px}table{width:100%;border-collapse:collapse;text-align:left;white-space:nowrap}th{padding:14px 10px;font-size:9px;letter-spacing:1px;color:#929bb0;border-bottom:1px solid var(--line)}td{padding:14px 10px;font-size:11px;border-bottom:1px solid #eef1f7}tbody tr:last-child td{border-bottom:0}td strong{font-size:11px}td small{display:block;font-size:10px;color:var(--muted);margin-top:3px}.status{display:inline-flex;padding:5px 8px;border-radius:99px;font-size:9px;font-weight:850;background:#f0edff;color:#6550bd}.status.verified,.status.approved,.status.paid{background:#e3f8ee;color:#147c56}.status.pending,.status.unpaid{background:#fff2d9;color:#a66a08}.status.rejected,.status.failed{background:#fff0f2;color:#ad2a42}.row-actions{display:flex;gap:5px}.row-actions .btn{padding:7px 9px;font-size:10px}.footer-note{max-width:900px}.section-full{margin-top:0}
+
+/* VIDYAMAP Admin refresh */
+:root{--ink:#17213a;--muted:#7c879f;--line:#e6eaf3;--paper:#f5f7fc;--purple:#6847f5;--purple2:#5234d8}
+body{background:#f5f7fc;font-family:"DM Sans",Inter,system-ui,sans-serif}
+.topbar{height:76px;padding:0 clamp(18px,3vw,42px);box-shadow:0 4px 24px #18213b08}
+.brand{font-family:Manrope, sans-serif;font-weight:800;letter-spacing:-.7px}
+.mark{border-radius:14px;background:linear-gradient(145deg,#8c73ff,#5637dc);box-shadow:0 9px 22px #6847f52c}
+.wrap{max-width:1600px;padding:26px clamp(14px,2.5vw,36px) 50px}
+.admin-layout{display:grid;grid-template-columns:218px minmax(0,1fr);gap:26px;align-items:start}
+.admin-sidebar{position:sticky;top:98px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px 12px;box-shadow:0 12px 30px #18213b08}
+.sidebar-label{padding:9px 12px 8px;color:#9aa3b7;font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:11px;width:100%;border:0;background:transparent;color:#68748e;padding:11px 12px;border-radius:12px;text-align:left;font-size:12px;font-weight:750;margin:2px 0;transition:.18s}
+.nav-item:hover{background:#f5f2ff;color:var(--purple)}
+.nav-item.active{background:linear-gradient(110deg,#eeeaff,#f7f5ff);color:#583bd7;box-shadow:inset 3px 0 #6847f5}
+.nav-ico{width:23px;height:23px;border-radius:8px;display:grid;place-items:center;background:#f2f4f9;font-size:13px}
+.nav-item.active .nav-ico{background:#ded6ff}
+.sidebar-tip{margin:18px 4px 2px;padding:13px;border-radius:14px;background:linear-gradient(145deg,#f4f1ff,#f8faff);color:#6f7890;font-size:10px;line-height:1.6}
+.dashboard-main{min-width:0}
+.dashboard-hero{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;padding:6px 2px 0}
+.hero-copy h1{font-family:Manrope,sans-serif;font-size:clamp(28px,3vw,39px);font-weight:800;letter-spacing:-1.5px;margin:8px 0}
+.hero-actions{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:22px 0 4px}
+.searchbox{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:0 13px;min-width:min(360px,100%);height:42px;color:#8b95aa;flex:1;max-width:470px}
+.searchbox input{border:0;outline:0;background:transparent;width:100%;color:var(--ink);font-size:12px}
+.searchbox:focus-within{border-color:#b7a9ff;box-shadow:0 0 0 3px #6847f514}
+.toolbar-note{font-size:10px;color:#9099ad}
+.stats{gap:16px;margin:20px 0 24px}
+.stat{padding:20px 21px;border-radius:19px;box-shadow:0 10px 30px #18213b08;transition:transform .2s,box-shadow .2s}
+.stat:hover{transform:translateY(-3px);box-shadow:0 15px 34px #18213b10}
+.stat-top{font-size:11px;color:#6e7993}
+.stat strong{font-family:Manrope,sans-serif;font-size:35px;font-weight:800}
+.stat small{font-size:10px}
+.section-grid{gap:18px;margin-bottom:18px}
+.panel{border-radius:20px;box-shadow:0 12px 30px #18213b08}
+.section-panel{scroll-margin-top:95px}
+.section-head{padding:20px 21px}
+.section-head h2{font-family:Manrope,sans-serif;font-size:14px}
+.section-head p{font-size:11px}
+.btn{border-radius:11px;padding:10px 14px}
+.btn.secondary{box-shadow:0 2px 4px #18213b05}
+.btn.secondary:hover{background:#f7f5ff}
+.table-wrap{padding:0 17px 13px}
+th{background:#fbfcff;padding:15px 11px}
+td{padding:15px 11px}
+tbody tr:hover{background:#faf9ff}
+.status{letter-spacing:.1px;padding:5px 9px}
+.empty{padding:38px 20px}
+#dashboardNotice{margin-top:16px}
+#dashboardView .footer-note{margin-top:22px}
+@media(max-width:1050px){.admin-layout{grid-template-columns:1fr;gap:18px}.admin-sidebar{position:static;display:flex;align-items:center;gap:5px;overflow-x:auto;padding:8px}.sidebar-label,.sidebar-tip{display:none}.nav-item{width:auto;white-space:nowrap;margin:0;padding:10px 12px}.nav-item.active{box-shadow:inset 0 -3px #6847f5}.nav-ico{display:none}}
 @media(max-width:900px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.section-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.topbar{height:64px}.wrap{padding:18px 11px 30px}.stats{gap:9px;margin:15px 0}.stat{padding:13px;border-radius:15px}.stat strong{font-size:28px}.hero-copy h1{font-size:28px}.searchbox{min-width:100%;max-width:none}.hero-actions{width:100%}.hero-actions .btn{flex:1}.section-head{padding:14px}.section-head h2{font-size:13px}}
+
 @media(max-width:520px){.topbar{height:64px;padding:0 13px}.brand{font-size:15px}.mark{width:35px;height:35px}.pill{font-size:10px;padding:6px 8px}.wrap{padding:22px 12px 35px}.login-area{margin:4vh auto;padding:22px}.stats{gap:9px}.stat{padding:13px;border-radius:14px}.stat strong{font-size:27px}.stat-top{font-size:10px}.stat-icon{width:29px;height:29px}.section-head{padding:14px}.section-head h2{font-size:13px}.btn{padding:9px 10px;font-size:10px}}
 </style>
 </head>
@@ -49,9 +101,23 @@
   </section>
 
   <section id="dashboardView" class="hidden">
-    <div class="eyebrow">Operations overview</div>
-    <h1>Good to see you, team.</h1>
-    <p class="sub">Review institution registrations and manage approved campaign workflows from one place.</p>
+    <div class="admin-layout">
+      <aside class="admin-sidebar" aria-label="Admin navigation">
+        <div class="sidebar-label">Workspace</div>
+        <button class="nav-item active" type="button" data-target="overview"><span class="nav-ico">⌂</span>Overview</button>
+        <button class="nav-item" type="button" data-target="registrations"><span class="nav-ico">▤</span>Registrations</button>
+        <button class="nav-item" type="button" data-target="campaigns"><span class="nav-ico">▣</span>Ad campaigns</button>
+        <button class="nav-item" type="button" data-target="institutions"><span class="nav-ico">▦</span>Institutions</button>
+        <div class="sidebar-tip"><strong>Admin workspace</strong><br>Review submissions, monitor campaigns, and manage institution listings from one place.</div>
+      </aside>
+      <div class="dashboard-main">
+        <div id="overview" class="dashboard-hero">
+          <div class="hero-copy"><div class="eyebrow">Operations overview</div>
+          <h1>Good to see you, team.</h1>
+          <p class="sub">Your institution directory and campaign operations at a glance.</p></div>
+          <div class="hero-actions"><button class="btn secondary" id="exportBtn" type="button">Export CSV</button><button class="btn" id="refreshAll" type="button">↻ Refresh all</button></div>
+        </div>
+        <div class="toolbar"><label class="searchbox"><span>⌕</span><input id="dashboardSearch" type="search" placeholder="Search registrations, campaigns, institutions…" aria-label="Search dashboard records"></label><span class="toolbar-note">Search filters visible records below</span></div>
     <div id="dashboardNotice" class="notice hidden" role="status" aria-live="polite"></div>
     <div class="stats">
       <article class="panel stat"><div class="stat-top"><span>Institutions</span><span class="stat-icon">▦</span></div><strong id="collegeCount">—</strong><small>All records in directory</small></article>
@@ -60,20 +126,22 @@
       <article class="panel stat"><div class="stat-top"><span>Ad campaigns</span><span class="stat-icon">▣</span></div><strong id="campaignCount">—</strong><small>All campaign records</small></article>
     </div>
     <div class="section-grid">
-      <section class="panel section-panel">
+      <section id="registrations" class="panel section-panel">
         <div class="section-head"><div><h2>College registrations</h2><p>Review submitted institution requests</p></div><button class="btn secondary" id="refreshRequests" type="button">Refresh</button></div>
         <div id="requestsArea" class="loading">Loading requests…</div>
       </section>
-      <section class="panel section-panel">
+      <section id="campaigns" class="panel section-panel">
         <div class="section-head"><div><h2>Ad campaigns</h2><p>Check approval and payment status</p></div><button class="btn secondary" id="refreshCampaigns" type="button">Refresh</button></div>
         <div id="campaignsArea" class="loading">Loading campaigns…</div>
       </section>
     </div>
-    <section class="panel section-panel section-full">
+    <section id="institutions" class="panel section-panel section-full">
       <div class="section-head"><div><h2>Institution listings</h2><p>Latest college records and verification status</p></div><button class="btn secondary" id="refreshColleges" type="button">Refresh</button></div>
       <div id="collegesArea" class="loading">Loading institutions…</div>
     </section>
-    <p class="footer-note">Student personal data is intentionally excluded from this first dashboard view. All management actions are checked by Supabase database permissions, not just by this page.</p>
+    <p class="footer-note">Student personal data is intentionally excluded from this dashboard view. All management actions are checked by Supabase database permissions, not just by this page.</p>
+      </div>
+    </div>
   </section>
 </main>
 </div>
@@ -113,7 +181,13 @@ async function reviewRequest(id,decision,button){if(!currentUser)return;const ve
 $('loginForm').addEventListener('submit',async event=>{event.preventDefault();hideNotice(loginNotice);const button=$('loginBtn');setBusy(button,true,'Signing in…');try{const {data,error}=await client.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)throw error;await ensurePlatformAdmin(data.user);showDashboard(data.user);}catch(error){const {data}=await client.auth.getSession();if(data&&data.session)await client.auth.signOut();showLogin(error.message||'Sign in failed. Please try again.',true);}finally{setBusy(button,false);}});
 $('resetBtn').addEventListener('click',async()=>{const email=$('email').value.trim();if(!email){showNotice(loginNotice,'Enter your team email above first.');$('email').focus();return;}try{const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+window.location.pathname});if(error)throw error;showNotice(loginNotice,'If this email belongs to an account, a password reset link has been sent.');}catch(error){showNotice(loginNotice,error.message||'Unable to request a reset right now.',true);}});
 $('signOutBtn').addEventListener('click',async()=>{await client.auth.signOut();currentUser=null;showLogin('You have signed out.');});
+
 $('refreshRequests').addEventListener('click',loadDashboard);$('refreshCampaigns').addEventListener('click',loadDashboard);$('refreshColleges').addEventListener('click',loadDashboard);
+$('refreshAll').addEventListener('click',loadDashboard);
+$('dashboardSearch').addEventListener('input',()=>{const term=$('dashboardSearch').value.trim().toLowerCase();document.querySelectorAll('#dashboardView tbody tr').forEach(row=>{row.style.display=row.textContent.toLowerCase().includes(term)?'':'none';});});
+document.querySelectorAll('[data-target]').forEach(button=>button.addEventListener('click',()=>{const target=$(button.dataset.target);if(target)target.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('[data-target]').forEach(item=>item.classList.toggle('active',item===button));}));
+$('exportBtn').addEventListener('click',()=>{const rows=[['Section','Record','Status','Details']];[['Registrations','requestsArea'],['Ad campaigns','campaignsArea'],['Institutions','collegesArea']].forEach(([section,id])=>{const area=$(id);area.querySelectorAll('tbody tr').forEach(tr=>{const cells=[...tr.querySelectorAll('td')].map(td=>td.innerText.replace(/\\s+/g,' ').trim());rows.push([section,...cells]);});});const csv=rows.map(row=>row.map(value=>'"'+String(value??'').replace(/"/g,'""')+'"').join(',')).join('\\r\\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='vidyamap-admin-export.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);});
+
 document.addEventListener('click',event=>{const button=event.target.closest('[data-review]');if(button)reviewRequest(button.dataset.id,button.dataset.review,button);});
 client.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY'){showRecovery();return;}if(event==='SIGNED_OUT'){currentUser=null;if(!recoveryMode)showLogin();}else if(session&&session.user&&!currentUser&&!recoveryMode){setTimeout(async()=>{if(recoveryMode)return;try{await ensurePlatformAdmin(session.user);showDashboard(session.user);}catch(error){await client.auth.signOut();showLogin(error.message||'Admin access required.',true);}},0);}});
 client.auth.getSession().then(async({data,error})=>{if(error){showLogin('Could not verify session. Please sign in again.',true);return;}const isRecovery=window.location.hash.includes('type=recovery')||new URLSearchParams(window.location.search).get('type')==='recovery';if(isRecovery&&data.session){showRecovery();return;}if(data.session){try{await ensurePlatformAdmin(data.session.user);showDashboard(data.session.user);}catch(error){await client.auth.signOut();showLogin(error.message||'Admin access required.',true);}}});
