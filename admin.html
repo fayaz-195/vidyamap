@@ -353,7 +353,9 @@ async function loadDashboard(){
   ]).then(extras=>{renderMarketing(extras[0]);renderPublicLeads(extras[1]);renderEnquirySummary(extras[2]);renderAudit(extras[3]);renderSearchActivity(extras[4]);return extras;}).catch(error=>{showNotice(dashboardNotice,'Some dashboard data could not load: '+(error.message||'database error'),true);return [];});
   const settled=await Promise.all([...core,...counts]);const extras=await extrasPromise;
   const base=[settled[3],settled[4],settled[5],settled[6],settled[0],settled[1],settled[2]];
-  if(extras.length){renderOverviewData(base,extras);renderAdminNotifications(base,extras);}
+  const overviewExtras=extras.length?extras:[{data:[],error:new Error('Data unavailable')},{data:[],error:new Error('Data unavailable')},{data:[],error:new Error('Data unavailable')},{data:[],error:new Error('Data unavailable')},{data:[],error:new Error('Data unavailable')},null,null,null,null];
+  try{renderOverviewData(base,overviewExtras);}catch(error){const area=$('overviewDataArea');if(area)area.innerHTML=empty('Overview records could not be rendered: '+esc(error.message||'unknown error'));}
+  try{renderAdminNotifications(base,overviewExtras);}catch(error){const list=$('notificationList');if(list)list.innerHTML='<div class="notification-empty">Notifications are temporarily unavailable.</div>';}
   loadNextgenAnalytics();loadCrm();loadTeam();loadHealth();
   window.setTimeout(()=>[['requestsArea','Registration requests'],['campaignsArea','College ad campaigns'],['collegesArea','Institution listings'],['enquirySummaryArea','Student enquiries'],['searchActivityArea','Student search activity']].forEach(([id,label])=>{const el=$(id);if(el&&/Loading/.test(el.textContent||''))el.innerHTML=empty(label+' did not respond. Check the database connection or permissions.');}),12000);
 }
