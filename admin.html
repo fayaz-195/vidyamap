@@ -250,6 +250,21 @@ body{background:var(--vm-canvas)!important;color:var(--vm-ink)}
   #dashboardView .dashboard-hero{align-items:flex-start!important;flex-direction:column!important;padding:19px!important}
   #dashboardView .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
+
+/* Collapsible Enquiries navigation group */
+.admin-sidebar .nav-group{display:block;min-width:0}
+.admin-sidebar .nav-group>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px}
+.admin-sidebar .nav-group>summary::-webkit-details-marker{display:none}
+.admin-sidebar .nav-group-label{flex:1;min-width:0}
+.admin-sidebar .nav-group-chevron{margin-left:auto;font-size:15px;transition:transform .15s;color:#c8b9ef}
+.admin-sidebar .nav-group[open]>.nav-group-toggle .nav-group-chevron{transform:rotate(180deg)}
+.admin-sidebar .nav-group>.nav-group-toggle.active{background:linear-gradient(100deg,#204da5,#6530a0)!important;color:#fff!important;box-shadow:inset 3px 0 #e3c98f!important;border-color:#8d73c9!important}
+.admin-sidebar .nav-submenu{display:flex;flex-direction:column;gap:4px;margin:5px 0 7px 16px;padding:4px 0 4px 12px;border-left:1px solid #8d79c7}
+.admin-sidebar .nav-subitem{display:flex;align-items:center;gap:9px;padding:9px 10px;border:1px solid transparent;border-radius:8px;color:#dcd7f4;text-decoration:none;font-size:11px;font-weight:600;line-height:1.4}
+.admin-sidebar .nav-subitem:hover{background:#ffffff14;color:#fff}
+.admin-sidebar .nav-subitem.active{background:#ffffff18;color:#fff;border-color:#ffffff2b;box-shadow:inset 2px 0 #e3c98f}
+.admin-sidebar .nav-subdot{width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:#a997df}
+.admin-sidebar .nav-subitem.active .nav-subdot{background:#e3c98f;box-shadow:0 0 0 3px #e3c98f22}
 </style>
 </head>
 <body>
@@ -295,11 +310,16 @@ body{background:var(--vm-canvas)!important;color:var(--vm-ink)}
         
         <a class="nav-item" data-page="institutions" href="admin.html?page=institutions"><span class="nav-ico">▦</span>Institution listings</a>
         <a class="nav-item" data-page="marketing" href="admin.html?page=marketing"><span class="nav-ico">◉</span>Marketing campaigns</a>
-        <a class="nav-item" data-page="publicleads" href="admin.html?page=publicleads"><span class="nav-ico">♧</span>College callback requests</a>
-        <a class="nav-item" data-page="enquirySummary" href="admin.html?page=enquirySummary"><span class="nav-ico">◎</span>Student enquiries</a>
+        <details class="nav-group" id="enquiryNavGroup">
+          <summary class="nav-item nav-group-toggle"><span class="nav-ico">◎</span><span class="nav-group-label">Enquiries</span><span class="nav-group-chevron">⌄</span></summary>
+          <div class="nav-submenu">
+            <a class="nav-subitem" data-page="enquirySummary" href="admin.html?page=enquirySummary"><span class="nav-subdot"></span>Student enquiries</a>
+            <a class="nav-subitem" data-page="publicleads" href="admin.html?page=publicleads"><span class="nav-subdot"></span>College enquiries</a>
+            <a class="nav-subitem" data-page="crm" href="admin.html?page=crm"><span class="nav-subdot"></span>Enquiry CRM & follow-ups</a>
+          </div>
+        </details>
         <a class="nav-item" data-page="auditlogs" href="admin.html?page=auditlogs"><span class="nav-ico">☷</span>Audit logs</a>
         <a class="nav-item" data-page="analytics" href="admin.html?page=analytics"><span class="nav-ico">▥</span>Advanced analytics</a>
-        <a class="nav-item" data-page="crm" href="admin.html?page=crm"><span class="nav-ico">◎</span>Enquiry CRM</a>
         <a class="nav-item" data-page="team" href="admin.html?page=team"><span class="nav-ico">♙</span>Team & permissions</a>
         <a class="nav-item" data-page="health" href="admin.html?page=health"><span class="nav-ico">⌁</span>Security & health</a>
         <a class="nav-item" data-page="assistant" href="admin.html?page=assistant"><span class="nav-ico">✦</span>Admin assistant</a>
@@ -749,7 +769,7 @@ async function loadHealth(){const area=$('healthArea');if(!area)return;area.inne
 async function answerAssistant(){const q=$('assistantQuestion').value.trim().toLowerCase(),out=$('assistantAnswer');out.classList.remove('hidden','error');out.textContent='Querying live database…';try{let answer='I can answer: student enquiry count, verified college count, pending registration count, search activity count, or top enquiry districts. Ask one of those questions.';if(/enquir|student/.test(q)){answer='Total student enquiries recorded: '+await countRows('student_enquiries')+'.';}else if(/verified college|verified institution/.test(q)){answer='Verified college listings: '+await countRows('colleges',x=>x.eq('status','verified'))+'.';}else if(/pending|registration/.test(q)){answer='Pending college registration requests: '+await countRows('college_registration_requests',x=>x.eq('status','pending'))+'.';}else if(/search/.test(q)){answer='Tracked student search events: '+await countRows('student_search_activity')+'.';}else if(/active ad|ads|advertis/.test(q)){answer='Active college ad campaigns: '+await countRows('college_ad_campaigns',x=>x.eq('status','active'))+'.';}else if(/district/.test(q)){const r=await safeSelect('student_enquiries','district_id,district:districts(name)',x=>x.not('district_id','is',null).limit(1000));if(r.error)throw r.error;const m={};r.data.forEach(x=>{const n=x.district?.name||'Unknown';m[n]=(m[n]||0)+1;});answer='Top districts by latest loaded enquiries: '+(Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([n,v])=>n+' ('+v+')').join(', ')||'No district data')+'.';}out.textContent=answer;}catch(e){out.textContent='Could not query live data: '+(e.message||'unknown error');out.classList.add('error');}}
 async function exportReport(table,columns,file,dateCol){const note=$('reportNotice');note.classList.remove('hidden','error');note.textContent='Preparing export…';try{let q=client.from(table).select(columns).order(dateCol,{ascending:false}).limit(5000);q=dateFilter(q,dateCol);const {data,error}=await q;if(error)throw error;if(!data?.length){note.textContent='No records found for the selected date range.';return;}csvDownload(file,[columns.split(',').map(x=>x.trim()),...data.map(row=>columns.split(',').map(k=>row[k]))]);note.textContent='Exported '+data.length+' records.';}catch(e){note.textContent='Export failed: '+(e.message||'unknown error');note.classList.add('error');}}
 
-function applyPageView(){const allowed=['overview','registrations','createCollege','institutions','marketing','publicleads','enquirySummary','auditlogs','analytics','crm','team','health','assistant','reports'];const params=new URLSearchParams(window.location.search);const requested=params.get('page')||'overview';let active=requested==='campaigns'?'overview':(allowed.includes(requested)?requested:'overview');if(currentPermissions&&currentPermissions[active]!==true)active='overview';document.querySelectorAll('.admin-page-view').forEach(section=>section.classList.toggle('page-hidden',section.id!==(active==='overview'?'overviewContent':active)));document.querySelectorAll('.admin-sidebar [data-page]').forEach(link=>{const permitted=!currentPermissions||currentPermissions[link.dataset.page]===true;link.classList.toggle('hidden',!permitted);link.classList.toggle('active',link.dataset.page===active);});const titles={overview:'Overview',registrations:'College registrations',createCollege:'Create college account',institutions:'Institution listings',marketing:'Marketing campaigns',publicleads:'College callback requests',enquirySummary:'Student enquiries',auditlogs:'Audit logs',analytics:'Advanced analytics',crm:'Enquiry CRM',team:'Team & permissions',health:'Security & health',assistant:'Admin assistant',reports:'Reports & exports'};document.title='VIDYAMAP Admin · '+titles[active];}
+function applyPageView(){const allowed=['overview','registrations','createCollege','institutions','marketing','publicleads','enquirySummary','auditlogs','analytics','crm','team','health','assistant','reports'];const params=new URLSearchParams(window.location.search);const requested=params.get('page')||'overview';let active=requested==='campaigns'?'overview':(allowed.includes(requested)?requested:'overview');if(currentPermissions&&currentPermissions[active]!==true)active='overview';document.querySelectorAll('.admin-page-view').forEach(section=>section.classList.toggle('page-hidden',section.id!==(active==='overview'?'overviewContent':active)));document.querySelectorAll('.admin-sidebar [data-page]').forEach(link=>{const permitted=!currentPermissions||currentPermissions[link.dataset.page]===true;link.classList.toggle('hidden',!permitted);link.classList.toggle('active',link.dataset.page===active);});const enquiryGroup=document.getElementById('enquiryNavGroup');if(enquiryGroup){const enquiryPages=['enquirySummary','publicleads','crm'];const enquiryActive=enquiryPages.includes(active);enquiryGroup.open=enquiryActive;const summary=enquiryGroup.querySelector('.nav-group-toggle');if(summary)summary.classList.toggle('active',enquiryActive);const hasVisibleChild=enquiryGroup.querySelectorAll('.nav-subitem:not(.hidden)').length>0;enquiryGroup.classList.toggle('hidden',!hasVisibleChild);}const titles={overview:'Overview',registrations:'College registrations',createCollege:'Create college account',institutions:'Institution listings',marketing:'Marketing campaigns',publicleads:'College callback requests',enquirySummary:'Student enquiries',auditlogs:'Audit logs',analytics:'Advanced analytics',crm:'Enquiry CRM',team:'Team & permissions',health:'Security & health',assistant:'Admin assistant',reports:'Reports & exports'};document.title='VIDYAMAP Admin · '+titles[active];}
 
 document.addEventListener('click',event=>{
   const link=event.target.closest('a[href]');
