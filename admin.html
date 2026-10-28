@@ -1012,7 +1012,7 @@ function downloadEnquiryCsv(items,filename){
  const columns=['Student name','Phone','Email','Course','Academic year','Town','District','State','Institution category','Contact consent','Source','Created at','Message','Student record ID'];
  const quote=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
  const lines=[columns.map(quote).join(','),...items.map(({row:x,info})=>[x.student_name,x.phone,x.email,info.course,x.academic_year,x.town,info.districtName,info.state,info.category,x.contact_consent===true?'Yes':'No',x.source||'website',x.created_at?new Date(x.created_at).toISOString():'',x.message,x.id].map(quote).join(','))];
- const blob=new Blob(['\\uFEFF'+lines.join('\\r\\n')],{type:'text/csv;charset=utf-8;'});
+ const blob=new Blob(['\uFEFF'+lines.join('\r\n')],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 }
 function renderEnquirySummary(result,activityResult={data:[]},districtResult={data:[]},institutionResult={data:[]}){
