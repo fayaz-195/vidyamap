@@ -151,6 +151,35 @@ tbody tr:hover td{background:#faf9ff}
 @media(max-width:1050px){.admin-sidebar{background:#202642;border-color:#303753}.admin-sidebar .nav-item{white-space:nowrap}.admin-sidebar .nav-item.active{box-shadow:inset 0 -3px #b8adff}}
 @media(max-width:520px){.admin-sidebar{border-radius:16px}.section-head{padding:16px}.table-wrap{padding:0 10px 10px}.panel{border-radius:16px}}
 
+
+/* Modern overview action centre */
+#overviewContent .overview-action-centre{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.85fr);gap:16px;margin:18px 0 24px}
+#overviewContent .action-panel,#overviewContent .overview-health-panel{background:#fff;border:1px solid #e5e8f3;border-radius:22px;box-shadow:0 12px 32px #20234a08;overflow:hidden}
+#overviewContent .action-panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:21px 22px 13px}
+#overviewContent .action-panel-head h2{font:800 17px Manrope,sans-serif;letter-spacing:-.4px}
+#overviewContent .action-panel-head p{font-size:11px;color:#8993aa;margin:5px 0 0}
+#overviewContent .live-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border-radius:99px;background:#eaf9f1;color:#137b55;font-size:9px;font-weight:850;white-space:nowrap}
+#overviewContent .live-chip:before{content:"";width:6px;height:6px;border-radius:50%;background:#20ae75;box-shadow:0 0 0 3px #20ae751c}
+#overviewContent .quick-action-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:5px 18px 19px}
+#overviewContent .quick-action{display:flex;align-items:center;gap:12px;min-width:0;padding:14px;border:1px solid #edf0f7;border-radius:15px;text-decoration:none;color:#202944;background:linear-gradient(145deg,#fff,#fbfbff);transition:transform .18s,border-color .18s,box-shadow .18s}
+#overviewContent .quick-action:hover{transform:translateY(-2px);border-color:#cfc5ff;box-shadow:0 8px 20px #6847f511}
+#overviewContent .quick-action-icon{flex:0 0 38px;width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#f0edff;color:#6847f5;font-size:17px;font-weight:900}
+#overviewContent .quick-action:nth-child(2) .quick-action-icon{background:#fff2dc;color:#a76008}
+#overviewContent .quick-action:nth-child(3) .quick-action-icon{background:#e3f8ef;color:#137b55}
+#overviewContent .quick-action:nth-child(4) .quick-action-icon{background:#e8f1ff;color:#3868c5}
+#overviewContent .quick-action strong{display:block;font-size:11px;font-weight:850}
+#overviewContent .quick-action small{display:block;margin-top:4px;font-size:10px;color:#8993aa;line-height:1.4}
+#overviewContent .quick-action-arrow{margin-left:auto;color:#9aa3b7;font-size:16px}
+#overviewContent .overview-health-panel{padding:21px}
+#overviewContent .overview-health-title{display:flex;align-items:center;gap:10px;font:800 15px Manrope,sans-serif}
+#overviewContent .overview-health-icon{width:35px;height:35px;border-radius:12px;display:grid;place-items:center;background:#f0edff;color:#6847f5}
+#overviewContent .overview-health-panel>p{font-size:11px;color:#8993aa;line-height:1.6;margin:8px 0 17px}
+#overviewContent .health-metric{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-top:1px solid #eff1f7;font-size:11px;color:#6f7a93}
+#overviewContent .health-metric strong{font-size:12px;color:#202944}
+#overviewContent .overview-hint{padding:11px 12px;border-radius:12px;background:#f7f5ff;color:#6e5ac9;font-size:10px;line-height:1.6;margin-top:12px}
+@media(max-width:850px){#overviewContent .overview-action-centre{grid-template-columns:1fr}}
+@media(max-width:520px){#overviewContent .overview-action-centre{gap:10px;margin:14px 0 18px}#overviewContent .action-panel-head{padding:17px 15px 10px}#overviewContent .quick-action-grid{padding:5px 12px 14px;gap:8px}#overviewContent .quick-action{padding:11px;gap:8px}#overviewContent .quick-action-icon{width:32px;height:32px;flex-basis:32px;border-radius:10px}#overviewContent .quick-action strong{font-size:10px}#overviewContent .quick-action small{font-size:9px}#overviewContent .overview-health-panel{padding:17px}}
+
 </style>
 </head>
 <body>
@@ -223,6 +252,25 @@ tbody tr:hover td{background:#faf9ff}
       <article class="panel stat"><div class="stat-top"><span>Registration queue</span><span class="stat-icon">◷</span></div><strong id="requestCount">—</strong><small>Waiting for review</small></article>
       <article class="panel stat"><div class="stat-top"><span>Ad campaigns</span><span class="stat-icon">▣</span></div><strong id="campaignCount">—</strong><small>All campaign records</small></article>
     </div>
+        <section class="overview-action-centre" aria-label="Admin quick actions">
+          <div class="action-panel">
+            <div class="action-panel-head"><div><h2>Action centre</h2><p>Jump straight into the work that keeps VIDYAMAP moving.</p></div><span class="live-chip">Live workspace</span></div>
+            <div class="quick-action-grid">
+              <a class="quick-action" href="admin.html?page=registrations"><span class="quick-action-icon">▤</span><span><strong>Review registrations</strong><small>Check new institution requests</small></span><span class="quick-action-arrow">↗</span></a>
+              <a class="quick-action" href="admin.html?page=createCollege"><span class="quick-action-icon">＋</span><span><strong>Add institution</strong><small>Create a college account</small></span><span class="quick-action-arrow">↗</span></a>
+              <a class="quick-action" href="admin.html?page=enquirySummary"><span class="quick-action-icon">♙</span><span><strong>Student enquiries</strong><small>Review leads and follow-ups</small></span><span class="quick-action-arrow">↗</span></a>
+              <a class="quick-action" href="admin.html?page=analytics"><span class="quick-action-icon">▥</span><span><strong>Open analytics</strong><small>Explore trends and performance</small></span><span class="quick-action-arrow">↗</span></a>
+            </div>
+          </div>
+          <aside class="overview-health-panel">
+            <div class="overview-health-title"><span class="overview-health-icon">✦</span>Workspace snapshot</div>
+            <p>Live totals from the connected VIDYAMAP database. Use these shortcuts to focus on key operations.</p>
+            <div class="health-metric"><span>Verified institutions</span><strong id="actionVerifiedCount">—</strong></div>
+            <div class="health-metric"><span>Awaiting review</span><strong id="actionPendingCount">—</strong></div>
+            <div class="health-metric"><span>Student enquiries</span><strong id="actionEnquiryCount">—</strong></div>
+            <div class="overview-hint">Counts refresh with the dashboard. Data that is unavailable will remain marked as an error or dash rather than being guessed.</div>
+          </aside>
+        </section>
         <div class="section-head" style="margin-top:18px"><div><h2>Workspace pulse</h2><p>Live totals across every admin area, with the latest records and quick links</p></div></div>
         <div class="stats" id="overviewAllCounts">
           <article class="panel stat"><div class="stat-top">College callback requests</div><strong id="overviewCollegeLeads">—</strong><small><a href="admin.html?page=publicleads">Open college requests →</a></small></article>
@@ -382,6 +430,9 @@ document.addEventListener('click',e=>{if(!e.target.closest('.notification-wrap')
 function renderOverviewData(base,extras){
 const val=v=>v===null||v===undefined?'—':String(v);
 $('overviewCollegeLeads').textContent=val(extras[5]);$('overviewStudentLeads').textContent=extras[6]===null?'Error':val(extras[6]);$('overviewSearches').textContent=extras[7]===null?'Error':val(extras[7]);$('overviewMarketing').textContent=val(extras[8]);
+if($('actionVerifiedCount'))$('actionVerifiedCount').textContent=val(base[1]);
+if($('actionPendingCount'))$('actionPendingCount').textContent=val(base[2]);
+if($('actionEnquiryCount'))$('actionEnquiryCount').textContent=val(extras[6]);
 const sections=[
 {icon:'▤',name:'College registrations',hint:'Review & approve institutions',count:base[2],href:'admin.html?page=registrations',items:(base[4]?.data||[]).slice(0,3).map(x=>[x.college_name,x.status,new Date(x.created_at).toLocaleDateString()])},
 {icon:'▶',name:'Poster & video ads',hint:'Creative approvals and subscriptions',count:base[3],href:'admin.html?page=campaigns',items:(base[5]?.data||[]).slice(0,3).map(x=>[x.title,x.status,x.payment_status])},
