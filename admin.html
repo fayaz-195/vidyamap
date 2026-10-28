@@ -459,6 +459,16 @@ main.wrap:has(#dashboardView:not(.hidden)){display:block!important;box-sizing:bo
 #loginView.hidden,#recoveryView.hidden{display:none!important}
 #dashboardView:not(.hidden){display:block!important}
 
+
+/* Correct page switching and make the active workflow fill the workspace */
+.admin-page-view.page-hidden,
+#dashboardView .admin-page-view.page-hidden{display:none!important}
+#dashboardView .section-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;max-width:none!important;gap:16px!important}
+#dashboardView .section-grid>.admin-page-view:not(.page-hidden){display:block!important;grid-column:1/-1!important;box-sizing:border-box!important;width:100%!important;max-width:none!important;min-width:0!important}
+#dashboardView #createCollege .create-college-banner{width:auto!important}
+#dashboardView #createCollege .create-college-steps{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+@media(max-width:760px){#dashboardView #createCollege .create-college-steps{grid-template-columns:minmax(0,1fr)!important}}
+
 </style>
 </head>
 <body>
