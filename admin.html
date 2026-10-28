@@ -127,6 +127,76 @@ button.primary:hover,.btn-primary:hover,.primary-btn:hover{filter:brightness(1.1
 .section-panel{min-width:0}.section-panel>.loading{padding:28px 18px}.section-full{width:100%}.section-head .eyebrow{margin-bottom:5px}.section-head .status{white-space:nowrap}.section-panel .table-wrap{max-width:100%}.section-panel table{min-width:620px}.section-panel input[type=checkbox]{accent-color:#5934a0}.section-panel button:focus-visible,.section-panel a:focus-visible,.admin-sidebar a:focus-visible{outline:3px solid #bca8ed;outline-offset:2px}
 @media(max-width:1050px){.staff-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.staff-permission-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.create-college-steps{grid-template-columns:1fr}.college-directory-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.form-grid,.college-directory-breakdowns{grid-template-columns:1fr}.create-college-banner{margin:12px;padding:17px}.create-college-banner-mark{width:44px;height:44px;flex-basis:44px;font-size:24px}.create-college-banner h3{font-size:17px}.staff-fields,.staff-permission-grid{grid-template-columns:1fr}.staff-form-footer{align-items:stretch;flex-direction:column}.staff-form-footer .btn{width:100%}.college-directory-stats{grid-template-columns:1fr 1fr}.overview-records{grid-template-columns:1fr}.section-head{align-items:flex-start}.section-head .btn{flex-shrink:0}}
+
+/* VIDYAMAP overview: clean clinical-grade dashboard inspired by the supplied reference */
+:root{--vm-teal:#137f80;--vm-teal-dark:#096b70;--vm-teal-soft:#e1f2f0;--vm-canvas:#f7f7f4;--vm-card:#fff;--vm-ink:#202827;--vm-muted:#737c7a;--vm-border:#e5e8e4}
+body{background:var(--vm-canvas)!important;color:var(--vm-ink)}
+.topbar{background:#fbfaf7!important;border-bottom:1px solid #e5e4df!important;box-shadow:none!important}
+.topbar .brand-caption{color:var(--vm-teal)!important}
+.topbar .brand img{background:#fff!important;border:1px solid #e8e5dd!important;border-radius:10px!important;padding:3px 8px!important}
+.topbar .pill{background:#fff!important;border-color:#e2e5e0!important;color:#52615e!important}
+.btn{background:var(--vm-teal)!important;color:#fff!important;border-color:var(--vm-teal)!important;box-shadow:none!important}
+.btn:hover{background:var(--vm-teal-dark)!important;transform:translateY(-1px)}
+.btn.secondary{background:#fff!important;color:#34413e!important;border:1px solid #dfe4df!important}
+.btn.secondary:hover{background:#f0f8f7!important;border-color:#a6d4d0!important}
+.eyebrow{color:var(--vm-teal)!important}
+.panel,.action-panel,.overview-health-panel,.overview-insight-panel{background:#fff!important;border:1px solid var(--vm-border)!important;border-radius:13px!important;box-shadow:0 2px 8px #1f302508!important}
+.admin-sidebar{background:#f3f2ee!important;border:1px solid #e7e5de!important;border-radius:0 14px 14px 0!important;color:#34403d!important}
+.admin-sidebar .sidebar-label{color:#777e78!important}
+.admin-sidebar .nav-item{color:#606a66!important;border-radius:8px!important;font-weight:650!important}
+.admin-sidebar .nav-item:hover{background:#e8eeeb!important;color:#126f70!important}
+.admin-sidebar .nav-item.active{background:#dcefed!important;color:#0b7172!important;box-shadow:inset 3px 0 #168889!important;border-color:#dcefed!important}
+.admin-sidebar .nav-ico{background:#e6e9e4!important;color:#58716e!important;border-radius:7px!important}
+.admin-sidebar .nav-item.active .nav-ico{background:#c9e6e3!important;color:#087678!important}
+.admin-sidebar .sidebar-tip{background:#fff!important;border-color:#e4e6df!important;color:#727a75!important}
+#dashboardView .dashboard-hero{display:flex;align-items:center;justify-content:space-between;gap:20px;background:#fff!important;color:#202827!important;border:1px solid #e5e8e4!important;border-radius:14px!important;padding:24px 26px!important;margin-bottom:16px!important}
+#dashboardView .dashboard-hero h1{color:#202827!important;font-size:clamp(25px,2.5vw,34px)!important;letter-spacing:-1px!important}
+#dashboardView .dashboard-hero .sub{color:#727c78!important}
+#dashboardView .dashboard-hero .eyebrow{color:#138082!important}
+#dashboardView .stats{gap:14px;margin:16px 0 18px}
+#dashboardView .stat{border-radius:13px!important;border-top:1px solid #e5e8e4!important;padding:17px 18px!important}
+#dashboardView .stat:after{display:none}
+#dashboardView .stat-icon{background:#e1f2f0!important;color:#137f80!important}
+#dashboardView .stat:nth-child(2) .stat-icon{background:#e7f3ed!important;color:#348866!important}
+#dashboardView .stat:nth-child(3) .stat-icon{background:#fff2dd!important;color:#b17a26!important}
+#dashboardView .stat:nth-child(4) .stat-icon{background:#e7f0f5!important;color:#3b8196!important}
+#dashboardView .stat strong{font-size:30px!important;color:#202827!important}
+.admin-smart-search .searchbox,.admin-smart-search select{border-color:#dfe4df!important;border-radius:9px!important}
+.quick-action{background:#fff!important;border-color:#e5e8e4!important;border-radius:11px!important}
+.quick-action:hover{border-color:#9acdc9!important;box-shadow:0 5px 15px #137f8010!important}
+.quick-action-icon,.overview-health-icon{background:#e1f2f0!important;color:#137f80!important}
+.quick-action strong,.action-panel-head h2,.overview-health-title,.overview-insight-head h2{color:#25312e!important}
+.quick-action-arrow,.overview-link{color:#137f80!important}
+.live-chip{background:#e7f5ee!important;color:#247c59!important}
+.attention-heading{border-color:#e8ebe6!important}
+.overview-needs-attention a,.overview-needs-attention .attention-item{background:#fbfcfa!important;border-color:#e5e8e4!important;color:#43504b!important}
+.overview-hint{background:#eff7f5!important;color:#55716d!important}
+.health-metric{border-color:#e9ece8!important;color:#69736f!important}
+.health-metric strong{color:#25312e!important}
+.overview-insight-head{border-color:#e6e9e4!important}
+.overview-trend-metric{background:#f4f8f6!important}
+.overview-trend-title{color:#34413d!important}
+.overview-trend-change{background:#e7f5ee!important;color:#247c59!important}
+.section-head{background:#fff!important}
+.status{background:#e9f4f2!important;color:#137779!important}
+@media(min-width:761px){
+  .wrap:has(#dashboardView:not(.hidden)){max-width:none!important;width:100%!important;margin:0!important;padding:18px 22px 18px 0!important}
+  #dashboardView{height:calc(100vh - 100px)!important;min-height:0!important;max-height:calc(100vh - 100px)!important;overflow:hidden!important}
+  #dashboardView .admin-layout{grid-template-columns:245px minmax(0,1fr)!important;gap:20px!important;height:100%!important;min-height:0!important;max-height:100%!important;overflow:hidden!important;margin:0!important}
+  #dashboardView .admin-sidebar{height:100%!important;min-height:0!important;max-height:none!important;overflow:visible!important;border-radius:0 14px 14px 0!important}
+  #dashboardView .dashboard-main{height:100%!important;min-height:0!important;max-height:100%!important;overflow-y:auto!important;overflow-x:hidden!important;padding:0 10px 24px 0!important;scrollbar-gutter:stable;overscroll-behavior:contain}
+  #dashboardView .dashboard-main::-webkit-scrollbar{width:8px}
+  #dashboardView .dashboard-main::-webkit-scrollbar-thumb{background:#c6d7d2;border:2px solid #f7f7f4;border-radius:99px}
+}
+@media(max-width:760px){
+  .wrap:has(#dashboardView:not(.hidden)){padding:14px!important}
+  #dashboardView{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
+  #dashboardView .admin-layout{height:auto!important;max-height:none!important;overflow:visible!important;grid-template-columns:1fr!important;gap:14px!important}
+  #dashboardView .admin-sidebar{height:auto!important;max-height:none!important;overflow:visible!important;border-radius:13px!important}
+  #dashboardView .dashboard-main{height:auto!important;max-height:none!important;overflow:visible!important;padding:0!important}
+  #dashboardView .dashboard-hero{align-items:flex-start!important;flex-direction:column!important;padding:19px!important}
+  #dashboardView .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
 </style>
 </head>
 <body>
