@@ -439,6 +439,70 @@ tbody tr:hover td{background:#f5f4ff!important}
 @media(max-width:1050px){.admin-layout{grid-template-columns:1fr!important;gap:17px!important}.admin-sidebar{position:static!important;min-height:0!important}.dashboard-hero{min-height:160px!important}}
 @media(max-width:650px){.topbar{height:68px!important;padding:0 13px!important}.brand img{width:145px!important;height:46px!important}.brand-caption{display:none!important}.wrap{padding:16px 11px 30px!important}.dashboard-hero{padding:23px 19px!important;border-radius:20px!important;min-height:0!important}.dashboard-hero h1,.dashboard-hero .hero-copy h1{font-size:30px!important}.stats{gap:9px!important}.stat{min-height:125px!important;padding:14px!important;border-radius:16px!important}.stat strong{font-size:31px!important}.stat-icon{width:33px!important;height:33px!important}.toolbar.admin-smart-search{padding:10px!important}.section-head{padding:16px!important}}
 
+
+/* Unified design system for EVERY admin page */
+:root{--vm-ink:#1a2444;--vm-muted:#74819d;--vm-line:#e3e8f4;--vm-purple:#6048e9;--vm-cyan:#24b8c7;--vm-surface:#fff}
+#dashboardView{color:var(--vm-ink)}
+#dashboardView .admin-page-view:not(.page-hidden){animation:vmPageIn .24s ease-out both}
+@keyframes vmPageIn{from{opacity:.65;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+#dashboardView .section-panel{overflow:hidden;border:1px solid #fff!important;border-radius:23px!important;background:rgba(255,255,255,.96)!important;box-shadow:0 15px 38px #202e570d!important}
+#dashboardView .section-panel>.section-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:23px 25px!important;background:linear-gradient(115deg,#fff 0%,#f8f8ff 62%,#effbff 100%)!important;border-bottom:1px solid #e8edf7!important}
+#dashboardView .section-head>div{min-width:0}
+#dashboardView .section-head h2{margin:0 0 5px;font-family:Manrope,sans-serif;font-size:17px!important;font-weight:850;letter-spacing:-.35px;color:#1e2949!important}
+#dashboardView .section-head p{margin:0;max-width:760px;font-size:11px!important;line-height:1.7;color:#7885a0!important}
+#dashboardView .section-head .btn,#dashboardView .section-head button{flex-shrink:0}
+#dashboardView .section-panel>.toolbar,#dashboardView .section-panel>.college-search-wrap,#dashboardView .section-panel>.admin-smart-search{margin:17px 22px!important;padding:12px!important;border:1px solid #e7ebf5!important;border-radius:15px!important;background:linear-gradient(120deg,#fbfcff,#f5f7ff)!important}
+#dashboardView .section-panel>.toolbar input,#dashboardView .section-panel>.toolbar select,#dashboardView .section-panel>.toolbar button{min-height:39px;border-radius:10px}
+#dashboardView .section-panel>.form-grid,#dashboardView .section-panel>form .form-grid{padding:21px 23px!important;gap:16px!important}
+#dashboardView .section-panel .field{gap:7px}
+#dashboardView .section-panel .field label,#dashboardView .section-panel label{font-size:11px;font-weight:750;color:#56627e}
+#dashboardView .section-panel input:not([type=checkbox]):not([type=radio]),#dashboardView .section-panel select,#dashboardView .section-panel textarea{min-height:41px;border:1px solid #dfe5f1;border-radius:11px;background:#fbfcff;padding:10px 12px;color:#202a48;font:inherit;font-size:12px;outline:none;transition:border-color .15s,box-shadow .15s}
+#dashboardView .section-panel textarea{min-height:95px;resize:vertical}
+#dashboardView .section-panel input:focus,#dashboardView .section-panel select:focus,#dashboardView .section-panel textarea:focus{border-color:#8a7af3!important;box-shadow:0 0 0 4px #654cf016!important}
+#dashboardView .section-panel button.btn,#dashboardView .section-panel button:not(.icon-button){border-radius:11px}
+#dashboardView .section-panel .table-wrap{margin:0 20px 21px!important;border:1px solid #e8edf6;border-radius:15px;overflow:auto;background:#fff}
+#dashboardView .section-panel table{width:100%;border-collapse:separate;border-spacing:0;font-size:11px}
+#dashboardView .section-panel thead th{position:sticky;top:0;z-index:1;padding:14px 13px!important;background:#f4f6fd!important;color:#7784a0!important;font-size:10px;font-weight:850;letter-spacing:.35px;text-transform:uppercase;border-bottom:1px solid #e4e9f4!important;white-space:nowrap}
+#dashboardView .section-panel tbody td{padding:14px 13px!important;border-bottom:1px solid #edf0f7!important;vertical-align:middle;color:#47536f}
+#dashboardView .section-panel tbody tr:last-child td{border-bottom:0!important}
+#dashboardView .section-panel tbody tr:nth-child(even) td{background:#fcfcff}
+#dashboardView .section-panel tbody tr:hover td{background:#f2f4ff!important}
+#dashboardView .section-panel .status{display:inline-flex;align-items:center;justify-content:center;padding:5px 9px;border-radius:99px;font-size:10px;font-weight:850;white-space:nowrap}
+#dashboardView .section-panel .btn{min-height:36px;padding:9px 13px;font-size:11px;font-weight:800}
+#dashboardView .section-panel .btn.secondary{background:#fff!important;border:1px solid #dfe5f1!important;color:#4f5b78!important;box-shadow:0 3px 10px #27365c07!important}
+#dashboardView .section-panel .loading,#dashboardView .section-panel .empty{margin:18px 22px;padding:28px 18px;border:1px dashed #dce3f2;border-radius:14px;background:linear-gradient(130deg,#fbfcff,#f6f7ff);text-align:center;color:#7d89a3;font-size:12px}
+#dashboardView .section-panel .notice{margin:15px 22px;border-radius:12px}
+#dashboardView .section-panel .form-actions{padding:17px 23px;border-top:1px solid #edf0f7;background:#fafbff}
+#dashboardView .section-panel .toolbar-note{color:#7c88a2;font-size:10px;line-height:1.6}
+#dashboardView .section-panel .college-directory-stats{padding:18px 22px 0;gap:12px}
+#dashboardView .section-panel .college-directory-stat{border:1px solid #e7eafa!important;border-radius:15px!important;background:linear-gradient(145deg,#fff,#f6f7ff)!important;box-shadow:0 8px 22px #27365c08!important;padding:15px!important}
+#dashboardView .section-panel .college-directory-stat .stat-value{font-size:25px;font-weight:850;color:#263056}
+#dashboardView .section-panel .vm-analytics-panels{gap:17px!important;padding:19px 22px!important}
+#dashboardView .section-panel .vm-analytics-panel{border:1px solid #e6eafa!important;border-radius:18px!important;background:linear-gradient(145deg,#fff,#f8faff)!important;box-shadow:0 9px 25px #27365c08!important;padding:19px!important}
+#dashboardView .section-panel .vm-analytics-panel h3{font-family:Manrope,sans-serif;color:#283251;font-size:14px}
+#dashboardView .section-panel .staff-create-wrap{padding:21px 23px 10px!important}
+#dashboardView .section-panel .staff-create-form{border:1px solid #e3e8f5!important;border-radius:19px!important;background:linear-gradient(145deg,#fff,#fafbff)!important;box-shadow:0 10px 30px #27365c09!important}
+#dashboardView .section-panel .staff-member-card{border:1px solid #e3e8f5!important;border-radius:17px!important;background:#fff!important;box-shadow:0 10px 26px #27365c09!important}
+#dashboardView .section-panel .staff-member-permissions label{border:1px solid #e8ebf5!important;border-radius:10px!important}
+#dashboardView .section-panel .staff-member-controls .btn.danger{background:#fff0f2!important;color:#b52d48!important;border:1px solid #f4d4dc!important;box-shadow:none!important}
+#dashboardView .section-panel .crm-board,#dashboardView .section-panel .crm-column{border-radius:16px}
+#dashboardView .section-panel .report-card,#dashboardView .section-panel .assistant-card,#dashboardView .section-panel .health-card{border:1px solid #e5eaf5;border-radius:17px;background:linear-gradient(145deg,#fff,#f8faff);box-shadow:0 9px 24px #27365c08}
+#dashboardView .section-panel .audit-item,#dashboardView .section-panel .activity-item{border-bottom:1px solid #edf0f7;padding:14px 0}
+#dashboardView .section-panel .section-head .eyebrow{font-size:9px;font-weight:850;letter-spacing:1.8px;color:#6550df}
+#dashboardView .section-panel hr{border:0;border-top:1px solid #e9edf6;margin:16px 0}
+@media(max-width:760px){
+#dashboardView .section-panel{border-radius:17px!important}
+#dashboardView .section-panel>.section-head{padding:17px!important;align-items:flex-start}
+#dashboardView .section-panel>.section-head h2{font-size:15px!important}
+#dashboardView .section-panel>.section-head .btn{padding:8px 10px;font-size:10px}
+#dashboardView .section-panel>.toolbar,#dashboardView .section-panel>.college-search-wrap{margin:12px!important;padding:9px!important}
+#dashboardView .section-panel>.form-grid,#dashboardView .section-panel>form .form-grid{padding:14px!important}
+#dashboardView .section-panel .table-wrap{margin:0 10px 14px!important}
+#dashboardView .section-panel .college-directory-stats,#dashboardView .section-panel .vm-analytics-panels{padding:12px!important}
+#dashboardView .section-panel .staff-create-wrap{padding:12px!important}
+}
+@media(prefers-reduced-motion:reduce){#dashboardView .admin-page-view:not(.page-hidden){animation:none}}
+
 </style>
 </head>
 <body>
