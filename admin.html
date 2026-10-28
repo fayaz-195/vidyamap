@@ -493,7 +493,7 @@ main.wrap:has(#dashboardView:not(.hidden)){display:block!important;box-sizing:bo
 .sidebar-account-email{font-size:10px;color:#e1ddfa;overflow-wrap:anywhere}
 .sidebar-account-role{font-size:9px;color:#ffe3a1;font-weight:750}
 .sidebar-account-chevron{color:#ffe3a1;font-size:16px}
-.sidebar-account-menu{margin-top:7px;padding:7px;border:1px solid #ffffff30;border-radius:12px;background:#171746;box-shadow:0 10px 24px #080a252e}
+.sidebar-account-menu{position:absolute;left:0;right:0;bottom:calc(100% + 7px);margin:0;padding:7px;border:1px solid #ffffff30;border-radius:12px;background:#171746;box-shadow:0 10px 24px #080a252e;z-index:20}
 .sidebar-menu-label{padding:6px 9px 8px;color:#c8b8ff;font-size:9px;font-weight:850;letter-spacing:1px;text-transform:uppercase}
 .sidebar-account-menu button{display:block;width:100%;text-align:left;padding:10px;border:0;border-radius:8px;background:transparent;color:#f5f3ff;font:650 11px/1.4 Inter,system-ui,sans-serif;cursor:pointer}
 .sidebar-account-menu button:hover{background:#ffffff18;color:#fff}
@@ -894,6 +894,12 @@ async function reviewRequest(id,decision,button){if(!currentUser)return;const ve
 $('loginForm').addEventListener('submit',async event=>{event.preventDefault();if(loginInProgress)return;loginInProgress=true;hideNotice(loginNotice);const button=$('loginBtn');setBusy(button,true,'Signing in…');showNotice(loginNotice,'Checking your credentials and admin access…',false);try{const {data,error}=await client.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)throw new Error('Sign-in failed: '+(error.message||'Please check your email and password.'));if(!data?.user)throw new Error('Authentication returned no user session. Please try again.');try{await ensurePlatformAdmin(data.user);}catch(accessError){throw new Error('Your password was accepted, but admin access could not be verified: '+(accessError.message||'Please contact the founder.'));}showDashboard(data.user);}catch(error){showLogin(error.message||'Sign in failed. Please try again.',true);}finally{loginInProgress=false;setBusy(button,false);}});
 $('resetBtn').addEventListener('click',async()=>{const email=$('email').value.trim();if(!email){showNotice(loginNotice,'Enter your team email above first.');$('email').focus();return;}try{const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+window.location.pathname});if(error)throw error;showNotice(loginNotice,'If this email belongs to an account, a password reset link has been sent.');}catch(error){showNotice(loginNotice,error.message||'Unable to request a reset right now.',true);}});
 $('signOutBtn').addEventListener('click',async()=>{await client.auth.signOut();currentUser=null;showLogin('You have signed out.');});
+
+$('sidebarAccountToggle')?.addEventListener('click',()=>{const menu=$('sidebarAccountMenu'),toggle=$('sidebarAccountToggle');if(!menu||!toggle)return;const open=menu.classList.contains('hidden');menu.classList.toggle('hidden',!open);toggle.setAttribute('aria-expanded',String(open));});
+$('sidebarAccountDetailsBtn')?.addEventListener('click',()=>{const menu=$('sidebarAccountMenu'),toggle=$('sidebarAccountToggle');menu?.classList.add('hidden');toggle?.setAttribute('aria-expanded','false');showNotice(dashboardNotice,'Signed in as '+($('sidebarAccountEmail')?.textContent||'admin')+' · '+($('sidebarAccountRole')?.textContent||'Team account'),false);});
+$('sidebarSignOutBtn')?.addEventListener('click',()=>{$('sidebarAccountMenu')?.classList.add('hidden');$('sidebarAccountToggle')?.setAttribute('aria-expanded','false');$('signOutBtn')?.click();});
+document.addEventListener('click',event=>{if(!event.target.closest('#sidebarAccountWrap')){$('sidebarAccountMenu')?.classList.add('hidden');$('sidebarAccountToggle')?.setAttribute('aria-expanded','false');}});
+
 
 async function loadCollegeDistrictOptions(){
 const select=$('newCollegeDistrict');
