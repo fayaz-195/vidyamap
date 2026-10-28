@@ -285,6 +285,51 @@ body{background:var(--vm-canvas)!important;color:var(--vm-ink)}
 #dashboardView .overview-needs-attention a:hover{border-color:#a18bd7!important;background:#f8f5ff!important}
 #dashboardView .admin-sidebar .nav-item.active{background:linear-gradient(100deg,#204da5,#6530a0)!important;color:#fff!important}
 #dashboardView .admin-sidebar .nav-subitem.active{color:#fff!important}
+/* Final admin-wide alignment pass: consistent content edges, card spacing and responsive controls */
+#dashboardView{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
+#dashboardView .admin-layout{display:grid!important;grid-template-columns:250px minmax(0,1fr)!important;gap:22px!important;align-items:start!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;margin:22px 0 0!important}
+#dashboardView .admin-sidebar{position:sticky!important;top:88px!important;align-self:start!important;width:100%!important;height:auto!important;min-height:0!important;max-height:calc(100vh - 104px)!important;overflow-y:auto!important;overflow-x:hidden!important}
+#dashboardView .dashboard-main{width:100%!important;min-width:0!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:0 0 28px!important}
+#dashboardView .admin-page-view{width:100%!important;min-width:0!important;margin:0!important}
+#dashboardView .dashboard-hero{width:100%!important;margin:0 0 18px!important;box-sizing:border-box!important}
+#dashboardView .stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important;width:100%!important}
+#dashboardView .section-grid,#dashboardView .overview-action-centre,#dashboardView .overview-insights-grid{width:100%!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px!important;align-items:stretch!important}
+#dashboardView .section-panel,#dashboardView .panel,#dashboardView .action-panel,#dashboardView .overview-health-panel,#dashboardView .overview-insight-panel{min-width:0!important;width:100%;margin:0 0 16px}
+#dashboardView .section-head{align-items:center!important;flex-wrap:wrap!important;padding:17px 18px!important}
+#dashboardView .toolbar{max-width:100%!important;flex-wrap:wrap!important}
+#dashboardView .toolbar input,#dashboardView .toolbar select,#dashboardView .toolbar button{max-width:100%!important;min-width:0}
+#dashboardView .table-wrap{width:100%!important;max-width:100%!important;overflow-x:auto!important}
+#dashboardView table{min-width:640px}
+#dashboardView .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0 16px!important}
+#dashboardView input,#dashboardView select,#dashboardView textarea{max-width:100%}
+@media(max-width:1100px){
+ #dashboardView .admin-layout{grid-template-columns:220px minmax(0,1fr)!important;gap:16px!important}
+ #dashboardView .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #dashboardView .section-grid,#dashboardView .overview-action-centre,#dashboardView .overview-insights-grid{grid-template-columns:minmax(0,1fr)!important}
+}
+@media(max-width:760px){
+ #dashboardView .admin-layout{grid-template-columns:minmax(0,1fr)!important;gap:14px!important;margin-top:14px!important}
+ #dashboardView .admin-sidebar{position:static!important;top:auto!important;max-height:none!important;overflow:visible!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important}
+ #dashboardView .admin-sidebar .sidebar-label,#dashboardView .admin-sidebar .sidebar-tip{grid-column:1/-1!important}
+ #dashboardView .dashboard-main{padding:0 0 20px!important}
+ #dashboardView .dashboard-hero{padding:20px!important;gap:12px!important}
+ #dashboardView .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+ #dashboardView .stat{padding:14px!important}
+ #dashboardView .stat strong{font-size:26px!important}
+ #dashboardView .section-head{align-items:flex-start!important}
+ #dashboardView .section-head>.toolbar,#dashboardView .section-head>.row-actions{width:100%!important}
+ #dashboardView .form-grid{grid-template-columns:minmax(0,1fr)!important}
+ #dashboardView .form-grid .field.full{grid-column:auto!important}
+ #dashboardView .create-college-banner{margin:12px!important;padding:17px!important}
+ #dashboardView .create-college-steps{grid-template-columns:minmax(0,1fr)!important;padding:12px!important}
+}
+@media(max-width:440px){
+ #dashboardView .stats{grid-template-columns:minmax(0,1fr)!important}
+ #dashboardView .admin-sidebar{grid-template-columns:minmax(0,1fr)!important}
+ #dashboardView .quick-action-grid,#dashboardView .overview-needs-attention,#dashboardView .overview-records{grid-template-columns:minmax(0,1fr)!important}
+ #dashboardView .section-head{padding:14px!important}
+ #dashboardView .panel{border-radius:13px!important}
+}
 </style>
 </head>
 <body>
@@ -777,51 +822,7 @@ function drawCrm(){
  });
  const overdue=vmCrmRows.filter(isOverdue).length,today=vmCrmRows.filter(isToday).length,unassigned=vmCrmRows.filter(x=>!x.assigned_to).length;
  const styles='<style>.vm-crm-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:16px 18px 8px}.vm-crm-kpi{border:1px solid #e6eaf3;border-radius:13px;background:#fff;padding:13px 15px}.vm-crm-kpi span{display:block;color:#7e89a4;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.4px}.vm-crm-kpi strong{display:block;color:#202944;font-size:24px;margin-top:4px}.vm-crm-tools{display:flex;gap:9px;flex-wrap:wrap;padding:12px 18px}.vm-crm-tools input,.vm-crm-tools select{min-height:38px;border:1px solid #dfe4f0;border-radius:9px;padding:7px 10px;background:#fff;color:#202944;font:inherit}.vm-crm-tools input{flex:1;min-width:190px}.vm-crm-result{padding:0 18px 10px;color:#7f89a0;font-size:11px}@media(max-width:700px){.vm-crm-kpis{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px}.vm-crm-tools{padding:10px 12px}.vm-crm-result{padding:0 12px 10px}}
-/* Final admin-wide alignment pass: consistent content edges, card spacing and responsive controls */
-#dashboardView{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
-#dashboardView .admin-layout{display:grid!important;grid-template-columns:250px minmax(0,1fr)!important;gap:22px!important;align-items:start!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;margin:22px 0 0!important}
-#dashboardView .admin-sidebar{position:sticky!important;top:88px!important;align-self:start!important;width:100%!important;height:auto!important;min-height:0!important;max-height:calc(100vh - 104px)!important;overflow-y:auto!important;overflow-x:hidden!important}
-#dashboardView .dashboard-main{width:100%!important;min-width:0!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:0 0 28px!important}
-#dashboardView .admin-page-view{width:100%!important;min-width:0!important;margin:0!important}
-#dashboardView .dashboard-hero{width:100%!important;margin:0 0 18px!important;box-sizing:border-box!important}
-#dashboardView .stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important;width:100%!important}
-#dashboardView .section-grid,#dashboardView .overview-action-centre,#dashboardView .overview-insights-grid{width:100%!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px!important;align-items:stretch!important}
-#dashboardView .section-panel,#dashboardView .panel,#dashboardView .action-panel,#dashboardView .overview-health-panel,#dashboardView .overview-insight-panel{min-width:0!important;width:100%;margin:0 0 16px}
-#dashboardView .section-head{align-items:center!important;flex-wrap:wrap!important;padding:17px 18px!important}
-#dashboardView .toolbar{max-width:100%!important;flex-wrap:wrap!important}
-#dashboardView .toolbar input,#dashboardView .toolbar select,#dashboardView .toolbar button{max-width:100%!important;min-width:0}
-#dashboardView .table-wrap{width:100%!important;max-width:100%!important;overflow-x:auto!important}
-#dashboardView table{min-width:640px}
-#dashboardView .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0 16px!important}
-#dashboardView input,#dashboardView select,#dashboardView textarea{max-width:100%}
-@media(max-width:1100px){
- #dashboardView .admin-layout{grid-template-columns:220px minmax(0,1fr)!important;gap:16px!important}
- #dashboardView .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
- #dashboardView .section-grid,#dashboardView .overview-action-centre,#dashboardView .overview-insights-grid{grid-template-columns:minmax(0,1fr)!important}
-}
-@media(max-width:760px){
- #dashboardView .admin-layout{grid-template-columns:minmax(0,1fr)!important;gap:14px!important;margin-top:14px!important}
- #dashboardView .admin-sidebar{position:static!important;top:auto!important;max-height:none!important;overflow:visible!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important}
- #dashboardView .admin-sidebar .sidebar-label,#dashboardView .admin-sidebar .sidebar-tip{grid-column:1/-1!important}
- #dashboardView .dashboard-main{padding:0 0 20px!important}
- #dashboardView .dashboard-hero{padding:20px!important;gap:12px!important}
- #dashboardView .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
- #dashboardView .stat{padding:14px!important}
- #dashboardView .stat strong{font-size:26px!important}
- #dashboardView .section-head{align-items:flex-start!important}
- #dashboardView .section-head>.toolbar,#dashboardView .section-head>.row-actions{width:100%!important}
- #dashboardView .form-grid{grid-template-columns:minmax(0,1fr)!important}
- #dashboardView .form-grid .field.full{grid-column:auto!important}
- #dashboardView .create-college-banner{margin:12px!important;padding:17px!important}
- #dashboardView .create-college-steps{grid-template-columns:minmax(0,1fr)!important;padding:12px!important}
-}
-@media(max-width:440px){
- #dashboardView .stats{grid-template-columns:minmax(0,1fr)!important}
- #dashboardView .admin-sidebar{grid-template-columns:minmax(0,1fr)!important}
- #dashboardView .quick-action-grid,#dashboardView .overview-needs-attention,#dashboardView .overview-records{grid-template-columns:minmax(0,1fr)!important}
- #dashboardView .section-head{padding:14px!important}
- #dashboardView .panel{border-radius:13px!important}
-}
+
 
 </style>';
  const kpis='<div class="vm-crm-kpis"><div class="vm-crm-kpi"><span>Loaded enquiries</span><strong>'+vmCrmRows.length+'</strong></div><div class="vm-crm-kpi"><span>Follow-up overdue</span><strong>'+overdue+'</strong></div><div class="vm-crm-kpi"><span>Follow-up today</span><strong>'+today+'</strong></div><div class="vm-crm-kpi"><span>Unassigned</span><strong>'+unassigned+'</strong></div></div>';
