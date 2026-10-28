@@ -438,6 +438,21 @@ footer,footer p,footer li,footer small,footer h2,footer h3,footer a{color:#f5f7f
  #dashboardView .admin-layout{grid-template-columns:minmax(0,1fr)!important}
 }
 
+
+/* Widen the actual admin canvas; keep the create-account form from collapsing to half width */
+html,body{width:100%!important;max-width:none!important}
+main.wrap:has(#dashboardView:not(.hidden)){display:block!important;box-sizing:border-box!important;width:100%!important;max-width:none!important;margin:0!important;padding:22px 24px 40px!important}
+#dashboardView{display:block!important;box-sizing:border-box!important;width:100%!important;max-width:none!important}
+#dashboardView .admin-layout{box-sizing:border-box!important;width:100%!important;max-width:none!important;grid-template-columns:238px minmax(0,1fr)!important;gap:16px!important}
+#dashboardView .dashboard-main{box-sizing:border-box!important;width:100%!important;max-width:none!important;min-width:0!important}
+#dashboardView #createCollege{box-sizing:border-box!important;display:block!important;width:100%!important;max-width:none!important;min-width:0!important}
+#dashboardView #createCollege .section-head{width:100%!important;box-sizing:border-box!important}
+#dashboardView #createCollege .create-college-banner{box-sizing:border-box!important;width:auto!important}
+@media(max-width:760px){
+ main.wrap:has(#dashboardView:not(.hidden)){padding:12px!important}
+ #dashboardView .admin-layout{grid-template-columns:minmax(0,1fr)!important}
+}
+
 </style>
 </head>
 <body>
