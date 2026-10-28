@@ -420,14 +420,17 @@ async function exportReport(table,columns,file,dateCol){const note=$('reportNoti
 
 function applyPageView(){const allowed=['overview','registrations','createCollege','institutions','marketing','publicleads','enquirySummary','auditlogs','analytics','crm','team','health','assistant','reports'];const params=new URLSearchParams(window.location.search);const requested=params.get('page')||'overview';const active=requested==='campaigns'?'overview':(allowed.includes(requested)?requested:'overview');document.querySelectorAll('.admin-page-view').forEach(section=>section.classList.toggle('page-hidden',section.id!==(active==='overview'?'overviewContent':active)));document.querySelectorAll('.admin-sidebar [data-page]').forEach(link=>link.classList.toggle('active',link.dataset.page===active));const titles={overview:'Overview',registrations:'College registrations',createCollege:'Create college account',institutions:'Institution listings',marketing:'Marketing campaigns',publicleads:'College callback requests',enquirySummary:'Student enquiries',auditlogs:'Audit logs',analytics:'Advanced analytics',crm:'Enquiry CRM',team:'Team & permissions',health:'Security & health',assistant:'Admin assistant',reports:'Reports & exports'};document.title='VIDYAMAP Admin · '+titles[active];}
 
-document.querySelectorAll('.admin-sidebar a.nav-item[data-page]').forEach(link=>link.addEventListener('click',event=>{
-  const url=new URL(link.href,window.location.href);
-  if(url.origin!==window.location.origin||url.pathname!==window.location.pathname)return;
+document.addEventListener('click',event=>{
+  const link=event.target.closest('a[href]');
+  if(!link)return;
+  let url;
+  try{url=new URL(link.href,window.location.href);}catch(_){return;}
+  if(url.origin!==window.location.origin||url.pathname!==window.location.pathname||!url.searchParams.has('page'))return;
   event.preventDefault();
   if(url.searchParams.get('page')==='campaigns')url.searchParams.set('page','overview');
   window.history.pushState({},'',url.pathname+url.search+url.hash);
   applyPageView();
-}));
+});
 window.addEventListener('popstate',applyPageView);
 
 
