@@ -190,6 +190,7 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
  location.replace("./index.html?next="+encodeURIComponent(next)+"#studentLeadCapture");
 })();
 const db=window.supabase.createClient("https://taxlvccrinehasexgvhv.supabase.co","sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA");
+ async function recordSearch(q,filters){try{const lead=JSON.parse(sessionStorage.getItem("vidyamap_public_student_lead_v1")||"null");await db.rpc("record_student_search_activity",{p_lead_id:lead&&lead.lead_id||null,p_event_type:"search",p_query_text:q||null,p_search_filters:filters||{}})}catch(e){console.warn(e)}}
 const grid=document.getElementById("collegeGrid"),statusEl=document.getElementById("status");
 const districtSelect=document.getElementById("district"),mandalSelect=document.getElementById("mandal");
 const PAGE_SIZE=12;let colleges=[],districts=[],mandals=[],filtered=[],page=1;const compareIds=new Set();
@@ -242,13 +243,13 @@ function openCompare(){const items=colleges.filter(c=>compareIds.has(String(c.id
 document.getElementById("openCompare").addEventListener("click",openCompare);
 document.querySelectorAll("[data-close-compare]").forEach(el=>el.addEventListener("click",()=>document.getElementById("compareModal").hidden=true));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")document.getElementById("compareModal").hidden=true});
-function search(){
+async function search(){
  const keyword=document.getElementById("keyword").value.trim().toLowerCase(),cat=document.getElementById("category").value.toLowerCase(),district=districtSelect.value,mandal=mandalSelect.value,adm=document.getElementById("admissions").value;
  filtered=colleges.filter(c=>{
   const text=[c.name,c.description,c.category,c.town,c.address,c.scholarship_info].filter(Boolean).join(" ").toLowerCase();
   return (!keyword||text.includes(keyword))&&(!cat||(c.category||"").toLowerCase().includes(cat))&&(!district||String(c.district_id)===district)&&(!mandal||String(c.mandal_id)===mandal)&&(adm!=="open"||c.admissions_open===true);
  });
- filtered.sort((a,b)=>String(a.name||"").localeCompare(String(b.name||""),undefined,{sensitivity:"base"}));page=1;render();
+ filtered.sort((a,b)=>String(a.name||"").localeCompare(String(b.name||""),undefined,{sensitivity:"base"}));page=1;render();recordSearch(document.getElementById("keyword").value.trim(),{category:document.getElementById("category").value||"",district_id:districtSelect.value||"",mandal_id:mandalSelect.value||"",admissions:document.getElementById("admissions").value||"",result_count:filtered.length});
 }
 document.getElementById("searchForm").addEventListener("submit",e=>{e.preventDefault();search()});
 document.getElementById("reset").addEventListener("click",()=>setTimeout(()=>{document.getElementById("searchForm").reset();updateMandals();filtered=colleges;page=1;render()},0));
