@@ -2507,8 +2507,10 @@ async function initDashboard(){
     const targetedM=(ms||[]).filter(x=>x.campaign_id===c.id).map(x=>mandalRows?.find(m=>m.id===x.mandal_id)?.name).filter(Boolean);
     areas.textContent="Districts: "+(targetedD.join(", ")||"None")+" · Mandals: "+(targetedM.join(", ")||"None");
     info.append(title,college,desc,areas);
-    if(c.media_type==="video"){const v=document.createElement("video");v.src=window.vmSafeAdMediaUrl(c.media_url,c.media_type);v.controls=true;v.preload="metadata";v.playsInline=true;v.className="ad-review-media";info.append(v);}
-    else{const im=document.createElement("img");im.src=window.vmSafeAdMediaUrl(c.media_url,c.media_type);im.alt=c.title;im.loading="lazy";im.className="ad-review-media";info.append(im);}
+    const safeMedia=window.vmSafeAdMediaUrl(c.media_url,c.media_type);
+    if(safeMedia&&c.media_type==="video"){const v=document.createElement("video");v.src=safeMedia;v.controls=true;v.preload="metadata";v.playsInline=true;v.className="ad-review-media";info.append(v);}
+    else if(safeMedia){const im=document.createElement("img");im.src=safeMedia;im.alt=c.title;im.loading="lazy";im.className="ad-review-media";info.append(im);}
+    else{const blocked=document.createElement("p");blocked.className="feature-note";blocked.textContent="Media blocked: only supported files hosted in VIDYAMAP Supabase Storage can be previewed.";info.append(blocked);}
     const actions=document.createElement("div");actions.className="ad-review-actions";
     const safePreview=window.vmSafeAdMediaUrl(c.media_url,c.media_type);if(safePreview){const preview=document.createElement("a");preview.href=safePreview;preview.target="_blank";preview.rel="noopener noreferrer";preview.className="btn btn-outline";preview.textContent="Open media";actions.append(preview);}
     if(c.payment_status!=="paid" && c.status!=="rejected"){
