@@ -329,36 +329,32 @@ function withQueryTimeout(promise,ms=8000){return Promise.race([promise,new Prom
 async function countRows(table,filters){let q=client.from(table).select('id',{count:'exact',head:true});if(filters)filters(q);const {count,error}=await withQueryTimeout(q);if(error)throw error;return count||0;}
 async function safeCountRows(table){try{return await countRows(table);}catch(_){return null;}}
 async function loadDashboard(){
-  hideNotice(dashboardNotice);
-  loadEnquiryPanels();
-  ['requestsArea','campaignsArea','collegesArea'].forEach(id=>$(id).textContent='Loading…');
-  const countSafe=async(table,filters)=>{try{return await countRows(table,filters);}catch(error){return {error};}};
-  const selectSafe=async(table,columns,configure)=>{try{let q=client.from(table).select(columns);if(configure)q=configure(q);const {data,error}=await withQueryTimeout(q);return {data:data||[],error:error||null};}catch(error){return {data:[],error};}};
-  const results=await Promise.all([
-    countSafe('colleges'),
-    countSafe('colleges',q=>q.eq('status','verified')),
-    countSafe('college_registration_requests',q=>q.eq('status','pending')),
-    countSafe('college_ad_campaigns'),
-    selectSafe('college_registration_requests','id,college_name,contact_name,status,created_at',q=>q.order('created_at',{ascending:false}).limit(8)),
-    selectSafe('college_ad_campaigns','id,title,media_type,media_url,status,payment_status,payment_amount_inr,payment_reference,duration_days,starts_at,ends_at',q=>q.order('created_at',{ascending:false}).limit(30)),
-    selectSafe('colleges','id,name,status,category,admissions_open,admission_deadline,website_url,phone,district_id,created_at',q=>q.order('created_at',{ascending:false}).limit(30))
-  ]);
-  const showCount=(id,value)=>$(id).textContent===undefined?null:($(id).textContent=value&&typeof value==='object'?'—':(value??'—'));
-  showCount('collegeCount',results[0]);showCount('verifiedCount',results[1]);showCount('requestCount',results[2]);showCount('campaignCount',results[3]);
-  renderRequests(results[4]);renderCampaigns(results[5]);renderColleges(results[6]);
-  const extras=await Promise.all([
+  hideNotice(dashboardNotice);loadEnquiryPanels();
+  const jobs=[
+    ['requestsArea',()=>safeSelect('college_registration_requests','id,college_name,contact_name,status,created_at',q=>q.order('created_at',{ascending:false}).limit(8)),renderRequests],
+    ['campaignsArea',()=>safeSelect('college_ad_campaigns','id,title,media_type,media_url,status,payment_status,payment_amount_inr,payment_reference,duration_days,starts_at,ends_at',q=>q.order('created_at',{ascending:false}).limit(30)),renderCampaigns],
+    ['collegesArea',()=>safeSelect('colleges','id,name,status,category,admissions_open,admission_deadline,website_url,phone,district_id,created_at',q=>q.order('created_at',{ascending:false}).limit(30)),renderColleges]
+  ];
+  jobs.forEach(([id])=>{if($(id))$(id).innerHTML='<div class="loading">Loading data…</div>';});
+  const core=jobs.map(async([id,query,render])=>{const result=await query();render(result);return result;});
+  const counts=[
+    countRows('colleges').then(v=>{if($('collegeCount'))$('collegeCount').textContent=v;return v;}).catch(e=>({error:e})),
+    countRows('colleges',q=>q.eq('status','verified')).then(v=>{if($('verifiedCount'))$('verifiedCount').textContent=v;return v;}).catch(e=>({error:e})),
+    countRows('college_registration_requests',q=>q.eq('status','pending')).then(v=>{if($('requestCount'))$('requestCount').textContent=v;return v;}).catch(e=>({error:e})),
+    countRows('college_ad_campaigns').then(v=>{if($('campaignCount'))$('campaignCount').textContent=v;return v;}).catch(e=>({error:e}))
+  ];
+  const extrasPromise=Promise.all([
     safeSelect('campaigns','id,name,channel,status,budget_inr,submitted_at,scheduled_at,created_at',q=>q.order('created_at',{ascending:false}).limit(30)),
     safeSelect('college_public_leads','id,institution_name,contact_name,contact_designation,contact_phone,category,state_code,district_id,address,status,created_at',q=>q.order('created_at',{ascending:false}).limit(30)),
     safeSelect('student_enquiries','id,student_name,phone,email,district_id,town,course_id,course_name,academic_year,message,contact_consent,source,created_at,status,follow_up_at,assigned_to,district:districts(name),course:courses(name)',q=>q.order('created_at',{ascending:false}).limit(300)),
     safeSelect('audit_logs','id,action,entity_type,entity_id,created_at',q=>q.order('created_at',{ascending:false}).limit(30)),
     safeSelect('student_search_activity','id,lead_id,event_type,query_text,search_filters,college_id,college_name,created_at',q=>q.order('created_at',{ascending:false}).limit(300)),
     safeCountRows('college_public_leads'),safeCountRows('student_enquiries'),safeCountRows('student_search_activity'),safeCountRows('campaigns')
-  ]);
-  renderMarketing(extras[0]);renderPublicLeads(extras[1]);renderEnquirySummary(extras[2]);renderAudit(extras[3]);renderSearchActivity(extras[4]);
-  renderOverviewData(results,extras);renderAdminNotifications(results,extras);
+  ]).then(extras=>{renderMarketing(extras[0]);renderPublicLeads(extras[1]);renderEnquirySummary(extras[2]);renderAudit(extras[3]);renderSearchActivity(extras[4]);return extras;}).catch(error=>{showNotice(dashboardNotice,'Some dashboard data could not load: '+(error.message||'database error'),true);return [];});
+  const base=await Promise.all([...core,...counts]);const extras=await extrasPromise;
+  if(extras.length){renderOverviewData(base.slice(0,7),extras);renderAdminNotifications(base.slice(0,7),extras);}
   loadNextgenAnalytics();loadCrm();loadTeam();loadHealth();
-  const errors=[...results.slice(0,4),...results.slice(4,7).map(x=>x.error?{error:x.error}:null),...extras.slice(0,5).map(x=>x.error?{error:x.error}:null)].filter(x=>x&&x.error);
-  if(errors.length)showNotice(dashboardNotice,'Some dashboard data could not load. Other sections are still available. Details: '+errors.slice(0,3).map(x=>x.error.message||'database access error').join(' · '),true);
+  window.setTimeout(()=>[['requestsArea','Registration requests'],['campaignsArea','College ad campaigns'],['collegesArea','Institution listings'],['enquirySummaryArea','Student enquiries'],['searchActivityArea','Student search activity']].forEach(([id,label])=>{const el=$(id);if(el&&/Loading/.test(el.textContent||''))el.innerHTML=empty(label+' did not respond. Check the database connection or permissions.');}),12000);
 }
 const notificationReadKey='vidyamap_admin_notifications_read_v1';
 function renderAdminNotifications(base,extras){
