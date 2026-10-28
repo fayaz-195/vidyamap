@@ -369,6 +369,40 @@ input,select,textarea{color:#172b43}
 input::placeholder,textarea::placeholder{color:#6b778b;opacity:1}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #9b82e8!important;outline-offset:2px}
 footer,footer p,footer li,footer small,footer h2,footer h3,footer a{color:#f5f7ff}
+
+/* Workspace readability and width correction */
+@media(min-width:761px){
+ .wrap{max-width:1600px!important;padding:22px 22px 40px!important}
+ .admin-layout{grid-template-columns:230px minmax(0,1fr)!important;gap:16px!important;margin-top:16px!important}
+ .admin-layout>.dashboard-main{width:100%!important;min-width:0!important}
+}
+.admin-page-view{width:100%!important;max-width:none!important;min-width:0!important}
+.admin-page-view .section-head{padding:16px 18px!important}
+.admin-page-view .section-head p{color:#4d5d73!important;line-height:1.55!important}
+.create-college-banner{width:auto!important;margin:16px 18px 0!important;padding:22px 24px!important;background:linear-gradient(115deg,#142f79 0%,#3f2587 58%,#55258f 100%)!important;color:#fff!important}
+.create-college-banner .create-college-banner-copy h3{color:#fff!important;font-size:clamp(19px,2vw,24px)!important;line-height:1.35!important;margin:7px 0 8px!important}
+.create-college-banner .create-college-banner-copy p{color:#f4f1ff!important;font-size:13px!important;line-height:1.65!important;max-width:700px!important}
+.create-college-banner .create-college-kicker{color:#ffe09a!important;font-weight:850!important}
+.create-college-banner .create-college-banner-mark{color:#fff!important;background:#ffffff20!important;border:1px solid #ffffff45!important;flex-shrink:0}
+.create-college-steps{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important;padding:16px 18px!important}
+.create-college-step{min-width:0!important}
+#createCollege>div[style*="padding:20px"]{padding:18px!important}
+#createCollege .form-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0 16px!important}
+#createCollege .form-grid .field{min-width:0!important}
+#createCollege .form-grid input,#createCollege .form-grid select{width:100%!important;min-width:0!important}
+@media(max-width:1050px){
+ .wrap{padding:18px 16px 32px!important}
+ .admin-layout{grid-template-columns:210px minmax(0,1fr)!important;gap:12px!important}
+ .create-college-steps{grid-template-columns:1fr!important}
+}
+@media(max-width:760px){
+ .wrap{padding:14px 12px 28px!important}
+ .admin-layout{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+ .admin-page-view{width:100%!important}
+ .create-college-banner{margin:12px!important;padding:17px!important}
+ .create-college-steps{grid-template-columns:1fr!important;padding:12px!important}
+ #createCollege .form-grid{grid-template-columns:minmax(0,1fr)!important}
+}
 </style>
 </head>
 <body>
