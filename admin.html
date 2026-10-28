@@ -379,7 +379,7 @@ $('markNotificationsRead').addEventListener('click',()=>{const keys=Array.from(d
 document.addEventListener('click',e=>{if(!e.target.closest('.notification-wrap')){$('notificationPanel').classList.add('hidden');$('notificationBell').setAttribute('aria-expanded','false');}});
 function renderOverviewData(base,extras){
 const val=v=>v===null||v===undefined?'—':String(v);
-$('overviewCollegeLeads').textContent=val(extras[5]);$('overviewStudentLeads').textContent=val(extras[6]);$('overviewSearches').textContent=val(extras[7]);$('overviewMarketing').textContent=val(extras[8]);
+$('overviewCollegeLeads').textContent=val(extras[5]);$('overviewStudentLeads').textContent=extras[6]===null?'Error':val(extras[6]);$('overviewSearches').textContent=extras[7]===null?'Error':val(extras[7]);$('overviewMarketing').textContent=val(extras[8]);
 const sections=[
 {icon:'▤',name:'College registrations',hint:'Review & approve institutions',count:base[2],href:'admin.html?page=registrations',items:(base[4]?.data||[]).slice(0,3).map(x=>[x.college_name,x.status,new Date(x.created_at).toLocaleDateString()])},
 {icon:'▶',name:'Poster & video ads',hint:'Creative approvals and subscriptions',count:base[3],href:'admin.html?page=campaigns',items:(base[5]?.data||[]).slice(0,3).map(x=>[x.title,x.status,x.payment_status])},
@@ -440,7 +440,7 @@ finally{button.disabled=false;button.textContent='Create college account';}
 $('createCollegeForm').addEventListener('reset',()=>setTimeout(()=>{$('createdCollegeResult').classList.add('hidden');},0));
 loadCollegeDistrictOptions();
 $('refreshRequests')?.addEventListener('click',loadDashboard);$('refreshCampaigns')?.addEventListener('click',loadDashboard);$('refreshColleges')?.addEventListener('click',loadDashboard);
-$('refreshAll').addEventListener('click',loadDashboard);
+document.addEventListener('click',event=>{const refresh=event.target.closest('#refreshAll');if(!refresh)return;event.preventDefault();if(refresh.dataset.refreshing==='true')return;refresh.dataset.refreshing='true';refresh.disabled=true;refresh.textContent='Refreshing…';Promise.resolve(loadDashboard()).catch(error=>showNotice(dashboardNotice,'Refresh failed: '+(error.message||'unknown error'),true)).finally(()=>{refresh.dataset.refreshing='false';refresh.disabled=false;refresh.textContent='↻ Refresh all';});});
 $('refreshMarketing').addEventListener('click',loadDashboard);$('refreshLeads').addEventListener('click',loadDashboard);$('refreshEnquiries').addEventListener('click',loadDashboard);$('refreshAudit').addEventListener('click',loadDashboard);
 $('dashboardSearch').addEventListener('input',()=>{const term=$('dashboardSearch').value.trim().toLowerCase();document.querySelectorAll('#dashboardView tbody tr').forEach(row=>{row.style.display=row.textContent.toLowerCase().includes(term)?'':'none';});});
 
