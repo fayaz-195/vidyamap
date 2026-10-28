@@ -15,6 +15,26 @@
 .admin-page-view.page-hidden{display:none!important}
 .admin-sidebar .nav-item.active{background:linear-gradient(110deg,#eeeaff,#f7f5ff);color:#583bd7;box-shadow:inset 3px 0 #6847f5}
 
+/* Restore admin workspace layout and readable navigation */
+.admin-layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:20px;align-items:start;margin-top:28px}
+.admin-sidebar{display:flex;flex-direction:column;gap:5px;padding:14px;border-radius:18px;min-width:0;position:sticky;top:92px;max-height:calc(100vh - 112px);overflow-y:auto;color:#fff}
+.admin-sidebar .sidebar-label{padding:8px 10px 10px;color:#c7c9ee;font-size:10px;font-weight:850;letter-spacing:1.6px;text-transform:uppercase}
+.admin-sidebar .nav-item{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:10px;color:#e8e8ff;text-decoration:none;font-size:12px;font-weight:650;line-height:1.35;border:1px solid transparent;transition:background .15s,color .15s}
+.admin-sidebar .nav-item:hover{background:#ffffff18;color:#fff;border-color:#ffffff20}
+.admin-sidebar .nav-item.active{background:linear-gradient(100deg,#2453b4,#6834a4)!important;color:#fff!important;box-shadow:inset 3px 0 #e3c98f;border-color:#8e78d0}
+.admin-sidebar .nav-ico{display:inline-grid;place-items:center;width:23px;height:23px;flex:0 0 23px;border-radius:7px;background:#ffffff18;color:#f1dba8;font-size:14px}
+.admin-sidebar .sidebar-tip{margin-top:12px;padding:12px;border:1px solid #ffffff22;border-radius:12px;background:#ffffff0b;color:#d9d8f3;font-size:10px;line-height:1.6}
+.dashboard-main{min-width:0}
+.dashboard-hero{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:27px 29px;border-radius:18px;margin-bottom:18px}
+.dashboard-hero .eyebrow{color:#e8d29b!important}.dashboard-hero .sub{color:#e1e5ff!important}.hero-actions{display:flex;gap:9px;flex-wrap:wrap}
+.admin-page-view{min-width:0}.admin-page-view.page-hidden{display:none!important}
+#team .section-panel,#team .panel{overflow:hidden}
+#team input:not([type=checkbox]),#team select,#team textarea{max-width:100%;min-width:0;padding:10px 12px;border:1px solid #dce1ef;border-radius:9px;background:#fbfcff;color:#18213b;font:12px/1.4 Inter,system-ui,sans-serif}
+#team label{font-size:11px;color:#39435f;line-height:1.5}
+#team input:focus,#team select:focus,#team textarea:focus{outline:2px solid #c7b8f0;border-color:#7354b8}
+#team button{border-radius:9px}
+@media(max-width:1000px){.admin-layout{grid-template-columns:210px minmax(0,1fr);gap:14px}.admin-sidebar{padding:10px}.admin-sidebar .nav-item{font-size:11px;padding:9px}}
+@media(max-width:760px){.admin-layout{grid-template-columns:1fr}.admin-sidebar{position:static;max-height:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.admin-sidebar .sidebar-label,.admin-sidebar .sidebar-tip{grid-column:1/-1}.dashboard-hero{align-items:flex-start;flex-direction:column;padding:21px}}
 /* Royal Blue + Royal Purple admin palette */
 :root{--royal-blue:#173b8f;--royal-blue-deep:#101f55;--royal-purple:#55258f;--royal-purple-deep:#35145f;--royal-lilac:#eee7fb;--royal-gold:#e3c98f}
 .topbar{background:linear-gradient(112deg,#101f55 0%,#173b8f 48%,#55258f 100%)!important;border-bottom:1px solid #8d73c9!important}
