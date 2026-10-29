@@ -2775,7 +2775,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
   if(dr.error||mr.error||cr.error)throw (dr.error||mr.error||cr.error);
   const districtsData=dr.data||[], mandalsData=mr.data||[], campaigns=cr.data||[];
   const locationStatus=document.createElement('p');locationStatus.className='vm-ad-location-status';locationStatus.setAttribute('role','status');locationStatus.style.cssText='font-size:12px;color:#66718a;margin:0 0 12px';locationStatus.textContent='Finding sponsored ads near you…';grid.parentElement?.insertBefore(locationStatus,grid);
-  const normalizeLocation=v=>String(v||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/district|mandal|municipality|urban|rural/g,'').replace(/[^a-z0-9]/g,'').trim();
+  const normalizeLocation=v=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/district|mandal|municipality|urban|rural/g,'').replace(/[^a-z0-9]/g,'').trim();
   async function detectAdArea(){
    const districtNames= new Map(districtsData.map(d=>[normalizeLocation(d.name),d]));
    const mandalNames= new Map(mandalsData.map(m=>[normalizeLocation(m.name),m]));
