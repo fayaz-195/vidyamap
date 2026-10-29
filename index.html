@@ -2726,20 +2726,19 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
    if(managedAds.length){
     document.getElementById('collegeAds')?.classList.remove('vm-managed-fullscreen-ad');
     grid.replaceChildren();grid.classList.remove('vm-managed-fullscreen-ad-grid');
-    managedAds.forEach(ad=>{
-     const card=document.createElement('article');card.className='ad-slot-placeholder vm-section-managed-ad';
-     const safeUrl=window.vmSafeAdMediaUrl(ad.media_url,ad.media_type);let media;
-     if(ad.media_type==='video'){media=document.createElement('video');media.src=safeUrl;media.controls=true;media.preload='metadata';media.playsInline=true;media.className='vm-section-managed-ad-media';}
-     else{media=document.createElement('img');media.src=safeUrl;media.alt=ad.title||'Sponsored college ad';media.loading='lazy';media.className='vm-section-managed-ad-media';}
-     card.append(media);
-     const h=document.createElement('strong');h.textContent=ad.title||'Sponsored college promotion';card.append(h);
-     if(ad.description){const p=document.createElement('p');p.textContent=ad.description;card.append(p);}
-     if(ad.click_url){try{const dest=new URL(ad.click_url,window.location.href);if(['https:','http:'].includes(dest.protocol)){const link=document.createElement('a');link.href=dest.href;link.target='_blank';link.rel='noopener noreferrer';link.className='vm-section-managed-ad-link';link.textContent='Learn more';card.append(link);}}catch(_){}}
+    const byPosition=new Map();managedAds.forEach(ad=>{const position=Number(ad.sort_order);if(position>=1&&position<=20&&!byPosition.has(position))byPosition.set(position,ad);});
+    for(let position=1;position<=20;position++){
+     const ad=byPosition.get(position),card=document.createElement('article');card.className='ad-slot-placeholder vm-section-managed-ad'+(ad?'':' vm-section-managed-ad-empty');
+     if(ad){
+      const safeUrl=window.vmSafeAdMediaUrl(ad.media_url,ad.media_type);let media;
+      if(ad.media_type==='video'){media=document.createElement('video');media.src=safeUrl;media.controls=true;media.preload='metadata';media.playsInline=true;media.className='vm-section-managed-ad-media';}
+      else{media=document.createElement('img');media.src=safeUrl;media.alt=ad.title||'Sponsored college ad';media.loading='lazy';media.className='vm-section-managed-ad-media';}
+      card.append(media);const h=document.createElement('strong');h.textContent=ad.title||'Sponsored college promotion';card.append(h);
+      if(ad.description){const p=document.createElement('p');p.textContent=ad.description;card.append(p);}
+      if(ad.click_url){try{const dest=new URL(ad.click_url,window.location.href);if(['https:','http:'].includes(dest.protocol)){const link=document.createElement('a');link.href=dest.href;link.target='_blank';link.rel='noopener noreferrer';link.className='vm-section-managed-ad-link';link.textContent='Learn more';card.append(link);}}catch(_){}}
+     }else{const ico=document.createElement('div');ico.className='slot-icon';ico.textContent='📢';const h=document.createElement('strong');h.textContent='POSITION '+position;const p=document.createElement('p');p.textContent='Your ad can be assigned to this slot';card.append(ico,h,p);}
      grid.append(card);
-    });
-    const original=Array.from(grid.children);
-    for(let i=original.length;i<20;i++)grid.append(original[i%original.length].cloneNode(true));
-    const belt=Array.from(grid.children);belt.forEach(card=>grid.append(card.cloneNode(true)));
+    }
     return;
    }
   }catch(managedErr){console.warn('Managed college promotion ads unavailable',managedErr);}
