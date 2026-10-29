@@ -1770,8 +1770,12 @@ const SUPABASE_KEY = "sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function loadHomepagePromoItems(){
- const track=document.querySelector('.vm-sponsored-track span');if(!track)return;
+ const track=document.querySelector('.vm-sponsored-track span');
+ const badge=document.querySelector('.vm-sponsored-label');
  try{
+  const {data:settings}=await db.from('site_promo_settings').select('badge_text').eq('id',true).maybeSingle();
+  if(badge&&settings?.badge_text)badge.textContent=settings.badge_text;
+  if(!track)return;
   const {data,error}=await db.from('site_promo_items').select('item_type,heading,body,url,sort_order').eq('is_active',true).order('sort_order').order('created_at');
   if(error||!data?.length)return;
   track.replaceChildren();
