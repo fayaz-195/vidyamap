@@ -2854,13 +2854,13 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     const slots=Array.from(grid.children);slots.forEach(slot=>grid.append(slot.cloneNode(true)));
     return;
    }
-   filtered.forEach(c=>{const college=collegesById.get(c.college_id);if(!college)return;const card=document.createElement('article');card.className='ad-campaign-card';
+   filtered.forEach(c=>{const college=collegesById.get(c.college_id);if(!college)return;db.from('college_ad_campaign_events').insert({campaign_id:c.id,event_type:'impression'}).then(()=>{}).catch(()=>{});const card=document.createElement('article');card.className='ad-campaign-card';
     if(c.media_type==='video'){const v=document.createElement('video');v.className='ad-campaign-video';v.src=window.vmSafeAdMediaUrl(c.media_url,c.media_type);v.controls=true;v.preload='metadata';v.playsInline=true;v.setAttribute('aria-label',c.title);card.append(v)}
     else {const im=document.createElement('img');im.className='ad-campaign-media';im.src=window.vmSafeAdMediaUrl(c.media_url,c.media_type);im.alt=c.title;im.loading='lazy';card.append(im)}
     const body=document.createElement('div');body.className='ad-campaign-body';const h=document.createElement('h3');h.textContent=c.title;const org=document.createElement('div');org.className='ad-campaign-meta';org.textContent=college.name+' · '+(c.media_type==='video'?'Video promotion':'College poster');body.append(h,org);
     if(c.description){const p=document.createElement('p');p.textContent=c.description;body.append(p)}
     const area=document.createElement('div');area.className='ad-campaign-meta';const ids=[...new Set([...districtsByCampaign.filter(x=>x.campaign_id===c.id).map(x=>x.district_id),...mandalsByCampaign.filter(x=>x.campaign_id===c.id).map(x=>mandalsData.find(m=>m.id===x.mandal_id)?.district_id).filter(Boolean)])];area.textContent=ids.map(id=>districtsData.find(d=>d.id===id)?.name).filter(Boolean).join(', ');body.append(area);
-    // External campaign click-through links are disabled until destination URLs can be reviewed.
+    if(c.click_url){try{const dest=new URL(c.click_url,window.location.href);if(['https:','http:'].includes(dest.protocol)){const link=document.createElement('a');link.href=dest.href;link.target='_blank';link.rel='noopener noreferrer';link.className='vm-section-managed-ad-link';link.textContent='View college / admissions';link.addEventListener('click',()=>{db.from('college_ad_campaign_events').insert({campaign_id:c.id,event_type:'click'}).then(()=>{}).catch(()=>{});});body.append(link);}}catch(_){}}
     card.append(body);grid.append(card);
    });
    // Fill a 20-box ad belt with real approved campaigns, then duplicate the belt for seamless motion.
