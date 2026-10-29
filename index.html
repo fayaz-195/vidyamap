@@ -2742,7 +2742,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
 // Public ad showcase: only approved, in-date campaigns are read from Supabase.
 (async function initCollegeAds(){
  const grid=document.getElementById('collegeAdGrid'); if(!grid||!window.supabase)return;
- const districtSel=null, mandalSel=null;
+ let districtSel=null, mandalSel=null;
  // Admin-managed multi-image/video carousel for sponsored college promotions.
   try{
    const managedResult=await db.from('site_ad_placements').select('id,title,description,media_type,media_url,click_url,sort_order').eq('placement_key','after_sponsored_college_promotions').eq('is_active',true).order('sort_order',{ascending:true}).order('created_at',{ascending:true});
@@ -2774,6 +2774,17 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
   ]);
   if(dr.error||mr.error||cr.error)throw (dr.error||mr.error||cr.error);
   const districtsData=dr.data||[], mandalsData=mr.data||[], campaigns=cr.data||[];
+  const locationBar=document.createElement('div');locationBar.className='vm-ad-location-filter';locationBar.style.cssText='display:flex;align-items:end;gap:10px;flex-wrap:wrap;margin:0 0 14px;padding:12px 14px;border:1px solid #e3e7f2;border-radius:12px;background:#fff';
+  const locationLabel=document.createElement('strong');locationLabel.textContent='Show ads for my area';locationLabel.style.cssText='font-size:12px;color:#26345d;width:100%';locationBar.append(locationLabel);
+  const districtWrap=document.createElement('label');districtWrap.style.cssText='display:grid;gap:4px;font-size:10px;color:#75809a;font-weight:700';districtWrap.textContent='District';
+  districtSel=document.createElement('select');districtSel.id='vmCollegeAdDistrict';districtSel.style.cssText='min-width:190px;padding:9px;border:1px solid #dfe4ef;border-radius:9px;background:#fff;color:#26345d;font:inherit';
+  const districtDefault=document.createElement('option');districtDefault.value='';districtDefault.textContent='Choose district';districtSel.append(districtDefault);
+  districtsData.forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.name;districtSel.append(o)});districtWrap.append(districtSel);
+  const mandalWrap=document.createElement('label');mandalWrap.style.cssText='display:grid;gap:4px;font-size:10px;color:#75809a;font-weight:700';mandalWrap.textContent='Mandal (optional)';
+  mandalSel=document.createElement('select');mandalSel.id='vmCollegeAdMandal';mandalSel.style.cssText='min-width:190px;padding:9px;border:1px solid #dfe4ef;border-radius:9px;background:#fff;color:#26345d;font:inherit';mandalWrap.append(mandalSel);
+  locationBar.append(districtWrap,mandalWrap);grid.parentElement?.insertBefore(locationBar,grid);
+  function fillMandals(){const did=districtSel.value;mandalSel.replaceChildren();const all=document.createElement('option');all.value='';all.textContent=did?'All mandals in selected district':'Choose a district first';mandalSel.append(all);mandalSel.disabled=!did;mandalsData.filter(m=>did&&m.district_id===did).forEach(m=>{const o=document.createElement('option');o.value=m.id;o.textContent=m.name;mandalSel.append(o)});}
+  fillMandals();districtSel.addEventListener('change',()=>{fillMandals();render();});mandalSel.addEventListener('change',render);
   const ticker=document.getElementById('vmAdTicker'),tickerTrack=document.getElementById('vmTickerTrack');
   const paidActive=campaigns.filter(c=>c.payment_status==='paid'&&window.vmSafeAdMediaUrl(c.media_url,c.media_type)&&(!c.starts_at||new Date(c.starts_at)<=new Date())&&(!c.ends_at||new Date(c.ends_at)>=new Date()));
   if(ticker&&tickerTrack){
@@ -2789,7 +2800,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
   ]);
   if(targetD.error||targetM.error||collRes.error)throw (targetD.error||targetM.error||collRes.error);
   const districtsByCampaign=targetD.data||[], mandalsByCampaign=targetM.data||[], collegesById=new Map((collRes.data||[]).map(c=>[c.id,c]));
-  function fillMandals(){const did=districtSel.value;mandalSel.replaceChildren();const all=document.createElement('option');all.value='';all.textContent='All mandals';mandalSel.append(all);mandalsData.filter(m=>!did||m.district_id===did).forEach(m=>{const o=document.createElement('option');o.value=m.id;o.textContent=m.name;mandalSel.append(o)});}
+  
   function render(){
    grid.replaceChildren();
    const filtered=campaigns.filter(c=>{
@@ -2797,10 +2808,15 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     if(c.starts_at&&new Date(c.starts_at)>new Date())return false;
     if(c.ends_at&&new Date(c.ends_at)<new Date())return false;
     const ds=districtsByCampaign.filter(x=>x.campaign_id===c.id), ms=mandalsByCampaign.filter(x=>x.campaign_id===c.id);
-    return ds.length>0||ms.length>0; // show only area-targeted campaigns; no manual filter needed
+    if(!ds.length&&!ms.length)return false;
+    const selectedDistrict=districtSel?.value||'',selectedMandal=mandalSel?.value||'';
+    if(!selectedDistrict)return false;
+    if(selectedMandal)return ds.some(x=>x.district_id===selectedDistrict)||ms.some(x=>x.mandal_id===selectedMandal);
+    return ds.some(x=>x.district_id===selectedDistrict);
    });
    if(!filtered.length){
-    for(let i=1;i<=20;i++){const slot=document.createElement('article');slot.className='ad-slot-placeholder';const ico=document.createElement('div');ico.className='slot-icon';ico.textContent='📢';const h=document.createElement('strong');h.textContent='YOUR AD SHOWN HERE';const p=document.createElement('p');p.textContent='VidyaMap · Sponsored college poster or video';slot.append(ico,h,p);grid.append(slot);}
+    const hasArea=!!districtSel?.value;
+    for(let i=1;i<=20;i++){const slot=document.createElement('article');slot.className='ad-slot-placeholder';const ico=document.createElement('div');ico.className='slot-icon';ico.textContent='📢';const h=document.createElement('strong');h.textContent='YOUR AD SHOWN HERE';const p=document.createElement('p');p.textContent=hasArea?'No paid ads are currently targeted to this area.':'Choose your district above to see ads targeted to your area.';slot.append(ico,h,p);grid.append(slot);}
     const slots=Array.from(grid.children);slots.forEach(slot=>grid.append(slot.cloneNode(true)));
     return;
    }
