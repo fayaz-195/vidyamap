@@ -2719,30 +2719,30 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
 (async function initCollegeAds(){
  const grid=document.getElementById('collegeAdGrid'); if(!grid||!window.supabase)return;
  const districtSel=null, mandalSel=null;
- // If an admin-managed full-screen creative exists for this section, show it instead of placeholder cards.
+ // Admin-managed multi-image/video carousel for sponsored college promotions.
   try{
-   const managedResult=await db.from('site_ad_placements').select('title,description,media_type,media_url,click_url,is_active,sort_order').eq('placement_key','after_sponsored_college_promotions').eq('is_active',true).order('sort_order',{ascending:true}).limit(1);
-   const managed=managedResult.error?null:(managedResult.data||[])[0];
-   const safeUrl=managed&&window.vmSafeAdMediaUrl(managed.media_url,managed.media_type);
-   if(managed&&safeUrl){
-    const section=document.getElementById('collegeAds');section?.classList.add('vm-managed-fullscreen-ad');
-    grid.replaceChildren();grid.classList.add('vm-managed-fullscreen-ad-grid');
-    const card=document.createElement('article');card.className='vm-managed-fullscreen-ad-card';
-    let media;
-    if(managed.media_type==='video'){media=document.createElement('video');media.src=safeUrl;media.controls=true;media.autoplay=true;media.muted=true;media.loop=true;media.playsInline=true;media.preload='metadata';media.setAttribute('aria-label',managed.title||'Sponsored college promotion');}
-    else{media=document.createElement('img');media.src=safeUrl;media.alt=managed.title||'Sponsored college promotion';media.loading='eager';}
-    card.append(media);
-    const copy=document.createElement('div');copy.className='vm-managed-fullscreen-ad-copy';
-    const kicker=document.createElement('div');kicker.className='vm-managed-fullscreen-ad-kicker';kicker.textContent='SPONSORED COLLEGE PROMOTION';
-    const title=document.createElement('h3');title.textContent=managed.title||'College admissions open';
-    copy.append(kicker,title);
-    if(managed.description){const desc=document.createElement('p');desc.textContent=managed.description;copy.append(desc);}
-    if(managed.click_url){try{const dest=new URL(managed.click_url,window.location.href);if(['https:','http:'].includes(dest.protocol)){const link=document.createElement('a');link.href=dest.href;link.target='_blank';link.rel='noopener noreferrer';link.className='vm-managed-fullscreen-ad-link';link.textContent='Learn more';copy.append(link);}}catch(_){}}
-    card.append(copy);grid.append(card);
+   const managedResult=await db.from('site_ad_placements').select('id,title,description,media_type,media_url,click_url,sort_order').eq('placement_key','after_sponsored_college_promotions').eq('is_active',true).order('sort_order',{ascending:true}).order('created_at',{ascending:true});
+   const managedAds=(managedResult.error?[]:(managedResult.data||[])).filter(c=>window.vmSafeAdMediaUrl(c.media_url,c.media_type));
+   if(managedAds.length){
+    document.getElementById('collegeAds')?.classList.remove('vm-managed-fullscreen-ad');
+    grid.replaceChildren();grid.classList.remove('vm-managed-fullscreen-ad-grid');
+    managedAds.forEach(ad=>{
+     const card=document.createElement('article');card.className='ad-slot-placeholder vm-section-managed-ad';
+     const safeUrl=window.vmSafeAdMediaUrl(ad.media_url,ad.media_type);let media;
+     if(ad.media_type==='video'){media=document.createElement('video');media.src=safeUrl;media.controls=true;media.preload='metadata';media.playsInline=true;media.className='vm-section-managed-ad-media';}
+     else{media=document.createElement('img');media.src=safeUrl;media.alt=ad.title||'Sponsored college ad';media.loading='lazy';media.className='vm-section-managed-ad-media';}
+     card.append(media);
+     const h=document.createElement('strong');h.textContent=ad.title||'Sponsored college promotion';card.append(h);
+     if(ad.description){const p=document.createElement('p');p.textContent=ad.description;card.append(p);}
+     if(ad.click_url){try{const dest=new URL(ad.click_url,window.location.href);if(['https:','http:'].includes(dest.protocol)){const link=document.createElement('a');link.href=dest.href;link.target='_blank';link.rel='noopener noreferrer';link.className='vm-section-managed-ad-link';link.textContent='Learn more';card.append(link);}}catch(_){}}
+     grid.append(card);
+    });
+    const original=Array.from(grid.children);
+    for(let i=original.length;i<20;i++)grid.append(original[i%original.length].cloneNode(true));
+    const belt=Array.from(grid.children);belt.forEach(card=>grid.append(card.cloneNode(true)));
     return;
    }
-  }catch(_){}
-  try{document.getElementById('collegeAds')?.classList.remove('vm-managed-fullscreen-ad');grid.classList.remove('vm-managed-fullscreen-ad-grid');}catch(_){}
+  }catch(managedErr){console.warn('Managed college promotion ads unavailable',managedErr);}
   try{
   const [dr,mr,cr]=await Promise.all([
    db.from('districts').select('id,name').eq('is_active',true).order('name'),
@@ -3552,30 +3552,12 @@ footer,footer p,footer li,footer small,footer h2,footer h3,footer a{color:#f5f7f
 #collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-link{display:inline-flex!important;padding:12px 20px!important;background:#76208f!important;border:1px solid #ffffffb8!important;border-radius:12px!important;color:#fff!important;font-weight:850!important;text-decoration:none!important}
 @media(max-width:650px){#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-grid,#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-card{min-height:480px!important}#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-copy{padding:22px!important}}
 
-/* Regular ad banner sizing; never full-screen */
-#collegeAds.vm-managed-fullscreen-ad{display:block!important;width:100%!important;min-height:0!important;margin-left:0!important;padding:40px 0!important;background:linear-gradient(120deg,#f4efff,#eef5ff 55%,#fff8ef)!important}
-#collegeAds.vm-managed-fullscreen-ad>.container{display:block!important;width:min(1180px,92%)!important;margin:0 auto 18px!important}
-#collegeAds.vm-managed-fullscreen-ad .ad-carousel-wrap{display:block!important;width:min(1180px,92%)!important;margin:0 auto!important;padding:0!important}
-#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-grid{display:block!important;width:100%!important;height:clamp(280px,42vw,460px)!important;min-height:280px!important;margin:0!important;padding:0!important;overflow:hidden!important;border-radius:22px!important}
-#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-card{position:relative!important;width:100%!important;height:100%!important;min-height:280px!important;margin:0!important;overflow:hidden!important;border:1px solid #d8c9ee!important;border-radius:22px!important;background:#101b3c!important;box-shadow:0 16px 40px #17254c20!important}
-#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-card>img,#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-card>video{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center!important;background:#101b3c!important}
-#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-copy{position:absolute!important;z-index:2!important;left:0!important;right:0!important;bottom:0!important;padding:clamp(18px,3vw,34px)!important;color:#fff!important;background:linear-gradient(180deg,transparent 0%,rgba(8,15,38,.70) 45%,rgba(8,15,38,.94) 100%)!important}
-#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-kicker{font-size:11px!important;letter-spacing:1.5px!important;font-weight:900!important;color:#f2c8ff!important;margin-bottom:7px!important}
-#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-copy h3{font-size:clamp(22px,3vw,36px)!important;color:#fff!important;margin:0 0 8px!important;font-weight:900!important}
-#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-copy p{font-size:clamp(13px,1.5vw,17px)!important;color:#f5f6ff!important;max-width:760px!important;margin:0 0 10px!important}
-#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-link{display:inline-flex!important;padding:9px 15px!important;background:#76208f!important;border:1px solid #ffffffb8!important;border-radius:10px!important;color:#fff!important;font-weight:850!important;text-decoration:none!important}
-#vmAdAfterServices.vm-approved-ad-slot{height:auto!important;min-height:0!important;padding:30px 0!important}
-#vmAdAfterServices .vm-approved-ad-inner{height:auto!important;min-height:0!important;width:min(1180px,92%)!important;margin:auto!important;padding:18px!important;border:1px solid #ffffff38!important;border-radius:20px!important;background:#ffffff12!important}
-#vmAdAfterServices .vm-approved-ad-kicker,#vmAdAfterServices .vm-approved-ad-title,#vmAdAfterServices .vm-approved-ad-sub{display:block!important}
-#vmAdAfterServices .vm-approved-ad-title{color:#fff!important;font-size:clamp(22px,3vw,30px)!important}
-#vmAdAfterServices .vm-approved-ad-sub{color:#e0e7ff!important}
-#vmAdAfterServices .vm-approved-ad-track{display:grid!important;grid-auto-flow:column!important;grid-auto-columns:minmax(0,1fr)!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:hidden!important;padding:0!important;margin:0!important;gap:0!important}
-#vmAdAfterServices .vm-approved-ad-card{height:clamp(260px,35vw,420px)!important;min-height:260px!important;border-radius:14px!important}
-#vmAdAfterServices .vm-approved-ad-card>img,#vmAdAfterServices .vm-approved-ad-card>video,#vmAdAfterServices .vm-approved-ad-media{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;object-fit:contain!important;background:#101b3c!important}
-#vmAdAfterServices .vm-approved-ad-copy{padding:18px!important}
-#vmAdAfterServices .vm-approved-ad-copy h3{font-size:clamp(20px,2.5vw,30px)!important;color:#fff!important}
-#vmAdAfterServices .vm-approved-ad-copy p{color:#f3f5ff!important}
-#vmAdAfterMarketing{display:none!important}
-@media(max-width:650px){#collegeAds.vm-managed-fullscreen-ad{padding:28px 0!important}#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-grid{height:300px!important;min-height:300px!important}#collegeAds.vm-managed-fullscreen-ad .vm-managed-fullscreen-ad-card{min-height:300px!important}#vmAdAfterServices .vm-approved-ad-card{height:300px!important;min-height:300px!important}#vmAdAfterServices .vm-approved-ad-inner{padding:13px!important}}
+/* Admin-managed ads use the same 250px carousel cards as existing placeholders */
+.ad-campaign-grid .vm-section-managed-ad{flex:0 0 250px!important;width:250px!important;min-height:228px!important;height:228px!important;justify-content:flex-start!important;gap:0!important;padding:0!important;overflow:hidden!important;border:1px dashed #a78bfa!important;border-radius:18px!important;background:linear-gradient(145deg,#faf5ff,#eff6ff)!important}
+.ad-campaign-grid .vm-section-managed-ad .vm-section-managed-ad-media{display:block!important;width:100%!important;height:132px!important;min-height:132px!important;max-height:132px!important;object-fit:cover!important;object-position:center!important;background:#101b3c!important;border:0!important;border-radius:0!important;margin:0 0 8px!important}
+.ad-campaign-grid .vm-section-managed-ad strong{display:block!important;color:#17418b!important;font-size:15px!important;line-height:1.25!important;margin:7px 10px 4px!important;max-width:100%!important;overflow-wrap:anywhere!important}
+.ad-campaign-grid .vm-section-managed-ad p{display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;color:#596b86!important;font-size:13px!important;line-height:1.35!important;margin:0 10px 7px!important}
+.ad-campaign-grid .vm-section-managed-ad-link{display:inline-block!important;margin:0 10px 8px!important;color:#76208f!important;font-size:12px!important;font-weight:800!important;text-decoration:none!important}
+@media(max-width:700px){.ad-campaign-grid .vm-section-managed-ad{flex-basis:78vw!important;width:78vw!important;height:228px!important;min-height:228px!important}}
 </style></body>
 </html>
