@@ -3442,5 +3442,54 @@ input,select,textarea{color:#172b43}
 input::placeholder,textarea::placeholder{color:#6b778b;opacity:1}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #9b82e8!important;outline-offset:2px}
 footer,footer p,footer li,footer small,footer h2,footer h3,footer a{color:#f5f7ff}
+
+/* FINAL HOMEPAGE AD OVERRIDE — full-screen single creative with readable text */
+#vmAdAfterServices.vm-approved-ad-slot{
+ display:block!important;position:relative!important;width:100vw!important;max-width:none!important;
+ margin-left:calc(50% - 50vw)!important;padding:0!important;height:86vh!important;min-height:560px!important;
+ background:linear-gradient(120deg,#111d4c,#422276)!important;border:0!important;overflow:hidden!important;
+}
+#vmAdAfterServices .vm-approved-ad-inner{
+ display:block!important;position:relative!important;width:100%!important;max-width:none!important;
+ height:100%!important;min-height:0!important;margin:0!important;padding:0!important;
+ border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;
+}
+#vmAdAfterServices .vm-approved-ad-kicker,
+#vmAdAfterServices .vm-approved-ad-title,
+#vmAdAfterServices .vm-approved-ad-sub{display:none!important}
+#vmAdAfterServices .vm-approved-ad-track{
+ display:block!important;position:relative!important;width:100%!important;height:100%!important;
+ min-height:0!important;max-height:none!important;margin:0!important;padding:0!important;
+ overflow:hidden!important;scroll-snap-type:none!important;background:transparent!important;
+}
+#vmAdAfterServices .vm-approved-ad-card{
+ display:block!important;position:relative!important;width:100%!important;height:100%!important;
+ min-width:0!important;min-height:0!important;margin:0!important;padding:0!important;
+ border:0!important;border-radius:0!important;overflow:hidden!important;
+ background:#101b3c!important;box-shadow:none!important;
+}
+#vmAdAfterServices .vm-approved-ad-card>img,
+#vmAdAfterServices .vm-approved-ad-card>video,
+#vmAdAfterServices .vm-approved-ad-media{
+ display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+ min-height:0!important;max-height:none!important;object-fit:cover!important;object-position:center!important;
+ margin:0!important;padding:0!important;background:#101b3c!important;border:0!important;border-radius:0!important;
+}
+#vmAdAfterServices .vm-approved-ad-copy{
+ display:block!important;position:absolute!important;z-index:2!important;left:0!important;right:0!important;bottom:0!important;
+ padding:clamp(22px,4vw,52px)!important;background:linear-gradient(180deg,transparent 0%,rgba(7,15,39,.78) 38%,rgba(7,15,39,.96) 100%)!important;
+ color:#fff!important;text-shadow:0 1px 3px #07102788!important;
+}
+#vmAdAfterServices .vm-approved-ad-meta{display:block!important;color:#f2c8ff!important;font-weight:900!important;letter-spacing:1.5px!important;font-size:12px!important;margin-bottom:8px!important}
+#vmAdAfterServices .vm-approved-ad-copy h3{display:block!important;color:#fff!important;font-size:clamp(24px,4vw,44px)!important;line-height:1.12!important;margin:0 0 10px!important;font-weight:850!important}
+#vmAdAfterServices .vm-approved-ad-copy p{display:block!important;color:#f3f5ff!important;font-size:clamp(14px,1.6vw,18px)!important;line-height:1.5!important;margin:0 0 12px!important;max-width:760px!important}
+#vmAdAfterServices .vm-approved-ad-click{display:inline-flex!important;color:#fff!important;background:#76208f!important;border:1px solid #ffffffb8!important;border-radius:12px!important;padding:11px 17px!important;font-weight:850!important;text-decoration:none!important}
+#vmAdAfterServices .vm-approved-ad-empty{display:block!important;position:absolute!important;left:4%!important;right:4%!important;top:50%!important;transform:translateY(-50%)!important;margin:0!important;padding:28px!important;text-align:center!important;color:#fff!important;background:#ffffff14!important;border:1px dashed #ffffff88!important;border-radius:18px!important}
+#vmAdAfterMarketing{display:none!important}
+@media(max-width:650px){
+ #vmAdAfterServices.vm-approved-ad-slot{height:76vh!important;min-height:480px!important}
+ #vmAdAfterServices .vm-approved-ad-copy{padding:22px!important}
+ #vmAdAfterServices .vm-approved-ad-card>img,#vmAdAfterServices .vm-approved-ad-card>video{object-position:center!important}
+}
 </style></body>
 </html>
