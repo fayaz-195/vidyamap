@@ -3112,6 +3112,28 @@ main{overflow:visible!important}
   const client=window.supabase.createClient("https://taxlvccrinehasexgvhv.supabase.co","sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA");
   const managedResult=await client.from("site_ad_placements").select("id,placement_key,title,description,media_type,media_url,click_url,sort_order").eq("is_active",true).order("sort_order",{ascending:true});
   const managedAds=managedResult.error?[]:(managedResult.data||[]);
+  // Render the admin-uploaded ad before optional college campaign queries, so those queries cannot block it.
+  const primaryManaged=managedAds.find(c=>c.placement_key==="after_services"&&window.vmSafeAdMediaUrl(c.media_url,c.media_type));
+  if(primaryManaged){
+   const slot=document.getElementById("vmAdAfterServices"),track=slot?.querySelector(".vm-approved-ad-track");
+   if(track){
+    track.replaceChildren();
+    const card=document.createElement("article");card.className="vm-approved-ad-card";
+    let media;
+    const safeUrl=window.vmSafeAdMediaUrl(primaryManaged.media_url,primaryManaged.media_type);
+    if(primaryManaged.media_type==="video"){media=document.createElement("video");media.src=safeUrl;media.controls=true;media.preload="metadata";media.playsInline=true;media.setAttribute("aria-label",primaryManaged.title||"Sponsored video");}
+    else{media=document.createElement("img");media.className="vm-approved-ad-media";media.src=safeUrl;media.alt=primaryManaged.title||"Sponsored promotion";media.loading="eager";}
+    card.append(media);
+    const copy=document.createElement("div");copy.className="vm-approved-ad-copy";
+    const meta=document.createElement("div");meta.className="vm-approved-ad-meta";meta.textContent="SPONSORED · "+(primaryManaged.media_type==="video"?"VIDEO":"IMAGE");
+    const h=document.createElement("h3");h.textContent=primaryManaged.title||"VIDYAMAP promotion";
+    copy.append(meta,h);
+    if(primaryManaged.description){const p=document.createElement("p");p.textContent=primaryManaged.description;copy.append(p);}
+    if(primaryManaged.click_url){try{const dest=new URL(primaryManaged.click_url,window.location.href);if(["https:","http:"].includes(dest.protocol)){const link=document.createElement("a");link.className="vm-approved-ad-click";link.href=dest.href;link.target="_blank";link.rel="noopener noreferrer";link.textContent="Learn more ↗";copy.append(link);}}catch(_){}}
+    card.append(copy);track.append(card);
+    return;
+   }
+  }
   const {data,error}=await client.from("college_ad_campaigns").select("id,college_id,title,description,media_type,media_url,click_url,starts_at,ends_at,payment_status,status").eq("status","approved").eq("payment_status","paid").order("created_at",{ascending:false}).limit(100);
   if(error)throw error;
   const now=new Date(),active=(data||[]).filter(c=>window.vmSafeAdMediaUrl(c.media_url,c.media_type)&&(!c.starts_at||new Date(c.starts_at)<=now)&&(!c.ends_at||new Date(c.ends_at)>=now));
