@@ -779,6 +779,10 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
             <div id="overviewRecentActivity"><div class="loading">Loading audit activity…</div></div>
           </article>
         </section>
+        <section class="panel section-panel" style="margin:0 0 18px;overflow:hidden" aria-label="Follow-up operations">
+          <div class="section-head"><div><h2>Follow-up operations</h2><p>Student enquiries with follow-up dates due now or overdue.</p></div><a class="btn secondary" href="admin.html?page=enquirySummary">Open enquiries ↗</a></div>
+          <div id="adminFollowUpQueue" class="loading">Checking scheduled follow-ups…</div>
+        </section>
         <div id="overviewDataArea" class="panel" style="padding:18px;margin-bottom:18px"><p class="sub">Latest records from each section will appear here.</p></div>
         </div>
     <div class="section-grid">
@@ -1048,10 +1052,24 @@ async function loadSiteAds(){
  area.querySelectorAll('[data-site-ad-delete]').forEach(btn=>btn.addEventListener('click',async()=>{const card=btn.closest('.site-ad-card'),title=card?.dataset.adTitle||'this ad',position=card?.dataset.adPosition||'?';if(!confirm('Delete only this ad at position '+position+'?\\n\\nAd: '+title+'\\n\\nOther positions using the same image will not be deleted.'))return;btn.disabled=true;try{const {error}=await client.from('site_ad_placements').delete().eq('id',btn.dataset.siteAdDelete);if(error)throw error;showNotice($('siteAdsNotice'),'Deleted "'+title+'" from position '+position+'.',false);await loadSiteAds();}catch(e){showNotice($('siteAdsNotice'),'Could not delete ad: '+e.message,true);btn.disabled=false;}}));
  filterAds();
 }
+async function loadAdminFollowUpQueue(){
+ const area=$('adminFollowUpQueue');if(!area)return;
+ try{
+  const now=new Date().toISOString();
+  const result=await safeSelect('student_enquiries','id,student_name,phone,course_name,status,follow_up_at,assigned_to',q=>q.not('follow_up_at','is',null).lte('follow_up_at',now).order('follow_up_at',{ascending:true}).limit(12));
+  if(result.error)throw result.error;
+  const rows=result.data||[];
+  if(!rows.length){area.innerHTML='<div class="empty">No follow-ups are due right now. Scheduled follow-ups will appear here automatically.</div>';return;}
+  area.innerHTML='<div class="table-wrap"><table><thead><tr><th>Student</th><th>Course</th><th>Status</th><th>Follow-up due</th><th>Contact</th></tr></thead><tbody>'+rows.map(row=>{
+   const due=new Date(row.follow_up_at),valid=!Number.isNaN(due.getTime()),overdue=valid&&due.getTime()<Date.now();
+   return '<tr><td><strong>'+esc(row.student_name||'Student enquiry')+'</strong><small>'+esc(row.assigned_to||'Unassigned')+'</small></td><td>'+esc(row.course_name||'—')+'</td><td><span class="status '+(overdue?'rejected':'pending')+'">'+(overdue?'Overdue':'Due now')+'</span></td><td>'+esc(valid?due.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}):'Date unavailable')+'</td><td>'+ (row.phone?'<a href="tel:'+esc(String(row.phone).replace(/[^+0-9]/g,''))+'">'+esc(row.phone)+'</a>':'—')+'</td></tr>';
+  }).join('')+'</tbody></table></div>';
+ }catch(error){area.innerHTML='<div class="empty">Follow-up queue unavailable: '+esc(error.message||'database query failed')+'</div>';}
+}
 async function loadDashboard(){
   const collegeAdQueuePromise=safeSelect('college_ad_campaigns','id,title,description,media_type,media_url,click_url,placement_key,status,payment_status,payment_amount_inr,payment_reference,duration_days,starts_at,ends_at,created_at,college:colleges(name)',q=>q.order('created_at',{ascending:false}).limit(100)).then(renderCollegeAdApprovalQueue);
 
-  hideNotice(dashboardNotice);loadEnquiryPanels();if($('siteAdsArea')){loadSiteAds();loadSitePromoItems();}
+  hideNotice(dashboardNotice);loadAdminFollowUpQueue();loadEnquiryPanels();if($('siteAdsArea')){loadSiteAds();loadSitePromoItems();}
   const jobs=[
     ['requestsArea',()=>safeSelect('college_registration_requests','id,college_name,contact_name,status,created_at',q=>q.order('created_at',{ascending:false}).limit(8)),renderRequests],
     ['campaignsArea',()=>safeSelect('college_ad_campaigns','id,title,media_type,media_url,status,payment_status,payment_amount_inr,payment_reference,duration_days,starts_at,ends_at',q=>q.order('created_at',{ascending:false}).limit(30)),renderCampaigns],
