@@ -3157,7 +3157,7 @@ main{overflow:visible!important}
     return;
    }
   }
-  const {data,error}=await client.from("college_ad_campaigns").select("id,college_id,title,description,media_type,media_url,click_url,starts_at,ends_at,payment_status,status").eq("status","approved").eq("payment_status","paid").order("created_at",{ascending:false}).limit(100);
+  const {data,error}=await client.from("college_ad_campaigns").select("id,college_id,title,description,media_type,media_url,click_url,starts_at,ends_at,payment_status,status,placement_key").eq("status","approved").eq("payment_status","paid").order("created_at",{ascending:false}).limit(100);
   if(error)throw error;
   const now=new Date(),active=(data||[]).filter(c=>window.vmSafeAdMediaUrl(c.media_url,c.media_type)&&(!c.starts_at||new Date(c.starts_at)<=now)&&(!c.ends_at||new Date(c.ends_at)>=now));
   const ids=[...new Set(active.map(c=>c.college_id).filter(Boolean))];let collegeMap=new Map();
@@ -3167,7 +3167,7 @@ main{overflow:visible!important}
    const track=slot.querySelector(".vm-approved-ad-track");if(!track)return;
    const kind=slot.dataset.kind||"mixed";
    const placementKey=slot.id==="vmAdAfterServices"?"after_services":slot.id==="vmAdAfterMarketing"?"after_marketing":"";
-   if(slot!==primarySlot){slot.hidden=true;return;}
+   slot.hidden=false;
    const managed=managedAds.filter(c=>c.placement_key===placementKey).slice(0,1);
    if(managed.length){
     track.replaceChildren();
@@ -3189,9 +3189,9 @@ main{overflow:visible!important}
     if(!track.children.length)putEmpty(slot);
     return;
    }
-   let items=usable.filter(c=>kind==="image"?c.media_type!=="video":kind==="video"?c.media_type==="video":true).slice(0,1);
-   if(!items.length){putEmpty(slot);return}
-   const offset=slotIndex%items.length;items=items.slice(offset).concat(items.slice(0,offset));
+   let items=usable.filter(c=>(c.placement_key||"after_services")===placementKey&&(kind==="image"?c.media_type!=="video":kind==="video"?c.media_type==="video":true));
+   if(!items.length){putEmpty(slot);slot.hidden=true;return}
+   slot.hidden=false;const offset=slotIndex%items.length;items=items.slice(offset).concat(items.slice(0,offset));
    track.replaceChildren();
    items.slice(0,6).forEach(c=>{
     const card=document.createElement("article");card.className="vm-approved-ad-card";
