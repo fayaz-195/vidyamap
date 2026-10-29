@@ -2726,7 +2726,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
    if(managedAds.length){
     document.getElementById('collegeAds')?.classList.remove('vm-managed-fullscreen-ad');
     grid.replaceChildren();grid.classList.remove('vm-managed-fullscreen-ad-grid');
-    const byPosition=new Map();managedAds.forEach(ad=>{const position=Number(ad.sort_order);if(position>=1&&position<=20&&!byPosition.has(position))byPosition.set(position,ad);});
+    const byPosition=new Map();managedAds.forEach(ad=>{const position=Number(ad.sort_order);if(Number.isInteger(position)&&position>=1&&position<=100&&!byPosition.has(position))byPosition.set(position,ad);});
     for(const [position,ad] of [...byPosition.entries()].sort((a,b)=>a[0]-b[0])){
      const card=document.createElement('article');card.className='ad-slot-placeholder vm-section-managed-ad';
      if(ad){
