@@ -3068,6 +3068,8 @@ main{overflow:visible!important}
  if(!window.supabase)return;
  try{
   const client=window.supabase.createClient("https://taxlvccrinehasexgvhv.supabase.co","sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA");
+  const managedResult=await client.from("site_ad_placements").select("id,placement_key,title,description,media_type,media_url,click_url,sort_order").eq("is_active",true).order("sort_order",{ascending:true});
+  const managedAds=managedResult.error?[]:(managedResult.data||[]);
   const {data,error}=await client.from("college_ad_campaigns").select("id,college_id,title,description,media_type,media_url,click_url,starts_at,ends_at,payment_status,status").eq("status","approved").eq("payment_status","paid").order("created_at",{ascending:false}).limit(100);
   if(error)throw error;
   const now=new Date(),active=(data||[]).filter(c=>window.vmSafeAdMediaUrl(c.media_url,c.media_type)&&(!c.starts_at||new Date(c.starts_at)<=now)&&(!c.ends_at||new Date(c.ends_at)>=now));
@@ -3077,6 +3079,28 @@ main{overflow:visible!important}
   slots.forEach((slot,slotIndex)=>{
    const track=slot.querySelector(".vm-approved-ad-track");if(!track)return;
    const kind=slot.dataset.kind||"mixed";
+   const placementKey=slot.id==="vmAdAfterServices"?"after_services":slot.id==="vmAdAfterMarketing"?"after_marketing":"";
+   const managed=managedAds.filter(c=>c.placement_key===placementKey);
+   if(managed.length){
+    track.replaceChildren();
+    managed.slice(0,6).forEach(c=>{
+     const card=document.createElement("article");card.className="vm-approved-ad-card";
+     let media;
+     if(c.media_type==="video"){media=document.createElement("video");media.src=window.vmSafeAdMediaUrl(c.media_url,"video");media.controls=true;media.preload="metadata";media.playsInline=true;media.setAttribute("aria-label",c.title||"Sponsored video");}
+     else{media=document.createElement("img");media.className="vm-approved-ad-media";media.src=window.vmSafeAdMediaUrl(c.media_url,"image");media.alt=c.title||"Sponsored promotion";media.loading="lazy";}
+     if(!media.src){return;}
+     card.append(media);
+     const copy=document.createElement("div");copy.className="vm-approved-ad-copy";
+     const meta=document.createElement("div");meta.className="vm-approved-ad-meta";meta.textContent="SPONSORED · "+(c.media_type==="video"?"VIDEO":"IMAGE");
+     const h=document.createElement("h3");h.textContent=c.title||"VIDYAMAP promotion";
+     const p=document.createElement("p");p.textContent=c.description||"";
+     copy.append(meta,h);if(c.description)copy.append(p);
+     if(c.click_url){try{const dest=new URL(c.click_url,window.location.href);if(["https:","http:"].includes(dest.protocol)){const link=document.createElement("a");link.className="vm-approved-ad-click";link.href=dest.href;link.target="_blank";link.rel="noopener noreferrer";link.textContent="Learn more ↗";copy.append(link);}}catch(_){}}
+     card.append(copy);track.append(card);
+    });
+    if(!track.children.length)putEmpty(slot);
+    return;
+   }
    let items=usable.filter(c=>kind==="image"?c.media_type!=="video":kind==="video"?c.media_type==="video":true);
    if(!items.length){putEmpty(slot);return}
    const offset=slotIndex%items.length;items=items.slice(offset).concat(items.slice(0,offset));
