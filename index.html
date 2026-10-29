@@ -2806,9 +2806,11 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     try{
      const response=await fetch('https://ipapi.co/json/');
      if(!response.ok)throw err;
-     const ip=await response.json(),candidates=[ip.region,ip.city].filter(Boolean);\n     const stateText=normalizeLocation(ip.region||'');detectedStateCode=stateText.includes('andhrapradesh')?'AP':stateText.includes('telangana')?'TS':null;
+     const ip=await response.json(),candidates=[ip.region,ip.city].filter(Boolean);
+     const stateText=normalizeLocation(ip.region||'');detectedStateCode=stateText.includes('andhrapradesh')?'AP':stateText.includes('telangana')?'TS':null;
      const found=candidates.map(v=>districtNames.get(normalizeLocation(v))||[...districtNames.entries()].find(([key])=>key&&normalizeLocation(v).includes(key))?.[1]).find(Boolean);
-     if(found){detectedDistrictId=found.id;detectedStateCode=found.state_code;detectedAreaLabel=found.name+' (approximate)';return;}\n     if(detectedStateCode){detectedAreaLabel=(detectedStateCode==='AP'?'Andhra Pradesh':'Telangana')+' (approximate)';return;}
+     if(found){detectedDistrictId=found.id;detectedStateCode=found.state_code;detectedAreaLabel=found.name+' (approximate)';return;}
+     if(detectedStateCode){detectedAreaLabel=(detectedStateCode==='AP'?'Andhra Pradesh':'Telangana')+' (approximate)';return;}
     }catch(_){}
     locationStatus.textContent='Could not automatically identify your district. Only ads targeted to all areas can be shown here.';
     return;
