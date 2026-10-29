@@ -1242,6 +1242,24 @@ input:focus,select:focus,textarea:focus{outline-color:#9b83d2!important;border-c
 footer{background:linear-gradient(115deg,#101f55,#35145f)!important;color:#f4f0ff!important}
 footer a:hover{color:#e3c98f!important}
 </style>
+
+<style id="vm-single-fullscreen-ad">
+/* One homepage ad: full-width creative, no card carousel */
+#vmAdAfterServices.vm-approved-ad-slot{display:block;width:100vw;max-width:none;margin-left:calc(50% - 50vw);padding:0!important;min-height:82vh;background:#0b1430;border:0;overflow:hidden}
+#vmAdAfterServices .vm-approved-ad-inner{width:100%;max-width:none;min-height:82vh;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+#vmAdAfterServices .vm-approved-ad-kicker,#vmAdAfterServices .vm-approved-ad-title,#vmAdAfterServices .vm-approved-ad-sub{display:none!important}
+#vmAdAfterServices .vm-approved-ad-track{display:block;width:100%;height:82vh;min-height:480px;max-height:1000px;overflow:hidden;padding:0;margin:0;scroll-snap-type:none}
+#vmAdAfterServices .vm-approved-ad-card{position:relative;display:block;width:100%;height:100%;min-height:480px;margin:0;border:0;border-radius:0;box-shadow:none;background:#0b1430;overflow:hidden}
+#vmAdAfterServices .vm-approved-ad-media,#vmAdAfterServices .vm-approved-ad-card video{display:block;width:100%;height:100%;min-height:480px;max-height:none;object-fit:contain;background:#0b1430}
+#vmAdAfterServices .vm-approved-ad-copy{position:absolute;left:0;right:0;bottom:0;padding:28px clamp(18px,4vw,56px) 22px;background:linear-gradient(transparent,#081127dc);color:#fff}
+#vmAdAfterServices .vm-approved-ad-copy h3,#vmAdAfterServices .vm-approved-ad-copy p,#vmAdAfterServices .vm-approved-ad-meta{color:#fff}
+#vmAdAfterServices .vm-approved-ad-copy h3{font-size:clamp(18px,2.5vw,30px);margin:0 0 5px}
+#vmAdAfterServices .vm-approved-ad-copy p{font-size:14px;margin:0 0 8px}
+#vmAdAfterServices .vm-approved-ad-empty{margin:24px auto;width:min(720px,92%);text-align:center;color:#fff;background:#ffffff12;border-color:#ffffff45}
+#vmAdAfterMarketing{display:none!important}
+@media(max-width:650px){#vmAdAfterServices.vm-approved-ad-slot{min-height:68vh}#vmAdAfterServices .vm-approved-ad-inner{min-height:68vh}#vmAdAfterServices .vm-approved-ad-track{height:68vh;min-height:360px}#vmAdAfterServices .vm-approved-ad-card,#vmAdAfterServices .vm-approved-ad-media,#vmAdAfterServices .vm-approved-ad-card video{min-height:360px}}
+</style>
+
 </head>
 <body>
 <div class="announcement">Your Education Journey Starts Here · Telangana &amp; Andhra Pradesh</div>
@@ -3062,7 +3080,7 @@ main{overflow:visible!important}
 
 <script id="vm-approved-ad-slots-script">
 (async function(){
- const slots=[...document.querySelectorAll("[data-vm-ad-slot]")];if(!slots.length)return;
+ const slots=[...document.querySelectorAll("[data-vm-ad-slot]")];if(!slots.length)return;const primarySlot=document.getElementById("vmAdAfterServices");slots.forEach(slot=>{if(slot!==primarySlot)slot.hidden=true;});
  const putEmpty=(slot)=>{const track=slot.querySelector(".vm-approved-ad-track");if(!track)return;const e=document.createElement("div");e.className="vm-approved-ad-empty";e.textContent="Approved college promotions will appear here when an active campaign matches this placement.";track.replaceChildren(e)};
  slots.forEach(putEmpty);
  if(!window.supabase)return;
@@ -3080,7 +3098,8 @@ main{overflow:visible!important}
    const track=slot.querySelector(".vm-approved-ad-track");if(!track)return;
    const kind=slot.dataset.kind||"mixed";
    const placementKey=slot.id==="vmAdAfterServices"?"after_services":slot.id==="vmAdAfterMarketing"?"after_marketing":"";
-   const managed=managedAds.filter(c=>c.placement_key===placementKey);
+   if(slot!==primarySlot){slot.hidden=true;return;}
+   const managed=managedAds.filter(c=>c.is_active).slice(0,1);
    if(managed.length){
     track.replaceChildren();
     managed.slice(0,6).forEach(c=>{
@@ -3101,7 +3120,7 @@ main{overflow:visible!important}
     if(!track.children.length)putEmpty(slot);
     return;
    }
-   let items=usable.filter(c=>kind==="image"?c.media_type!=="video":kind==="video"?c.media_type==="video":true);
+   let items=usable.filter(c=>kind==="image"?c.media_type!=="video":kind==="video"?c.media_type==="video":true).slice(0,1);
    if(!items.length){putEmpty(slot);return}
    const offset=slotIndex%items.length;items=items.slice(offset).concat(items.slice(0,offset));
    track.replaceChildren();
