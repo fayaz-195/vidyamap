@@ -2719,8 +2719,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
 (async function initCollegeAds(){
  const grid=document.getElementById('collegeAdGrid'); if(!grid||!window.supabase)return;
  const districtSel=null, mandalSel=null;
- try{
-  // If an admin-managed full-screen creative exists for this section, show it instead of placeholder cards.
+ // If an admin-managed full-screen creative exists for this section, show it instead of placeholder cards.
   try{
    const managedResult=await db.from('site_ad_placements').select('title,description,media_type,media_url,click_url,is_active,sort_order').eq('placement_key','after_sponsored_college_promotions').eq('is_active',true).order('sort_order',{ascending:true}).limit(1);
    const managed=managedResult.error?null:(managedResult.data||[])[0];
@@ -3124,7 +3123,7 @@ main{overflow:visible!important}
    const kind=slot.dataset.kind||"mixed";
    const placementKey=slot.id==="vmAdAfterServices"?"after_services":slot.id==="vmAdAfterMarketing"?"after_marketing":"";
    if(slot!==primarySlot){slot.hidden=true;return;}
-   const managed=managedAds.filter(c=>c.is_active).slice(0,1);
+   const managed=managedAds.filter(c=>c.placement_key===placementKey).slice(0,1);
    if(managed.length){
     track.replaceChildren();
     managed.slice(0,6).forEach(c=>{
