@@ -780,7 +780,7 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
           </article>
         </section>
         <section class="panel section-panel" style="margin:0 0 18px;overflow:hidden" aria-label="Follow-up operations">
-          <div class="section-head"><div><h2>Follow-up operations</h2><p>Student enquiries with follow-up dates due now or overdue.</p></div><a class="btn secondary" href="admin.html?page=enquirySummary">Open enquiries ↗</a></div>
+          <div class="section-head"><div><h2>Follow-up operations</h2><p>Due, overdue and upcoming student follow-ups.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn secondary" type="button" id="adminFollowUpRefresh">Refresh</button><button class="btn secondary" type="button" id="adminFollowUpExport">Export CSV</button><a class="btn secondary" href="admin.html?page=enquirySummary">Open enquiries ↗</a></div></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px"><button class="btn secondary" type="button" data-follow-filter="due">Due / overdue</button><button class="btn secondary" type="button" data-follow-filter="upcoming">Next 7 days</button><button class="btn secondary" type="button" data-follow-filter="all">All scheduled</button></div>
           <div id="adminFollowUpQueue" class="loading">Checking scheduled follow-ups…</div>
         </section>
         <div id="overviewDataArea" class="panel" style="padding:18px;margin-bottom:18px"><p class="sub">Latest records from each section will appear here.</p></div>
@@ -1052,20 +1052,44 @@ async function loadSiteAds(){
  area.querySelectorAll('[data-site-ad-delete]').forEach(btn=>btn.addEventListener('click',async()=>{const card=btn.closest('.site-ad-card'),title=card?.dataset.adTitle||'this ad',position=card?.dataset.adPosition||'?';if(!confirm('Delete only this ad at position '+position+'?\\n\\nAd: '+title+'\\n\\nOther positions using the same image will not be deleted.'))return;btn.disabled=true;try{const {error}=await client.from('site_ad_placements').delete().eq('id',btn.dataset.siteAdDelete);if(error)throw error;showNotice($('siteAdsNotice'),'Deleted "'+title+'" from position '+position+'.',false);await loadSiteAds();}catch(e){showNotice($('siteAdsNotice'),'Could not delete ad: '+e.message,true);btn.disabled=false;}}));
  filterAds();
 }
+let adminFollowUpRows=[];
+let adminFollowUpFilter='due';
 async function loadAdminFollowUpQueue(){
  const area=$('adminFollowUpQueue');if(!area)return;
+ area.innerHTML='<div class="loading">Loading scheduled follow-ups…</div>';
  try{
-  const now=new Date().toISOString();
-  const result=await safeSelect('student_enquiries','id,student_name,phone,course_name,status,follow_up_at,assigned_to',q=>q.not('follow_up_at','is',null).lte('follow_up_at',now).order('follow_up_at',{ascending:true}).limit(12));
+  const result=await safeSelect('student_enquiries','id,student_name,phone,course_name,status,follow_up_at,assigned_to',q=>q.not('follow_up_at','is',null).order('follow_up_at',{ascending:true}).limit(500));
   if(result.error)throw result.error;
-  const rows=result.data||[];
-  if(!rows.length){area.innerHTML='<div class="empty">No follow-ups are due right now. Scheduled follow-ups will appear here automatically.</div>';return;}
-  area.innerHTML='<div class="table-wrap"><table><thead><tr><th>Student</th><th>Course</th><th>Status</th><th>Follow-up due</th><th>Contact</th></tr></thead><tbody>'+rows.map(row=>{
-   const due=new Date(row.follow_up_at),valid=!Number.isNaN(due.getTime()),overdue=valid&&due.getTime()<Date.now();
-   return '<tr><td><strong>'+esc(row.student_name||'Student enquiry')+'</strong><small>'+esc(row.assigned_to||'Unassigned')+'</small></td><td>'+esc(row.course_name||'—')+'</td><td><span class="status '+(overdue?'rejected':'pending')+'">'+(overdue?'Overdue':'Due now')+'</span></td><td>'+esc(valid?due.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}):'Date unavailable')+'</td><td>'+ (row.phone?'<a href="tel:'+esc(String(row.phone).replace(/[^+0-9]/g,''))+'">'+esc(row.phone)+'</a>':'—')+'</td></tr>';
-  }).join('')+'</tbody></table></div>';
+  adminFollowUpRows=result.data||[];
+  renderAdminFollowUpQueue();
  }catch(error){area.innerHTML='<div class="empty">Follow-up queue unavailable: '+esc(error.message||'database query failed')+'</div>';}
 }
+function renderAdminFollowUpQueue(){
+ const area=$('adminFollowUpQueue');if(!area)return;
+ const now=Date.now(),week=now+7*86400000;
+ const filtered=adminFollowUpRows.filter(row=>{
+  const t=new Date(row.follow_up_at).getTime();if(!Number.isFinite(t))return false;
+  if(adminFollowUpFilter==='due')return t<=now;
+  if(adminFollowUpFilter==='upcoming')return t>now&&t<=week;
+  return true;
+ }).slice(0,100);
+ document.querySelectorAll('[data-follow-filter]').forEach(b=>{b.classList.toggle('active',b.dataset.followFilter===adminFollowUpFilter);b.setAttribute('aria-pressed',String(b.dataset.followFilter===adminFollowUpFilter));});
+ if(!filtered.length){area.innerHTML='<div class="empty">'+(adminFollowUpFilter==='due'?'No follow-ups are due or overdue right now.':adminFollowUpFilter==='upcoming'?'No follow-ups are scheduled for the next 7 days.':'No scheduled follow-ups found.')+'</div>';return;}
+ area.innerHTML='<div class="table-wrap"><table><thead><tr><th>Student</th><th>Course</th><th>Status</th><th>Follow-up due</th><th>Contact</th></tr></thead><tbody>'+filtered.map(row=>{
+  const due=new Date(row.follow_up_at),valid=!Number.isNaN(due.getTime()),overdue=valid&&due.getTime()<now;
+  const phone=String(row.phone||'').replace(/[^+0-9]/g,'');
+  return '<tr><td><strong>'+esc(row.student_name||'Student enquiry')+'</strong><small>'+esc(row.assigned_to||'Unassigned')+'</small></td><td>'+esc(row.course_name||'—')+'</td><td><span class="status '+(overdue?'rejected':due.getTime()<=now?'pending':'verified')+'">'+(overdue?'Overdue':due.getTime()<=now?'Due now':'Upcoming')+'</span></td><td>'+esc(valid?due.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}):'Date unavailable')+'</td><td>'+(phone?'<a href="tel:'+esc(phone)+'">'+esc(row.phone)+'</a>':'—')+'</td></tr>';
+ }).join('')+'</tbody></table></div><p class="sub" style="margin-top:10px">Showing '+filtered.length+' of '+adminFollowUpRows.length+' scheduled records.</p>';
+}
+document.addEventListener('click',event=>{
+ const filter=event.target.closest('[data-follow-filter]');
+ if(filter){adminFollowUpFilter=filter.dataset.followFilter;renderAdminFollowUpQueue();}
+ if(event.target.closest('#adminFollowUpRefresh'))loadAdminFollowUpQueue();
+ if(event.target.closest('#adminFollowUpExport')){
+  const rows=adminFollowUpRows.map(r=>[r.student_name,r.phone,r.course_name,r.status,r.assigned_to,r.follow_up_at]);
+  csvDownload('vidyamap-follow-ups.csv',[['Student','Phone','Course','Status','Assigned To','Follow-up At'],...rows]);
+ }
+});
 async function loadDashboard(){
   const collegeAdQueuePromise=safeSelect('college_ad_campaigns','id,title,description,media_type,media_url,click_url,placement_key,status,payment_status,payment_amount_inr,payment_reference,duration_days,starts_at,ends_at,created_at,college:colleges(name)',q=>q.order('created_at',{ascending:false}).limit(100)).then(renderCollegeAdApprovalQueue);
 
