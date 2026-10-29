@@ -2797,7 +2797,15 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     if(c.starts_at&&new Date(c.starts_at)>new Date())return false;
     if(c.ends_at&&new Date(c.ends_at)<new Date())return false;
     const ds=districtsByCampaign.filter(x=>x.campaign_id===c.id), ms=mandalsByCampaign.filter(x=>x.campaign_id===c.id);
-    return ds.length>0||ms.length>0; // show only area-targeted campaigns; no manual filter needed
+    if(!ds.length&&!ms.length)return false;
+    const selectedDistrict=districtSel?.value||'',selectedMandal=mandalSel?.value||'';
+    if(!selectedDistrict&&!selectedMandal)return true;
+    const selectedMandalRow=mandalsData.find(m=>m.id===selectedMandal);
+    if(selectedMandal&&ms.some(x=>x.mandal_id===selectedMandal))return true;
+    if(selectedDistrict&&ds.some(x=>x.district_id===selectedDistrict))return true;
+    if(selectedDistrict&&ms.some(x=>mandalsData.find(m=>m.id===x.mandal_id)?.district_id===selectedDistrict))return true;
+    if(selectedMandal&&ds.some(x=>x.district_id===selectedMandalRow?.district_id))return true;
+    return false;
    });
    if(!filtered.length){
     for(let i=1;i<=20;i++){const slot=document.createElement('article');slot.className='ad-slot-placeholder';const ico=document.createElement('div');ico.className='slot-icon';ico.textContent='📢';const h=document.createElement('strong');h.textContent='YOUR AD SHOWN HERE';const p=document.createElement('p');p.textContent='VidyaMap · Sponsored college poster or video';slot.append(ico,h,p);grid.append(slot);}
