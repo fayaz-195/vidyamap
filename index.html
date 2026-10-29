@@ -1012,6 +1012,21 @@ body.vm-lead-modal-open{overflow:hidden!important}
 .deadline-card .btn{align-self:flex-start;margin-top:auto}.deadline-empty{grid-column:1/-1;padding:20px;border:1px dashed #c9d5eb;border-radius:12px;color:var(--muted);background:#fff}
 @media(max-width:800px){.deadline-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.deadline-tracker{padding:16px}}
 @media(max-width:520px){.deadline-grid{grid-template-columns:1fr}}
+/* Smart College Finder */
+.smart-finder-panel{width:min(1120px,92%);margin:0 auto;padding:clamp(22px,4vw,38px);border:1px solid var(--border);border-radius:24px;background:linear-gradient(135deg,#fff 0%,#f7f3ff 100%);box-shadow:0 18px 55px #14265b0d}
+.smart-finder-panel h2{margin:8px 0;font-size:clamp(26px,3vw,36px);color:var(--navy)}
+.smart-finder-form{display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:12px;align-items:end;margin:22px 0}
+.smart-finder-form label{display:grid;gap:7px;font-size:13px;font-weight:750;color:var(--ink)}
+.smart-finder-form input,.smart-finder-form select{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--border);border-radius:11px;background:#fff;color:var(--ink);font:inherit}
+.smart-finder-results{margin-top:16px}
+.smart-finder-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.smart-finder-result{padding:16px;border:1px solid var(--border);border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.smart-finder-result h3{font-size:16px;margin:0;color:var(--navy)}
+.smart-finder-result p{font-size:13px;margin:0;line-height:1.5}
+.smart-match-score{display:inline-flex;align-self:flex-start;padding:5px 9px;border-radius:999px;background:#e6f7ed;color:#176b43;font-size:11px;font-weight:800}
+.smart-finder-result .btn{align-self:flex-start;margin-top:4px}
+@media(max-width:900px){.smart-finder-form{grid-template-columns:repeat(2,minmax(0,1fr))}.smart-finder-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.smart-finder-form,.smart-finder-list{grid-template-columns:1fr}.smart-finder-form .btn{width:100%}}
 </style></style></style></style></style></style></style></style></style></style>
 <style>
 /* Three distinct product panels */
@@ -1418,6 +1433,23 @@ footer a:hover{color:#e3c98f!important}
 
 
 
+
+<section class="section" id="smartCollegeFinder" aria-labelledby="smartFinderTitle">
+ <div class="container">
+  <div class="smart-finder-panel">
+   <div class="eyebrow">PERSONALISED COLLEGE DISCOVERY</div>
+   <h2 id="smartFinderTitle">Find colleges that fit you</h2>
+   <p class="muted">Choose your preferences and get a shortlist from verified VidyaMap profiles. Recommendations use available profile data only.</p>
+   <form id="smartFinderForm" class="smart-finder-form">
+    <label>Course or keyword<input id="finderKeyword" type="search" maxlength="100" placeholder="e.g. MPC, nursing, engineering"></label>
+    <label>Preferred district<select id="finderDistrict"><option value="">Any district</option></select></label>
+    <label>Admission preference<select id="finderAdmission"><option value="any">Any admission status</option><option value="open">Admissions marked open</option></select></label>
+    <button class="btn" type="submit">Find matching colleges →</button>
+   </form>
+   <div class="smart-finder-results" id="smartFinderResults" aria-live="polite"><p class="muted">Set your preferences and select Find matching colleges.</p></div>
+  </div>
+ </div>
+</section>
 
 <section class="section" id="directory" aria-labelledby="directoryTitle">
   <div class="container">
@@ -2270,6 +2302,48 @@ function renderColleges(items) {
   });
 }
 
+// Smart finder ranks verified records using only data actually present on each profile.
+function populateSmartFinderDistricts(){
+ const select=$("finderDistrict");if(!select)return;
+ const previous=select.value;
+ const unique=[...new Map(districts.filter(d=>d?.id&&d?.name).map(d=>[String(d.id),d])).values()].sort((a,b)=>a.name.localeCompare(b.name));
+ select.innerHTML='<option value="">Any district</option>';
+ unique.forEach(d=>{const option=document.createElement("option");option.value=String(d.id);option.textContent=d.name;select.append(option);});
+ if(previous)select.value=previous;
+}
+function runSmartCollegeFinder(event){
+ if(event)event.preventDefault();
+ const keyword=$("finderKeyword")?.value.trim().toLowerCase()||"";
+ const districtId=$("finderDistrict")?.value||"";
+ const admission=$("finderAdmission")?.value||"any";
+ const results=$("smartFinderResults");if(!results)return;
+ const candidates=verifiedColleges.map(c=>{
+  const haystack=[c.name,c.category,c.description,c.town,c.address,c.scholarship_info].filter(Boolean).join(" ").toLowerCase();
+  let score=0,reasons=[];
+  if(keyword){if(haystack.includes(keyword)){score+=5;reasons.push("Matches your keyword");}else return null;}
+  if(districtId){if(String(c.district_id)===districtId){score+=3;reasons.push("Preferred district");}else return null;}
+  if(admission==="open"){if(c.admissions_open===true){score+=4;reasons.push("Admissions marked open");}else return null;}
+  if(c.verified_at){score+=1;reasons.push("Verified profile");}
+  if(c.scholarship_info){score+=1;reasons.push("Scholarship details available");}
+  return {college:c,score,reasons};
+ }).filter(Boolean).sort((a,b)=>b.score-a.score||String(a.college.name||"").localeCompare(String(b.college.name||""))).slice(0,6);
+ results.innerHTML="";
+ if(!candidates.length){const p=document.createElement("p");p.className="muted";p.textContent="No verified colleges match all selected preferences. Try another keyword or choose Any district/admission status.";results.append(p);return;}
+ const intro=document.createElement("p");intro.className="muted";intro.textContent="Top "+candidates.length+" match(es), ranked by the profile information available on VidyaMap.";results.append(intro);
+ const list=document.createElement("div");list.className="smart-finder-list";
+ candidates.forEach(({college,reasons})=>{
+  const card=document.createElement("article");card.className="smart-finder-result";
+  const badge=document.createElement("span");badge.className="smart-match-score";badge.textContent="Profile match";
+  const h=document.createElement("h3");h.textContent=college.name||"Institution";
+  const loc=document.createElement("p");const d=districts.find(x=>String(x.id)===String(college.district_id));loc.textContent=[college.town,d?.name].filter(Boolean).join(", ")||"Location not provided";
+  const why=document.createElement("p");why.textContent=reasons.length?reasons.join(" · "):"Verified institution profile";
+  const btn=document.createElement("button");btn.type="button";btn.className="btn btn-outline";btn.textContent="View profile";btn.addEventListener("click",()=>openCollegeProfile(college));
+  card.append(badge,h,loc,why,btn);list.append(card);
+ });
+ results.append(list);
+}
+$("smartFinderForm")?.addEventListener("submit",runSmartCollegeFinder);
+
 // Deadline tracker uses only published dates from verified college profiles.
 function renderAdmissionDeadlines(){
  const grid=$('deadlineGrid'),count=$('deadlineResultsCount'),windowEl=$('deadlineWindow');if(!grid||!count)return;
@@ -2297,6 +2371,8 @@ async function loadColleges() {
   }
 
   verifiedColleges = data || [];
+  window.verifiedCollegesForCompare = verifiedColleges;
+  populateSmartFinderDistricts();
   renderColleges(verifiedColleges);
   renderAdmissionDeadlines();
 }
