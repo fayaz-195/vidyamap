@@ -1027,6 +1027,13 @@ body.vm-lead-modal-open{overflow:hidden!important}
 .smart-finder-result .btn{align-self:flex-start;margin-top:4px}
 @media(max-width:900px){.smart-finder-form{grid-template-columns:repeat(2,minmax(0,1fr))}.smart-finder-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.smart-finder-form,.smart-finder-list{grid-template-columns:1fr}.smart-finder-form .btn{width:100%}}
+/* Student shortlist */
+.shortlist-toolbar{width:min(1120px,92%);margin:0 auto 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 18px;border:1px solid var(--border);border-radius:16px;background:#fff}
+.shortlist-toolbar strong{color:var(--navy)}.shortlist-toolbar p{margin:4px 0 0;font-size:13px}
+.shortlist-save-btn{align-self:flex-start;border:1px solid #d7dff0;border-radius:10px;background:#fff;color:var(--navy);padding:9px 12px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.shortlist-save-btn[aria-pressed="true"]{background:#edf9f1;border-color:#b8e4c8;color:#176b43}
+.shortlist-save-btn:focus-visible,.shortlist-toolbar button:focus-visible{outline:3px solid #8bb8ff;outline-offset:2px}
+@media(max-width:560px){.shortlist-toolbar{align-items:stretch;flex-direction:column}.shortlist-toolbar button{width:100%}}
 </style></style></style></style></style></style></style></style></style></style>
 <style>
 /* Three distinct product panels */
@@ -1461,6 +1468,10 @@ footer a:hover{color:#e3c98f!important}
       <div><strong>Compare institutions</strong><p class="muted">Choose up to three institution profiles to compare.</p></div>
       <button class="btn btn-outline" type="button" id="openCompare" disabled>Compare selected (0)</button>
     </div>
+    <div class="shortlist-toolbar" aria-label="Saved college shortlist">
+      <div><strong>Your college shortlist</strong><p class="muted">Save colleges on this device and revisit them while comparing options.</p></div>
+      <button class="btn btn-outline" type="button" id="toggleSavedColleges" aria-pressed="false">Show saved colleges (0)</button>
+    </div>
     <div class="cards college-grid" id="collegeGrid"></div>
   </div>
 </section>
@@ -1876,6 +1887,21 @@ let states = [];
 let districts = [];
 let mandals = [];
 let verifiedColleges = [];
+const shortlistStorageKey = "vidyamap_saved_college_ids_v1";
+let savedCollegeIds = new Set();
+let shortlistOnly = false;
+let lastRenderedCollegeItems = [];
+try { const raw = JSON.parse(localStorage.getItem(shortlistStorageKey) || "[]"); if(Array.isArray(raw)) savedCollegeIds = new Set(raw.map(String)); } catch {}
+function persistShortlist(){try{localStorage.setItem(shortlistStorageKey,JSON.stringify([...savedCollegeIds]));}catch{}}
+function refreshShortlistButton(){
+ const button=$("toggleSavedColleges");if(!button)return;
+ button.textContent=(shortlistOnly?"Show all colleges":"Show saved colleges")+" ("+savedCollegeIds.size+")";
+ button.setAttribute("aria-pressed",String(shortlistOnly));
+}
+$("toggleSavedColleges")?.addEventListener("click",()=>{
+ shortlistOnly=!shortlistOnly;refreshShortlistButton();renderColleges(lastRenderedCollegeItems);
+});
+refreshShortlistButton();
 
 function showNotice(el, text, type = "") {
   el.style.display = "block";
@@ -2209,21 +2235,23 @@ document.querySelectorAll("[data-close-profile]").forEach(el => el.addEventListe
 document.addEventListener("keydown", ev => { if (ev.key === "Escape" && !$("collegeProfileModal").hidden) closeCollegeProfile(); });
 
 function renderColleges(items) {
+  lastRenderedCollegeItems = Array.isArray(items) ? items : [];
+  const displayItems = shortlistOnly ? lastRenderedCollegeItems.filter(c=>savedCollegeIds.has(String(c.id))) : lastRenderedCollegeItems;
   const grid = $("collegeGrid");
   grid.innerHTML = "";
 
-  if (!items.length) {
+  if (!displayItems.length) {
     const e = document.createElement("div");
     e.className = "empty";
-    e.textContent = "No verified colleges match these filters yet.";
+    e.textContent = shortlistOnly ? "No saved colleges match this view yet. Show all colleges and tap Save to shortlist." : "No verified colleges match these filters yet.";
     grid.appendChild(e);
     $("resultsCount").textContent = "0 verified colleges";
     return;
   }
 
-  $("resultsCount").textContent = items.length + " verified institution(s)";
+  $("resultsCount").textContent = displayItems.length + (shortlistOnly ? " saved institution(s)" : " verified institution(s)");
 
-  items.forEach(c => {
+  displayItems.forEach(c => {
     const d = districts.find(x => String(x.id) === String(c.district_id));
     const m = mandals.find(x => String(x.id) === String(c.mandal_id));
     const state = states.find(x => d && x.code === d.state_code);
@@ -2289,6 +2317,18 @@ function renderColleges(items) {
       } catch {}
     }
     card.append(actions);
+    const saveButton=document.createElement("button");
+    saveButton.type="button";saveButton.className="shortlist-save-btn";
+    saveButton.setAttribute("aria-pressed",String(savedCollegeIds.has(String(c.id))));
+    const updateSaveLabel=()=>{const saved=savedCollegeIds.has(String(c.id));saveButton.textContent=saved?"✓ Saved to shortlist":"＋ Save to shortlist";saveButton.setAttribute("aria-pressed",String(saved));};
+    updateSaveLabel();
+    saveButton.addEventListener("click",()=>{
+      const id=String(c.id);
+      if(savedCollegeIds.has(id))savedCollegeIds.delete(id);else savedCollegeIds.add(id);
+      persistShortlist();updateSaveLabel();refreshShortlistButton();
+      if(shortlistOnly)renderColleges(lastRenderedCollegeItems);
+    });
+    card.append(saveButton);
     const compareLabel = document.createElement("label");
     compareLabel.className = "compare-check";
     const compareInput = document.createElement("input");
