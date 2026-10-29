@@ -1262,7 +1262,7 @@ const response=await fetch(SUPABASE_URL+'/functions/v1/admin-create-college-acco
 const data=await response.json().catch(()=>({}));
 if(!response.ok||!data.ok)throw new Error(data.error||'Could not create college account.');
 notice.textContent='College account created successfully. Login email: '+data.email+'. Listing status: Pending approval.';notice.classList.remove('hidden','error');
-result.innerHTML='<strong>Account created</strong><p style="margin:8px 0 4px">College: '+esc(data.college_name)+'</p><p style="margin:4px 0">Login email: <strong>'+esc(data.email)+'</strong></p><p style="margin:4px 0">Listing status: <span class="status pending">Pending approval</span></p><p class="footer-note">Temporary password is not shown again after form reset. Share it securely with the college contact.</p>';
+result.innerHTML='<strong>Account created</strong><p style="margin:8px 0 4px">College: '+esc(data.college_name)+'</p><p style="margin:4px 0">Login email: <strong>'+esc(data.email)+'</strong></p><p style="margin:4px 0">Listing status: <span class="status pending">Pending approval</span></p><p class="footer-note">Temporary password is not shown again after form reset. Share it securely with the college contact.</p><p style="margin:14px 0 0"><a class="btn" href="./college-dashboard.html" target="_blank" rel="noopener noreferrer">Open College Dashboard ↗</a></p>';
 result.classList.remove('hidden');$('createCollegeForm').reset();await loadCollegeDistrictOptions();await loadDashboard();
 }catch(error){notice.textContent=error.message||'Account creation failed.';notice.classList.remove('hidden');notice.classList.add('error');}
 finally{button.disabled=false;button.textContent='Create college account';}
