@@ -998,6 +998,20 @@ body.vm-lead-modal-open{overflow:hidden!important}
 @keyframes vmSponsoredTicker{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.vm-inner-sponsored-text{animation:none;padding-left:0}}
 
+
+/* New feature: live admission deadline tracker */
+.deadline-tracker{background:linear-gradient(135deg,#f4f8ff,#f8f5ff);border:1px solid #dfe7f7;border-radius:20px;padding:24px;margin:22px 0 34px}
+.deadline-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin:16px 0}
+.deadline-toolbar label{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy);font-size:13px}
+.deadline-toolbar select{border:1px solid var(--border);border-radius:9px;padding:10px 12px;background:#fff;color:var(--ink);font:inherit}
+.deadline-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.deadline-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.deadline-card h3{font-size:16px;margin:0;color:var(--navy)}.deadline-card p{margin:0;color:var(--muted);font-size:13px}
+.deadline-countdown{font-size:13px;font-weight:800;color:#8a4b00;background:#fff5df;border-radius:8px;padding:8px 10px;align-self:flex-start}
+.deadline-countdown.urgent{color:#a52828;background:#fff0f0}.deadline-countdown.open{color:#087f5b;background:#eaf8f0}
+.deadline-card .btn{align-self:flex-start;margin-top:auto}.deadline-empty{grid-column:1/-1;padding:20px;border:1px dashed #c9d5eb;border-radius:12px;color:var(--muted);background:#fff}
+@media(max-width:800px){.deadline-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.deadline-tracker{padding:16px}}
+@media(max-width:520px){.deadline-grid{grid-template-columns:1fr}}
 </style></style></style></style></style></style></style></style></style></style>
 <style>
 /* Three distinct product panels */
@@ -1417,6 +1431,21 @@ footer a:hover{color:#e3c98f!important}
     </div>
     <div class="cards college-grid" id="collegeGrid"></div>
   </div>
+</section>
+
+<section class="section" id="admissionDeadlineTracker" aria-labelledby="deadlineTrackerTitle">
+ <div class="container">
+  <div class="deadline-tracker">
+   <div class="eyebrow">NEW · LIVE DIRECTORY DATA</div>
+   <h2 id="deadlineTrackerTitle">Admission deadline tracker</h2>
+   <p class="muted">See verified colleges with published upcoming deadlines. Dates are taken from each institution's current VidyaMap profile.</p>
+   <div class="deadline-toolbar">
+    <label for="deadlineWindow">Show deadlines <select id="deadlineWindow"><option value="30">Next 30 days</option><option value="60">Next 60 days</option><option value="90" selected>Next 90 days</option><option value="all">All upcoming dates</option></select></label>
+    <span class="results" id="deadlineResultsCount" role="status" aria-live="polite">Loading deadline data…</span>
+   </div>
+   <div class="deadline-grid" id="deadlineGrid"><div class="deadline-empty">Loading published admission dates…</div></div>
+  </div>
+ </div>
 </section>
 <section class="feature-section" id="admissions" aria-labelledby="admissionsTitle">
   <div class="container">
@@ -2241,6 +2270,17 @@ function renderColleges(items) {
   });
 }
 
+// Deadline tracker uses only published dates from verified college profiles.
+function renderAdmissionDeadlines(){
+ const grid=$('deadlineGrid'),count=$('deadlineResultsCount'),windowEl=$('deadlineWindow');if(!grid||!count)return;
+ const now=new Date();now.setHours(0,0,0,0);const horizon=windowEl?.value||'90';
+ const items=(verifiedColleges||[]).filter(c=>c.admission_deadline).map(c=>{const date=new Date(c.admission_deadline+'T00:00:00');return {college:c,date,days:Math.ceil((date-now)/86400000)};}).filter(x=>Number.isFinite(x.date.getTime())&&x.days>=0&&(horizon==='all'||x.days<=Number(horizon))).sort((a,b)=>a.days-b.days).slice(0,12);
+ count.textContent=items.length+' upcoming deadline'+(items.length===1?'':'s');grid.replaceChildren();
+ if(!items.length){const empty=document.createElement('div');empty.className='deadline-empty';empty.textContent='No published admission deadlines match this window. Check college profiles for updates; dates that are not published are not guessed.';grid.append(empty);return;}
+ items.forEach(({college:c,date,days})=>{const card=document.createElement('article');card.className='deadline-card';const title=document.createElement('h3');title.textContent=c.name||'Verified college';const location=document.createElement('p');const d=districts.find(x=>String(x.id)===String(c.district_id));location.textContent=[c.town,d?.name].filter(Boolean).join(', ')||'Location available in profile';const status=document.createElement('span');status.className='deadline-countdown'+(days<=7?' urgent':c.admissions_open?' open':'');status.textContent=days===0?'Deadline today':days===1?'1 day left':days+' days left';const dateLabel=document.createElement('p');dateLabel.textContent='Deadline: '+date.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});const btn=document.createElement('button');btn.type='button';btn.className='btn btn-outline';btn.textContent='View college details';btn.addEventListener('click',()=>openCollegeProfile(c));card.append(title,location,status,dateLabel,btn);grid.append(card);});
+}
+document.getElementById('deadlineWindow')?.addEventListener('change',renderAdmissionDeadlines);
+
 async function loadColleges() {
   const { data, error } = await db
     .from("colleges")
@@ -2258,6 +2298,7 @@ async function loadColleges() {
 
   verifiedColleges = data || [];
   renderColleges(verifiedColleges);
+  renderAdmissionDeadlines();
 }
 
 async function search(event) {
