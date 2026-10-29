@@ -2742,7 +2742,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
 // Public ad showcase: only approved, in-date campaigns are read from Supabase.
 (async function initCollegeAds(){
  const grid=document.getElementById('collegeAdGrid'); if(!grid||!window.supabase)return;
- let detectedDistrictId=null, detectedMandalId=null, detectedAreaLabel='your area';
+ let detectedDistrictId=null, detectedMandalId=null, detectedStateCode=null, detectedAreaLabel='your area';
  // Admin-managed multi-image/video carousel for sponsored college promotions.
   try{
    const managedResult=await db.from('site_ad_placements').select('id,title,description,media_type,media_url,click_url,sort_order').eq('placement_key','after_sponsored_college_promotions').eq('is_active',true).order('sort_order',{ascending:true}).order('created_at',{ascending:true});
@@ -2768,7 +2768,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
   }catch(managedErr){console.warn('Managed college promotion ads unavailable',managedErr);}
   try{
   const [dr,mr,cr]=await Promise.all([
-   db.from('districts').select('id,name').eq('is_active',true).order('name'),
+   db.from('districts').select('id,name,state_code').eq('is_active',true).order('name'),
    db.from('mandals').select('id,name,district_id').eq('is_active',true).order('name'),
    db.from('college_ad_campaigns').select('id,college_id,title,description,media_type,media_url,click_url,starts_at,ends_at,payment_status,duration_days').eq('status','approved').eq('payment_status','paid').order('created_at',{ascending:false}).limit(100)
   ]);
@@ -2787,7 +2787,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     let mandal=null;
     for(const candidate of localityCandidates){const n=normalizeLocation(candidate);mandal=mandalNames.get(n)||[...mandalNames.entries()].find(([key])=>key&&n===key)?.[1];if(mandal&&(!district||mandal.district_id===district.id))break;}
     if(mandal&&!district)district=districtsData.find(d=>d.id===mandal.district_id)||null;
-    return {district,mandal};
+    const stateText=normalizeLocation(address.state||address.state_code||'');const stateCode=stateText.includes('andhrapradesh')?'AP':stateText.includes('telangana')?'TS':null;\n    return {district,mandal,stateCode};
    };
    const locateByCoordinates=()=>new Promise((resolve,reject)=>{
     if(!navigator.geolocation)return reject(new Error('Geolocation is unavailable'));
@@ -2798,22 +2798,22 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     const response=await fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+encodeURIComponent(pos.lat)+'&lon='+encodeURIComponent(pos.lon)+'&zoom=10&addressdetails=1',{headers:{'Accept':'application/json'}});
     if(!response.ok)throw new Error('Reverse geocoding failed');
     const place=await response.json(),matched=matchArea(place.address||{});
-    if(matched.district){detectedDistrictId=matched.district.id;detectedMandalId=matched.mandal?.district_id===matched.district.id?matched.mandal.id:null;detectedAreaLabel=[matched.mandal?.name,matched.district.name].filter(Boolean).join(', ');return;}
+    if(matched.district){detectedDistrictId=matched.district.id;detectedStateCode=matched.district.state_code||matched.stateCode;detectedMandalId=matched.mandal?.district_id===matched.district.id?matched.mandal.id:null;detectedAreaLabel=[matched.mandal?.name,matched.district.name].filter(Boolean).join(', ');return;}\n    if(matched.stateCode){detectedStateCode=matched.stateCode;detectedAreaLabel=matched.stateCode==='AP'?'Andhra Pradesh':'Telangana';return;}
     throw new Error('Could not match the detected location to a VidyaMap district');
    }catch(err){
     try{
      const response=await fetch('https://ipapi.co/json/');
      if(!response.ok)throw err;
-     const ip=await response.json(),candidates=[ip.region,ip.city].filter(Boolean);
+     const ip=await response.json(),candidates=[ip.region,ip.city].filter(Boolean);\n     const stateText=normalizeLocation(ip.region||'');detectedStateCode=stateText.includes('andhrapradesh')?'AP':stateText.includes('telangana')?'TS':null;
      const found=candidates.map(v=>districtNames.get(normalizeLocation(v))||[...districtNames.entries()].find(([key])=>key&&normalizeLocation(v).includes(key))?.[1]).find(Boolean);
-     if(found){detectedDistrictId=found.id;detectedAreaLabel=found.name+' (approximate)';return;}
+     if(found){detectedDistrictId=found.id;detectedStateCode=found.state_code;detectedAreaLabel=found.name+' (approximate)';return;}\n     if(detectedStateCode){detectedAreaLabel=(detectedStateCode==='AP'?'Andhra Pradesh':'Telangana')+' (approximate)';return;}
     }catch(_){}
     locationStatus.textContent='Could not automatically identify your district. Only ads targeted to all areas can be shown here.';
     return;
    }
   }
   await detectAdArea();
-  locationStatus.textContent=detectedDistrictId?'Showing sponsored ads for '+detectedAreaLabel+'.':'Showing ads available across all areas.';
+  locationStatus.textContent=detectedDistrictId?'Showing sponsored ads for '+detectedAreaLabel+'.':detectedStateCode?'Showing sponsored ads across '+detectedAreaLabel+'.':'Showing ads available across all areas.';
   const ticker=document.getElementById('vmAdTicker'),tickerTrack=document.getElementById('vmTickerTrack');
   const paidActive=campaigns.filter(c=>c.payment_status==='paid'&&window.vmSafeAdMediaUrl(c.media_url,c.media_type)&&(!c.starts_at||new Date(c.starts_at)<=new Date())&&(!c.ends_at||new Date(c.ends_at)>=new Date()));
   if(ticker&&tickerTrack){
@@ -2838,7 +2838,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     if(c.ends_at&&new Date(c.ends_at)<new Date())return false;
     const ds=districtsByCampaign.filter(x=>x.campaign_id===c.id), ms=mandalsByCampaign.filter(x=>x.campaign_id===c.id);
     if(!ds.length&&!ms.length)return false;
-    if(!detectedDistrictId)return ds.length===districtsData.length&&districtsData.length>0;
+    if(!detectedDistrictId){if(!detectedStateCode)return false;const stateDistrictIds=districtsData.filter(d=>d.state_code===detectedStateCode).map(d=>d.id);return stateDistrictIds.length>0&&stateDistrictIds.every(id=>ds.some(x=>x.district_id===id));}
     if(detectedMandalId&&ms.some(x=>x.mandal_id===detectedMandalId))return true;
     if(ds.some(x=>x.district_id===detectedDistrictId))return true;
     if(ms.some(x=>mandalsData.find(m=>m.id===x.mandal_id)?.district_id===detectedDistrictId))return true;
