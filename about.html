@@ -263,4 +263,27 @@ input,select,textarea{color:#172b43}
 input::placeholder,textarea::placeholder{color:#6b778b;opacity:1}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #9b82e8!important;outline-offset:2px}
 footer,footer p,footer li,footer small,footer h2,footer h3,footer a{color:#f5f7ff}
-</style></body></html>
+</style><script>
+(function(){
+ async function applySponsoredBannerSettings(){
+  if(!window.supabase)return;
+  const bar=document.querySelector('.vm-sponsored-bar');if(!bar)return;
+  try{
+   const client=window.supabase.createClient('https://taxlvccrinehasexgvhv.supabase.co','sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA');
+   const badge=bar.querySelector('.vm-sponsored-label'),track=bar.querySelector('.vm-sponsored-track span');
+   const settings=await client.from('site_promo_settings').select('badge_text').eq('id',true).maybeSingle();
+   if(badge&&settings.data?.badge_text)badge.textContent=settings.data.badge_text;
+   const result=await client.from('site_promo_items').select('item_type,heading,body,url,sort_order').eq('is_active',true).order('sort_order').order('created_at');
+   if(result.error||!result.data?.length||!track)return;
+   track.replaceChildren();
+   result.data.forEach((item,i)=>{
+    if(i){const sep=document.createElement('span');sep.textContent='　 |　';track.append(sep);}
+    if(item.item_type==='link'&&item.url){try{const u=new URL(item.url);if(!['http:','https:'].includes(u.protocol))return;const a=document.createElement('a');a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent=item.heading||'Click here';a.style.cssText='color:inherit;text-decoration:underline;font-weight:700';track.append(a);}catch(_){}}
+    else{const strong=document.createElement('strong');strong.textContent=item.heading||'';track.append(strong);if(item.body){const body=document.createElement('span');body.textContent=' · '+item.body;track.append(body);}}
+   });
+  }catch(e){console.warn('Sponsored banner settings unavailable',e);}
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applySponsoredBannerSettings,{once:true});else applySponsoredBannerSettings();
+})();
+</script>
+</body></html>
