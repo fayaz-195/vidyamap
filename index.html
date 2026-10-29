@@ -2727,8 +2727,8 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
     document.getElementById('collegeAds')?.classList.remove('vm-managed-fullscreen-ad');
     grid.replaceChildren();grid.classList.remove('vm-managed-fullscreen-ad-grid');
     const byPosition=new Map();managedAds.forEach(ad=>{const position=Number(ad.sort_order);if(position>=1&&position<=20&&!byPosition.has(position))byPosition.set(position,ad);});
-    for(let position=1;position<=20;position++){
-     const ad=byPosition.get(position),card=document.createElement('article');card.className='ad-slot-placeholder vm-section-managed-ad'+(ad?'':' vm-section-managed-ad-empty');
+    for(const [position,ad] of [...byPosition.entries()].sort((a,b)=>a[0]-b[0])){
+     const card=document.createElement('article');card.className='ad-slot-placeholder vm-section-managed-ad';
      if(ad){
       const safeUrl=window.vmSafeAdMediaUrl(ad.media_url,ad.media_type);let media;
       if(ad.media_type==='video'){media=document.createElement('video');media.src=safeUrl;media.controls=true;media.preload='metadata';media.playsInline=true;media.className='vm-section-managed-ad-media';}
@@ -2736,7 +2736,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
       card.append(media);const h=document.createElement('strong');h.textContent=ad.title||'Sponsored college promotion';card.append(h);
       if(ad.description){const p=document.createElement('p');p.textContent=ad.description;card.append(p);}
       if(ad.click_url){try{const dest=new URL(ad.click_url,window.location.href);if(['https:','http:'].includes(dest.protocol)){const link=document.createElement('a');link.href=dest.href;link.target='_blank';link.rel='noopener noreferrer';link.className='vm-section-managed-ad-link';link.textContent='Learn more';card.append(link);}}catch(_){}}
-     }else{const ico=document.createElement('div');ico.className='slot-icon';ico.textContent='📢';const h=document.createElement('strong');h.textContent='POSITION '+position;const p=document.createElement('p');p.textContent='Your ad can be assigned to this slot';card.append(ico,h,p);}
+     }
      grid.append(card);
     }
     return;
