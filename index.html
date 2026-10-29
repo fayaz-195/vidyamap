@@ -3085,10 +3085,10 @@ main{overflow:visible!important}
     track.replaceChildren();
     managed.slice(0,6).forEach(c=>{
      const card=document.createElement("article");card.className="vm-approved-ad-card";
-     let media;
-     if(c.media_type==="video"){media=document.createElement("video");media.src=window.vmSafeAdMediaUrl(c.media_url,"video");media.controls=true;media.preload="metadata";media.playsInline=true;media.setAttribute("aria-label",c.title||"Sponsored video");}
-     else{media=document.createElement("img");media.className="vm-approved-ad-media";media.src=window.vmSafeAdMediaUrl(c.media_url,"image");media.alt=c.title||"Sponsored promotion";media.loading="lazy";}
-     if(!media.src){return;}
+     let media;const safeMediaUrl=window.vmSafeAdMediaUrl(c.media_url,c.media_type);
+     if(!safeMediaUrl)return;
+     if(c.media_type==="video"){media=document.createElement("video");media.src=safeMediaUrl;media.controls=true;media.preload="metadata";media.playsInline=true;media.setAttribute("aria-label",c.title||"Sponsored video");}
+     else{media=document.createElement("img");media.className="vm-approved-ad-media";media.src=safeMediaUrl;media.alt=c.title||"Sponsored promotion";media.loading="lazy";}
      card.append(media);
      const copy=document.createElement("div");copy.className="vm-approved-ad-copy";
      const meta=document.createElement("div");meta.className="vm-approved-ad-meta";meta.textContent="SPONSORED · "+(c.media_type==="video"?"VIDEO":"IMAGE");
