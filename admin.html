@@ -1049,7 +1049,7 @@ async function loadSiteAds(){
  filterAds();
 }
 async function loadDashboard(){
-  const collegeAdQueuePromise=safeSelect('college_ad_campaigns','id,title,description,media_type,media_url,click_url,status,payment_status,payment_amount_inr,payment_reference,duration_days,starts_at,ends_at,created_at,college:colleges(name)',q=>q.order('created_at',{ascending:false}).limit(100)).then(renderCollegeAdApprovalQueue);
+  const collegeAdQueuePromise=safeSelect('college_ad_campaigns','id,title,description,media_type,media_url,click_url,placement_key,status,payment_status,payment_amount_inr,payment_reference,duration_days,starts_at,ends_at,created_at,college:colleges(name)',q=>q.order('created_at',{ascending:false}).limit(100)).then(renderCollegeAdApprovalQueue);
 
   hideNotice(dashboardNotice);loadEnquiryPanels();if($('siteAdsArea')){loadSiteAds();loadSitePromoItems();}
   const jobs=[
