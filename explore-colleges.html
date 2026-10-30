@@ -177,6 +177,7 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
     <nav class="vm-shared-links" id="vmSharedLinks" aria-label="Main navigation">
       <a href="./index.html">Home</a>
       <a href="./explore-colleges.html" aria-current="page">Explore Colleges</a>
+      <a href="./admission-journey.html">My Admission Journey</a>
       <a href="./marketing-services.html">Marketing Services</a>
       <a href="./for-colleges.html">For Colleges</a>
       <div class="vm-shared-dropdown">
@@ -315,10 +316,13 @@ function runCollegeFit(event){
   const loc=document.createElement("p");const d=districts.find(x=>String(x.id)===String(c.district_id));loc.textContent=[c.town,d?.name].filter(Boolean).join(", ")||"Location details not provided";
   const why=document.createElement("div");why.className="fit-reasons";reasons.forEach(reason=>{const tag=document.createElement("span");tag.className="fit-reason";tag.textContent=reason;why.append(tag)});
   const note=document.createElement("p");note.textContent="Based on available verified listing details. Confirm course availability and admission terms directly with the institution.";
+  const actions=document.createElement("div");actions.className="card-actions";
   const add=document.createElement("button");add.type="button";add.className="btn secondary";add.textContent=compareIds.has(String(c.id))?"Added to comparison":"Add to comparison";
   add.disabled=compareIds.has(String(c.id));
   add.addEventListener("click",()=>{if(compareIds.size>=3){document.getElementById("fitResultCount").textContent="Comparison supports up to 3 colleges. Remove one from the directory selection first.";return;}compareIds.add(String(c.id));add.textContent="Added to comparison";add.disabled=true;updateCompareButton();});
-  card.append(h,loc,why,note,add);resultGrid.append(card);
+  const journey=document.createElement("button");journey.type="button";journey.className="btn";journey.textContent="Track admission →";
+  journey.addEventListener("click",()=>{const q=new URLSearchParams({college:c.name||"College",course:interest||""});window.location.href="./admission-journey.html?"+q.toString();});
+  actions.append(add,journey);card.append(h,loc,why,note,actions);resultGrid.append(card);
  });
  resultHost.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
