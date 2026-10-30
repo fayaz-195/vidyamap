@@ -21,6 +21,16 @@ h1{font-size:clamp(36px,5vw,56px);line-height:1.08;letter-spacing:-1.5px;color:v
 @media(max-width:560px){.compare-panel{align-items:flex-start;flex-direction:column}.compare-dialog{padding:20px 14px}.compare-table th,.compare-table td{padding:8px;font-size:12px}}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;padding-bottom:70px}
 .card{background:#ffffffed;border:1px solid #fff;border-radius:20px;padding:21px;box-shadow:0 13px 30px #30437412;min-width:0}.top{display:flex;gap:13px;align-items:center;margin-bottom:12px}.logo{width:54px;height:54px;flex:0 0 54px;border-radius:15px;background:linear-gradient(135deg,#f1e7ff,#e5edff);display:grid;place-items:center;color:var(--purple);font-weight:900;overflow:hidden}.logo img{width:100%;height:100%;object-fit:contain}.card h2{font-size:18px;line-height:1.3;color:var(--navy);margin:0 0 5px;overflow-wrap:anywhere}.location{font-size:12px;color:var(--muted)}.pill{display:inline-block;background:#e7f7ef;color:#146c43;border-radius:99px;padding:4px 9px;font-size:11px;font-weight:900;margin:2px 0 10px}.card p{color:var(--muted);font-size:14px;margin:8px 0 15px}.card-actions{display:flex;gap:8px;flex-wrap:wrap}.card-actions a,.card-actions button{font-size:12px;padding:9px 11px}.empty{grid-column:1/-1;padding:35px;text-align:center;color:var(--muted);background:#ffffffb8;border:1px dashed #d9dfee;border-radius:18px}
  .pagination{display:flex;justify-content:center;align-items:center;gap:12px;padding:0 0 60px}.pagination button:disabled{opacity:.4;cursor:not-allowed}footer{padding:24px 0;background:#0b2142;color:#dce6f5;font-size:13px}
+
+/* Keep the full desktop navigation inside the viewport on standard laptop screens. */
+@media (min-width:821px) and (max-width:1700px){
+  .vm-shared-nav{width:calc(100% - 32px);gap:8px}
+  .vm-shared-brand{padding:4px 6px}
+  .vm-shared-brand img{height:54px;max-width:170px}
+  .vm-shared-links{gap:2px}
+  .vm-shared-links>a,.vm-shared-about{padding:8px 7px;font-size:11px}
+  .vm-shared-register{padding:9px 10px!important}
+}
 @media(max-width:1000px){.filters{grid-template-columns:repeat(3,minmax(0,1fr))}.filters .field:first-child{grid-column:1/-1}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.filters,.grid{grid-template-columns:1fr}.filters .field:first-child{grid-column:auto}.hero{padding-top:38px}.search-panel{padding:16px}}
 
