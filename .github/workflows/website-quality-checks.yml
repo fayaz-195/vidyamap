@@ -48,7 +48,7 @@ jobs:
                 new vm.Script(code, { filename: file + ':inline-script-' + (index + 1) + '.js' });
                 console.log('PASS:', label + 'inline JavaScript syntax #' + (index + 1));
               } catch (error) {
-                console.error('FAIL:', label + 'inline JavaScript syntax #' + (index + 1) + ': ' + error.message);
+                console.error('FAIL:', label + 'inline JavaScript syntax #' + (index + 1) + ': ' + error.stack);
                 failures++;
               }
             });
