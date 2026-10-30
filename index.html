@@ -2966,11 +2966,17 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
  const savedKey='vidyamap_public_student_lead_v1';
  const getSaved=()=>{try{return JSON.parse(sessionStorage.getItem(savedKey)||'null')}catch{return null}};
  const captureSection=document.getElementById('studentLeadCapture');
+ // Keep the modal as a direct body child while open. This escapes stacking contexts
+ // created by main/hero transforms, so the overlay and close control sit above sticky nav.
+ const captureHomeParent=captureSection.parentNode;
+ const captureHomeNext=captureSection.nextSibling;
+ const moveCaptureToBody=()=>{if(captureSection.parentNode!==document.body)document.body.appendChild(captureSection);};
+ const restoreCaptureHome=()=>{if(captureHomeParent&&captureSection.parentNode===document.body){if(captureHomeNext&&captureHomeNext.parentNode===captureHomeParent)captureHomeParent.insertBefore(captureSection,captureHomeNext);else captureHomeParent.appendChild(captureSection);}};
  const gatedItems=[document.querySelector('.vm-trust-strip'),document.getElementById('compareTools'),document.getElementById('resultsCount'),document.getElementById('collegeGrid')];
  const setStudentGate=unlocked=>gatedItems.forEach(el=>{if(el)el.classList.toggle('vm-student-unlocked',!!unlocked)});
  const reminder=document.getElementById('vmLeadReminder');
- const openLeadPopup=()=>{captureSection.hidden=false;captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');};
- const closeLeadPopup=()=>{captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');if(reminder)reminder.classList.add('is-visible');};
+ const openLeadPopup=()=>{moveCaptureToBody();captureSection.hidden=false;captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');};
+ const closeLeadPopup=()=>{captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');restoreCaptureHome();if(reminder)reminder.classList.add('is-visible');};
  const params=new URLSearchParams(location.search);
  const isCollegeRegistration=location.hash==='#register'||location.hash==='#contact';
  const isExploreGate=params.get('next')==='explore-colleges.html'||(params.get('next')||'').startsWith('explore-colleges.html?')||location.hash==='#studentLeadCapture';
@@ -2982,7 +2988,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
  else {
   document.body.classList.add('vm-public-locked');setStudentGate(false);searchForm.classList.add('vm-search-locked');
   if(isCollegeRegistration){captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');if(reminder)reminder.classList.remove('is-visible');}
-  else if(isExploreGate||!wasDismissed()){captureSection.hidden=false;captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');if(reminder)reminder.classList.remove('is-visible');installCloseButton();}
+  else if(isExploreGate||!wasDismissed()){moveCaptureToBody();captureSection.hidden=false;captureSection.classList.add('vm-lead-modal');document.body.classList.add('vm-lead-modal-open');if(reminder)reminder.classList.remove('is-visible');installCloseButton();}
   else {captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');if(reminder)reminder.classList.add('is-visible');installCloseButton();}
  }
  document.getElementById('vmLeadReminderOpen')?.addEventListener('click',openLeadPopup);
@@ -3007,7 +3013,7 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
    document.body.classList.remove('vm-public-locked');setStudentGate(true);
     searchForm.classList.remove('vm-search-locked');
    status.textContent='Saved! Your college search is now unlocked.';status.style.color='var(--green)';
-   captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');
+   captureSection.hidden=true;captureSection.classList.remove('vm-lead-modal');document.body.classList.remove('vm-lead-modal-open');restoreCaptureHome();
    const nextPage=new URLSearchParams(location.search).get('next');
    if(nextPage==='explore-colleges.html'||nextPage?.startsWith('explore-colleges.html?')){window.location.href='./'+nextPage;return;}
    document.getElementById('find')?.scrollIntoView({behavior:'smooth',block:'start'});
