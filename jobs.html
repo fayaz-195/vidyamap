@@ -142,62 +142,44 @@ html body header.vm-shared-header .vm-shared-menu a{color:#263b58!important}
 async function renderVidyamapSponsoredBar(bar,client){
  if(!bar||!client)return;
  const badge=bar.querySelector('.vm-sponsored-label');
+ const message=bar.querySelector('.vm-sponsored-message');
+ if(!message)return;
+ if(badge)badge.textContent='Latest';
  try{
-  const [settings,result]=await Promise.all([
-   client.from('site_promo_settings').select('badge_text').eq('id',true).maybeSingle(),
-   client.from('site_promo_items').select('item_type,heading,body,url,sort_order').eq('is_active',true).order('sort_order').order('created_at')
-  ]);
-  if(badge&&settings.data?.badge_text)badge.textContent=settings.data.badge_text;
-  if(result.error)throw result.error;
-  if(!result.data?.length)return;
-  let viewport=bar.querySelector('.vm-sponsored-viewport');
-  if(!viewport){viewport=document.createElement('div');viewport.className='vm-sponsored-viewport';bar.querySelector('.vm-sponsored-message')?.replaceChildren(viewport);}
-  const makeSequence=()=>{
+  const {data,error}=await client.from('site_promo_items')
+   .select('item_type,heading,body,url,sort_order')
+   .eq('is_active',true).order('sort_order');
+  if(error)throw error;
+  const items=data||[];
+  if(!items.length){message.textContent='Sponsored promotions will appear here';return;}
+  const viewport=document.createElement('span');viewport.className='vm-sponsored-viewport';
+  const marquee=document.createElement('span');marquee.className='vm-sponsored-marquee';
+  function makeSequence(){
    const seq=document.createElement('span');seq.className='vm-sponsored-sequence';
-   result.data.forEach((item,i)=>{
-    if(i){const sep=document.createElement('span');sep.className='vm-sponsored-separator';sep.textContent='•';seq.appendChild(sep);}
-    const label=(item.heading||'').trim()+(item.body?' — '+item.body.trim():'');
+   items.forEach((item,index)=>{
+    if(index){const sep=document.createElement('span');sep.className='vm-sponsored-separator';sep.textContent='•';seq.appendChild(sep);}
+    const text=(item.heading||'').trim()+(item.body?' — '+item.body.trim():'');
     let node=document.createElement('span');
-    if(item.item_type==='link'&&item.url){try{const u=new URL(item.url);if(['https:','http:'].includes(u.protocol)){node=document.createElement('a');node.href=u.href;node.target='_blank';node.rel='noopener noreferrer';node.className='vm-sponsored-link';}}catch(_){}}
-    node.textContent=label||'View promotion';seq.appendChild(node);
+    if(item.item_type==='link'&&item.url){try{const u=new URL(item.url);if(u.protocol==='https:'||u.protocol==='http:'){const a=document.createElement('a');a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';node=a;}}catch(_){}}
+    node.textContent=text||'Sponsored promotion';seq.appendChild(node);
    });
    return seq;
-  };
-  const first=makeSequence(),second=makeSequence();second.setAttribute('aria-hidden','true');
-  const marquee=document.createElement('span');marquee.className='vm-sponsored-marquee';marquee.append(first,second);
-  viewport.replaceChildren(marquee);
-  const speed=38;marquee.style.animationDuration=Math.max(24,first.scrollWidth/speed)+'s';
-  const styleId='vm-sponsored-shared-marquee-style';
-  if(!document.getElementById(styleId)){
-   const style=document.createElement('style');style.id=styleId;
-   style.textContent=`
-    .vm-sponsored-bar .vm-sponsored-label{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;background:#f3232b!important;color:#fff!important;border:0!important;border-radius:7px!important;padding:8px 12px!important;font-size:12px!important;font-weight:850!important;line-height:1.2!important;white-space:nowrap!important}
-    @media(max-width:600px){.vm-sponsored-bar .vm-sponsored-label{padding:7px 9px!important;font-size:11px!important}}
-
-    .vm-sponsored-bar .vm-sponsored-message,.vm-sponsored-bar .vm-sponsored-viewport{display:block!important;flex:1 1 auto!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;white-space:nowrap!important;text-align:left!important}
-    .vm-sponsored-bar .vm-sponsored-marquee{display:flex!important;align-items:center!important;width:max-content!important;min-width:max-content!important;white-space:nowrap!important;will-change:transform!important;animation:vmSponsoredSharedFlow 32s linear infinite!important}
-    .vm-sponsored-bar .vm-sponsored-sequence{display:inline-flex!important;align-items:center!important;flex:0 0 auto!important;width:max-content!important;white-space:nowrap!important;padding-right:56px!important}
-    .vm-sponsored-bar .vm-sponsored-sequence>*{display:inline-block!important;flex:0 0 auto!important;white-space:nowrap!important;color:inherit!important}
-    .vm-sponsored-bar .vm-sponsored-separator{margin:0 24px!important;opacity:.7!important}
-    .vm-sponsored-bar .vm-sponsored-link{font-weight:800!important;text-decoration:underline!important}
-    @keyframes vmSponsoredSharedFlow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    @media(max-width:600px){.vm-sponsored-bar{flex-wrap:nowrap!important}.vm-sponsored-bar .vm-sponsored-marquee{animation-duration:25s!important}.vm-sponsored-bar .vm-sponsored-sequence{padding-right:30px!important}}
-    @media(prefers-reduced-motion:reduce){.vm-sponsored-bar .vm-sponsored-marquee{animation:none!important;transform:none!important}}
-   `;
-   document.head.appendChild(style);
   }
- }catch(e){console.warn('Sponsored promotions failed to load',e);}
-}
-(function(){
- async function applySponsoredBannerSettings(){
-  if(!window.supabase)return;
-  const client=window.supabase.createClient('https://taxlvccrinehasexgvhv.supabase.co','sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA');
-  await renderVidyamapSponsoredBar(document.querySelector('.vm-sponsored-bar'),client);
+  const first=makeSequence(),second=makeSequence();second.setAttribute('aria-hidden','true');
+  marquee.append(first,second);viewport.appendChild(marquee);message.replaceChildren(viewport);
+  marquee.style.animationDuration=Math.max(24,first.scrollWidth/38)+'s';
+ }catch(error){
+  console.error('Sponsored strip load failed',error);
+  message.textContent='Sponsored promotions temporarily unavailable';
  }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applySponsoredBannerSettings,{once:true});
- else applySponsoredBannerSettings();
-})();
-</script>
+}
+function initVidyamapSponsoredStrip(){
+ const bar=document.querySelector('.vm-sponsored-bar');
+ if(bar&&typeof db!=='undefined')renderVidyamapSponsoredBar(bar,db);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initVidyamapSponsoredStrip,{once:true});
+else initVidyamapSponsoredStrip();
+
 
 
 
@@ -258,5 +240,18 @@ const current=location.pathname.split('/').pop()||'index.html';nav.querySelector
  },true);
 })();
 </script>
+<style id="vm-sponsored-strip-one-loader">
+html body .vm-sponsored-bar{display:flex!important;align-items:center!important;flex-wrap:nowrap!important;gap:12px!important;min-height:52px!important;height:52px!important;max-height:52px!important;box-sizing:border-box!important;overflow:hidden!important;padding:6px 3%!important;background:#fff8ed!important;position:relative!important;z-index:30!important;color:#152744!important}
+html body .vm-sponsored-bar>.vm-sponsored-label{display:inline-flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:center!important;background:#f3232b!important;color:#fff!important;padding:8px 12px!important;border-radius:8px!important;font-size:12px!important;font-weight:850!important;white-space:nowrap!important}
+html body .vm-sponsored-bar>.vm-sponsored-message{display:block!important;flex:1 1 auto!important;min-width:0!important;width:0!important;overflow:hidden!important;white-space:nowrap!important}
+html body .vm-sponsored-bar .vm-sponsored-viewport{display:block!important;width:100%!important;min-width:0!important;overflow:hidden!important;white-space:nowrap!important}
+html body .vm-sponsored-bar .vm-sponsored-marquee{display:flex!important;align-items:center!important;width:max-content!important;min-width:max-content!important;white-space:nowrap!important;animation:vmSponsoredUnifiedFlow 32s linear infinite!important;will-change:transform!important}
+html body .vm-sponsored-bar .vm-sponsored-sequence{display:inline-flex!important;align-items:center!important;flex:0 0 auto!important;width:max-content!important;white-space:nowrap!important;padding-right:50px!important}
+html body .vm-sponsored-bar .vm-sponsored-sequence>*{display:inline-block!important;flex:0 0 auto!important;white-space:nowrap!important;color:#152744!important;font-size:14px!important}
+html body .vm-sponsored-bar .vm-sponsored-separator{margin:0 22px!important}
+@keyframes vmSponsoredUnifiedFlow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:600px){html body .vm-sponsored-bar{height:52px!important;min-height:52px!important;padding:6px 10px!important;gap:9px!important}html body .vm-sponsored-bar>.vm-sponsored-label{font-size:11px!important;padding:7px 10px!important}html body .vm-sponsored-bar .vm-sponsored-sequence>*{font-size:13px!important}}
+@media(prefers-reduced-motion:reduce){html body .vm-sponsored-bar .vm-sponsored-marquee{animation:none!important;transform:none!important}}
+</style>
 </body>
 </html>
