@@ -3487,7 +3487,7 @@ main{overflow:visible!important}
    const kind=slot.dataset.kind||"mixed";
    const placementKey=slot.id==="vmAdAfterServices"?"after_services":slot.id==="vmAdAfterMarketing"?"after_marketing":"";
    slot.hidden=false;
-   const managed=managedAds.filter(c=>c.placement_key===placementKey).slice(0,1);
+   const managed=managedAds.filter(c=>c.placement_key===placementKey).slice(0,6);
    if(managed.length){
     track.replaceChildren();
     managed.slice(0,6).forEach(c=>{
