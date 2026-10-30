@@ -2970,8 +2970,9 @@ window.addEventListener("load",()=>{setTimeout(loadOriginal,500);});
  // created by main/hero transforms, so the overlay and close control sit above sticky nav.
  const captureHomeParent=captureSection.parentNode;
  const captureHomeNext=captureSection.nextSibling;
- const moveCaptureToBody=()=>{if(captureSection.parentNode!==document.body)document.body.appendChild(captureSection);};
- const restoreCaptureHome=()=>{if(captureHomeParent&&captureSection.parentNode===document.body){if(captureHomeNext&&captureHomeNext.parentNode===captureHomeParent)captureHomeParent.insertBefore(captureSection,captureHomeNext);else captureHomeParent.appendChild(captureSection);}};
+ // Portal to the document root, outside body/main/header stacking contexts.
+ const moveCaptureToBody=()=>{if(captureSection.parentNode!==document.documentElement)document.documentElement.appendChild(captureSection);};
+ const restoreCaptureHome=()=>{if(captureHomeParent&&captureSection.parentNode===document.documentElement){if(captureHomeNext&&captureHomeNext.parentNode===captureHomeParent)captureHomeParent.insertBefore(captureSection,captureHomeNext);else captureHomeParent.appendChild(captureSection);}};
  const gatedItems=[document.querySelector('.vm-trust-strip'),document.getElementById('compareTools'),document.getElementById('resultsCount'),document.getElementById('collegeGrid')];
  const setStudentGate=unlocked=>gatedItems.forEach(el=>{if(el)el.classList.toggle('vm-student-unlocked',!!unlocked)});
  const reminder=document.getElementById('vmLeadReminder');
@@ -4430,6 +4431,21 @@ html body #studentLeadCapture.vm-lead-modal .vm-lead-close{
  position:relative!important;z-index:200001!important;float:right!important;
  margin:-4px -4px 4px 12px!important;pointer-events:auto!important;
 }
+</style>
+<style id="vm-lead-popup-root-layer">
+/* Top-level modal portal: place above every site header/navigation stacking layer. */
+html> #studentLeadCapture.vm-lead-modal{
+ position:fixed!important;inset:0!important;z-index:2147483647!important;
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:flex-start!important;overflow-y:auto!important;overscroll-behavior:contain;
+ isolation:isolate!important;pointer-events:auto!important;
+ background:rgba(10,22,48,.64)!important;backdrop-filter:blur(5px)!important;
+}
+html> #studentLeadCapture.vm-lead-modal .container{position:relative!important;z-index:1!important}
+html> #studentLeadCapture.vm-lead-modal .vm-lead-close{position:relative!important;z-index:2147483647!important;pointer-events:auto!important}
+html body header.vm-shared-header{z-index:10!important}
+html body .vm-portal-utility{z-index:11!important}
+html body .vm-portal-brandbar{z-index:1!important}
 </style>
 </body>
 </html>
