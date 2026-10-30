@@ -4447,5 +4447,24 @@ html body header.vm-shared-header{z-index:10!important}
 html body .vm-portal-utility{z-index:11!important}
 html body .vm-portal-brandbar{z-index:1!important}
 </style>
+<style id="vm-sticky-navigation-and-sponsored">
+/* Keep the main navigation and the sponsored college strip pinned during page scroll. */
+html body header.vm-shared-header{
+ position:sticky!important;top:0!important;z-index:10020!important;
+}
+html body #vmHeaderSponsored{position:sticky!important;top:54px!important;z-index:10010!important}
+html body .vm-sponsored-bar{
+ position:sticky!important;top:54px!important;z-index:10010!important;
+ min-height:46px!important;
+ background:#fff8eb!important;
+ box-shadow:0 3px 10px rgba(23,35,62,.08)!important;
+}
+html body header.vm-shared-header .vm-shared-nav{min-height:54px!important}
+@media(max-width:820px){
+ html body header.vm-shared-header .vm-shared-nav{min-height:52px!important}
+ html body #vmHeaderSponsored{top:52px!important}
+ html body .vm-sponsored-bar{top:52px!important}
+}
+</style>
 </body>
 </html>
