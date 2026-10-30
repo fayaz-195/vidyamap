@@ -3447,109 +3447,39 @@ main{overflow:visible!important}
 
 <script id="vm-approved-ad-slots-script">
 (async function(){
- const slots=[...document.querySelectorAll("[data-vm-ad-slot]")];if(!slots.length)return;const primarySlot=document.getElementById("vmAdAfterServices");slots.forEach(slot=>{if(slot!==primarySlot)slot.hidden=true;});
- const putEmpty=(slot)=>{const track=slot.querySelector(".vm-approved-ad-track");if(!track)return;const e=document.createElement("div");e.className="vm-approved-ad-empty";e.textContent="Approved college promotions will appear here when an active campaign matches this placement.";track.replaceChildren(e)};
- slots.forEach(putEmpty);
- if(!window.supabase)return;
+ const slots=[...document.querySelectorAll("[data-vm-ad-slot]")];
+ if(!slots.length||!window.supabase)return;
+ const client=window.supabase.createClient("https://taxlvccrinehasexgvhv.supabase.co","sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA");
+ const empty=(slot,message)=>{const track=slot.querySelector(".vm-approved-ad-track");if(!track)return;const node=document.createElement("div");node.className="vm-approved-ad-empty";node.textContent=message||"Sponsored promotions will appear here.";track.replaceChildren(node);};
  try{
-  const client=window.supabase.createClient("https://taxlvccrinehasexgvhv.supabase.co","sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA");
-  const managedResult=await client.from("site_ad_placements").select("id,placement_key,title,description,media_type,media_url,click_url,sort_order").eq("is_active",true).order("sort_order",{ascending:true});
-  const managedAds=managedResult.error?[]:(managedResult.data||[]);
-  // Render the admin-uploaded ad before optional college campaign queries, so those queries cannot block it.
-  const primaryManaged=managedAds.find(c=>c.placement_key==="after_services"&&window.vmSafeAdMediaUrl(c.media_url,c.media_type));
-  if(primaryManaged){
-   const slot=document.getElementById("vmAdAfterServices"),track=slot?.querySelector(".vm-approved-ad-track");
-   if(track){
-    track.replaceChildren();
+  const result=await client.from("site_ad_placements").select("id,placement_key,title,description,media_type,media_url,click_url,sort_order").eq("is_active",true).order("sort_order",{ascending:true});
+  if(result.error)throw result.error;
+  const ads=result.data||[];
+  for(const slot of slots){
+   const track=slot.querySelector(".vm-approved-ad-track");if(!track)continue;
+   const key=slot.id==="vmAdAfterServices"?"after_services":slot.id==="vmAdAfterMarketing"?"after_marketing":null;
+   if(!key){slot.hidden=true;continue;}
+   const matching=ads.filter(ad=>ad.placement_key===key&&window.vmSafeAdMediaUrl(ad.media_url,ad.media_type)).slice(0,6);
+   if(!matching.length){slot.hidden=true;continue;}
+   track.replaceChildren();slot.hidden=false;
+   matching.forEach(ad=>{
     const card=document.createElement("article");card.className="vm-approved-ad-card";
-    let media;
-    const safeUrl=window.vmSafeAdMediaUrl(primaryManaged.media_url,primaryManaged.media_type);
-    if(primaryManaged.media_type==="video"){media=document.createElement("video");media.src=safeUrl;media.controls=true;media.preload="metadata";media.playsInline=true;media.setAttribute("aria-label",primaryManaged.title||"Sponsored video");}
-    else{media=document.createElement("img");media.className="vm-approved-ad-media";media.src=safeUrl;media.alt=primaryManaged.title||"Sponsored promotion";media.loading="eager";}
+    const safeUrl=window.vmSafeAdMediaUrl(ad.media_url,ad.media_type);let media;
+    if(ad.media_type==="video"){media=document.createElement("video");media.src=safeUrl;media.controls=true;media.preload="metadata";media.playsInline=true;media.setAttribute("aria-label",ad.title||"Sponsored video");}
+    else{media=document.createElement("img");media.className="vm-approved-ad-media";media.src=safeUrl;media.alt=ad.title||"Sponsored promotion";media.loading="lazy";}
     card.append(media);
     const copy=document.createElement("div");copy.className="vm-approved-ad-copy";
-    const meta=document.createElement("div");meta.className="vm-approved-ad-meta";meta.textContent="SPONSORED · "+(primaryManaged.media_type==="video"?"VIDEO":"IMAGE");
-    const h=document.createElement("h3");h.textContent=primaryManaged.title||"VIDYAMAP promotion";
-    copy.append(meta,h);
-    if(primaryManaged.description){const p=document.createElement("p");p.textContent=primaryManaged.description;copy.append(p);}
-    if(primaryManaged.click_url){try{const dest=new URL(primaryManaged.click_url,window.location.href);if(["https:","http:"].includes(dest.protocol)){const link=document.createElement("a");link.className="vm-approved-ad-click";link.href=dest.href;link.target="_blank";link.rel="noopener noreferrer";link.textContent="Learn more ↗";copy.append(link);}}catch(_){}}
-    card.append(copy);track.append(card);
-   }
-  }
-  const {data,error}=await client.from("college_ad_campaigns").select("id,college_id,title,description,media_type,media_url,click_url,starts_at,ends_at,payment_status,status,placement_key").eq("status","approved").eq("payment_status","paid").order("created_at",{ascending:false}).limit(100);
-  if(error)throw error;
-  const now=new Date(),active=(data||[]).filter(c=>window.vmSafeAdMediaUrl(c.media_url,c.media_type)&&(!c.starts_at||new Date(c.starts_at)<=now)&&(!c.ends_at||new Date(c.ends_at)>=now));
-  const ids=[...new Set(active.map(c=>c.college_id).filter(Boolean))];let collegeMap=new Map();
-  if(ids.length){const cr=await client.from("colleges").select("id,name,status").in("id",ids).eq("status","verified");if(!cr.error)collegeMap=new Map((cr.data||[]).map(c=>[c.id,c]));}
-  const usable=active.filter(c=>collegeMap.has(c.college_id));
-  slots.forEach((slot,slotIndex)=>{
-   const track=slot.querySelector(".vm-approved-ad-track");if(!track)return;
-   const kind=slot.dataset.kind||"mixed";
-   const placementKey=slot.id==="vmAdAfterServices"?"after_services":slot.id==="vmAdAfterMarketing"?"after_marketing":"";
-   slot.hidden=false;
-   const managed=managedAds.filter(c=>c.placement_key===placementKey).slice(0,6);
-   if(managed.length){
-    track.replaceChildren();
-    managed.slice(0,6).forEach(c=>{
-     const card=document.createElement("article");card.className="vm-approved-ad-card";
-     let media;const safeMediaUrl=window.vmSafeAdMediaUrl(c.media_url,c.media_type);
-     if(!safeMediaUrl)return;
-     if(c.media_type==="video"){media=document.createElement("video");media.src=safeMediaUrl;media.controls=true;media.preload="metadata";media.playsInline=true;media.setAttribute("aria-label",c.title||"Sponsored video");}
-     else{media=document.createElement("img");media.className="vm-approved-ad-media";media.src=safeMediaUrl;media.alt=c.title||"Sponsored promotion";media.loading="lazy";}
-     card.append(media);
-     const copy=document.createElement("div");copy.className="vm-approved-ad-copy";
-     const meta=document.createElement("div");meta.className="vm-approved-ad-meta";meta.textContent="SPONSORED · "+(c.media_type==="video"?"VIDEO":"IMAGE");
-     const h=document.createElement("h3");h.textContent=c.title||"VIDYAMAP promotion";
-     const p=document.createElement("p");p.textContent=c.description||"";
-     copy.append(meta,h);if(c.description)copy.append(p);
-     if(c.click_url){try{const dest=new URL(c.click_url,window.location.href);if(["https:","http:"].includes(dest.protocol)){const link=document.createElement("a");link.className="vm-approved-ad-click";link.href=dest.href;link.target="_blank";link.rel="noopener noreferrer";link.textContent="Learn more ↗";copy.append(link);}}catch(_){}}
-     card.append(copy);track.append(card);
-    });
-    if(!track.children.length)putEmpty(slot);
-    return;
-   }
-   let items=usable.filter(c=>(c.placement_key||"after_services")===placementKey&&(kind==="image"?c.media_type!=="video":kind==="video"?c.media_type==="video":true));
-   if(!items.length){putEmpty(slot);slot.hidden=true;return}
-   slot.hidden=false;const offset=slotIndex%items.length;items=items.slice(offset).concat(items.slice(0,offset));
-   track.replaceChildren();
-   items.slice(0,6).forEach(c=>{
-    const card=document.createElement("article");card.className="vm-approved-ad-card";
-    if(c.media_type==="video"){const v=document.createElement("video");v.src=window.vmSafeAdMediaUrl(c.media_url,c.media_type);v.controls=true;v.preload="metadata";v.playsInline=true;v.setAttribute("aria-label",c.title||"College promotion video");card.append(v)}
-    else{const img=document.createElement("img");img.className="vm-approved-ad-media";img.src=window.vmSafeAdMediaUrl(c.media_url,c.media_type);img.alt=c.title||"College promotion";img.loading="lazy";card.append(img)}
-    const copy=document.createElement("div");copy.className="vm-approved-ad-copy";const meta=document.createElement("div");meta.className="vm-approved-ad-meta";meta.textContent="SPONSORED · "+(c.media_type==="video"?"VIDEO":"COLLEGE POSTER");
-    const h=document.createElement("h3");h.textContent=c.title||"College promotion";const p=document.createElement("p");p.textContent=c.description||collegeMap.get(c.college_id).name;copy.append(meta,h,p);
-    const org=document.createElement("p");org.textContent=collegeMap.get(c.college_id).name;copy.append(org);
-    // External campaign click-through links are disabled until destination URLs can be reviewed.
+    const meta=document.createElement("div");meta.className="vm-approved-ad-meta";meta.textContent="SPONSORED · "+(ad.media_type==="video"?"VIDEO":"IMAGE");
+    const heading=document.createElement("h3");heading.textContent=ad.title||"VidyaMap promotion";copy.append(meta,heading);
+    if(ad.description){const p=document.createElement("p");p.textContent=ad.description;copy.append(p);}
+    if(ad.click_url){try{const dest=new URL(ad.click_url,window.location.href);if(["https:","http:"].includes(dest.protocol)){const link=document.createElement("a");link.className="vm-approved-ad-click";link.href=dest.href;link.target="_blank";link.rel="noopener noreferrer";link.textContent="Learn more ↗";copy.append(link);}}catch(_){}}
     card.append(copy);track.append(card);
    });
-  });
-  /* vm-ad-autoscroll-installed: slow carousel; pause while pointer/focus/touch is interacting */
-  slots.forEach(slot=>{
-   const track=slot.querySelector(".vm-approved-ad-track");
-   if(!track||track.children.length<2||track.querySelector(".vm-approved-ad-empty"))return;
-   let timer=null;
-   const stop=()=>{if(timer){clearInterval(timer);timer=null}};
-   const step=()=>{
-    if(slot.matches(":hover")||slot.contains(document.activeElement))return;
-    if(track.scrollWidth<=track.clientWidth+8)return;
-    const first=track.querySelector(".vm-approved-ad-card");
-    const gap=parseFloat(getComputedStyle(track).columnGap)||14;
-    const distance=first?first.getBoundingClientRect().width+gap:Math.max(220,track.clientWidth*.6);
-    const max=track.scrollWidth-track.clientWidth;
-    const next=track.scrollLeft+distance;
-    track.scrollTo({left:next>=max-8?0:next,behavior:"smooth"});
-   };
-   const start=()=>{stop();if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches)timer=setInterval(step,7500)};
-   slot.addEventListener("mouseenter",stop);
-   slot.addEventListener("mouseleave",start);
-   slot.addEventListener("focusin",stop);
-   slot.addEventListener("focusout",()=>{setTimeout(()=>{if(!slot.contains(document.activeElement)&&!slot.matches(":hover"))start()},250)});
-   slot.addEventListener("touchstart",stop,{passive:true});
-   slot.addEventListener("touchend",()=>{setTimeout(()=>{if(!slot.matches(":hover"))start()},2500)},{passive:true});
-   track.addEventListener("pointerdown",stop);
-   start();
-  });
- }catch(err){console.warn("Approved ad slots unavailable",err);}
+  }
+ }catch(error){
+  console.error("Public sponsored ad placements failed:",error);
+  slots.forEach(slot=>{if(slot.id==="vmAdAfterMarketing"||slot.id==="vmAdAfterServices"){slot.hidden=false;empty(slot,"Sponsored ads are temporarily unavailable. Please refresh shortly.");}});
+ }
 })();
 </script><script id="vm-floating-brand-ui">
 (function(){
