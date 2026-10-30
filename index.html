@@ -1435,7 +1435,7 @@ footer a:hover{color:#e3c98f!important}
 </head>
 <body>
 <div class="vm-portal-utility" aria-label="Quick links"><div class="vm-portal-utility-inner"><span class="vm-portal-tagline">VIDYAMAP&nbsp; | &nbsp;FIND. PROMOTE. GROW.</span><div class="vm-portal-utility-links"><a href="./about.html">About VidyaMap</a><a href="./for-colleges.html">For Institutions</a><a href="./index.html#contact">Contact</a></div></div></div><div class="vm-portal-brandbar"><div class="vm-portal-brand-inner"><a class="vm-portal-brand" href="./index.html" aria-label="VidyaMap Home"><img src="./vidyamap-logo.png" alt="VidyaMap"></a><div class="vm-portal-brand-actions"><a class="vm-portal-action-secondary" href="./explore-colleges.html">Explore Colleges</a><a class="vm-portal-action-primary" href="./index.html#register">Register Institution</a></div></div></div><header class="vm-shared-header"><div class="vm-shared-nav"><button class="vm-shared-toggle" type="button" aria-expanded="false" aria-controls="vmSharedLinks" aria-label="Toggle navigation">☰</button><nav class="vm-shared-links" id="vmSharedLinks" aria-label="Main navigation"><a href="./index.html">Home</a><div class="vm-shared-dropdown"><a href="#" class="vm-shared-about" aria-expanded="false">Explore <span>▾</span></a><div class="vm-shared-menu"><a href="./explore-colleges.html">Explore Colleges</a><a href="./admission-journey.html">My Admission Journey</a><a href="./scholarship-radar.html">Scholarships</a></div></div><a href="./exams.html">Exams</a><a href="./jobs.html">Jobs &amp; Hiring</a><div class="vm-shared-dropdown"><a href="#" class="vm-shared-about" aria-expanded="false">For Institutions <span>▾</span></a><div class="vm-shared-menu"><a href="./marketing-services.html">Marketing Services</a><a href="./for-colleges.html">For Colleges</a></div></div><div class="vm-shared-dropdown"><a href="./about.html" class="vm-shared-about" aria-expanded="false">About <span>▾</span></a><div class="vm-shared-menu"><a href="./about.html">About VidyaMap</a><a href="./our-mission.html">Our Mission</a><a href="./what-we-do.html">What We Do</a><a href="./our-vision.html">Our Vision</a><a href="./why-vidyamap.html">Why Choose VidyaMap?</a><a href="./founders.html">Founder</a></div></div><a href="./index.html#contact">Contact</a><a class="vm-shared-register" href="./index.html#register">Register College</a></nav></div></header>
-<div class="vm-sponsored-bar" aria-label="Sponsored college promotion"><span class="vm-sponsored-label">Sponsored</span><div class="vm-sponsored-message"><span class="vm-sponsored-single-line"><strong>SHOW YOUR COLLEGE HERE</strong> · Promote with posters &amp; videos · Get more admissions · Advertise with VidyaMap</span></div></div>
+<div class="vm-sponsored-bar" aria-label="Sponsored college promotion"><span class="vm-sponsored-label">Latest</span><div class="vm-sponsored-message"><span class="vm-sponsored-single-line"><strong>SHOW YOUR COLLEGE HERE</strong> · Promote with posters &amp; videos · Get more admissions · Advertise with VidyaMap</span></div></div>
 <div class="vm-ad-ticker" id="vmAdTicker" hidden><strong>📣 Sponsored</strong><div class="vm-ticker-window"><div class="vm-ticker-track" id="vmTickerTrack"></div></div></div>
 
 <main>
@@ -4627,6 +4627,56 @@ html body .vm-sponsored-bar .vm-sponsored-link{font-weight:800!important;text-de
    document.querySelectorAll('header.vm-shared-header .vm-shared-toggle').forEach(function(b){b.setAttribute('aria-expanded','false');b.textContent='☰';});
   }
  },true);
+})();
+</script>
+
+
+<style id="vm-home-latest-sponsored-visible-v2">
+html body .vm-sponsored-bar{display:flex!important;align-items:center!important;flex-wrap:nowrap!important;gap:12px!important;min-height:52px!important;max-height:52px!important;height:52px!important;box-sizing:border-box!important;overflow:hidden!important;padding:6px 3%!important;background:#fff8ed!important;position:relative!important;z-index:30!important}
+html body .vm-sponsored-bar>.vm-sponsored-label{display:inline-flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:center!important;background:#f3232b!important;color:#fff!important;padding:8px 12px!important;border-radius:8px!important;font-size:12px!important;font-weight:850!important;white-space:nowrap!important}
+html body .vm-sponsored-bar>.vm-sponsored-message{display:block!important;flex:1 1 auto!important;min-width:0!important;width:0!important;max-width:none!important;overflow:hidden!important;white-space:nowrap!important}
+html body .vm-sponsored-bar .vm-sponsored-viewport{display:block!important;width:100%!important;min-width:0!important;overflow:hidden!important;white-space:nowrap!important}
+html body .vm-sponsored-bar .vm-sponsored-marquee{display:flex!important;align-items:center!important;width:max-content!important;min-width:max-content!important;white-space:nowrap!important;animation:vmLatestSponsoredFlow 32s linear infinite!important;will-change:transform!important}
+html body .vm-sponsored-bar .vm-sponsored-sequence{display:inline-flex!important;align-items:center!important;flex:0 0 auto!important;width:max-content!important;white-space:nowrap!important;padding-right:50px!important}
+html body .vm-sponsored-bar .vm-sponsored-sequence>*{display:inline-block!important;flex:0 0 auto!important;white-space:nowrap!important;color:#152744!important;font-size:14px!important}
+html body .vm-sponsored-bar .vm-sponsored-separator{margin:0 22px!important}
+@keyframes vmLatestSponsoredFlow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:600px){html body .vm-sponsored-bar{height:52px!important;min-height:52px!important;padding:6px 10px!important;gap:9px!important}html body .vm-sponsored-bar>.vm-sponsored-label{font-size:11px!important;padding:7px 10px!important}html body .vm-sponsored-bar .vm-sponsored-sequence>*{font-size:13px!important}}
+@media(prefers-reduced-motion:reduce){html body .vm-sponsored-bar .vm-sponsored-marquee{animation:none!important;transform:none!important}}
+</style>
+<script id="vm-home-latest-sponsored-visible-v2-js">
+(function(){
+ async function load(){
+  var bar=document.querySelector('.vm-sponsored-bar');
+  if(!bar||!window.supabase||!window.supabase.createClient)return;
+  var label=bar.querySelector('.vm-sponsored-label');
+  var message=bar.querySelector('.vm-sponsored-message');
+  if(!message)return;
+  if(label)label.textContent='Latest';
+  try{
+   var client=window.supabase.createClient('https://taxlvccrinehasexgvhv.supabase.co','sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA');
+   var result=await client.from('site_promo_items').select('item_type,heading,body,url,sort_order').eq('is_active',true).order('sort_order');
+   if(result.error)throw result.error;
+   var items=result.data||[];
+   if(!items.length){message.textContent='Sponsored promotions will appear here';return;}
+   var viewport=document.createElement('span');viewport.className='vm-sponsored-viewport';
+   var marquee=document.createElement('span');marquee.className='vm-sponsored-marquee';
+   function sequence(){
+    var seq=document.createElement('span');seq.className='vm-sponsored-sequence';
+    items.forEach(function(item,index){
+     if(index){var sep=document.createElement('span');sep.className='vm-sponsored-separator';sep.textContent='•';seq.appendChild(sep);}
+     var text=(item.heading||'').trim()+(item.body?' — '+item.body.trim():'');
+     var node=document.createElement('span');
+     if(item.item_type==='link'&&item.url){try{var u=new URL(item.url);if(u.protocol==='https:'||u.protocol==='http:'){var link=document.createElement('a');link.href=u.href;link.target='_blank';link.rel='noopener noreferrer';node=link;}}catch(e){}}
+     node.textContent=text||'Sponsored promotion';seq.appendChild(node);
+    });
+    return seq;
+   }
+   var first=sequence(),second=sequence();second.setAttribute('aria-hidden','true');marquee.append(first,second);viewport.appendChild(marquee);message.replaceChildren(viewport);
+   marquee.style.animationDuration=Math.max(24,first.scrollWidth/38)+'s';
+  }catch(error){console.error('Latest sponsored strip failed:',error);message.textContent='Sponsored promotions are temporarily unavailable';}
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();
 })();
 </script>
 
