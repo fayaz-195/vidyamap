@@ -509,6 +509,8 @@ document.getElementById("nextPage").addEventListener("click",()=>{if(page<Math.c
    if(!items.length){putEmpty(slot);return}
    const offset=slotIndex%items.length;items=items.slice(offset).concat(items.slice(0,offset));
    track.replaceChildren();
+  track.style.setProperty('display','inline-flex','important');track.style.setProperty('align-items','center','important');track.style.setProperty('gap','10px','important');track.style.setProperty('width','max-content','important');track.style.setProperty('white-space','nowrap','important');track.style.setProperty('position','relative','important');track.style.setProperty('animation','vmPromoScroll 28s linear infinite','important');track.style.setProperty('will-change','transform','important');
+  if(!document.getElementById('vm-promo-scroll-style')){const style=document.createElement('style');style.id='vm-promo-scroll-style';style.textContent='@keyframes vmPromoScroll{from{transform:translateX(100%)}to{transform:translateX(-100%)}}';document.head.appendChild(style);}
    items.slice(0,6).forEach(c=>{
     const card=document.createElement("article");card.className="vm-approved-ad-card";
     if(c.media_type==="video"){const v=document.createElement("video");v.src=c.media_url;v.controls=true;v.preload="metadata";v.playsInline=true;v.setAttribute("aria-label",c.title||"College promotion video");card.append(v)}
