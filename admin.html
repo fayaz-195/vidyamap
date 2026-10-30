@@ -995,6 +995,35 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
 @media(max-width:620px){.scholarship-admin-wrap{padding:12px}.scholarship-admin-form{padding:14px}.scholarship-fields{grid-template-columns:1fr}.scholarship-fields .wide{grid-column:auto}.scholarship-fields .scholarship-featured{padding-top:4px}.scholarship-form-heading,.scholarship-list-head{flex-direction:column}.scholarship-list-head input{width:100%}.scholarship-admin-row{grid-template-columns:1fr}.scholarship-admin-row>div:first-child{grid-column:auto}}
 </style>
 <script>
+(function(){
+  'use strict';
+  function report(message){
+    var notice=document.getElementById('loginNotice');
+    if(!notice)return;
+    notice.textContent=message;
+    notice.classList.remove('hidden');
+    notice.classList.add('error');
+  }
+  window.addEventListener('error',function(event){
+    if(event&&event.message)report('Admin page script error: '+event.message+'. Please reload the page.');
+  });
+  window.addEventListener('unhandledrejection',function(event){
+    var reason=event&&event.reason;
+    report('Admin page request error: '+(reason&&reason.message?reason.message:String(reason||'Unknown error'))+'. Please reload the page.');
+  });
+  document.addEventListener('click',function(event){
+    var button=event.target&&event.target.closest?event.target.closest('#loginBtn'):null;
+    if(!button)return;
+    report('Login button clicked. Checking admin login script…');
+    window.setTimeout(function(){
+      if(window.__VIDYAMAP_ADMIN_READY__!==true){
+        report('Login could not start because the admin login script did not initialize. Reload this page; if it continues, send this screenshot to support.');
+      }
+    },1800);
+  },true);
+})();
+</script>
+<script>
 (async function(){
 'use strict';
 // Load the Supabase SDK reliably; if the primary CDN is unavailable, try the fallback CDN.
@@ -1439,6 +1468,7 @@ function renderColleges(result){
 $('recoveryForm').addEventListener('submit',async event=>{event.preventDefault();hideNotice($('recoveryNotice'));const password=$('newPassword').value;const confirm=$('confirmPassword').value;if(password!==confirm){showNotice($('recoveryNotice'),'Passwords do not match. Please enter the same password twice.',true);return;}const button=$('savePasswordBtn');setBusy(button,true,'Saving password…');try{const {error}=await client.auth.updateUser({password});if(error)throw error;recoveryMode=false;$('newPassword').value='';$('confirmPassword').value='';await client.auth.signOut();showLogin('Password updated successfully. You can now sign in with your new password.',false);}catch(error){showNotice($('recoveryNotice'),error.message||'Unable to update password. The reset link may have expired; request a new one.',true);}finally{setBusy(button,false);}});
 async function reviewRequest(id,decision,button){if(!currentUser)return;const verb=decision==='approved'?'approve':'reject';if(!window.confirm('Are you sure you want to '+verb+' this institution registration?'))return;setBusy(button,true,'Saving…');try{const {data,error}=await client.rpc('admin_review_college_request',{p_request_id:id,p_decision:decision==='approved'?'approve':'reject',p_review_notes:null});if(error)throw error;showNotice(dashboardNotice,decision==='approved'?'Registration approved and institution listing created.':'Registration rejected.',false);await loadDashboard();}catch(error){showNotice(dashboardNotice,'Could not save the decision. '+(error.message||'Database permissions may have blocked this action.'),true);}finally{setBusy(button,false);}}
 $('loginForm').addEventListener('submit',async event=>{event.preventDefault();if(loginInProgress)return;loginInProgress=true;hideNotice(loginNotice);const button=$('loginBtn');setBusy(button,true,'Signing in…');showNotice(loginNotice,'Checking your credentials and admin access…',false);try{const {data,error}=await withQueryTimeout(client.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value}),15000);if(error)throw new Error('Sign-in failed: '+(error.message||'Please check your email and password.'));if(!data?.user)throw new Error('Authentication returned no user session. Please try again.');await withQueryTimeout(ensurePlatformAdmin(data.user),15000);currentUser=data.user;showDashboard(data.user);hideNotice(loginNotice);}catch(error){console.error('VIDYAMAP admin sign-in failed:',error);showLogin(error.message||'Sign in failed. Please try again.',true);}finally{loginInProgress=false;setBusy(button,false);}});
+window.__VIDYAMAP_ADMIN_READY__=true;
 $('resetBtn').addEventListener('click',async()=>{const email=$('email').value.trim();if(!email){showNotice(loginNotice,'Enter your team email above first.');$('email').focus();return;}try{const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+window.location.pathname});if(error)throw error;showNotice(loginNotice,'If this email belongs to an account, a password reset link has been sent.');}catch(error){showNotice(loginNotice,error.message||'Unable to request a reset right now.',true);}});
 $('signOutBtn').addEventListener('click',async()=>{await client.auth.signOut();currentUser=null;showLogin('You have signed out.');});
 
