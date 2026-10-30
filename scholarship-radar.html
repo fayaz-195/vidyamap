@@ -44,6 +44,7 @@ main{padding-bottom:70px}.toolbar,.panel{background:#ffffffdf;border:1px solid #
 <p class="fineprint">Privacy note: tracked items are saved only in this browser using local storage. They are not uploaded to VidyaMap or synced across devices. Do not enter Aadhaar numbers, bank details, passwords, caste certificates or other sensitive documents here. VidyaMap does not decide eligibility or submit applications. Use the official department portal for final rules, dates and applications.</p>
 </main>
 <footer><div class="wrap"><span>© 2026 VidyaMap · Find. Promote. Grow.</span><span>Official information can change. <a href="./explore-colleges.html">Explore colleges</a></span></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
 <script>
 (function(){
 'use strict';
@@ -55,6 +56,22 @@ var opportunities=[
 {id:'nmmss',title:'National Means-cum-Merit Scholarship (NMMSS) — AY 2026–27',state:'India',level:'School',type:'Scholarship',category:'School education · merit-cum-means',deadline:'2026-08-31',deadlineLabel:'Student application deadline: 31 Aug 2026',summary:'The Ministry of Education notice for AY 2026–27 listed 31 August 2026 as the student application cut-off. That date has passed as of 30 October 2026. Check NSP for any official extension or the next cycle; do not assume applications are open.',keywords:'nmmss national means cum merit scholarship school class ix x xi xii',url:'https://scholarships.gov.in/',source:'NSP · Ministry of Education schedule',sourceNote:'AY 2026–27 schedule; verify any extension on NSP. Source notice: Government circular dated 3 June 2026.',expired:true},
 {id:'pm-vidya',title:'PM-Vidyalaxmi — Education Loan & Interest Support',state:'India',level:'UG',type:'Loan support',category:'Higher education finance',deadline:null,deadlineLabel:'Portal-based process',summary:'This is not a scholarship. It is a unified education-loan portal where eligible students can apply to banks, track loan status and claim interest subvention when eligible. Listed separately to avoid confusing loans with grants.',keywords:'pm vidyalaxmi education loan interest subvention higher education ug pg bank',url:'https://pmvidyalaxmi.co.in/',source:'PM-Vidyalaxmi portal',sourceNote:'Official student manual describes loan application, tracking and interest-subvention services.'}
 ];
+async function loadPublishedScholarships(){
+ try{
+  var client=window.supabase.createClient('https://taxlvccrinehasexgvhv.supabase.co','sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA',{auth:{persistSession:false,autoRefreshToken:false}});
+  var result=await client.from('scholarship_opportunities').select('id,title,state,scheme_type,study_level,category,summary,official_url,application_url,source_label,source_note,academic_year,deadline,deadline_note,source_checked_at,is_featured,status').eq('status','published').order('is_featured',{ascending:false}).order('deadline',{ascending:true,nullsFirst:false}).limit(200);
+  if(result.error)throw result.error;
+  if(!Array.isArray(result.data)||!result.data.length)return;
+  opportunities=result.data.map(function(x){
+   var expired=!!(x.deadline&&x.deadline<new Date().toISOString().slice(0,10));
+   var deadlineLabel=x.deadline?new Date(x.deadline+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})+(expired?' · deadline passed':''):((x.deadline_note||'Check official portal'));
+   return {id:x.id,title:x.title,state:x.state,level:x.study_level,type:x.scheme_type,category:x.category,deadline:x.deadline||null,deadlineLabel:deadlineLabel,summary:x.summary,keywords:[x.title,x.category,x.study_level,x.academic_year,x.eligibility,x.benefits].filter(Boolean).join(' '),url:x.application_url||x.official_url,source:x.source_label||'Official portal',sourceNote:x.source_note||x.deadline_note||'Confirm current eligibility and dates on the official portal.',expired:expired,featured:x.is_featured===true};
+  });
+  renderCards();
+ }catch(error){
+  console.warn('Live scholarship feed unavailable; showing the last built-in reference list.',error);
+ }
+}
 var cards=document.getElementById('opportunityCards');
 var search=document.getElementById('search');
 var stateFilter=document.getElementById('stateFilter');
@@ -99,7 +116,7 @@ document.getElementById('customForm').addEventListener('submit',function(event){
  var items=readItems();items.push({id:'custom-'+Date.now(),title:title,deadline:deadline,status:status,url:url});saveItems(items);this.reset();renderTracker();document.getElementById('my-tracker').scrollIntoView({behavior:'smooth'});
 });
 [search,stateFilter,levelFilter,typeFilter].forEach(function(el){el.addEventListener('input',renderCards);el.addEventListener('change',renderCards);});
-renderCards();renderTracker();
+renderCards();renderTracker();loadPublishedScholarships();
 })();
 </script>
 </body>
