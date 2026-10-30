@@ -104,6 +104,16 @@ footer{background:var(--dark);color:white;padding:40px 0 18px}
 .footer-links{display:flex;gap:16px;flex-wrap:wrap;font-size:13px}
 .footer-bottom{border-top:1px solid #ffffff33;margin-top:24px;padding-top:14px;font-size:12px;color:#d4deea}
 button:disabled{opacity:.6;cursor:wait}
+
+/* Keep the full desktop navigation inside the viewport on standard laptop screens. */
+@media (min-width:821px) and (max-width:1700px){
+  .vm-shared-nav{width:calc(100% - 32px);gap:8px}
+  .vm-shared-brand{padding:4px 6px}
+  .vm-shared-brand img{height:54px;max-width:170px}
+  .vm-shared-links{gap:2px}
+  .vm-shared-links>a,.vm-shared-about{padding:8px 7px;font-size:11px}
+  .vm-shared-register{padding:9px 10px!important}
+}
 @media(max-width:1000px){.search-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.hero-grid,.register-grid{grid-template-columns:1fr}.search-grid{grid-template-columns:1fr 1fr}.cards,.categories{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.nav{min-height:64px}.brand{font-size:20px}.nav-links{gap:8px}.nav-links a:not(.btn){display:none}.nav-links .btn{font-size:12px;padding:10px}.search-grid,.cards,.categories,.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.hero-panel{padding:24px}.section{padding:46px 0}.footer-main{flex-direction:column}}
