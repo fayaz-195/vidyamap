@@ -1128,28 +1128,6 @@ body.vm-lead-modal-open{overflow:hidden!important}
 @media(max-width:1100px){.vm-shared-brand,.vm-shared-brand img{width:220px!important;min-width:220px!important;max-width:220px!important}.vm-shared-brand{min-width:220px!important}}
 @media(max-width:760px){.vm-shared-nav{min-height:76px!important}.vm-shared-brand{width:190px!important;min-width:190px!important;min-height:64px!important}.vm-shared-brand img{width:190px!important;max-width:190px!important;height:64px!important;max-height:64px!important}}
 @media(max-width:420px){.vm-shared-brand{width:160px!important;min-width:160px!important;min-height:58px!important}.vm-shared-brand img{width:160px!important;max-width:160px!important;height:58px!important;max-height:58px!important}}
-</style><style id="vm-sponsored-single-visible-fix">
-.vm-sponsored-bar{display:flex!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:44px!important;overflow:hidden!important;position:relative!important;z-index:20!important;background:#fff8ed!important;color:#152744!important}
-.vm-sponsored-bar .vm-sponsored-label{display:inline-flex!important;visibility:visible!important;opacity:1!important;flex:0 0 auto!important}
-.vm-sponsored-bar .vm-sponsored-message{display:block!important;visibility:visible!important;opacity:1!important;flex:1 1 auto!important;min-width:0!important;overflow:hidden!important;white-space:nowrap!important}
-.vm-sponsored-bar .vm-sponsored-track{display:block!important;width:max-content!important;animation:vmSponsoredSingleMove 28s linear infinite!important;will-change:transform!important}
-.vm-sponsored-bar .vm-sponsored-track span{display:inline-block!important;padding-right:70px!important;white-space:nowrap!important;visibility:visible!important;opacity:1!important;color:#152744!important}
-.vm-sponsored-bar:hover .vm-sponsored-track{animation-play-state:paused!important}
-@keyframes vmSponsoredSingleMove{from{transform:translateX(0)}to{transform:translateX(-55%)}}
-.vm-ad-ticker{display:none!important}
-@media(prefers-reduced-motion:reduce){.vm-sponsored-bar .vm-sponsored-track{animation:none!important;white-space:normal!important}.vm-sponsored-bar .vm-sponsored-message{white-space:normal!important}}
-</style><style id="vm-sponsored-fast-continuous">
-/* Sponsored ticker: faster, continuous motion; never pause on hover */
-.vm-sponsored-bar .vm-sponsored-track{animation:vmSponsoredContinuous 15s linear infinite!important;animation-play-state:running!important;will-change:transform}
-.vm-sponsored-bar:hover .vm-sponsored-track,.vm-sponsored-bar .vm-sponsored-track:hover{animation-play-state:running!important}
-.vm-sponsored-bar .vm-sponsored-track span{padding-right:90px!important}
-@keyframes vmSponsoredContinuous{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-</style><style id="vm-sponsored-slow-hover">
-/* Slow the sponsored message and pause it while hovered */
-.vm-sponsored-bar .vm-sponsored-track{animation:vmSponsoredGentleMove 48s linear infinite!important;animation-play-state:running!important}
-.vm-sponsored-bar:hover .vm-sponsored-track,.vm-sponsored-bar:focus-within .vm-sponsored-track{animation-play-state:paused!important}
-@keyframes vmSponsoredGentleMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media(prefers-reduced-motion:reduce){.vm-sponsored-bar .vm-sponsored-track{animation:none!important;transform:none!important}.vm-sponsored-bar .vm-sponsored-message{white-space:normal!important}.vm-sponsored-bar .vm-sponsored-track span{white-space:normal!important}}
 </style><style id="vm-benefit-row-alignment-final">
 /* Keep both benefit groups in normal document flow below the hero; do not hide or remove page sections. */
 .vm-hero-benefit-row{
@@ -1431,12 +1409,11 @@ footer a:hover{color:#e3c98f!important}
 @media(max-width:440px){.vm-portal-brand-inner{min-height:76px}.vm-portal-brand img{height:51px}.vm-portal-action-secondary{display:none}}
 </style>
 <style id="vm-universal-fixed-masthead-css">#vmUniversalMasthead{width:100%;z-index:2147483000}#vmUniversalMasthead.vm-universal-fixed{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:2147483000!important;box-shadow:0 5px 18px rgba(20,20,40,.18)!important}#vmUniversalMasthead.vm-universal-fixed header.vm-shared-header{position:relative!important;top:auto!important}#vmUniversalMasthead.vm-universal-fixed .vm-sponsored-bar{position:relative!important;top:auto!important}#vmUniversalMastheadPlaceholder{display:block;width:100%;height:0;pointer-events:none}@media print{#vmUniversalMasthead.vm-universal-fixed{position:static!important}}</style>
-<style id="vm-dropdown-above-sponsored-final">#vmUniversalMasthead header.vm-shared-header,#vmStickyMasthead header.vm-shared-header,#vmGlobalMasthead header.vm-shared-header{position:relative!important;z-index:2147483001!important;overflow:visible!important}header.vm-shared-header .vm-shared-nav,header.vm-shared-header .vm-shared-links{overflow:visible!important}header.vm-shared-header .vm-shared-dropdown{position:relative!important;z-index:2147483002!important}header.vm-shared-header .vm-shared-menu{position:absolute!important;top:100%!important;left:0!important;z-index:2147483003!important;min-width:250px!important;background:#fff!important;color:#17345f!important;box-shadow:0 18px 42px rgba(25,35,76,.22)!important;border:1px solid #e5def7!important}header.vm-shared-header .vm-shared-dropdown:hover .vm-shared-menu,header.vm-shared-header .vm-shared-dropdown:focus-within .vm-shared-menu,header.vm-shared-header .vm-shared-dropdown.is-open .vm-shared-menu{display:block!important}#vmUniversalMasthead .vm-sponsored-bar,#vmStickyMasthead .vm-sponsored-bar,#vmGlobalMasthead .vm-sponsored-bar,.vm-sponsored-bar{position:relative!important;z-index:1!important}</style>
+
 </head>
 <body>
 <div class="vm-portal-utility" aria-label="Quick links"><div class="vm-portal-utility-inner"><span class="vm-portal-tagline">VIDYAMAP&nbsp; | &nbsp;FIND. PROMOTE. GROW.</span><div class="vm-portal-utility-links"><a href="./about.html">About VidyaMap</a><a href="./for-colleges.html">For Institutions</a><a href="./index.html#contact">Contact</a></div></div></div><div class="vm-portal-brandbar"><div class="vm-portal-brand-inner"><a class="vm-portal-brand" href="./index.html" aria-label="VidyaMap Home"><img src="./vidyamap-logo.png" alt="VidyaMap"></a><div class="vm-portal-brand-actions"><a class="vm-portal-action-secondary" href="./explore-colleges.html">Explore Colleges</a><a class="vm-portal-action-primary" href="./index.html#register">Register Institution</a></div></div></div><header class="vm-shared-header"><div class="vm-shared-nav"><button class="vm-shared-toggle" type="button" aria-expanded="false" aria-controls="vmSharedLinks" aria-label="Toggle navigation">☰</button><nav class="vm-shared-links" id="vmSharedLinks" aria-label="Main navigation"><a href="./index.html">Home</a><div class="vm-shared-dropdown"><a href="#" class="vm-shared-about" aria-expanded="false">Explore <span>▾</span></a><div class="vm-shared-menu"><a href="./explore-colleges.html">Explore Colleges</a><a href="./admission-journey.html">My Admission Journey</a><a href="./scholarship-radar.html">Scholarships</a></div></div><a href="./exams.html">Exams</a><a href="./jobs.html">Jobs &amp; Hiring</a><div class="vm-shared-dropdown"><a href="#" class="vm-shared-about" aria-expanded="false">For Institutions <span>▾</span></a><div class="vm-shared-menu"><a href="./marketing-services.html">Marketing Services</a><a href="./for-colleges.html">For Colleges</a></div></div><div class="vm-shared-dropdown"><a href="./about.html" class="vm-shared-about" aria-expanded="false">About <span>▾</span></a><div class="vm-shared-menu"><a href="./about.html">About VidyaMap</a><a href="./our-mission.html">Our Mission</a><a href="./what-we-do.html">What We Do</a><a href="./our-vision.html">Our Vision</a><a href="./why-vidyamap.html">Why Choose VidyaMap?</a><a href="./founders.html">Founder</a></div></div><a href="./index.html#contact">Contact</a><a class="vm-shared-register" href="./index.html#register">Register College</a></nav></div></header>
-<div class="vm-sponsored-bar" aria-label="Sponsored college promotion"><span class="vm-sponsored-label">Latest</span><div class="vm-sponsored-message"><span class="vm-sponsored-single-line"><strong>SHOW YOUR COLLEGE HERE</strong> · Promote with posters &amp; videos · Get more admissions · Advertise with VidyaMap</span></div></div>
-<div class="vm-ad-ticker" id="vmAdTicker" hidden><strong>📣 Sponsored</strong><div class="vm-ticker-window"><div class="vm-ticker-track" id="vmTickerTrack"></div></div></div>
+<div class="vm-sponsored-bar" aria-label="Sponsored college promotion"><span class="vm-sponsored-label">Sponsored</span><div class="vm-sponsored-message"><span class="vm-sponsored-single-line"><strong>SHOW YOUR COLLEGE HERE</strong> · Promote with posters &amp; videos · Get more admissions · Advertise with VidyaMap</span></div></div></div></div>
 
 <main>
 <section class="hero">
@@ -3273,10 +3250,7 @@ slide.append(caption);root.insertBefore(slide,dots);slides.push(slide);});if(!sl
 @media(max-width:850px){.hero{background-image:linear-gradient(180deg,rgba(255,255,255,.88) 0%,rgba(255,255,255,.64) 40%,rgba(255,255,255,.08) 100%),url("assets/dreamy-campus-background.svg")!important;background-size:auto 440px!important;background-position:center top!important}}
 @media(max-width:560px){.hero{background-size:auto 340px!important}}
 </style>
-<style id="vm-single-sponsored-bar">
-/* Keep the header's main sponsored strip; hide the redundant rotating ticker. */
-.vm-ad-ticker{display:none!important}
-</style>
+
 <style id="vm-scroll-and-hero-sharpness">
 /* Restore normal document scrolling; the hero artwork should not trap the page. */
 html{height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:auto!important;scroll-behavior:auto!important}
@@ -3289,16 +3263,7 @@ main{overflow:visible!important}
 .vm-edu-card strong,.vm-edu-card small{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
 </style>
-<style id="vm-sponsored-scroll-fix">
-/* Single non-overlapping marquee: one continuous line moves inside a clipped viewport. */
-.vm-sponsored-bar{position:relative!important;overflow:hidden!important;display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;gap:12px!important;white-space:nowrap!important}
-.vm-sponsored-bar .vm-sponsored-label{position:relative!important;z-index:2!important;flex:0 0 auto!important;margin:0!important}
-.vm-sponsored-bar>span:nth-child(2),.vm-sponsored-bar>span:nth-child(3),.vm-sponsored-bar>span:nth-child(4),.vm-sponsored-bar>span:nth-child(5),.vm-sponsored-bar>span:nth-child(6){animation:none!important;transform:none!important}
-.vm-sponsored-bar .vm-sponsored-message{display:block!important;flex:1 1 auto!important;min-width:0!important;overflow:hidden!important;white-space:nowrap!important;position:relative!important}
-.vm-sponsored-bar .vm-sponsored-message span{display:inline-block!important;padding-left:100%!important;white-space:nowrap!important;animation:vmSponsoredOneLine 32s linear infinite!important;will-change:transform!important}
-@keyframes vmSponsoredOneLine{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
-@media(prefers-reduced-motion:reduce){.vm-sponsored-bar .vm-sponsored-message span{animation:none!important;padding-left:0!important;white-space:normal!important}}
-</style>
+
 <!-- VidyaMap Ask Query student guidance chatbot -->
 <div id="vmAskWidget" class="vm-ask-widget">
   <button id="vmAskLauncher" class="vm-ask-launcher" type="button" aria-label="Open Ask Query student guidance chatbot" aria-expanded="false">
@@ -3641,16 +3606,6 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
  section.section:not(#studentLeadCapture),section.feature-section,section.register{padding-block:44px!important}
  section.vm-approved-ad-slot{padding-block:26px!important}
 }
-</style><style id="vm-global-sponsored-ticker-css">
-.vm-sponsored-bar{position:relative;display:flex;align-items:center;gap:14px;min-height:44px;padding:6px 3%;overflow:hidden;background:#fff8ed;border-bottom:1px solid #f0e5d7;color:#152744;font-size:12px;line-height:1.35;z-index:8}
-.vm-sponsored-label{position:relative;z-index:2;flex:0 0 auto;background:#f3232b;color:#fff;font-weight:850;border-radius:7px;padding:8px 12px;white-space:nowrap}
-.vm-sponsored-message{flex:1;min-width:0;overflow:hidden;white-space:nowrap;mask-image:linear-gradient(90deg,transparent 0,#000 2%,#000 98%,transparent 100%)}
-.vm-sponsored-track{display:flex;align-items:center;width:max-content;white-space:nowrap;animation:vmSponsoredTickerMove 32s linear infinite}
-.vm-sponsored-track span{display:inline-block;padding-right:48px;white-space:nowrap}
-.vm-sponsored-bar:hover .vm-sponsored-track{animation-play-state:paused}
-@keyframes vmSponsoredTickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media(max-width:600px){.vm-sponsored-bar{gap:9px;padding:6px 10px;min-height:40px}.vm-sponsored-label{padding:7px 9px;font-size:11px}.vm-sponsored-track{animation-duration:25s}.vm-sponsored-track span{padding-right:30px}}
-@media(prefers-reduced-motion:reduce){.vm-sponsored-track{animation:none!important}}
 </style></style><script id="vm-scroll-and-sponsored-fix-script">
 (function(){
  function repairScroll(){
@@ -4572,6 +4527,7 @@ html body .vm-portal-brandbar{z-index:1!important}
  },true);
 })();
 </script>
+
 
 
 
