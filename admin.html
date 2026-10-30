@@ -1005,7 +1005,7 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
     notice.classList.add('error');
   }
   window.addEventListener('error',function(event){
-    if(event&&event.message)report('Admin page script error: '+event.message+'. Please reload the page.');
+    if(event&&event.message){var where=event.filename?(' at '+event.filename.split('/').pop()+':'+event.lineno+':'+event.colno):'';report('Admin page script error: '+event.message+where+'. Please reload the page.');}
   });
   window.addEventListener('unhandledrejection',function(event){
     var reason=event&&event.reason;
