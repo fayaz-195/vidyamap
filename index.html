@@ -4543,5 +4543,52 @@ html body .vm-portal-brandbar{z-index:1!important}
 }
 </style>
 
+
+<style id="vm-mobile-menu-emergency-fix">
+@media(max-width:820px){
+ html body #vmStickyMasthead header.vm-shared-header .vm-shared-nav,
+ html body #vmUniversalMasthead header.vm-shared-header .vm-shared-nav,
+ html body header.vm-shared-header .vm-shared-nav{position:relative!important;overflow:visible!important}
+ html body header.vm-shared-header nav.vm-shared-links.vm-force-open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+ html body header.vm-shared-header nav.vm-shared-links.vm-force-open{position:absolute!important;top:100%!important;left:0!important;right:0!important;width:100%!important;max-height:70vh!important;overflow-y:auto!important;flex-direction:column!important;align-items:stretch!important;background:#76208f!important;z-index:2147483647!important;padding:12px 14px 18px!important}
+ html body header.vm-shared-header .vm-shared-dropdown.vm-force-open>.vm-shared-menu{display:block!important;position:static!important;min-width:0!important;width:100%!important;background:#fff!important;margin:6px 0 10px!important;padding:8px!important}
+ html body header.vm-shared-header .vm-shared-menu a{display:block!important;color:#17345f!important;background:#fff!important;padding:12px!important}
+}
+</style>
+<script id="vm-mobile-menu-emergency-fix-js">
+(function(){
+ if(window.__vmMobileMenuEmergencyInstalled)return;
+ window.__vmMobileMenuEmergencyInstalled=true;
+ document.addEventListener('click',function(event){
+  var toggle=event.target.closest&&event.target.closest('header.vm-shared-header .vm-shared-toggle');
+  if(toggle){
+   event.preventDefault();event.stopImmediatePropagation();
+   var nav=document.getElementById(toggle.getAttribute('aria-controls')||'vmSharedLinks');
+   if(!nav)return;
+   var opening=!nav.classList.contains('vm-force-open');
+   nav.classList.toggle('vm-force-open',opening);
+   nav.classList.toggle('is-open',opening);
+   toggle.setAttribute('aria-expanded',String(opening));
+   toggle.textContent=opening?'✕':'☰';
+   return;
+  }
+  var trigger=event.target.closest&&event.target.closest('header.vm-shared-header .vm-shared-dropdown > .vm-shared-about');
+  if(trigger&&window.matchMedia('(max-width:820px)').matches){
+   event.preventDefault();event.stopImmediatePropagation();
+   var group=trigger.parentElement,opening=!group.classList.contains('vm-force-open');
+   group.classList.toggle('vm-force-open',opening);
+   group.classList.toggle('is-open',opening);
+   trigger.setAttribute('aria-expanded',String(opening));
+   return;
+  }
+  if(!event.target.closest||!event.target.closest('header.vm-shared-header')){
+   document.querySelectorAll('header.vm-shared-header nav.vm-shared-links.vm-force-open').forEach(function(nav){nav.classList.remove('vm-force-open','is-open');});
+   document.querySelectorAll('header.vm-shared-header .vm-shared-dropdown.vm-force-open').forEach(function(d){d.classList.remove('vm-force-open','is-open');});
+   document.querySelectorAll('header.vm-shared-header .vm-shared-toggle').forEach(function(b){b.setAttribute('aria-expanded','false');b.textContent='☰';});
+  }
+ },true);
+})();
+</script>
+
 </body>
 </html>
