@@ -1374,6 +1374,237 @@ footer a:hover{color:#e3c98f!important}
 @keyframes vmHeaderAdFade{from{opacity:.25;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:600px){#vmHeaderSponsored{padding:8px 0}#vmHeaderSponsored .vm-header-ad-inner{width:calc(100% - 24px);grid-template-columns:78px minmax(0,1fr);gap:8px}#vmHeaderSponsored .vm-header-ad-label{font-size:9px;padding:5px 6px}#vmHeaderSponsored .vm-header-ad-slide{gap:8px}#vmHeaderSponsored .vm-header-ad-slide img,#vmHeaderSponsored .vm-header-ad-slide video{width:62px;height:44px}#vmHeaderSponsored .vm-header-ad-copy strong{font-size:11px}#vmHeaderSponsored .vm-header-ad-copy span{font-size:10px}#vmHeaderSponsored .vm-header-ad-slide a{font-size:10px}}
 </style>
+
+<style id="vm-home-total-redesign">
+/* VIDYAMAP HOME — complete visual redesign; CSS only.
+   Header, shared sponsored strips, ad runtimes, content, forms and workflows are untouched. */
+:root{
+  --vm-ink:#142b4d;
+  --vm-navy:#102f5c;
+  --vm-purple:#76208f;
+  --vm-blue:#2869c7;
+  --vm-muted:#536782;
+  --vm-line:#e2e8f3;
+  --vm-paper:#ffffff;
+  --vm-lilac:#f4effb;
+}
+html{scroll-behavior:smooth}
+body{
+  color:var(--vm-ink)!important;
+  background:
+    radial-gradient(ellipse at 8% 28%,rgba(118,32,143,.075),transparent 34rem),
+    radial-gradient(ellipse at 92% 46%,rgba(40,105,199,.075),transparent 38rem),
+    #f7f9fd!important;
+}
+main{overflow:clip}
+main .container{width:min(1220px,calc(100% - 44px))}
+main h2{color:var(--vm-navy);letter-spacing:-.035em;font-weight:850}
+main p{line-height:1.72}
+main .muted{color:var(--vm-muted)!important}
+
+/* Hero: restore the missing campus photograph and give the first fold a new layout. */
+main>.hero{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:clamp(56px,7vw,96px) 0 clamp(46px,5vw,68px)!important;
+  background-color:#f4f6ff!important;
+  background-image:
+    linear-gradient(90deg,rgba(250,251,255,.98) 0%,rgba(250,251,255,.94) 32%,rgba(250,251,255,.72) 53%,rgba(250,251,255,.12) 100%),
+    url("assets/dreamy-campus-background.svg")!important;
+  background-repeat:no-repeat!important;
+  background-position:center right!important;
+  background-size:cover!important;
+}
+main>.hero:before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at 78% 20%,rgba(118,32,143,.12),transparent 36%);
+}
+.hero-grid{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)!important;gap:clamp(28px,4vw,64px)!important;align-items:center!important}
+.hero-grid>div:first-child{max-width:650px}
+.hero .eyebrow{color:var(--vm-purple)!important;letter-spacing:.16em;font-weight:900}
+.vm-hero-brand-pill{
+  display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:9px 15px;
+  border:1px solid #e2d5f0;border-radius:999px;background:#ffffffdf;
+  color:var(--vm-purple);font-weight:900;letter-spacing:.08em;
+  box-shadow:0 8px 22px rgba(53,37,91,.08)
+}
+.hero h1{
+  max-width:660px;margin:22px 0 18px!important;
+  color:#102b52!important;font-size:clamp(42px,5.3vw,70px)!important;
+  line-height:1.04!important;letter-spacing:-.055em!important;font-weight:900!important;
+  text-wrap:balance;text-shadow:none!important
+}
+.vm-hero-gradient{
+  color:#76208f!important;
+  background:linear-gradient(100deg,#76208f 0%,#385fc2 90%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent
+}
+.hero-copy{max-width:590px;color:#465d7b!important;font-size:clamp(16px,1.35vw,19px)!important;line-height:1.8!important}
+.hero-actions{gap:12px!important;margin:27px 0 18px!important}
+.hero-actions .btn,.actions .btn,main .btn{
+  min-height:46px;border-radius:13px!important;padding:13px 19px!important;
+  font-weight:850!important;letter-spacing:.005em;
+  box-shadow:0 8px 20px rgba(24,46,92,.10);
+  transition:transform .2s ease,box-shadow .2s ease,filter .2s ease
+}
+.hero-actions .btn:first-child,main .btn:not(.btn-outline){
+  background:linear-gradient(115deg,#76208f,#365fc2)!important;color:#fff!important;border:0!important
+}
+main .btn-outline{background:#fff!important;color:#193b69!important;border:1px solid #d8e0ef!important}
+main .btn:hover{transform:translateY(-2px);box-shadow:0 13px 28px rgba(35,42,96,.16);filter:saturate(1.08)}
+.hero-panel.vm-edu-overlay{
+  position:relative;isolation:isolate;overflow:hidden!important;
+  min-height:clamp(350px,35vw,470px)!important;height:auto!important;
+  padding:16px!important;border:1px solid #ffffff!important;border-radius:30px!important;
+  background:#e9edff url("assets/vidyamap-hero.svg") center/cover no-repeat!important;
+  box-shadow:0 28px 70px rgba(31,44,100,.22),inset 0 1px 0 #fff!important;
+}
+.hero-panel.vm-edu-overlay:before,.hero-panel.vm-edu-overlay:after{display:none!important}
+.vm-edu-card{
+  z-index:2!important;max-width:min(48%,230px)!important;min-height:56px;
+  padding:10px 12px!important;gap:9px!important;border:1px solid #ffffff!important;
+  border-radius:15px!important;background:rgba(255,255,255,.94)!important;
+  box-shadow:0 12px 28px rgba(25,43,87,.18)!important;
+  color:#183354!important
+}
+.vm-edu-card strong{font-size:12px!important;color:#16345e!important;line-height:1.25}
+.vm-edu-card small{font-size:10px!important;color:#5c6e87!important;line-height:1.35}
+.vm-edu-icon{width:34px!important;height:34px!important;flex:0 0 34px!important;border-radius:11px!important;background:#f1eafa!important}
+.vm-edu-card i{box-shadow:0 0 0 4px rgba(255,255,255,.8)}
+.hero-grid>.hero-panel{color:#17345f}
+
+/* Audience and trust ribbons become compact, aligned information panels. */
+.vm-hero-benefit-row{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:14px!important;margin-top:-18px!important;position:relative;z-index:5}
+.vm-audience-strip,.vm-trust-strip{
+  width:100%!important;height:100%;padding:14px!important;gap:8px!important;
+  border:1px solid #e5e9f2!important;border-radius:20px!important;
+  background:rgba(255,255,255,.96)!important;
+  box-shadow:0 14px 34px rgba(29,45,87,.08)!important
+}
+.vm-audience-item,.vm-trust-item{min-width:0;padding:8px!important;gap:9px!important}
+.vm-audience-item strong,.vm-trust-item strong{color:#18385f!important;font-size:12px!important;font-weight:850}
+.vm-audience-item small,.vm-trust-item small{color:#64758d!important;font-size:10px!important}
+.vm-audience-item>span,.vm-trust-icon{width:34px!important;height:34px!important;flex:0 0 34px!important;border-radius:11px!important;background:#f1eafa!important;color:#76208f!important}
+
+/* Lead capture, search and smart finder: distinct, clear workspace cards. */
+#studentLeadCapture{padding:54px 0 20px!important}
+#studentLeadCapture .search-card,.search-wrap .search-card,.register-card{
+  background:#fff!important;border:1px solid var(--vm-line)!important;border-radius:24px!important;
+  box-shadow:0 18px 48px rgba(25,45,87,.09),0 2px 8px rgba(25,45,87,.035)!important
+}
+#studentLeadCapture .search-card{padding:clamp(22px,3vw,38px)!important;max-width:1040px!important}
+#studentLeadCapture h2{font-size:clamp(25px,3vw,36px)!important;line-height:1.18!important}
+.search-wrap{margin:24px auto 38px!important}
+.search-wrap .search-card{padding:clamp(20px,3vw,34px)!important}
+.search-title{font-size:23px!important;font-weight:900!important;color:var(--vm-navy)!important}
+.field{gap:8px!important}
+.field label,.smart-finder-form label{font-size:12px!important;font-weight:850!important;color:#29415f!important}
+.field input,.field select,.field textarea,.smart-finder-form input,.smart-finder-form select{
+  min-height:48px!important;border:1px solid #dce3ef!important;border-radius:12px!important;
+  background:#fbfcff!important;color:#172d4b!important;padding:11px 13px!important;
+  box-shadow:inset 0 1px 2px rgba(25,45,87,.025)!important
+}
+.field input:focus,.field select:focus,.field textarea:focus,.smart-finder-form input:focus,.smart-finder-form select:focus{
+  outline:3px solid rgba(118,32,143,.13)!important;border-color:#8a55a8!important;background:#fff!important
+}
+#vmLeadReminder{
+  border:1px solid #e3d9f0!important;border-radius:18px!important;
+  background:linear-gradient(110deg,#f5effb,#eef4ff)!important;
+  box-shadow:0 12px 30px rgba(34,43,91,.08)!important;padding:18px 20px!important
+}
+#vmLeadReminder strong{color:#18345c!important}
+#vmLeadReminder button{border-radius:12px!important;background:linear-gradient(110deg,#76208f,#365fc2)!important;color:#fff!important}
+#smartCollegeFinder{padding-top:40px!important}
+.smart-finder-panel{
+  padding:clamp(24px,4vw,42px)!important;border:1px solid #e2e7f1!important;border-radius:28px!important;
+  background:linear-gradient(135deg,#fff 0%,#f5f1fb 55%,#eef4ff 100%)!important;
+  box-shadow:0 18px 46px rgba(30,45,91,.08)!important
+}
+.smart-finder-panel h2{font-size:clamp(27px,3vw,38px)!important}
+.smart-finder-form{gap:14px!important;align-items:end!important}
+.smart-finder-results{border:1px solid #e4e8f1!important;border-radius:16px!important;background:#fff!important;padding:16px!important}
+
+/* Directory and decision-support sections. */
+main>.section{padding:clamp(48px,6vw,76px) 0!important}
+#directory h2,#admissionDeadlineTracker h2,#admissions h2,#collegeAdsTitle{font-size:clamp(28px,3.1vw,40px)!important;line-height:1.16!important}
+#directory .compare-tools,#directory .shortlist-toolbar{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:17px 19px!important;margin:18px 0!important;
+  border:1px solid #e3e8f1!important;border-radius:17px!important;background:#fff!important;
+  box-shadow:0 8px 24px rgba(25,45,87,.045)!important
+}
+#directory .college-grid{gap:20px!important}
+#directory .college-card{
+  padding:21px!important;border:1px solid #e1e7f1!important;border-radius:20px!important;
+  background:#fff!important;box-shadow:0 10px 30px rgba(25,45,87,.07)!important;
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease!important
+}
+#directory .college-card:hover{transform:translateY(-5px)!important;border-color:#c9b5df!important;box-shadow:0 18px 38px rgba(48,39,102,.13)!important}
+#directory .college-card h3{color:#18365f!important;line-height:1.35!important}
+#directory .college-card p{color:#5a6e87!important}
+#directory .logo{border-radius:13px!important;background:linear-gradient(135deg,#f1eafa,#eaf1ff)!important;color:#76208f!important}
+#admissionDeadlineTracker .deadline-tracker{
+  padding:clamp(22px,3.5vw,38px)!important;border:1px solid #e1e7f1!important;border-radius:26px!important;
+  background:linear-gradient(135deg,#fff,#f5f2fb 62%,#edf4ff)!important;
+  box-shadow:0 16px 42px rgba(25,45,87,.075)!important
+}
+#admissionDeadlineTracker .deadline-grid{gap:14px!important}
+#admissions{padding:clamp(48px,6vw,76px) 0!important}
+#admissions .feature-grid{gap:18px!important}
+#admissions .feature-card{
+  padding:24px!important;border:1px solid #e2e8f2!important;border-radius:20px!important;
+  background:#fff!important;box-shadow:0 12px 30px rgba(25,45,87,.07)!important;
+  transition:transform .2s ease,box-shadow .2s ease!important
+}
+#admissions .feature-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(35,42,96,.12)!important}
+#admissions .feature-card h3{color:#18365f!important;font-size:19px!important}
+#admissions .feature-card p{color:#5a6e87!important}
+
+/* College partnership form and floating utility button. Ad units themselves are not styled. */
+.vm-register-compact{padding:clamp(48px,6vw,76px) 0!important;background:linear-gradient(120deg,#f1eafa 0%,#eef4ff 100%)!important}
+.vm-register-shell{gap:clamp(24px,4vw,52px)!important;align-items:center!important}
+.vm-register-compact .register-copy h2{font-size:clamp(32px,4vw,48px)!important;color:#102f5c!important}
+.vm-register-compact .register-card{padding:clamp(20px,3vw,32px)!important}
+.vm-register-compact .register-card .field input,.vm-register-compact .register-card .field select{background:#fbfcff!important}
+#vm-brand-floating-tools .vm-float-top{
+  width:54px!important;height:54px!important;right:22px!important;bottom:22px!important;
+  border:2px solid #fff!important;border-radius:18px!important;
+  background:linear-gradient(145deg,#76208f,#123b6d)!important;color:#fff!important;
+  box-shadow:0 14px 32px rgba(31,35,88,.30)!important
+}
+@media(max-width:900px){
+  main .container{width:calc(100% - 32px)}
+  .hero-grid{grid-template-columns:1fr!important}
+  .hero-panel.vm-edu-overlay{min-height:390px!important}
+  .vm-hero-benefit-row{grid-template-columns:1fr!important;margin-top:16px!important}
+  .vm-audience-strip{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .vm-trust-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:600px){
+  main>.hero{padding:38px 0 30px!important;background-position:62% center!important;background-image:linear-gradient(180deg,rgba(250,251,255,.97) 0%,rgba(250,251,255,.92) 48%,rgba(250,251,255,.50) 100%),url("assets/dreamy-campus-background.svg")!important}
+  .hero h1{font-size:clamp(38px,11vw,52px)!important}
+  .hero-actions{display:grid!important;grid-template-columns:1fr!important}
+  .hero-actions .btn{width:100%;justify-content:center;text-align:center}
+  .hero-panel.vm-edu-overlay{min-height:330px!important;padding:10px!important;border-radius:22px!important}
+  .vm-edu-card{max-width:48%!important;min-height:46px;padding:7px!important;gap:6px!important;border-radius:12px!important}
+  .vm-edu-card strong{font-size:10px!important}.vm-edu-card small{font-size:8px!important}
+  .vm-edu-icon{width:27px!important;height:27px!important;flex-basis:27px!important}
+  .vm-audience-strip{grid-template-columns:1fr!important}
+  .vm-audience-item{justify-content:flex-start!important}
+  .vm-trust-strip{grid-template-columns:1fr 1fr!important}
+  #directory .compare-tools,#directory .shortlist-toolbar{align-items:stretch;flex-direction:column}
+  #directory .compare-tools .btn,#directory .shortlist-toolbar .btn{width:100%}
+  #admissions .feature-grid{grid-template-columns:1fr!important}
+  .vm-register-shell{grid-template-columns:1fr!important}
+  #vm-brand-floating-tools .vm-float-top{right:14px!important;bottom:16px!important;width:48px!important;height:48px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  main .btn,#directory .college-card,#admissions .feature-card{transition:none!important}
+}
+</style>
+
 </head>
 <body>
 <header class="vm-shared-header"><div class="vm-shared-nav"><a class="vm-shared-brand" href="./index.html"><img src="./vidyamap-logo.png" alt="VidyaMap"></a><button class="vm-shared-toggle" type="button" aria-expanded="false" aria-controls="vmSharedLinks" aria-label="Toggle navigation">☰</button><nav class="vm-shared-links" id="vmSharedLinks" aria-label="Main navigation"><a href="./index.html">Home</a><div class="vm-shared-dropdown"><a href="#" class="vm-shared-about" aria-expanded="false">Explore <span>▾</span></a><div class="vm-shared-menu"><a href="./explore-colleges.html">Explore Colleges</a><a href="./admission-journey.html">My Admission Journey</a><a href="./scholarship-radar.html">Scholarships</a></div></div><a href="./exams.html">Exams</a><a href="./jobs.html">Jobs &amp; Hiring</a><div class="vm-shared-dropdown"><a href="#" class="vm-shared-about" aria-expanded="false">For Institutions <span>▾</span></a><div class="vm-shared-menu"><a href="./marketing-services.html">Marketing Services</a><a href="./for-colleges.html">For Colleges</a></div></div><div class="vm-shared-dropdown"><a href="./about.html" class="vm-shared-about" aria-expanded="false">About <span>▾</span></a><div class="vm-shared-menu"><a href="./about.html">About VidyaMap</a><a href="./our-mission.html">Our Mission</a><a href="./what-we-do.html">What We Do</a><a href="./our-vision.html">Our Vision</a><a href="./why-vidyamap.html">Why Choose VidyaMap?</a><a href="./founders.html">Founder</a></div></div><a href="./index.html#contact">Contact</a><a class="vm-shared-register" href="./index.html#register">Register College</a></nav></div></header><section id="vmHeaderSponsored" aria-label="Sponsored advertisements"><div class="vm-header-ad-inner"><span class="vm-header-ad-label">Sponsored</span><div class="vm-header-ad-track" aria-live="polite"></div></div></section>
