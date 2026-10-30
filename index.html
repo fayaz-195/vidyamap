@@ -4496,5 +4496,56 @@ html body header.vm-shared-header .vm-shared-nav{min-height:54px!important}
 })();
 </script>
 
+
+<style id="vm-sticky-masthead-fixed-css">
+#vmStickyMasthead.vm-is-fixed{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:2147483000!important}
+#vmStickyMasthead.vm-is-fixed>header.vm-shared-header{position:relative!important;top:auto!important}
+#vmStickyMasthead.vm-is-fixed>#vmHeaderSponsored,
+#vmStickyMasthead.vm-is-fixed>.vm-sponsored-bar{position:relative!important;top:auto!important}
+#vmStickyMastheadPlaceholder{display:none!important;width:100%!important;pointer-events:none!important}
+#vmStickyMastheadPlaceholder.vm-placeholder-active{display:block!important}
+</style>
+<script id="vm-sticky-masthead-fixed-controller">
+(function(){
+ function setup(){
+  const masthead=document.getElementById('vmStickyMasthead');
+  if(!masthead||masthead.dataset.fixedController==='1')return;
+  masthead.dataset.fixedController='1';
+  const placeholder=document.createElement('div');
+  placeholder.id='vmStickyMastheadPlaceholder';
+  masthead.parentNode.insertBefore(placeholder,masthead);
+  let threshold=0,locked=false,raf=false;
+  function measure(){
+   if(!locked)threshold=placeholder.getBoundingClientRect().top+(window.scrollY||window.pageYOffset||0);
+  }
+  function update(){
+   raf=false;
+   const y=window.scrollY||window.pageYOffset||0;
+   const shouldLock=y>=threshold && threshold>0;
+   if(shouldLock&&!locked){
+    placeholder.style.height=masthead.getBoundingClientRect().height+'px';
+    placeholder.classList.add('vm-placeholder-active');
+    masthead.classList.add('vm-is-fixed');
+    locked=true;
+   }else if(!shouldLock&&locked){
+    masthead.classList.remove('vm-is-fixed');
+    placeholder.classList.remove('vm-placeholder-active');
+    placeholder.style.height='0px';
+    locked=false;
+    measure();
+   }
+  }
+  function onScroll(){if(!raf){raf=true;requestAnimationFrame(update);}}
+  measure();
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',function(){if(locked){placeholder.style.height=masthead.getBoundingClientRect().height+'px';}else measure();onScroll();},{passive:true});
+  window.addEventListener('load',function(){if(!locked)measure();onScroll();},{once:true});
+  onScroll();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup,{once:true});
+ else setup();
+})();
+</script>
+
 </body>
 </html>
