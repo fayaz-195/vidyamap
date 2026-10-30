@@ -371,7 +371,7 @@ footer,footer p,footer li,footer small,footer h2,footer h3,footer a{color:#f5f7f
   const bar=document.querySelector('.vm-sponsored-bar');if(!bar)return;
   try{
    const client=window.supabase.createClient('https://taxlvccrinehasexgvhv.supabase.co','sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA');
-   const badge=bar.querySelector('.vm-sponsored-label'),track=bar.querySelector('.vm-sponsored-track span');
+   const badge=bar.querySelector('.vm-sponsored-label'),track=bar.querySelector('.vm-sponsored-single-line, .vm-sponsored-track span');
    const settings=await client.from('site_promo_settings').select('badge_text').eq('id',true).maybeSingle();
    if(badge&&settings.data?.badge_text)badge.textContent=settings.data.badge_text;
    const result=await client.from('site_promo_items').select('item_type,heading,body,url,sort_order').eq('is_active',true).order('sort_order').order('created_at');
