@@ -4466,5 +4466,35 @@ html body header.vm-shared-header .vm-shared-nav{min-height:54px!important}
  html body .vm-sponsored-bar{top:52px!important}
 }
 </style>
+<style id="vm-sticky-masthead-wrapper-css">
+/* Use one sticky masthead wrapper so navigation and sponsored strip travel as a unit. */
+#vmStickyMasthead{position:sticky!important;top:0!important;z-index:100000!important;width:100%!important;display:block!important;overflow:visible!important;isolation:isolate!important}
+#vmStickyMasthead>header.vm-shared-header{position:relative!important;top:auto!important;z-index:2!important;width:100%!important}
+#vmStickyMasthead>#vmHeaderSponsored{position:relative!important;top:auto!important;z-index:1!important}
+#vmStickyMasthead>.vm-sponsored-bar{position:relative!important;top:auto!important;z-index:1!important;width:100%!important}
+#vmStickyMasthead>.vm-ad-ticker{position:relative!important;top:auto!important}
+</style>
+
+<script id="vm-sticky-masthead-wrapper">
+(function(){
+ function install(){
+  const header=document.querySelector('body>header.vm-shared-header');
+  const headerAds=document.getElementById('vmHeaderSponsored');
+  const sponsored=document.querySelector('body>.vm-sponsored-bar');
+  if(!header||!sponsored)return;
+  let wrap=document.getElementById('vmStickyMasthead');
+  if(!wrap){
+   wrap=document.createElement('div');wrap.id='vmStickyMasthead';
+   header.parentNode.insertBefore(wrap,header);
+  }
+  if(header.parentNode!==wrap)wrap.appendChild(header);
+  if(headerAds&&headerAds.parentNode!==wrap)wrap.appendChild(headerAds);
+  if(sponsored.parentNode!==wrap)wrap.appendChild(sponsored);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});
+ else install();
+})();
+</script>
+
 </body>
 </html>
