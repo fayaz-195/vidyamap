@@ -140,6 +140,35 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
 @keyframes vmSponsoredSingleMove{from{transform:translateX(0)}to{transform:translateX(-55%)}}
 .vm-ad-ticker{display:none!important}
 @media(prefers-reduced-motion:reduce){.vm-sponsored-bar .vm-sponsored-track{animation:none!important;white-space:normal!important}.vm-sponsored-bar .vm-sponsored-message{white-space:normal!important}}
+</style>
+<style id="vm-college-fit-studio-css">
+.fit-studio{position:relative;margin:30px 0 24px;padding:clamp(20px,3vw,34px);overflow:hidden;border:1px solid #dfd6f3;border-radius:26px;background:radial-gradient(circle at 90% 0%,#d9e9ffb5,transparent 19rem),linear-gradient(125deg,#fff 0%,#f7f0ff 52%,#eef5ff 100%);box-shadow:0 18px 44px #29345d12}
+.fit-studio:before{content:"";position:absolute;width:230px;height:230px;right:-90px;bottom:-130px;border:1px solid #bba8df80;border-radius:50%;box-shadow:0 0 0 24px #bba8df12,0 0 0 50px #bba8df0b;pointer-events:none}
+.fit-head{position:relative;display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:22px}
+.fit-kicker{font-size:11px;letter-spacing:1.8px;font-weight:900;color:#76208f;text-transform:uppercase}
+.fit-title{margin:5px 0 7px;font-size:clamp(24px,3vw,34px);line-height:1.12;color:#102d55;letter-spacing:-.8px}
+.fit-copy{margin:0;max-width:690px;color:#566580;font-size:14px}
+.fit-spark{flex:none;width:54px;height:54px;display:grid;place-items:center;border-radius:17px;background:linear-gradient(145deg,#76208f,#3d65bd);color:white;font-size:25px;box-shadow:0 10px 22px #592a9538}
+.fit-fields{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.fit-field label{display:block;margin:0 0 6px;font-size:12px;font-weight:850;color:#17345e}
+.fit-field input,.fit-field select{width:100%;min-height:48px;padding:12px 13px;border:1px solid #d9d9ed;border-radius:13px;background:#ffffffed;color:#172b49}
+.fit-hint{font-size:11px;color:#68758c;margin:12px 0 0}
+.fit-actions{position:relative;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:17px}
+.fit-results{position:relative;margin-top:22px}
+.fit-results[hidden]{display:none}
+.fit-results-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}
+.fit-results-head strong{font-size:15px;color:#102d55}
+.fit-results-head span{font-size:12px;color:#65718a}
+.fit-result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fit-result{min-width:0;padding:16px;border:1px solid #e3dff0;border-radius:17px;background:#ffffffed;box-shadow:0 8px 22px #29345d0b}
+.fit-result h3{margin:0 0 5px;color:#102d55;font-size:15px;line-height:1.35}
+.fit-result p{margin:5px 0 10px;color:#61708a;font-size:12px}
+.fit-reasons{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0 13px}
+.fit-reason{display:inline-flex;padding:5px 8px;border-radius:99px;background:#f0eaff;color:#64218d;font-size:10px;font-weight:850}
+.fit-result button{font-size:11px;padding:9px 12px}
+.fit-empty{padding:17px;border:1px dashed #c9bddf;border-radius:14px;color:#5e6c84;background:#ffffffb8;font-size:13px}
+@media(max-width:760px){.fit-fields{grid-template-columns:1fr 1fr}.fit-result-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.fit-head{gap:10px}.fit-spark{width:43px;height:43px;border-radius:14px}.fit-fields,.fit-result-grid{grid-template-columns:1fr}.fit-studio{padding:18px;border-radius:20px}.fit-results-head{align-items:flex-start;flex-direction:column}}
 </style></head><body>
 <header class="vm-shared-header">
   <div class="vm-shared-nav">
@@ -174,6 +203,24 @@ section.vm-approved-ad-slot{padding-block:clamp(30px,4vw,48px)!important}
 <div class="field"><label for="mandal">Mandal</label><select id="mandal"><option value="">All mandals</option></select></div>
 <div class="field"><label for="admissions">Admissions</label><select id="admissions"><option value="">All verified colleges</option><option value="open">Admissions marked open</option></select></div>
 </div><div class="actions"><button class="btn" type="submit">Search colleges →</button><button class="btn secondary" id="reset" type="reset">Reset filters</button></div></form>
+
+<section class="fit-studio" aria-labelledby="fitStudioTitle">
+ <div class="fit-head">
+  <div><div class="fit-kicker">VIDYAMAP · SMART DISCOVERY</div><h2 class="fit-title" id="fitStudioTitle">Find colleges that fit your goals.</h2><p class="fit-copy">Tell us what matters most. Fit Studio compares your preferences with verified institution information already available in VidyaMap and explains every match.</p></div>
+  <div class="fit-spark" aria-hidden="true">✦</div>
+ </div>
+ <form id="fitStudioForm">
+  <div class="fit-fields">
+   <div class="fit-field"><label for="fitCategory">What type of institution?</label><select id="fitCategory"><option value="">Any institution type</option><option>Junior College</option><option>Engineering</option><option>Medical</option><option>Degree College</option><option>Coaching Centre</option><option>Polytechnic &amp; ITI</option><option>University</option></select></div>
+   <div class="fit-field"><label for="fitDistrict">Preferred district</label><select id="fitDistrict"><option value="">Any district</option></select></div>
+   <div class="fit-field"><label for="fitAdmission">Admission preference</label><select id="fitAdmission"><option value="">Show all verified listings</option><option value="open">Admissions marked open</option></select></div>
+   <div class="fit-field" style="grid-column:1/-1"><label for="fitInterest">Course or career interest <span style="font-weight:500;color:#71809a">(optional)</span></label><input id="fitInterest" maxlength="100" placeholder="e.g. MPC, computer science, nursing, commerce"></div>
+  </div>
+  <p class="fit-hint">Recommendations use verified directory fields only. Fees, cut-offs, placements and facilities are not guessed when information is unavailable.</p>
+  <div class="fit-actions"><button class="btn" type="submit">Build my college shortlist ✦</button><button class="btn secondary" type="reset" id="fitReset">Clear preferences</button></div>
+ </form>
+ <div class="fit-results" id="fitResults" aria-live="polite" hidden><div class="fit-results-head"><strong id="fitResultTitle">Your college matches</strong><span id="fitResultCount"></span></div><div class="fit-result-grid" id="fitResultGrid"></div></div>
+</section>
 <section class="compare-panel" id="comparePanel"><div><strong>Compare colleges</strong><p>Select up to 3 verified colleges to compare their details.</p></div><button class="btn" id="openCompare" type="button" disabled>Compare selected (0)</button></section>
 <div class="compare-modal" id="compareModal" hidden><div class="compare-backdrop" data-close-compare></div><section class="compare-dialog" role="dialog" aria-modal="true" aria-label="Compare colleges"><button class="close-compare" type="button" data-close-compare aria-label="Close comparison">×</button><h2>Compare colleges</h2><div id="compareContent"></div></section></div>
 <div class="status" id="status" role="status">Loading verified institutions…</div><div class="grid" id="collegeGrid"><div class="empty">Loading colleges…</div></div><div class="pagination"><button class="btn secondary" id="prevPage" type="button" disabled>← Previous</button><span class="status" id="pageStatus">Page 1</span><button class="btn secondary" id="nextPage" type="button" disabled>Next →</button></div></div></section></main>
@@ -233,6 +280,51 @@ function render(){
   compareLabel.append(check,document.createTextNode(" Add to compare"));card.append(compareLabel);grid.append(card);
  });
 }
+
+function runCollegeFit(event){
+ event.preventDefault();
+ const category=document.getElementById("fitCategory").value.trim().toLowerCase();
+ const district=document.getElementById("fitDistrict").value;
+ const admission=document.getElementById("fitAdmission").value;
+ const interest=document.getElementById("fitInterest").value.trim().toLowerCase();
+ const resultHost=document.getElementById("fitResults"),resultGrid=document.getElementById("fitResultGrid");
+ if(!category&&!district&&!admission&&!interest){
+  resultHost.hidden=false;document.getElementById("fitResultTitle").textContent="Add at least one preference";
+  document.getElementById("fitResultCount").textContent="A little detail makes the shortlist more useful.";
+  resultGrid.innerHTML='<div class="fit-empty">Choose an institution type, district, admission preference, or course interest to build your shortlist.</div>';return;
+ }
+ const terms=interest.split(/[^a-z0-9]+/).filter(x=>x.length>1);
+ const ranked=colleges.map(c=>{
+  const hay=[c.name,c.description,c.category,c.town,c.address,c.scholarship_info].filter(Boolean).join(" ").toLowerCase();
+  const reasons=[];let score=0;
+  if(category&&(c.category||"").toLowerCase().includes(category)){score+=40;reasons.push("Preferred institution type")}
+  if(district&&String(c.district_id)===district){score+=35;reasons.push("Preferred district")}
+  if(admission==="open"&&c.admissions_open===true){score+=20;reasons.push("Admissions marked open")}
+  const matched=terms.filter(t=>hay.includes(t));
+  if(matched.length){score+=Math.min(15,matched.length*5);reasons.push("Interest: "+matched.slice(0,3).join(", "))}
+  if(c.description)score+=2;if(c.website_url)score+=2;if(c.phone||c.email)score+=2;
+  return {college:c,score,reasons};
+ }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||String(a.college.name||"").localeCompare(String(b.college.name||""),undefined,{sensitivity:"base"}));
+ resultHost.hidden=false;resultGrid.replaceChildren();
+ document.getElementById("fitResultTitle").textContent="Your college matches";
+ document.getElementById("fitResultCount").textContent=ranked.length+" verified listing(s) matched your preferences · showing up to 3";
+ if(!ranked.length){resultGrid.innerHTML='<div class="fit-empty">No verified institution currently matches those preferences. Try widening your district or institution type. We have not invented alternatives.</div>';return;}
+ ranked.slice(0,3).forEach(({college:c,reasons})=>{
+  const card=document.createElement("article");card.className="fit-result";
+  const h=document.createElement("h3");h.textContent=c.name||"Verified institution";
+  const loc=document.createElement("p");const d=districts.find(x=>String(x.id)===String(c.district_id));loc.textContent=[c.town,d?.name].filter(Boolean).join(", ")||"Location details not provided";
+  const why=document.createElement("div");why.className="fit-reasons";reasons.forEach(reason=>{const tag=document.createElement("span");tag.className="fit-reason";tag.textContent=reason;why.append(tag)});
+  const note=document.createElement("p");note.textContent="Based on available verified listing details. Confirm course availability and admission terms directly with the institution.";
+  const add=document.createElement("button");add.type="button";add.className="btn secondary";add.textContent=compareIds.has(String(c.id))?"Added to comparison":"Add to comparison";
+  add.disabled=compareIds.has(String(c.id));
+  add.addEventListener("click",()=>{if(compareIds.size>=3){document.getElementById("fitResultCount").textContent="Comparison supports up to 3 colleges. Remove one from the directory selection first.";return;}compareIds.add(String(c.id));add.textContent="Added to comparison";add.disabled=true;updateCompareButton();});
+  card.append(h,loc,why,note,add);resultGrid.append(card);
+ });
+ resultHost.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+document.getElementById("fitStudioForm").addEventListener("submit",runCollegeFit);
+document.getElementById("fitStudioForm").addEventListener("reset",()=>{document.getElementById("fitResults").hidden=true;});
+
 function updateCompareButton(){const b=document.getElementById("openCompare");b.disabled=compareIds.size<2;b.textContent="Compare selected ("+compareIds.size+")";}
 function openCompare(){const items=colleges.filter(c=>compareIds.has(String(c.id)));if(items.length<2)return;
  const fields=[["College",c=>c.name],["Category",c=>c.category],["Location",c=>[c.town,districts.find(d=>String(d.id)===String(c.district_id))?.name,c.address].filter(Boolean).join(", ")],["Admissions",c=>c.admissions_open===true?"Marked open":"Not marked open"],["Description",c=>c.description],["Phone",c=>c.phone],["Email",c=>c.email],["Website",c=>c.website_url]];
@@ -273,7 +365,7 @@ document.getElementById("nextPage").addEventListener("click",()=>{if(page<Math.c
   if(cr.error){statusEl.textContent="Verified college data could not be loaded. Please refresh and try again.";grid.innerHTML='<div class="empty">Unable to load the directory right now.</div>';console.error(cr.error);return}
   const batch=cr.data||[];colleges.push(...batch);more=batch.length===1000;from+=batch.length;
  }
- setOptions(districtSelect,districts,"All districts");updateMandals();
+ setOptions(districtSelect,districts,"All districts");updateMandals();setOptions(document.getElementById("fitDistrict"),districts,"Any district");
  if(params.get("district"))districtSelect.value=params.get("district");
  updateMandals();if(params.get("mandal"))mandalSelect.value=params.get("mandal");
  filtered=colleges;search();
