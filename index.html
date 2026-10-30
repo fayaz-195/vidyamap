@@ -3855,54 +3855,28 @@ input::placeholder,textarea::placeholder{color:#6b778b;opacity:1}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #9b82e8!important;outline-offset:2px}
 footer,footer p,footer li,footer small,footer h2,footer h3,footer a{color:#f5f7ff}
 
-/* FINAL HOMEPAGE AD OVERRIDE — full-screen single creative with readable text */
-#vmAdAfterServices.vm-approved-ad-slot{
- display:block!important;position:relative!important;width:100vw!important;max-width:none!important;
- margin-left:calc(50% - 50vw)!important;padding:0!important;height:86vh!important;min-height:560px!important;
- background:linear-gradient(120deg,#111d4c,#422276)!important;border:0!important;overflow:hidden!important;
-}
-#vmAdAfterServices .vm-approved-ad-inner{
- display:block!important;position:relative!important;width:100%!important;max-width:none!important;
- height:100%!important;min-height:0!important;margin:0!important;padding:0!important;
- border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;
-}
-#vmAdAfterServices .vm-approved-ad-kicker,
-#vmAdAfterServices .vm-approved-ad-title,
-#vmAdAfterServices .vm-approved-ad-sub{display:none!important}
-#vmAdAfterServices .vm-approved-ad-track{
- display:block!important;position:relative!important;width:100%!important;height:100%!important;
- min-height:0!important;max-height:none!important;margin:0!important;padding:0!important;
- overflow:hidden!important;scroll-snap-type:none!important;background:transparent!important;
-}
-#vmAdAfterServices .vm-approved-ad-card{
- display:block!important;position:relative!important;width:100%!important;height:100%!important;
- min-width:0!important;min-height:0!important;margin:0!important;padding:0!important;
- border:0!important;border-radius:0!important;overflow:hidden!important;
- background:#101b3c!important;box-shadow:none!important;
-}
-#vmAdAfterServices .vm-approved-ad-card>img,
-#vmAdAfterServices .vm-approved-ad-card>video,
-#vmAdAfterServices .vm-approved-ad-media{
- display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
- min-height:0!important;max-height:none!important;object-fit:cover!important;object-position:center!important;
- margin:0!important;padding:0!important;background:#101b3c!important;border:0!important;border-radius:0!important;
-}
-#vmAdAfterServices .vm-approved-ad-copy{
- display:block!important;position:absolute!important;z-index:2!important;left:0!important;right:0!important;bottom:0!important;
- padding:clamp(22px,4vw,52px)!important;background:linear-gradient(180deg,transparent 0%,rgba(7,15,39,.78) 38%,rgba(7,15,39,.96) 100%)!important;
- color:#fff!important;text-shadow:0 1px 3px #07102788!important;
-}
-#vmAdAfterServices .vm-approved-ad-meta{display:block!important;color:#f2c8ff!important;font-weight:900!important;letter-spacing:1.5px!important;font-size:12px!important;margin-bottom:8px!important}
-#vmAdAfterServices .vm-approved-ad-copy h3{display:block!important;color:#fff!important;font-size:clamp(24px,4vw,44px)!important;line-height:1.12!important;margin:0 0 10px!important;font-weight:850!important}
-#vmAdAfterServices .vm-approved-ad-copy p{display:block!important;color:#f3f5ff!important;font-size:clamp(14px,1.6vw,18px)!important;line-height:1.5!important;margin:0 0 12px!important;max-width:760px!important}
-#vmAdAfterServices .vm-approved-ad-click{display:inline-flex!important;color:#fff!important;background:#76208f!important;border:1px solid #ffffffb8!important;border-radius:12px!important;padding:11px 17px!important;font-weight:850!important;text-decoration:none!important}
-#vmAdAfterServices .vm-approved-ad-empty{display:block!important;position:absolute!important;left:4%!important;right:4%!important;top:50%!important;transform:translateY(-50%)!important;margin:0!important;padding:28px!important;text-align:center!important;color:#fff!important;background:#ffffff14!important;border:1px dashed #ffffff88!important;border-radius:18px!important}
+/* HOMEPAGE SPONSORED ADS — editorial campus-gallery layout */
+#vmAdAfterServices.vm-approved-ad-slot{display:block!important;position:relative!important;width:min(1200px,calc(100% - 40px))!important;max-width:1200px!important;height:auto!important;min-height:0!important;margin:38px auto!important;padding:26px!important;box-sizing:border-box!important;background:#f7f6fa!important;border:1px solid #e8e2ef!important;border-radius:24px!important;overflow:hidden!important}
+#vmAdAfterServices.vm-approved-ad-slot[hidden]{display:none!important}
+#vmAdAfterServices .vm-approved-ad-inner{display:block!important;position:relative!important;width:100%!important;max-width:none!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+#vmAdAfterServices .vm-approved-ad-kicker{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin:0 0 8px!important;color:#76208f!important;font-size:12px!important;font-weight:900!important;letter-spacing:1.5px!important}
+#vmAdAfterServices .vm-approved-ad-title{display:block!important;margin:0 0 8px!important;color:#172b43!important;font-size:clamp(24px,3vw,34px)!important;line-height:1.15!important;font-weight:850!important}
+#vmAdAfterServices .vm-approved-ad-sub{display:block!important;margin:0 0 20px!important;color:#596b86!important;font-size:15px!important;line-height:1.5!important}
+#vmAdAfterServices .vm-approved-ad-track{display:grid!important;position:relative!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;grid-template-columns:minmax(0,1.2fr) repeat(2,minmax(0,1fr))!important;grid-auto-rows:180px!important;gap:16px!important;margin:0!important;padding:0!important;overflow:visible!important;scroll-snap-type:none!important;background:transparent!important}
+#vmAdAfterServices .vm-approved-ad-card{display:block!important;position:relative!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:18px!important;overflow:hidden!important;background:#18264a!important;box-shadow:0 10px 26px #17255418!important}
+#vmAdAfterServices .vm-approved-ad-card:first-child{grid-row:span 2!important}
+#vmAdAfterServices .vm-approved-ad-card:nth-child(2):last-child{grid-row:span 2!important}
+#vmAdAfterServices .vm-approved-ad-card:only-child{grid-column:1/-1!important;grid-row:span 2!important}
+#vmAdAfterServices .vm-approved-ad-card>img,#vmAdAfterServices .vm-approved-ad-card>video,#vmAdAfterServices .vm-approved-ad-media{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;object-fit:cover!important;object-position:center!important;margin:0!important;padding:0!important;background:#101b3c!important;border:0!important;border-radius:0!important}
+#vmAdAfterServices .vm-approved-ad-copy{display:block!important;position:absolute!important;z-index:2!important;left:0!important;right:0!important;bottom:0!important;padding:clamp(16px,2vw,28px)!important;background:linear-gradient(180deg,transparent 0%,rgba(7,15,39,.82) 48%,rgba(7,15,39,.96) 100%)!important;color:#fff!important;text-shadow:0 1px 3px #07102788!important}
+#vmAdAfterServices .vm-approved-ad-meta{display:block!important;color:#f2c8ff!important;font-weight:900!important;letter-spacing:1.3px!important;font-size:11px!important;margin-bottom:7px!important}
+#vmAdAfterServices .vm-approved-ad-copy h3{display:block!important;color:#fff!important;font-size:clamp(17px,2vw,25px)!important;line-height:1.15!important;margin:0 0 7px!important;font-weight:850!important}
+#vmAdAfterServices .vm-approved-ad-copy p{display:block!important;color:#f3f5ff!important;font-size:13px!important;line-height:1.4!important;margin:0 0 8px!important;max-width:760px!important}
+#vmAdAfterServices .vm-approved-ad-click{display:inline-flex!important;color:#fff!important;background:#76208f!important;border:1px solid #ffffffb8!important;border-radius:10px!important;padding:9px 14px!important;font-weight:850!important;text-decoration:none!important}
+#vmAdAfterServices .vm-approved-ad-empty{display:flex!important;align-items:center!important;justify-content:center!important;grid-column:1/-1!important;min-height:150px!important;padding:24px!important;text-align:center!important;color:#596b86!important;background:#fff!important;border:1px dashed #c9b9d8!important;border-radius:16px!important;font-size:14px!important}
 #vmAdAfterMarketing{display:none!important}
-@media(max-width:650px){
- #vmAdAfterServices.vm-approved-ad-slot{height:76vh!important;min-height:480px!important}
- #vmAdAfterServices .vm-approved-ad-copy{padding:22px!important}
- #vmAdAfterServices .vm-approved-ad-card>img,#vmAdAfterServices .vm-approved-ad-card>video{object-position:center!important}
-}
+@media(max-width:800px){#vmAdAfterServices.vm-approved-ad-slot{width:calc(100% - 28px)!important;margin:26px auto!important;padding:20px!important}#vmAdAfterServices .vm-approved-ad-track{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:160px!important;gap:12px!important}#vmAdAfterServices .vm-approved-ad-card:first-child{grid-row:span 2!important}#vmAdAfterServices .vm-approved-ad-card:only-child{grid-column:1/-1!important;grid-row:span 2!important}}
+@media(max-width:560px){#vmAdAfterServices.vm-approved-ad-slot{width:calc(100% - 24px)!important;margin:22px auto!important;padding:16px!important;border-radius:18px!important}#vmAdAfterServices .vm-approved-ad-title{font-size:23px!important}#vmAdAfterServices .vm-approved-ad-sub{font-size:13px!important;margin-bottom:14px!important}#vmAdAfterServices .vm-approved-ad-track{grid-template-columns:1fr!important;grid-auto-rows:230px!important;gap:12px!important}#vmAdAfterServices .vm-approved-ad-card:first-child,#vmAdAfterServices .vm-approved-ad-card:nth-child(2):last-child,#vmAdAfterServices .vm-approved-ad-card:only-child{grid-column:auto!important;grid-row:auto!important}#vmAdAfterServices .vm-approved-ad-copy{padding:18px!important}}
 
 /* Admin-managed full-screen creative for Sponsored College Promotions */
 #collegeAds.vm-managed-fullscreen-ad{display:flex!important;flex-direction:column!important;justify-content:center!important;position:relative!important;width:100vw!important;max-width:none!important;min-height:100vh!important;min-height:100svh!important;margin-left:calc(50% - 50vw)!important;padding:0!important;overflow:hidden!important;background:#101b3c!important;border:0!important}
