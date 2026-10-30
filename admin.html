@@ -994,10 +994,34 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
 @media(max-width:900px){.scholarship-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.scholarship-admin-row{grid-template-columns:1fr 1fr}.scholarship-admin-row>div:first-child{grid-column:1/-1}}
 @media(max-width:620px){.scholarship-admin-wrap{padding:12px}.scholarship-admin-form{padding:14px}.scholarship-fields{grid-template-columns:1fr}.scholarship-fields .wide{grid-column:auto}.scholarship-fields .scholarship-featured{padding-top:4px}.scholarship-form-heading,.scholarship-list-head{flex-direction:column}.scholarship-list-head input{width:100%}.scholarship-admin-row{grid-template-columns:1fr}.scholarship-admin-row>div:first-child{grid-column:auto}}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
 <script>
-(function(){
+(async function(){
 'use strict';
+// Load the Supabase SDK reliably; if the primary CDN is unavailable, try the fallback CDN.
+if(!window.supabase?.createClient){
+  try{
+    await new Promise((resolve,reject)=>{
+      const fallback=document.createElement('script');
+      fallback.src='https://unpkg.com/@supabase/supabase-js@2.57.4/dist/umd/supabase.js';
+      fallback.crossOrigin='anonymous';
+      fallback.onload=resolve;
+      fallback.onerror=()=>reject(new Error('Supabase library could not be loaded from either CDN.'));
+      document.head.appendChild(fallback);
+      window.setTimeout(()=>reject(new Error('Supabase library loading timed out. Please check your internet connection and reload.')),12000);
+    });
+  }catch(error){
+    const notice=document.getElementById('loginNotice');
+    if(notice){notice.textContent=error.message;notice.classList.remove('hidden');notice.classList.add('error');}
+    console.error('VIDYAMAP Supabase SDK load failed:',error);
+    return;
+  }
+}
+if(!window.supabase?.createClient){
+  const notice=document.getElementById('loginNotice');
+  if(notice){notice.textContent='Admin login could not start because the authentication library is unavailable. Please reload or check your connection.';notice.classList.remove('hidden');notice.classList.add('error');}
+  console.error('VIDYAMAP Supabase SDK is unavailable.');
+  return;
+}
 const SUPABASE_URL='https://taxlvccrinehasexgvhv.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA';
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
