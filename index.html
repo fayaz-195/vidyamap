@@ -4447,103 +4447,73 @@ html body header.vm-shared-header{z-index:10!important}
 html body .vm-portal-utility{z-index:11!important}
 html body .vm-portal-brandbar{z-index:1!important}
 </style>
-<style id="vm-sticky-navigation-and-sponsored">
-/* Keep the main navigation and the sponsored college strip pinned during page scroll. */
-html body header.vm-shared-header{
- position:sticky!important;top:0!important;z-index:10020!important;
-}
-html body #vmHeaderSponsored{position:sticky!important;top:54px!important;z-index:10010!important}
-html body .vm-sponsored-bar{
- position:sticky!important;top:54px!important;z-index:10010!important;
- min-height:46px!important;
- background:#fff8eb!important;
- box-shadow:0 3px 10px rgba(23,35,62,.08)!important;
-}
-html body header.vm-shared-header .vm-shared-nav{min-height:54px!important}
-@media(max-width:820px){
- html body header.vm-shared-header .vm-shared-nav{min-height:52px!important}
- html body #vmHeaderSponsored{top:52px!important}
- html body .vm-sponsored-bar{top:52px!important}
-}
-</style>
-<style id="vm-sticky-masthead-wrapper-css">
-/* Use one sticky masthead wrapper so navigation and sponsored strip travel as a unit. */
-#vmStickyMasthead{position:sticky!important;top:0!important;z-index:100000!important;width:100%!important;display:block!important;overflow:visible!important;isolation:isolate!important}
-#vmStickyMasthead>header.vm-shared-header{position:relative!important;top:auto!important;z-index:2!important;width:100%!important}
-#vmStickyMasthead>#vmHeaderSponsored{position:relative!important;top:auto!important;z-index:1!important}
-#vmStickyMasthead>.vm-sponsored-bar{position:relative!important;top:auto!important;z-index:1!important;width:100%!important}
-#vmStickyMasthead>.vm-ad-ticker{position:relative!important;top:auto!important}
-</style>
 
-<script id="vm-sticky-masthead-wrapper">
+<style id="vm-single-sticky-masthead-css">
+#vmStickyMasthead{display:block!important;width:100%!important;position:relative!important;z-index:2147483000!important;overflow:visible!important;isolation:isolate!important}
+#vmStickyMasthead.vm-is-fixed{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:2147483000!important}
+#vmStickyMasthead>header.vm-shared-header{display:block!important;position:relative!important;top:auto!important;z-index:2!important;width:100%!important;margin:0!important}
+#vmStickyMasthead>#vmHeaderSponsored,#vmStickyMasthead>.vm-sponsored-bar{display:flex!important;position:relative!important;top:auto!important;z-index:1!important;width:100%!important;margin:0!important}
+#vmStickyMastheadPlaceholder{display:block!important;width:100%!important;height:0;pointer-events:none!important}
+@media(max-width:820px){#vmStickyMasthead>header.vm-shared-header .vm-shared-nav{min-height:52px!important}}
+</style>
+<script id="vm-single-sticky-masthead-controller">
 (function(){
  function install(){
-  const header=document.querySelector('body>header.vm-shared-header');
+  const header=document.querySelector('header.vm-shared-header');
+  const sponsored=document.querySelector('.vm-sponsored-bar');
   const headerAds=document.getElementById('vmHeaderSponsored');
-  const sponsored=document.querySelector('body>.vm-sponsored-bar');
   if(!header||!sponsored)return;
-  let wrap=document.getElementById('vmStickyMasthead');
-  if(!wrap){
-   wrap=document.createElement('div');wrap.id='vmStickyMasthead';
-   header.parentNode.insertBefore(wrap,header);
+  let masthead=document.getElementById('vmStickyMasthead');
+  if(!masthead){
+   masthead=document.createElement('div');
+   masthead.id='vmStickyMasthead';
+   header.parentNode.insertBefore(masthead,header);
   }
-  if(header.parentNode!==wrap)wrap.appendChild(header);
-  if(headerAds&&headerAds.parentNode!==wrap)wrap.appendChild(headerAds);
-  if(sponsored.parentNode!==wrap)wrap.appendChild(sponsored);
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});
- else install();
-})();
-</script>
-
-
-<style id="vm-sticky-masthead-fixed-css">
-#vmStickyMasthead.vm-is-fixed{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:2147483000!important}
-#vmStickyMasthead.vm-is-fixed>header.vm-shared-header{position:relative!important;top:auto!important}
-#vmStickyMasthead.vm-is-fixed>#vmHeaderSponsored,
-#vmStickyMasthead.vm-is-fixed>.vm-sponsored-bar{position:relative!important;top:auto!important}
-#vmStickyMastheadPlaceholder{display:none!important;width:100%!important;pointer-events:none!important}
-#vmStickyMastheadPlaceholder.vm-placeholder-active{display:block!important}
-</style>
-<script id="vm-sticky-masthead-fixed-controller">
-(function(){
- function setup(){
-  const masthead=document.getElementById('vmStickyMasthead');
-  if(!masthead||masthead.dataset.fixedController==='1')return;
-  masthead.dataset.fixedController='1';
-  const placeholder=document.createElement('div');
-  placeholder.id='vmStickyMastheadPlaceholder';
-  masthead.parentNode.insertBefore(placeholder,masthead);
-  let threshold=0,locked=false,raf=false;
+  if(header.parentNode!==masthead)masthead.appendChild(header);
+  if(headerAds&&headerAds.parentNode!==masthead)masthead.appendChild(headerAds);
+  if(sponsored.parentNode!==masthead)masthead.appendChild(sponsored);
+  let placeholder=document.getElementById('vmStickyMastheadPlaceholder');
+  if(!placeholder){
+   placeholder=document.createElement('div');
+   placeholder.id='vmStickyMastheadPlaceholder';
+   masthead.parentNode.insertBefore(placeholder,masthead);
+  }
+  let threshold=0,locked=false,raf=0;
   function measure(){
-   if(!locked)threshold=placeholder.getBoundingClientRect().top+(window.scrollY||window.pageYOffset||0);
+   if(locked)return;
+   const rect=placeholder.getBoundingClientRect();
+   threshold=rect.top+(window.scrollY||window.pageYOffset||0);
   }
   function update(){
-   raf=false;
+   raf=0;
    const y=window.scrollY||window.pageYOffset||0;
-   const shouldLock=y>=threshold && threshold>0;
+   const shouldLock=y>Math.max(0,threshold)+1;
    if(shouldLock&&!locked){
     placeholder.style.height=masthead.getBoundingClientRect().height+'px';
-    placeholder.classList.add('vm-placeholder-active');
     masthead.classList.add('vm-is-fixed');
     locked=true;
    }else if(!shouldLock&&locked){
     masthead.classList.remove('vm-is-fixed');
-    placeholder.classList.remove('vm-placeholder-active');
     placeholder.style.height='0px';
     locked=false;
     measure();
    }
   }
-  function onScroll(){if(!raf){raf=true;requestAnimationFrame(update);}}
+  function schedule(){
+   if(!raf)raf=requestAnimationFrame(update);
+  }
   measure();
-  window.addEventListener('scroll',onScroll,{passive:true});
-  window.addEventListener('resize',function(){if(locked){placeholder.style.height=masthead.getBoundingClientRect().height+'px';}else measure();onScroll();},{passive:true});
-  window.addEventListener('load',function(){if(!locked)measure();onScroll();},{once:true});
-  onScroll();
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',function(){
+   if(locked)placeholder.style.height=masthead.getBoundingClientRect().height+'px';
+   else measure();
+   schedule();
+  },{passive:true});
+  window.addEventListener('load',function(){if(!locked)measure();schedule();},{once:true});
+  schedule();
  }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup,{once:true});
- else setup();
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});
+ else install();
 })();
 </script>
 
