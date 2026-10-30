@@ -304,7 +304,7 @@ function runCollegeFit(event){
   if(matched.length){score+=Math.min(15,matched.length*5);reasons.push("Interest: "+matched.slice(0,3).join(", "))}
   if(c.description)score+=2;if(c.website_url)score+=2;if(c.phone||c.email)score+=2;
   return {college:c,score,reasons};
- }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||String(a.college.name||"").localeCompare(String(b.college.name||""),undefined,{sensitivity:"base"}));
+ }).filter(x=>x.reasons.length>0).sort((a,b)=>b.score-a.score||String(a.college.name||"").localeCompare(String(b.college.name||""),undefined,{sensitivity:"base"}));
  resultHost.hidden=false;resultGrid.replaceChildren();
  document.getElementById("fitResultTitle").textContent="Your college matches";
  document.getElementById("fitResultCount").textContent=ranked.length+" verified listing(s) matched your preferences · showing up to 3";
