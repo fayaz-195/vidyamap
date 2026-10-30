@@ -4412,5 +4412,18 @@ html body header.vm-shared-header .vm-shared-toggle{display:none!important}
 }
 @media(max-width:440px){html body .vm-portal-brand-inner{min-height:76px!important}html body .vm-portal-brand img{height:51px!important}html body .vm-portal-action-secondary{display:none!important}}
 </style>
+<style id="vm-lead-modal-above-sticky-header">
+/* Modal must sit above every sticky masthead layer so its close button remains clickable. */
+html body #studentLeadCapture.vm-lead-modal{
+ position:fixed!important;inset:0!important;z-index:200000!important;
+}
+html body header.vm-shared-header{z-index:900!important}
+html body .vm-portal-utility{z-index:901!important}
+html body .vm-portal-brandbar{z-index:1!important}
+html body #studentLeadCapture.vm-lead-modal .vm-lead-close{
+ position:relative!important;z-index:200001!important;float:right!important;
+ margin:-4px -4px 4px 12px!important;pointer-events:auto!important;
+}
+</style>
 </body>
 </html>
