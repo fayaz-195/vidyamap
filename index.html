@@ -1965,61 +1965,35 @@ const SUPABASE_KEY = "sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function loadHomepagePromoItems(){
- const track=document.querySelector('.vm-sponsored-single-line');
- const badge=document.querySelector('.vm-sponsored-label');
- if(!track)return;
+ const bar=document.querySelector('.vm-sponsored-bar');
+ if(!bar)return;
+ const badge=bar.querySelector('.vm-sponsored-label');
+ const track=bar.querySelector('.vm-sponsored-single-line, .vm-sponsored-track span');
  try{
-  const [{data:settings},{data,error}]=await Promise.all([
-   db.from('site_promo_settings').select('badge_text').eq('id',true).maybeSingle(),
-   db.from('site_promo_items').select('item_type,heading,body,url,sort_order').eq('is_active',true).order('sort_order').order('created_at')
-  ]);
-  if(badge&&settings?.badge_text)badge.textContent=settings.badge_text;
-  if(error)throw error;
-  if(!data?.length)return;
-  const host=document.querySelector('.vm-sponsored-message')||track.parentElement;
-  const styleId='vm-promo-one-line-style';
-  if(!document.getElementById(styleId)){
-   const st=document.createElement('style');st.id=styleId;
-   st.textContent=`
-    .vm-sponsored-message{display:block!important;flex:1 1 auto!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;white-space:nowrap!important}
-    .vm-sponsored-single-line{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;overflow:hidden!important;white-space:nowrap!important;padding:0!important;animation:none!important}
-    .vm-promo-marquee{display:flex!important;align-items:center!important;width:max-content!important;min-width:max-content!important;will-change:transform;animation:vmPromoContinuous 32s linear infinite}
-    .vm-promo-sequence{display:inline-flex!important;align-items:center!important;flex:0 0 auto!important;width:max-content!important;white-space:nowrap!important;padding-right:48px!important}
-    .vm-promo-sequence>*{display:inline-block!important;flex:0 0 auto!important;white-space:nowrap!important}
-    .vm-promo-separator{margin:0 24px!important;font-weight:800!important;opacity:.65}
-    .vm-promo-link{color:inherit!important;text-decoration:underline!important;font-weight:800!important}
-    .vm-sponsored-bar:hover .vm-promo-marquee{animation-play-state:paused}
-    @keyframes vmPromoContinuous{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    @media(prefers-reduced-motion:reduce){.vm-promo-marquee{animation:none!important;transform:none!important}}
-   `;
+  const settings=await db.from('site_promo_settings').select('badge_text').eq('id',true).maybeSingle();
+  if(badge&&settings.data?.badge_text)badge.textContent=settings.data.badge_text;
+  const result=await db.from('site_promo_items').select('item_type,heading,body,url,sort_order').eq('is_active',true).order('sort_order').order('created_at');
+  if(result.error)throw result.error;
+  if(!result.data?.length||!track)return;
+  track.replaceChildren();
+  const host=bar.querySelector('.vm-sponsored-message')||track.parentElement;
+  host.style.cssText+=';display:block!important;flex:1 1 auto!important;min-width:0!important;overflow:hidden!important;white-space:nowrap!important';
+  track.style.cssText+=';display:inline-flex!important;align-items:center!important;white-space:nowrap!important;width:max-content!important;min-width:max-content!important;padding-left:100%!important;animation:vmPromoOneLine 30s linear infinite!important;vertical-align:middle!important';
+  if(!document.getElementById('vm-promo-one-line-style')){
+   const st=document.createElement('style');st.id='vm-promo-one-line-style';
+   st.textContent='@keyframes vmPromoOneLine{from{transform:translateX(0)}to{transform:translateX(-100%)}}.vm-sponsored-message{overflow:hidden!important;white-space:nowrap!important}.vm-sponsored-single-line{display:inline-flex!important;align-items:center!important;white-space:nowrap!important;width:max-content!important}';
    document.head.appendChild(st);
   }
-  const marquee=document.createElement('span');marquee.className='vm-promo-marquee';
-  const makeSequence=()=>{
-   const sequence=document.createElement('span');sequence.className='vm-promo-sequence';
-   data.forEach((item,i)=>{
-    if(i){const sep=document.createElement('span');sep.className='vm-promo-separator';sep.textContent='•';sequence.appendChild(sep);}
-    const label=(item.heading||'').trim()+(item.body?' — '+item.body.trim():'');
-    let node;
-    if(item.item_type==='link'&&item.url){
-     try{const u=new URL(item.url);if(!['https:','http:'].includes(u.protocol))throw new Error('Invalid URL');node=document.createElement('a');node.href=u.href;node.target='_blank';node.rel='noopener noreferrer';node.className='vm-promo-link';}
-     catch(_){node=document.createElement('span');}
-    }else node=document.createElement('span');
-    node.textContent=label||'View promotion';sequence.appendChild(node);
-   });
-   return sequence;
-  };
-  const first=makeSequence(),second=makeSequence();
-  second.setAttribute('aria-hidden','true');
-  marquee.append(first,second);
-  track.replaceChildren(marquee);
-  track.setAttribute('aria-label',data.map(item=>[item.heading,item.body].filter(Boolean).join(' — ')).join(' • '));
-  const duration=Math.max(24,Math.min(75,first.scrollWidth/55));
-  marquee.style.animationDuration=duration+'s';
-  host.style.overflow='hidden';
- }catch(e){console.warn('Homepage banner settings unavailable',e);}
+  result.data.forEach((item,i)=>{
+   if(i){const sep=document.createElement('span');sep.textContent='  •  ';sep.style.cssText='display:inline-block!important;margin:0 28px!important;white-space:nowrap!important';track.append(sep);}
+   const label=(item.heading||'').trim()+(item.body?' — '+item.body.trim():'');
+   if(item.item_type==='link'&&item.url){
+    try{const u=new URL(item.url);if(!['https:','http:'].includes(u.protocol))return;const a=document.createElement('a');a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label||'View promotion';a.style.cssText='display:inline-block!important;color:inherit;text-decoration:underline;font-weight:700;white-space:nowrap!important;margin-right:28px!important';track.append(a);}
+    catch(_){}
+   }else{const t=document.createElement('span');t.textContent=label;t.style.cssText='display:inline-block!important;white-space:nowrap!important;margin-right:28px!important';track.append(t);}
+  });
+ }catch(e){console.warn('Homepage sponsored banner could not load',e);}
 }
-
 loadHomepagePromoItems();
 
 // Ad-media safety gate: only serve raster images/video files from this project's Supabase Storage.
