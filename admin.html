@@ -1701,7 +1701,8 @@ async function loadHiringModeration(){if(currentPermissions?.hiring!==true)retur
 async function updateHiringCompany(id,status){if(!confirm((status==='verified'?'Verify this employer?':'Reject this employer request?')))return;try{const {error}=await client.from('hiring_companies').update({verification_status:status}).eq('id',id);if(error)throw error;showHiringNotice('Employer '+status+'.');await loadHiringModeration();}catch(e){showHiringNotice('Could not update employer: '+(e.message||'permission denied'),true);}}
 async function updateHiringJob(id,status){if(!confirm((status==='approved'?'Approve this job listing?':'Reject this job listing?')))return;try{const {error}=await client.from('hiring_jobs').update({status,approved_at:status==='approved'?new Date().toISOString():null,approved_by:currentUser?.id||null}).eq('id',id);if(error)throw error;showHiringNotice('Job '+status+'.');await loadHiringModeration();}catch(e){showHiringNotice('Could not update job: '+(e.message||'permission denied'),true);}}
 $('refreshHiring')?.addEventListener('click',loadHiringModeration);
-\nasync function loadScholarshipManager(){
+
+async function loadScholarshipManager(){
  const area=$('scholarshipAdminList');if(!area||currentPermissions?.scholarships!==true)return;
  area.innerHTML='<div class="loading">Loading scholarship records…</div>';
  const {data,error}=await withQueryTimeout(client.from('scholarship_opportunities').select('id,slug,title,state,scheme_type,study_level,category,summary,eligibility,benefits,official_url,application_url,source_label,source_note,academic_year,application_start,deadline,deadline_note,source_checked_at,is_featured,status,updated_at').order('updated_at',{ascending:false}).limit(500),12000).then(x=>x).catch(e=>({data:null,error:e}));
