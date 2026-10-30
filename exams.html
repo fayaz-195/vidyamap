@@ -143,7 +143,14 @@ body.vm-lead-modal-open{overflow:hidden!important}
 .panel{background:white;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 10px 28px #1d31500b}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.filters{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;margin:18px 0}.field{display:grid;gap:5px}.field label{font-size:12px;font-weight:800;color:#45536a}.field input,.field select,.field textarea{width:100%;border:1px solid #dce2ec;border-radius:10px;padding:11px;background:white;color:var(--ink)}.btn{border:0;border-radius:10px;padding:11px 16px;background:linear-gradient(115deg,#76209b,#4938bc);color:white;font-weight:800;cursor:pointer}.btn.alt{background:white;border:1px solid var(--line);color:var(--navy)}.btn:disabled{opacity:.55;cursor:not-allowed}
 .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:9px}.card h3{margin:0;color:var(--navy);font-size:19px}.muted{color:var(--muted);font-size:13px}.tag{display:inline-block;padding:4px 9px;border-radius:30px;background:#f2eafa;color:#70239a;font-size:11px;font-weight:800;margin:2px}.section{padding:28px 0 54px}.section h2{color:var(--navy)}.notice{padding:12px;border-radius:10px;background:#f2f6ff;color:#344968;margin:12px 0}.modal{position:fixed;inset:0;background:#0b1c36a8;z-index:10001;display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:20px}.modal.open{display:flex}.modal-box{background:white;border-radius:18px;padding:22px;width:min(620px,100%);margin:auto}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.wide{grid-column:1/-1}footer{padding:28px 0;background:#102c54;color:white;margin-top:40px}
 @media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr 1fr}}@media(max-width:560px){.grid,.filters,.form-grid{grid-template-columns:1fr}.wide{grid-column:auto}.hero{padding:35px 0 22px}}
-</style></head><body><header class="vm-shared-header"><div class="vm-shared-nav">
+</style>
+<style id="vm-nav-active-only">
+/* Only the current page stays highlighted; hover is intentionally subtle. */
+.vm-shared-links>a:hover,.vm-shared-about:hover,.vm-shared-dropdown.is-current>.vm-shared-about{color:#54218f!important;background:#f2eaff!important;box-shadow:none!important;transform:none!important}
+.vm-shared-links>a[aria-current=page]{color:#fff!important;background:linear-gradient(120deg,#8b21c0,#4b36c7)!important;box-shadow:0 8px 22px #692bae40!important}
+.vm-shared-menu a[aria-current=page]{color:#6520a0!important;background:linear-gradient(100deg,#f2e8ff,#eaf0ff)!important}
+</style>
+</head><body><header class="vm-shared-header"><div class="vm-shared-nav">
 <a class="vm-shared-brand" href="./index.html"><img src="./vidyamap-logo.png" alt="VidyaMap"></a>
 <button class="vm-shared-toggle" type="button" aria-expanded="false" aria-controls="vmSharedLinks" aria-label="Toggle navigation">☰</button>
 <nav class="vm-shared-links" id="vmSharedLinks" aria-label="Main navigation">
