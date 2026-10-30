@@ -138,7 +138,63 @@ html body header.vm-shared-header .vm-shared-menu a{color:#263b58!important}
 })();
 </script>
 <style id="vm-page-current-nav-highlight-style-v3">html body header.vm-shared-header .vm-shared-links>a[aria-current="page"],html body header.vm-shared-header .vm-shared-links>.vm-shared-dropdown>.vm-shared-about[aria-current="page"]{background:#5c176d!important;color:#fff!important;box-shadow:inset 0 -3px 0 #e2c4ef!important}html body header.vm-shared-header .vm-shared-links>.vm-shared-dropdown>.vm-shared-menu a[aria-current="page"]{background:#f1eaff!important;color:#76208f!important;font-weight:800!important}</style><script id="vm-page-current-nav-highlight-script-v3">(function(){function norm(p){try{p=decodeURIComponent(p)}catch(e){}if(p.length>1&&p.endsWith("/"))p=p.slice(0,-1);return p||"/"}function mark(){var nav=document.getElementById("vmSharedLinks")||document.querySelector("header.vm-shared-header .vm-shared-links");if(!nav)return;var cur=norm(location.pathname);if(cur==="/")cur="/index.html";nav.querySelectorAll("[aria-current]").forEach(function(a){a.removeAttribute("aria-current")});nav.querySelectorAll(".vm-shared-dropdown").forEach(function(d){d.classList.remove("is-current")});var hits=[];nav.querySelectorAll("a[href]").forEach(function(a){var raw=(a.getAttribute("href")||"").trim();if(!raw||raw==="#"||raw.charAt(0)==="#")return;try{var u=new URL(raw,location.href);if(u.origin!==location.origin)return;var p=norm(u.pathname);if(p==="/")p="/index.html";if(p!==cur)return;if(u.hash&&u.hash!==location.hash)return;if(!u.hash&&location.hash&&cur==="/index.html")return;hits.push(a)}catch(e){}});hits.forEach(function(a){a.setAttribute("aria-current","page");var d=a.closest(".vm-shared-dropdown");if(d){d.classList.add("is-current");var t=d.querySelector(":scope > .vm-shared-about");if(t)t.setAttribute("aria-current","page")}})}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mark,{once:true});else mark();window.addEventListener("pageshow",mark);window.addEventListener("popstate",mark)})();</script>
-<script id="vm-sponsored-banner-settings">(function(){async function applySponsoredBannerSettings(){if(!window.supabase)return;const bar=document.querySelector('.vm-sponsored-bar');if(!bar)return;try{const client=window.supabase.createClient('https://taxlvccrinehasexgvhv.supabase.co','sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA');const badge=bar.querySelector('.vm-sponsored-label'),track=bar.querySelector('.vm-sponsored-single-line, .vm-sponsored-track span');const settings=await client.from('site_promo_settings').select('badge_text').eq('id',true).maybeSingle();if(badge&&settings.data?.badge_text)badge.textContent=settings.data.badge_text;const result=await client.from('site_promo_items').select('item_type,heading,body,url,sort_order').eq('is_active',true).order('sort_order').order('created_at');if(result.error||!result.data?.length||!track)return;track.replaceChildren();const host=bar.querySelector('.vm-sponsored-message')||track.parentElement;host.style.cssText+=';overflow:hidden!important;white-space:nowrap!important';track.style.cssText+=';display:inline-flex!important;align-items:center!important;white-space:nowrap!important;width:max-content!important;min-width:max-content!important;padding-left:100%!important;animation:vmPromoOneLine 30s linear infinite!important;vertical-align:middle!important';if(!document.getElementById('vm-promo-one-line-style')){const st=document.createElement('style');st.id='vm-promo-one-line-style';st.textContent='@keyframes vmPromoOneLine{from{transform:translateX(0)}to{transform:translateX(-100%)}}.vm-sponsored-message{overflow:hidden!important;white-space:nowrap!important}.vm-sponsored-single-line{display:inline-flex!important;align-items:center!important;white-space:nowrap!important;width:max-content!important}';document.head.appendChild(st);}result.data.forEach((item,i)=>{if(i){const sep=document.createElement('span');sep.textContent='  •  ';sep.style.cssText='display:inline-block!important;margin:0 28px!important;white-space:nowrap!important';track.append(sep);}const label=(item.heading||'').trim()+(item.body?' — '+item.body.trim():'');if(item.item_type==='link'&&item.url){try{const u=new URL(item.url);if(!['https:','http:'].includes(u.protocol))return;const a=document.createElement('a');a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label||'View promotion';a.style.cssText='display:inline-block!important;color:inherit;text-decoration:underline;font-weight:700;white-space:nowrap!important;margin-right:28px!important';track.append(a);}catch(_){}}else{const t=document.createElement('span');t.textContent=label;t.style.cssText='display:inline-block!important;white-space:nowrap!important;margin-right:28px!important';track.append(t);}});}catch(e){console.warn('Sponsored banner settings unavailable',e);}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applySponsoredBannerSettings,{once:true});else applySponsoredBannerSettings();})();</script>
+<script id="vm-sponsored-banner-settings">
+async function renderVidyamapSponsoredBar(bar,client){
+ if(!bar||!client)return;
+ const badge=bar.querySelector('.vm-sponsored-label');
+ try{
+  const [settings,result]=await Promise.all([
+   client.from('site_promo_settings').select('badge_text').eq('id',true).maybeSingle(),
+   client.from('site_promo_items').select('item_type,heading,body,url,sort_order').eq('is_active',true).order('sort_order').order('created_at')
+  ]);
+  if(badge&&settings.data?.badge_text)badge.textContent=settings.data.badge_text;
+  if(result.error)throw result.error;
+  if(!result.data?.length)return;
+  let viewport=bar.querySelector('.vm-sponsored-viewport');
+  if(!viewport){viewport=document.createElement('div');viewport.className='vm-sponsored-viewport';bar.querySelector('.vm-sponsored-message')?.replaceChildren(viewport);}
+  const makeSequence=()=>{
+   const seq=document.createElement('span');seq.className='vm-sponsored-sequence';
+   result.data.forEach((item,i)=>{
+    if(i){const sep=document.createElement('span');sep.className='vm-sponsored-separator';sep.textContent='•';seq.appendChild(sep);}
+    const label=(item.heading||'').trim()+(item.body?' — '+item.body.trim():'');
+    let node=document.createElement('span');
+    if(item.item_type==='link'&&item.url){try{const u=new URL(item.url);if(['https:','http:'].includes(u.protocol)){node=document.createElement('a');node.href=u.href;node.target='_blank';node.rel='noopener noreferrer';node.className='vm-sponsored-link';}}catch(_){}}
+    node.textContent=label||'View promotion';seq.appendChild(node);
+   });
+   return seq;
+  };
+  const first=makeSequence(),second=makeSequence();second.setAttribute('aria-hidden','true');
+  const marquee=document.createElement('span');marquee.className='vm-sponsored-marquee';marquee.append(first,second);
+  viewport.replaceChildren(marquee);
+  const speed=38;marquee.style.animationDuration=Math.max(24,first.scrollWidth/speed)+'s';
+  const styleId='vm-sponsored-shared-marquee-style';
+  if(!document.getElementById(styleId)){
+   const style=document.createElement('style');style.id=styleId;
+   style.textContent=`
+    .vm-sponsored-bar .vm-sponsored-message,.vm-sponsored-bar .vm-sponsored-viewport{display:block!important;flex:1 1 auto!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;white-space:nowrap!important;text-align:left!important}
+    .vm-sponsored-bar .vm-sponsored-marquee{display:flex!important;align-items:center!important;width:max-content!important;min-width:max-content!important;white-space:nowrap!important;will-change:transform!important;animation:vmSponsoredSharedFlow 32s linear infinite!important}
+    .vm-sponsored-bar .vm-sponsored-sequence{display:inline-flex!important;align-items:center!important;flex:0 0 auto!important;width:max-content!important;white-space:nowrap!important;padding-right:56px!important}
+    .vm-sponsored-bar .vm-sponsored-sequence>*{display:inline-block!important;flex:0 0 auto!important;white-space:nowrap!important;color:inherit!important}
+    .vm-sponsored-bar .vm-sponsored-separator{margin:0 24px!important;opacity:.7!important}
+    .vm-sponsored-bar .vm-sponsored-link{font-weight:800!important;text-decoration:underline!important}
+    @keyframes vmSponsoredSharedFlow{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @media(max-width:600px){.vm-sponsored-bar{flex-wrap:nowrap!important}.vm-sponsored-bar .vm-sponsored-marquee{animation-duration:32s!important}.vm-sponsored-bar .vm-sponsored-sequence{padding-right:36px!important}}
+    @media(prefers-reduced-motion:reduce){.vm-sponsored-bar .vm-sponsored-marquee{animation:none!important;transform:none!important}}
+   `;
+   document.head.appendChild(style);
+  }
+ }catch(e){console.warn('Sponsored promotions failed to load',e);}
+}
+(function(){
+ async function applySponsoredBannerSettings(){
+  if(!window.supabase)return;
+  const client=window.supabase.createClient('https://taxlvccrinehasexgvhv.supabase.co','sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA');
+  await renderVidyamapSponsoredBar(document.querySelector('.vm-sponsored-bar'),client);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applySponsoredBannerSettings,{once:true});
+ else applySponsoredBannerSettings();
+})();
+</script>
 
 <style id="vm-jobs-mobile-menu-hard-fix">
 @media(max-width:820px){
