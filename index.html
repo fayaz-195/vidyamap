@@ -4542,31 +4542,6 @@ html body .vm-portal-brandbar{z-index:1!important}
  html body header.vm-shared-header .vm-shared-links .vm-shared-menu a{display:block!important;color:#17345f!important;background:#fff!important;padding:12px!important;min-height:42px!important}
 }
 </style>
-<script id="vm-mobile-navigation-open-fix-js">
-(function(){
- function init(){
-  var nav=document.getElementById('vmSharedLinks');
-  var toggle=document.querySelector('header.vm-shared-header .vm-shared-toggle');
-  if(!nav||!toggle||toggle.dataset.vmMenuFixed==='1')return;
-  toggle.dataset.vmMenuFixed='1';
-  toggle.addEventListener('click',function(){
-   var open=nav.classList.toggle('is-open');
-   toggle.setAttribute('aria-expanded',String(open));
-   toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');
-  });
-  nav.querySelectorAll('.vm-shared-dropdown > .vm-shared-about').forEach(function(trigger){
-   trigger.addEventListener('click',function(e){
-    if(window.matchMedia('(max-width:820px)').matches){
-     e.preventDefault();
-     var group=trigger.closest('.vm-shared-dropdown');
-     var open=group.classList.toggle('is-open');
-     trigger.setAttribute('aria-expanded',String(open));
-    }
-   });
-  });
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-})();
-</script>
+
 </body>
 </html>
