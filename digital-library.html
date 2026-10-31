@@ -21,6 +21,7 @@
 <div class="tabs hidden" id="questionFilters"><button class="tab active" data-filter="important">Important Questions</button><button class="tab" data-filter="previous">Previous Year Papers</button><button class="tab" data-filter="model">Model Papers</button><button class="tab" data-filter="all">All Questions</button></div>
 <div class="status" id="status" role="status">Loading library catalogue…</div>
 </section>
+<section class="panel hidden" id="videoLessons"><h2 style="margin:0 0 8px;color:var(--navy)">Related YouTube lessons</h2><p style="margin:0 0 12px;color:var(--muted);font-size:13px">Chapter selection batti matching lessons search chesam. YouTube results open chesi suitable videos choose cheyyandi.</p><a id="youtubeSearch" class="action primary" target="_blank" rel="noopener noreferrer" href="#">Search this chapter on YouTube ↗</a></section>
 <div class="content-grid">
 <section class="reader"><h2 id="sectionTitle">Study Material & Books</h2><div id="content"><div class="empty">Select a class, subject and chapter to begin.</div></div></section>
 <aside class="side"><h3>Official textbook portals</h3><p>Open the government source for free textbook access. These links open the official source in a new tab.</p><p><a href="https://cse.ap.gov.in/loadacademictextbookpublicview" target="_blank" rel="noopener noreferrer">Andhra Pradesh · Textbooks View / Download ↗</a></p><p><a href="https://www.scert.telangana.gov.in/" target="_blank" rel="noopener noreferrer">Telangana SCERT · e-Textbooks ↗</a></p><p><a href="https://ncert.nic.in/textbook.php" target="_blank" rel="noopener noreferrer">NCERT · Textbooks I–XII ↗</a></p><p><a href="https://diksha.gov.in/" target="_blank" rel="noopener noreferrer">DIKSHA · Digital learning resources ↗</a></p><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h3>How to use</h3><p><b>Study Material:</b> Open chapter notes and resources. Long notes are split into readable pages with Next and Previous controls.</p><p><b>Question Bank:</b> Practise important questions, previous-year papers and model questions. Answers appear under each question.</p><p>Only verified and published material is shown to students. More chapters become available as the library catalogue is added by the VidyaMap team.</p></aside>
@@ -88,7 +89,18 @@
   $('content').innerHTML=rows.length?rows.map((q,i)=>'<article class="qcard"><div class="qmeta">'+esc(q.question_type||'Practice')+' · '+esc(q.marks||'')+' marks '+(q.source_year?' · '+esc(q.source_year):'')+'</div><h3>'+ (i+1)+'. '+esc(q.question_text)+'</h3>'+(Array.isArray(q.options)&&q.options.length?'<ol type="A">'+q.options.map(o=>'<li>'+esc(typeof o==='string'?o:o.text||o.label||'')+'</li>').join('')+'</ol>':'')+'<details><summary>Show answer & explanation</summary><div class="answer"><b>Answer:</b> '+esc(q.answer_text||q.correct_answer||'Answer will be added soon.')+(q.explanation?'<br><br><b>Explanation:</b> '+esc(q.explanation):'')+'</div></details></article>').join(''):'<div class="empty">No published questions in this category yet.</div>';
   setStatus(rows.length+' question(s) shown. Answers are available under each question.');
  }
- async function loadContent(){if($('mode').value==='questions')await loadQuestions();else await loadStudy();}
+ async function loadContent(){
+  const videoBox=$('videoLessons'),videoLink=$('youtubeSearch');
+  if($('chapter').value){
+   const p=$('program').selectedOptions[0]?.textContent||'Andhra Pradesh SCERT';
+   const s=$('subject').selectedOptions[0]?.textContent||'';
+   const ch=$('chapter').selectedOptions[0]?.textContent||'';
+   const q=[p,s,ch,'lesson explanation Telugu English'].filter(Boolean).join(' ');
+   videoLink.href='https://www.youtube.com/results?search_query='+encodeURIComponent(q);
+   videoBox.classList.remove('hidden');
+  }else videoBox.classList.add('hidden');
+  if($('mode').value==='questions')await loadQuestions();else await loadStudy();
+ }
  $('program').addEventListener('change',loadSubjects);$('subject').addEventListener('change',loadChapters);$('chapter').addEventListener('change',loadContent);$('mode').addEventListener('change',()=>{$('questionFilters').classList.toggle('hidden',$('mode').value!=='questions');loadContent();});
  $('questionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;questionFilter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderQuestions();});
  loadPrograms();
