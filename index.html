@@ -3302,6 +3302,27 @@ main{overflow:visible!important}
 @media(max-width:560px){.vm-ask-widget{right:12px;bottom:12px}.vm-ask-launcher{min-width:0;padding:10px 12px;border-radius:16px}.vm-ask-launcher-icon{width:36px;height:36px}.vm-ask-launcher small{font-size:10px}.vm-ask-panel{position:fixed;left:8px;right:8px;bottom:8px;width:auto;height:min(78dvh,700px);min-height:390px;border-radius:20px}.vm-ask-quick button{font-size:10px}}
 .vm-ask-typing{letter-spacing:4px;font-weight:700;animation:vmAskDots 1s infinite ease-in-out}@keyframes vmAskDots{0%,60%,100%{opacity:.35}30%{opacity:1}}
 
+/* Responsive Ask Query launcher: compact desktop pill, minimal mobile action */
+#vmAskWidget.vm-ask-widget{right:20px;bottom:20px}
+#vmAskLauncher.vm-ask-launcher{min-width:176px;max-width:176px;gap:9px;padding:7px 12px 7px 8px;border-radius:999px}
+#vmAskLauncher .vm-ask-launcher-icon{width:36px;height:36px;font-size:20px}
+#vmAskLauncher .vm-ask-launcher strong{font-size:13px;line-height:1.2}
+#vmAskLauncher .vm-ask-launcher small{font-size:9px;margin-top:2px;white-space:nowrap}
+#vmAskLauncher .vm-ask-online{width:7px;height:7px;box-shadow:0 0 0 3px #ffffff20}
+@media(max-width:560px){
+ #vmAskWidget.vm-ask-widget{right:12px;bottom:12px}
+ #vmAskLauncher.vm-ask-launcher{width:132px;min-width:132px;max-width:132px;min-height:44px;gap:7px;padding:5px 9px 5px 6px;border-radius:14px;box-shadow:0 5px 16px #35207835}
+ #vmAskLauncher .vm-ask-launcher-icon{width:32px;height:32px;font-size:18px}
+ #vmAskLauncher .vm-ask-launcher strong{font-size:12px}
+ #vmAskLauncher .vm-ask-launcher small{display:none}
+ #vmAskLauncher .vm-ask-online{width:6px;height:6px;box-shadow:0 0 0 2px #ffffff20}
+ .vm-ask-panel{left:8px;right:8px;bottom:64px;width:auto;height:min(78dvh,680px);min-height:360px;border-radius:18px}
+}
+@media(max-width:360px){
+ #vmAskLauncher.vm-ask-launcher{width:118px;min-width:118px;max-width:118px}
+}
+
+
 /* ===== Floating glass header refresh ===== */
 .vm-site-header{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(248,247,255,.88));border-bottom:1px solid rgba(209,215,239,.8);box-shadow:0 12px 32px rgba(24,39,85,.09);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);overflow:visible}
 .vm-main-nav{min-height:94px;gap:clamp(12px,2vw,28px)}
