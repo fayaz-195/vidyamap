@@ -88,7 +88,7 @@
  function renderQuestions(){
   const rows=questionRows.filter(q=>questionFilter==='all'||(questionFilter==='previous'&&/previous|past|year|paper/i.test((q.source_name||'')+' '+(q.question_type||'')))||(questionFilter==='model'&&/model/i.test((q.source_name||'')+' '+(q.question_type||'')))||(questionFilter==='important'&&(/important/i.test((q.question_type||'')+' '+(q.source_name||''))||!/(previous|past|year|paper|model)/i.test((q.question_type||'')+' '+(q.source_name||'')))));
   $('content').innerHTML=rows.length?rows.map((q,i)=>'<article class="qcard"><div class="qmeta">'+esc(q.question_type||'Practice')+' · '+esc(q.marks||'')+' marks '+(q.source_year?' · '+esc(q.source_year):'')+'</div><h3>'+ (i+1)+'. '+esc(q.question_text)+'</h3>'+(Array.isArray(q.options)&&q.options.length?'<ol type="A">'+q.options.map(o=>'<li>'+esc(typeof o==='string'?o:o.text||o.label||'')+'</li>').join('')+'</ol>':'')+'<details><summary>Show answer & explanation</summary><div class="answer"><b>Answer:</b> '+esc(q.answer_text||q.correct_answer||'Answer will be added soon.')+(q.explanation?'<br><br><b>Explanation:</b> '+esc(q.explanation):'')+'</div></details></article>').join(''):'<div class="empty">No published questions in this category yet.</div>';
-  if(window.MathJax?.typesetPromise){window.MathJax.typesetClear?.([$('content')]);window.MathJax.typesetPromise([$ ('content')].filter(Boolean)).catch(()=>{});}
+  if(window.MathJax?.typesetPromise){window.MathJax.typesetClear?.([$('content')]);window.MathJax.typesetPromise([$('content')]).catch(()=>{});}
   setStatus(rows.length+' question(s) shown. Answers are available under each question.');
  }
  async function loadContent(){
