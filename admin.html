@@ -731,6 +731,7 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
             <a class="nav-subitem" data-page="mediaLibrary" href="admin.html?page=mediaLibrary"><span class="nav-subdot"></span>Media library</a>
             <a class="nav-subitem" data-page="scholarships" href="admin.html?page=scholarships"><span class="nav-subdot"></span>Scholarship management</a>
             <a class="nav-subitem" data-page="learningLibrary" href="admin.html?page=learningLibrary"><span class="nav-subdot"></span>Digital Learning Library</a>
+            <a class="nav-subitem" data-page="competitiveExams" href="admin.html?page=competitiveExams"><span class="nav-subdot"></span>Competitive Exams</a>
             <a class="nav-subitem" data-page="hiring" href="admin.html?page=hiring"><span class="nav-subdot"></span>Jobs &amp; hiring moderation</a>
           </div>
         </details>
@@ -889,6 +890,12 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
     <div class="scholarship-list-head"><div><h3>Saved opportunities</h3><p id="scholarshipAdminCount">Loading records…</p></div><input id="scholarshipAdminSearch" type="search" placeholder="Search title, state or status…" aria-label="Search scholarship opportunities"></div>
     <div id="scholarshipAdminList" class="scholarship-admin-list"><div class="loading">Loading scholarships…</div></div>
   </div>
+</section>
+<section id="competitiveExams" class="panel section-panel admin-page-view section-full">
+ <div class="section-head"><div><h2>Competitive Exam Centre</h2><p>Manage exam catalogue, discovered official papers and review queue. Only verified records should be published.</p></div><button class="btn secondary" id="refreshExamDiscoveries" type="button">↻ Refresh</button></div>
+ <div class="stats-grid" style="margin-bottom:16px"><div class="stat-card"><span>Official sources</span><strong id="examSourceCount">—</strong></div><div class="stat-card"><span>New discoveries</span><strong id="examDiscoveryCount">—</strong></div><div class="stat-card"><span>Pending review</span><strong id="examPendingCount">—</strong></div></div>
+ <div class="card"><div class="card-head"><h3>Official source discoveries</h3><p>Daily automatic checks identify new paper, syllabus and notification links. Admin approval is required before public listing.</p></div><div id="examDiscoveryList" class="table-wrap"><div class="loading">Loading official source discoveries…</div></div></div>
+ <div class="card" style="margin-top:18px"><div class="card-head"><h3>Exam catalogue</h3><p>Seeded starter catalogue includes JEE Main, JEE Advanced, NEET UG, CUET UG, UGC NET, UPSC, SSC, RRB, banking, NDA and AP/TG EAPCET.</p></div><div id="examCatalogueList" class="table-wrap"><div class="loading">Loading examinations…</div></div></div>
 </section>
 <section id="learningLibrary" class="panel section-panel admin-page-view section-full">
  <div class="section-head"><div><h2>Digital Learning Library</h2><p>Build free chapter-wise study material for Telangana and Andhra Pradesh students. Only verified and published content is visible publicly.</p></div><div class="section-actions"><button class="btn" id="publishAllLearning" type="button">✓ Publish All Verified</button><button class="btn secondary" id="refreshLearningLibrary" type="button">↻ Refresh</button></div></div>
@@ -1826,7 +1833,7 @@ $('scholarshipAdminList')?.addEventListener('click',async event=>{
 $('refreshScholarships')?.addEventListener('click',loadScholarshipManager);
 $('scholarshipAdminSearch')?.addEventListener('input',renderScholarshipAdminList);
 $('cancelScholarshipEdit')?.addEventListener('click',()=>{resetScholarshipForm();hideNotice($('scholarshipAdminNotice'));});
-function applyPageView(){const allowed=['overview','registrations','createCollege','institutions','marketing','publicleads','enquirySummary','auditlogs','analytics','crm','team','health','assistant','reports','siteAds','mediaLibrary','scholarships','learningLibrary','hiring'];const params=new URLSearchParams(window.location.search);const requested=params.get('page')||'overview';let active=requested==='campaigns'?'overview':(allowed.includes(requested)?requested:'overview');if(currentPermissions&&currentPermissions[active]!==true)active='overview';document.querySelectorAll('.admin-page-view').forEach(section=>section.classList.toggle('page-hidden',section.id!==(active==='overview'?'overviewContent':active)));document.querySelectorAll('.admin-sidebar [data-page]').forEach(link=>{const permitted=!currentPermissions||currentPermissions[link.dataset.page]===true;link.classList.toggle('hidden',!permitted);link.classList.toggle('active',link.dataset.page===active);});[['enquiryNavGroup',['enquirySummary','publicleads','crm']],['institutionsNavGroup',['registrations','createCollege','institutions']],['insightsNavGroup',['analytics','reports']],['adminToolsNavGroup',['auditlogs','team','health','assistant','siteAds','mediaLibrary','scholarships','learningLibrary','hiring']]].forEach(([groupId,pages])=>{const group=document.getElementById(groupId);if(!group)return;const groupActive=pages.includes(active);group.open=groupActive;const summary=group.querySelector('.nav-group-toggle');if(summary)summary.classList.toggle('active',groupActive);const hasVisibleChild=Array.from(group.querySelectorAll('.nav-subitem')).some(link=>!link.classList.contains('hidden'));group.classList.toggle('hidden',!hasVisibleChild);});const titles={overview:'Overview',registrations:'College registrations',createCollege:'Create college account',institutions:'Institution listings',marketing:'Marketing campaigns',publicleads:'College callback requests',enquirySummary:'Student enquiries',auditlogs:'Audit logs',analytics:'Advanced analytics',crm:'Enquiry CRM',team:'Team & permissions',health:'Security & health',assistant:'Admin assistant',reports:'Reports & exports',siteAds:'Website ad placements',mediaLibrary:'Media library',scholarships:'Scholarship management',learningLibrary:'Digital Learning Library',hiring:'Jobs & hiring moderation'};document.title='VIDYAMAP Admin · '+titles[active];if(active==='scholarships')loadScholarshipManager();if(active==='learningLibrary')loadLearningAdmin();if(active==='hiring')loadHiringModeration();}
+function applyPageView(){const allowed=['competitiveExams','overview','registrations','createCollege','institutions','marketing','publicleads','enquirySummary','auditlogs','analytics','crm','team','health','assistant','reports','siteAds','mediaLibrary','scholarships','learningLibrary','hiring'];const params=new URLSearchParams(window.location.search);const requested=params.get('page')||'overview';let active=requested==='campaigns'?'overview':(allowed.includes(requested)?requested:'overview');if(currentPermissions&&currentPermissions[active]!==true)active='overview';document.querySelectorAll('.admin-page-view').forEach(section=>section.classList.toggle('page-hidden',section.id!==(active==='overview'?'overviewContent':active)));document.querySelectorAll('.admin-sidebar [data-page]').forEach(link=>{const permitted=!currentPermissions||currentPermissions[link.dataset.page]===true;link.classList.toggle('hidden',!permitted);link.classList.toggle('active',link.dataset.page===active);});[['enquiryNavGroup',['enquirySummary','publicleads','crm']],['institutionsNavGroup',['registrations','createCollege','institutions']],['insightsNavGroup',['analytics','reports']],['adminToolsNavGroup',['auditlogs','team','health','assistant','siteAds','mediaLibrary','scholarships','learningLibrary','hiring']]].forEach(([groupId,pages])=>{const group=document.getElementById(groupId);if(!group)return;const groupActive=pages.includes(active);group.open=groupActive;const summary=group.querySelector('.nav-group-toggle');if(summary)summary.classList.toggle('active',groupActive);const hasVisibleChild=Array.from(group.querySelectorAll('.nav-subitem')).some(link=>!link.classList.contains('hidden'));group.classList.toggle('hidden',!hasVisibleChild);});const titles={overview:'Overview',registrations:'College registrations',createCollege:'Create college account',institutions:'Institution listings',marketing:'Marketing campaigns',publicleads:'College callback requests',enquirySummary:'Student enquiries',auditlogs:'Audit logs',analytics:'Advanced analytics',crm:'Enquiry CRM',team:'Team & permissions',health:'Security & health',assistant:'Admin assistant',reports:'Reports & exports',siteAds:'Website ad placements',mediaLibrary:'Media library',scholarships:'Scholarship management',learningLibrary:'Digital Learning Library',hiring:'Jobs & hiring moderation'};document.title='VIDYAMAP Admin · '+titles[active];if(active==='scholarships')loadScholarshipManager();if(active==='learningLibrary')loadLearningAdmin();if(active==='hiring')loadHiringModeration();}
 
 document.addEventListener('click',event=>{
   const link=event.target.closest('a[href]');
@@ -1903,6 +1910,36 @@ client.auth.onAuthStateChange((event,session)=>{
  }
 });
 restoreAdminSession();
+})();
+</script>
+<script id="vm-competitive-exams-admin">
+(function(){
+ const url='https://taxlvccrinehasexgvhv.supabase.co',key='sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA';
+ const db=window.supabase?.createClient(url,key);if(!db)return;
+ const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ async function load(){
+  const [src,disc,ex]=await Promise.all([
+   db.from('exam_source_registry').select('id',{count:'exact',head:true}),
+   db.from('exam_source_discoveries').select('id,title,discovered_url,content_kind,detected_at,review_status,source_id,exam_source_registry(exam_id,source_name)').order('detected_at',{ascending:false}).limit(100),
+   db.from('exam_catalog').select('exam_name,category,conducting_body,is_active').order('display_order')
+  ]);
+  $('examSourceCount').textContent=src.count??'—';const rows=disc.data||[];$('examDiscoveryCount').textContent=rows.length;$('examPendingCount').textContent=rows.filter(x=>x.review_status==='pending').length;
+  $('examDiscoveryList').innerHTML=rows.length?'<table class="data-table"><thead><tr><th>Document / source</th><th>Detected</th><th>Status</th><th>Action</th></tr></thead><tbody>'+rows.map(x=>'<tr><td><strong>'+esc(x.title)+'</strong><br><small>'+esc(x.exam_source_registry?.source_name||'Official source')+'</small><br><a href="'+esc(x.discovered_url)+'" target="_blank" rel="noopener">Open source ↗</a></td><td>'+new Date(x.detected_at).toLocaleString()+'</td><td>'+esc(x.review_status)+'</td><td>'+(x.review_status==='pending'?'<button class="btn small" data-review="approve" data-id="'+x.id+'">Approve for paper list</button> <button class="btn secondary small" data-review="ignore" data-id="'+x.id+'">Ignore</button>':'—')+'</td></tr>').join('')+'</tbody></table>':'<div class="empty-state">No new official documents discovered yet. The scheduled source check runs daily.</div>';
+  $('examCatalogueList').innerHTML=(ex.data||[]).length?'<table class="data-table"><thead><tr><th>Examination</th><th>Category</th><th>Conducting body</th><th>Status</th></tr></thead><tbody>'+ex.data.map(x=>'<tr><td>'+esc(x.exam_name)+'</td><td>'+esc(x.category)+'</td><td>'+esc(x.conducting_body)+'</td><td>'+ (x.is_active?'Active':'Inactive')+'</td></tr>').join('')+'</tbody></table>':'No exams found.';
+ }
+ $('refreshExamDiscoveries')?.addEventListener('click',load);
+ $('examDiscoveryList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-review]');if(!b)return;const id=b.dataset.id;const {data:row,error}=await db.from('exam_source_discoveries').select('id,title,discovered_url,source_id').eq('id',id).single();if(error||!row)return;
+  if(b.dataset.review==='approve'){
+   const {data:src}=await db.from('exam_source_registry').select('exam_id,source_name').eq('id',row.source_id).single();
+   if(!src?.exam_id){alert('No exam is mapped to this source.');return;}
+   const {error:insertError}=await db.from('exam_papers').insert({exam_id:src.exam_id,title:row.title,source_url:row.discovered_url,source_name:src.source_name,paper_type:/syllabus/i.test(row.title)?'syllabus':/answer.?key/i.test(row.title)?'answer_key':'previous',verification_status:'review',is_published:false});
+   if(insertError){alert('Could not create review item: '+insertError.message);return;}
+   const {error:updateError}=await db.from('exam_source_discoveries').update({review_status:'approved'}).eq('id',id);if(updateError){alert(updateError.message);return;}
+   alert('Added to exam paper review queue. Verify it and publish from exam paper management.');
+  }else{const {error}=await db.from('exam_source_discoveries').update({review_status:'ignored'}).eq('id',id);if(error)alert(error.message);}
+  load();
+ });
+ if(location.search.includes('page=competitiveExams'))load();
 })();
 </script>
 </body>
