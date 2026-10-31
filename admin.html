@@ -1925,11 +1925,20 @@ restoreAdminSession();
    db.from('exam_catalog').select('exam_name,category,conducting_body,is_active').order('display_order')
   ]);
   $('examSourceCount').textContent=src.count??'—';const rows=disc.data||[];$('examDiscoveryCount').textContent=rows.length;$('examPendingCount').textContent=rows.filter(x=>x.review_status==='pending').length;
-  $('examDiscoveryList').innerHTML=rows.length?'<table class="data-table"><thead><tr><th>Document / source</th><th>Detected</th><th>Status</th><th>Action</th></tr></thead><tbody>'+rows.map(x=>'<tr><td><strong>'+esc(x.title)+'</strong><br><small>'+esc(x.exam_source_registry?.source_name||'Official source')+'</small><br><a href="'+esc(x.discovered_url)+'" target="_blank" rel="noopener">Open source ↗</a></td><td>'+new Date(x.detected_at).toLocaleString()+'</td><td>'+esc(x.review_status)+'</td><td>'+(x.review_status==='pending'?'<button class="btn small" data-review="approve" data-id="'+x.id+'">Approve for paper list</button> <button class="btn secondary small" data-review="ignore" data-id="'+x.id+'">Ignore</button>':'—')+'</td></tr>').join('')+'</tbody></table>':'<div class="empty-state">No new official documents discovered yet. The scheduled source check runs daily.</div>';
+  $('examDiscoveryList').innerHTML=rows.length?'<table class="data-table"><thead><tr><th>Document / source</th><th>Detected</th><th>Status</th><th>Action</th></tr></thead><tbody>'+rows.map(x=>'<tr><td><strong>'+esc(x.title)+'</strong><br><small>'+esc(x.exam_source_registry?.source_name||'Official source')+'</small><br><a href="'+esc(x.discovered_url)+'" target="_blank" rel="noopener">Open source ↗</a></td><td>'+new Date(x.detected_at).toLocaleString()+'</td><td>'+esc(x.review_status)+'</td><td>'+(x.review_status==='pending'?'<button class="btn small" data-review="approve" data-id="'+x.id+'">Approve for paper list</button> '+(x.content_kind==='pdf'?'<button class="btn secondary small" data-review="download" data-id="'+x.id+'">I confirm reuse permission — download PDF</button>':'')+' <button class="btn secondary small" data-review="ignore" data-id="'+x.id+'">Ignore</button>':'—')+'</td></tr>').join('')+'</tbody></table>':'<div class="empty-state">No new official documents discovered yet. Official source discovery runs automatically every 2 minutes.</div>';
   $('examCatalogueList').innerHTML=(ex.data||[]).length?'<table class="data-table"><thead><tr><th>Examination</th><th>Category</th><th>Conducting body</th><th>Status</th></tr></thead><tbody>'+ex.data.map(x=>'<tr><td>'+esc(x.exam_name)+'</td><td>'+esc(x.category)+'</td><td>'+esc(x.conducting_body)+'</td><td>'+ (x.is_active?'Active':'Inactive')+'</td></tr>').join('')+'</tbody></table>':'No exams found.';
  }
  $('refreshExamDiscoveries')?.addEventListener('click',load);
  $('examDiscoveryList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-review]');if(!b)return;const id=b.dataset.id;const {data:row,error}=await db.from('exam_source_discoveries').select('id,title,discovered_url,source_id').eq('id',id).single();if(error||!row)return;
+  if(b.dataset.review==='download'){
+   if(!confirm('Confirm that VIDYAMAP has permission or an applicable open licence to download and host this PDF.'))return;
+   const {error:permissionError}=await db.from('exam_source_discoveries').update({reuse_permission:'approved',admin_notes:'Reuse permission confirmed by administrator.'}).eq('id',id);
+   if(permissionError){alert(permissionError.message);return;}
+   b.disabled=true;b.textContent='Downloading…';
+   const {data:downloadResult,error:downloadError}=await db.functions.invoke('exam-source-download',{body:{discovery_id:id}});
+   if(downloadError||downloadResult?.error){alert('Download failed: '+(downloadResult?.error||downloadError?.message||'Unknown error'));b.disabled=false;b.textContent='Retry PDF download';return;}
+   alert(downloadResult.message||'PDF added to review queue.');load();return;
+  }
   if(b.dataset.review==='approve'){
    const {data:src}=await db.from('exam_source_registry').select('exam_id,source_name').eq('id',row.source_id).single();
    if(!src?.exam_id){alert('No exam is mapped to this source.');return;}
