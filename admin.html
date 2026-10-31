@@ -902,6 +902,13 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
  <div class="learning-admin-wrap">
   <div id="learningAdminNotice" class="notice hidden" role="status" aria-live="polite"></div>
   <div class="learning-admin-stats"><article><strong id="learningProgramCount">40</strong><span>Classes &amp; courses</span></article><article><strong id="learningSubjectCount">0</strong><span>Subjects</span></article><article><strong id="learningChapterCount">0</strong><span>Chapters</span></article><article><strong id="learningContentCount">0</strong><span>Notes &amp; questions</span></article></div>
+  <div class="card" style="margin:18px 0;padding:18px;border:1px solid #d9d2f4;border-radius:14px;background:#fbfaff">
+   <div class="card-head"><h3>✦ AI Automatic Book Builder</h3><p>Select a class and paste the direct PDF download link from the AP Government textbook portal. Gemini will identify the subject and chapters, write original notes, generate practice questions and answers, and save everything here for review.</p></div>
+   <div class="learning-form-row"><label>Class / course<select id="learningAiProgram"><option value="">Loading classes…</option></select></label><label>Language<select id="learningAiLanguage"><option>English</option><option>Telugu</option><option>Urdu</option></select></label></div>
+   <label style="display:block;margin-top:12px">Optional subject hint<input id="learningAiSubject" maxlength="120" placeholder="Leave blank to let AI identify the subject"></label>
+   <label style="display:block;margin-top:12px">Official textbook PDF URL<input id="learningAiPdfUrl" type="url" placeholder="Paste direct PDF link from samagrashiksha.ap.gov.in or cse.ap.gov.in"></label>
+   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px"><button class="btn" id="runLearningAiBookBuilder" type="button">✦ Generate complete book with AI</button><span id="learningAiBookStatus" style="font-size:12px;color:#69738d">AI will save chapters, notes and questions as unpublished review items.</span></div>
+  </div>
   <div class="card" style="margin:18px 0"><div class="card-head"><h3>Automatic source discovery</h3><p>AI-assisted discovery checks official education portals and listed YouTube channels every 3 minutes. New links stay in review until mapped to a chapter and verified.</p></div><div class="learning-admin-stats"><article><strong id="learningSourceCount">—</strong><span>Sources monitored</span></article><article><strong id="learningDiscoveryCount">—</strong><span>Discovered links</span></article><article><strong id="learningDiscoveryPending">—</strong><span>Pending review</span></article></div><div style="display:flex;justify-content:flex-end;margin:12px 0"><button class="btn secondary" id="runLearningAiScan" type="button">✦ Run AI scan now</button><button class="btn secondary" id="refreshLearningDiscoveries" type="button">↻ Refresh discoveries</button></div><div id="learningDiscoveryList" class="table-wrap"><div class="loading">Loading discovered learning links…</div></div></div>
   <div class="learning-admin-grid">
    <form id="learningSubjectForm" class="learning-admin-card"><h3>01 · Add Subject</h3><label>Class / course<select id="learningSubjectProgram" required></select></label><label>Subject name<input id="learningSubjectName" required maxlength="120" placeholder="e.g. Mathematics"></label><label>Language<select id="learningSubjectLanguage"><option>English</option><option>Telugu</option><option>Urdu</option></select></label><label>Description<input id="learningSubjectDescription" maxlength="240" placeholder="Optional short description"></label><button class="btn" type="submit">Save subject</button></form>
@@ -1994,6 +2001,21 @@ restoreAdminSession();
   if(insertError){alert('Could not add to review: '+insertError.message);return;}
   const {error:updateError}=await db.from('learning_source_discoveries').update({review_status:'approved'}).eq('id',id);if(updateError){alert(updateError.message);return;}
   alert('Added to the chapter as unpublished review content. Verify the resource before publishing.');load();
+ });
+ const aiProgram=$('learningAiProgram');
+ if(aiProgram){db.from('learning_programs').select('id,board,class_label,stream,course_name').eq('is_active',true).order('display_order').then(({data,error})=>{if(error){aiProgram.innerHTML='<option value="">Could not load classes</option>';return;}aiProgram.innerHTML='<option value="">Choose class / course</option>'+(data||[]).map(p=>'<option value="'+p.id+'">'+esc([p.board,p.class_label,p.stream,p.course_name].filter(Boolean).join(' · '))+'</option>').join('');});}
+ $('runLearningAiBookBuilder')?.addEventListener('click',async()=>{
+  const btn=$('runLearningAiBookBuilder'),status=$('learningAiBookStatus'),programId=$('learningAiProgram')?.value,pdfUrl=$('learningAiPdfUrl')?.value.trim();
+  if(!programId||!pdfUrl){alert('Choose class/course and paste the direct official PDF link.');return;}
+  btn.disabled=true;btn.textContent='AI is reading the book…';status.textContent='Downloading PDF and generating chapter-wise content. Please keep this page open.';
+  try{
+   const {data,error}=await db.functions.invoke('learning-ai-book-builder',{body:{program_id:programId,pdf_url:pdfUrl,language:$('learningAiLanguage')?.value||'English',subject_name:$('learningAiSubject')?.value.trim()||''}});
+   if(error||data?.error)throw new Error(data?.error||error?.message||'AI book generation failed');
+   status.textContent='Generated '+data.chapters_created+' chapters, '+data.notes_created+' notes and '+data.questions_created+' questions. '+data.videos_created+' videos saved.';
+   alert('AI book generation complete!\nChapters: '+data.chapters_created+'\nStudy notes: '+data.notes_created+'\nQuestions: '+data.questions_created+'\nYouTube videos: '+data.videos_created+'\n\nEverything is saved as REVIEW / UNPUBLISHED. Verify before publishing.');
+   await load();if(typeof loadLearningAdmin==='function')await loadLearningAdmin();
+  }catch(err){status.textContent='Generation failed: '+(err.message||err);alert('AI generation failed: '+(err.message||err));}
+  finally{btn.disabled=false;btn.textContent='✦ Generate complete book with AI';}
  });
  if(location.search.includes('page=learningLibrary'))load();
 })();
