@@ -2035,7 +2035,7 @@ restoreAdminSession();
   btn.disabled=true;btn.textContent='AI is reading the book…';status.textContent='Downloading PDF and generating chapter-wise content. Please keep this page open.';
   try{
    const {data,error}=await db.functions.invoke('learning-ai-book-builder',{body:{program_id:programId,pdf_url:pdfUrl,language:$('learningAiLanguage')?.value||'English',subject_name:$('learningAiSubject')?.value.trim()||''}});
-   if(error||data?.error)throw new Error(data?.error||error?.message||'AI book generation failed');
+   if(error||data?.error){let detail=data?.error||error?.message||'AI book generation failed';try{if(error?.context){const body=await error.context.clone().json();detail=body?.details?detail+' — '+body.details:(body?.error||detail);}}catch{}throw new Error(detail);}
    status.textContent='Generated '+data.chapters_created+' chapters, '+data.notes_created+' notes and '+data.questions_created+' questions. '+data.videos_created+' videos saved.';
    alert('AI book generation complete!\nChapters: '+data.chapters_created+'\nStudy notes: '+data.notes_created+'\nQuestions: '+data.questions_created+'\nYouTube videos: '+data.videos_created+'\n\nEverything is saved as REVIEW / UNPUBLISHED. Verify before publishing.');
    await load();if(typeof loadLearningAdmin==='function')await loadLearningAdmin();
