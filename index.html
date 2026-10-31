@@ -4476,45 +4476,7 @@ html body .vm-sponsored-bar .vm-sponsored-separator{margin:0 22px!important}
 @media(prefers-reduced-motion:reduce){html body .vm-sponsored-bar .vm-sponsored-marquee{animation:none!important;transform:none!important}}
 </style>
 
-<style id="vm-header-managed-ads-style">
-#vmHeaderManagedAds{display:none;width:100%;padding:12px 0;background:linear-gradient(100deg,#fff9ed,#f3edff 55%,#eef6ff);border-bottom:1px solid #e8e3f3}
-#vmHeaderManagedAds.has-ads{display:block}
-#vmHeaderManagedAds .vm-header-managed-inner{width:min(1380px,calc(100% - 32px));margin:auto;display:grid;grid-template-columns:105px repeat(2,minmax(0,1fr));gap:12px;align-items:stretch}
-#vmHeaderManagedAds .vm-header-managed-label{display:flex;align-items:center;justify-content:center;border-radius:9px;background:#54218f;color:#fff;font-size:11px;font-weight:900;letter-spacing:.5px}
-#vmHeaderManagedAds .vm-header-managed-card{display:flex;align-items:center;gap:12px;min-width:0;padding:8px;border:1px solid #e5dfef;border-radius:12px;background:#fff;color:#17345f;text-decoration:none}
-#vmHeaderManagedAds img{width:90px;height:58px;object-fit:cover;border-radius:8px;flex:0 0 auto}
-#vmHeaderManagedAds strong{font-size:13px;line-height:1.3}
-@media(max-width:650px){#vmHeaderManagedAds .vm-header-managed-inner{grid-template-columns:1fr 1fr;gap:7px}#vmHeaderManagedAds .vm-header-managed-label{grid-column:1/-1;min-height:27px}#vmHeaderManagedAds .vm-header-managed-card{gap:7px;padding:6px}#vmHeaderManagedAds img{width:56px;height:44px}#vmHeaderManagedAds strong{font-size:11px}}
-</style>
-<script id="vm-header-managed-ads-loader">
-(function(){
- async function init(){
-  const header=document.querySelector('header.vm-shared-header');
-  if(!header||!window.supabase){setTimeout(init,400);return;}
-  let slot=document.getElementById('vmHeaderManagedAds');
-  if(!slot){slot=document.createElement('section');slot.id='vmHeaderManagedAds';slot.setAttribute('aria-label','Sponsored advertisements');const masthead=document.getElementById('vmUniversalMasthead')||header; masthead.insertAdjacentElement('afterend',slot);}
-  if(slot.dataset.loaded==='1')return;
-  slot.dataset.loaded='1';
-  try{
-   const client=window.supabase.createClient('https://taxlvccrinehasexgvhv.supabase.co','sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA');
-   const {data,error}=await client.from('site_ad_placements').select('title,media_url,media_type,click_url,sort_order').eq('placement_key','after_header').eq('is_active',true).order('sort_order',{ascending:true});
-   if(error)throw error;
-   const ads=(data||[]).filter(a=>a.media_type==='image'&&a.media_url&&/^https:\/\//i.test(a.media_url)).slice(0,2);
-   if(!ads.length)return;
-   const inner=document.createElement('div');inner.className='vm-header-managed-inner';
-   const label=document.createElement('div');label.className='vm-header-managed-label';label.textContent='SPONSORED';inner.append(label);
-   ads.forEach(ad=>{
-    const card=document.createElement(ad.click_url&&/^https?:\/\//i.test(ad.click_url)?'a':'div');card.className='vm-header-managed-card';
-    if(card.tagName==='A'){card.href=ad.click_url;card.target='_blank';card.rel='noopener noreferrer';}
-    const img=document.createElement('img');img.src=ad.media_url;img.alt=ad.title||'Sponsored ad';img.loading='lazy';
-    const title=document.createElement('strong');title.textContent=ad.title||'Sponsored promotion';card.append(img,title);inner.append(card);
-   });
-   slot.replaceChildren(inner);slot.classList.add('has-ads');
-  }catch(e){console.error('Header sponsored ads failed:',e);slot.dataset.loaded='0';}
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-})();
-</script>
+
 
 </body>
 </html>
