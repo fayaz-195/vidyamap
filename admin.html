@@ -1101,6 +1101,7 @@ if(!window.supabase?.createClient){
 const SUPABASE_URL='https://taxlvccrinehasexgvhv.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA';
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+window.vidyamapAdminClient=client;
 const $=id=>document.getElementById(id);
 const loginView=$('loginView'),dashboardView=$('dashboardView'),loginNotice=$('loginNotice'),dashboardNotice=$('dashboardNotice');
 let currentUser=null;let recoveryMode=false;let loginInProgress=false;let currentPermissions=null;let currentProfile=null;
