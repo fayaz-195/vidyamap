@@ -902,6 +902,7 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
  <div class="learning-admin-wrap">
   <div id="learningAdminNotice" class="notice hidden" role="status" aria-live="polite"></div>
   <div class="learning-admin-stats"><article><strong id="learningProgramCount">40</strong><span>Classes &amp; courses</span></article><article><strong id="learningSubjectCount">0</strong><span>Subjects</span></article><article><strong id="learningChapterCount">0</strong><span>Chapters</span></article><article><strong id="learningContentCount">0</strong><span>Notes &amp; questions</span></article></div>
+  <div class="card" style="margin:18px 0"><div class="card-head"><h3>Automatic source discovery</h3><p>Daily checks scan official education portals and listed YouTube channels. New links stay in review until mapped to a chapter and verified.</p></div><div class="learning-admin-stats"><article><strong id="learningSourceCount">—</strong><span>Sources monitored</span></article><article><strong id="learningDiscoveryCount">—</strong><span>Discovered links</span></article><article><strong id="learningDiscoveryPending">—</strong><span>Pending review</span></article></div><div style="display:flex;justify-content:flex-end;margin:12px 0"><button class="btn secondary" id="refreshLearningDiscoveries" type="button">↻ Refresh discoveries</button></div><div id="learningDiscoveryList" class="table-wrap"><div class="loading">Loading discovered learning links…</div></div></div>
   <div class="learning-admin-grid">
    <form id="learningSubjectForm" class="learning-admin-card"><h3>01 · Add Subject</h3><label>Class / course<select id="learningSubjectProgram" required></select></label><label>Subject name<input id="learningSubjectName" required maxlength="120" placeholder="e.g. Mathematics"></label><label>Language<select id="learningSubjectLanguage"><option>English</option><option>Telugu</option><option>Urdu</option></select></label><label>Description<input id="learningSubjectDescription" maxlength="240" placeholder="Optional short description"></label><button class="btn" type="submit">Save subject</button></form>
    <form id="learningChapterForm" class="learning-admin-card"><h3>02 · Add Chapter</h3><label>Subject<select id="learningChapterSubject" required></select></label><label>Chapter number<input id="learningChapterNumber" maxlength="20" placeholder="e.g. 01"></label><label>Chapter title<input id="learningChapterTitle" required maxlength="180" placeholder="Chapter title"></label><label>Short summary<textarea id="learningChapterSummary" rows="2" placeholder="What this chapter covers"></textarea></label><button class="btn" type="submit">Save chapter</button></form>
@@ -1942,5 +1943,34 @@ restoreAdminSession();
  if(location.search.includes('page=competitiveExams'))load();
 })();
 </script>
-</body>
+<script id="vm-learning-source-review">
+(function(){
+ const db=window.supabase?.createClient('https://taxlvccrinehasexgvhv.supabase.co','sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA');if(!db)return;
+ const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ async function load(){
+  const [src,disc,chap]=await Promise.all([
+   db.from('learning_source_registry').select('id',{count:'exact',head:true}),
+   db.from('learning_source_discoveries').select('id,title,discovered_url,content_kind,detected_at,review_status,source_id,learning_source_registry(source_name)').order('detected_at',{ascending:false}).limit(150),
+   db.from('learning_chapters').select('id,chapter_title,learning_subjects(subject_name,learning_programs(class_label,course_name))').eq('is_active',true).order('display_order')
+  ]);
+  if(src.error||disc.error){$('learningDiscoveryList').innerHTML='<div class="empty-state">Source review is unavailable for this account. Check admin permissions.</div>';return;}
+  const rows=disc.data||[];$('learningSourceCount').textContent=src.count??'—';$('learningDiscoveryCount').textContent=rows.length;$('learningDiscoveryPending').textContent=rows.filter(x=>x.review_status==='pending').length;
+  const opts=(chap.data||[]).map(c=>'<option value="'+c.id+'">'+esc(c.learning_subjects?.learning_programs?.class_label||c.learning_subjects?.learning_programs?.course_name||'Class')+' · '+esc(c.learning_subjects?.subject_name||'Subject')+' · '+esc(c.chapter_title)+'</option>').join('');
+  $('learningDiscoveryList').innerHTML=rows.length?'<table class="data-table"><thead><tr><th>Discovered resource</th><th>Source</th><th>Type / date</th><th>Map to chapter</th><th>Action</th></tr></thead><tbody>'+rows.map(x=>'<tr><td><strong>'+esc(x.title)+'</strong><br><a href="'+esc(x.discovered_url)+'" target="_blank" rel="noopener">Open source ↗</a></td><td>'+esc(x.learning_source_registry?.source_name||'Education source')+'</td><td>'+esc(x.content_kind)+'<br><small>'+new Date(x.detected_at).toLocaleString()+'</small><br><small>'+esc(x.review_status)+'</small></td><td>'+(x.review_status==='pending'?'<select aria-label="Select chapter" data-learning-chapter="'+x.id+'" style="max-width:230px"><option value="">Choose chapter</option>'+opts+'</select>':'—')+'</td><td>'+(x.review_status==='pending'?'<button class="btn small" data-learning-add="'+x.id+'">Add to review</button> <button class="btn secondary small" data-learning-ignore="'+x.id+'">Ignore</button>':'—')+'</td></tr>').join('')+'</tbody></table>':'<div class="empty-state">No new links discovered yet. Daily monitoring is scheduled.</div>';
+ }
+ $('refreshLearningDiscoveries')?.addEventListener('click',load);
+ $('learningDiscoveryList')?.addEventListener('click',async e=>{
+  const ignore=e.target.closest('[data-learning-ignore]');if(ignore){const {error}=await db.from('learning_source_discoveries').update({review_status:'ignored'}).eq('id',ignore.dataset.learningIgnore);if(error)alert(error.message);else load();return;}
+  const add=e.target.closest('[data-learning-add]');if(!add)return;
+  const id=add.dataset.learningAdd,select=$('learningDiscoveryList').querySelector('[data-learning-chapter="'+id+'"]'),chapterId=select?.value;if(!chapterId){alert('Select the class, subject and chapter first.');return;}
+  const {data:row,error}=await db.from('learning_source_discoveries').select('id,title,discovered_url,content_kind,source_id,learning_source_registry(source_name)').eq('id',id).single();if(error||!row){alert(error?.message||'Discovery not found.');return;}
+  const type=row.content_kind==='video'?'video':row.content_kind==='question_paper'?'previous_paper':'reference';
+  const {error:insertError}=await db.from('learning_resources').insert({chapter_id:chapterId,resource_type:type,title:row.title,external_url:row.discovered_url,source_name:row.learning_source_registry?.source_name||'Discovered education source',source_url:row.discovered_url,verification_status:'review',is_published:false});
+  if(insertError){alert('Could not add to review: '+insertError.message);return;}
+  const {error:updateError}=await db.from('learning_source_discoveries').update({review_status:'approved'}).eq('id',id);if(updateError){alert(updateError.message);return;}
+  alert('Added to the chapter as unpublished review content. Verify the resource before publishing.');load();
+ });
+ if(location.search.includes('page=learningLibrary'))load();
+})();
+</script></body>
 </html>
