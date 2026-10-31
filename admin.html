@@ -1101,7 +1101,7 @@ if(!window.supabase?.createClient){
 const SUPABASE_URL='https://taxlvccrinehasexgvhv.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA';
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-window.vidyamapAdminClient=client;
+window.vidyamapAdminClient=client;window.dispatchEvent(new Event('vidyamap-admin-client-ready'));
 const $=id=>document.getElementById(id);
 const loginView=$('loginView'),dashboardView=$('dashboardView'),loginNotice=$('loginNotice'),dashboardNotice=$('dashboardNotice');
 let currentUser=null;let recoveryMode=false;let loginInProgress=false;let currentPermissions=null;let currentProfile=null;
@@ -1978,8 +1978,10 @@ restoreAdminSession();
 })();
 </script>
 <script id="vm-learning-source-review">
-(function(){
- const db=window.supabase?.createClient('https://taxlvccrinehasexgvhv.supabase.co','sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA');if(!db)return;
+(async function(){
+ await new Promise(resolve=>{if(window.vidyamapAdminClient)return resolve();window.addEventListener('vidyamap-admin-client-ready',resolve,{once:true});window.setTimeout(resolve,10000);});
+
+ const db=window.vidyamapAdminClient||(window.supabase?.createClient('https://taxlvccrinehasexgvhv.supabase.co','sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA'));if(!db){const status=document.getElementById('learningAiBookStatus');if(status)status.textContent='Admin database connection is not ready. Refresh this page.';return;}
  const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  async function load(){
   const [src,disc,chap]=await Promise.all([
@@ -2023,8 +2025,7 @@ restoreAdminSession();
  const aiProgram=$('learningAiProgram');
  if(aiProgram){
   aiProgram.innerHTML='<option value="">Loading classes…</option>';
-  const adminDb=window.vidyamapAdminClient||db;
-  adminDb.from('learning_programs').select('id,board,class_label,stream,course_name').eq('is_active',true).order('display_order')
+  db.from('learning_programs').select('id,board,class_label,stream,course_name').eq('is_active',true).order('display_order')
    .then(({data,error})=>{if(error)throw error;if(!data?.length){aiProgram.innerHTML='<option value="">No active classes found</option>';return;}aiProgram.innerHTML='<option value="">Choose class / course</option>'+(data||[]).map(p=>'<option value="'+p.id+'">'+esc([p.board,p.class_label,p.stream,p.course_name].filter(Boolean).join(' · '))+'</option>').join('');})
    .catch(error=>{console.error('AI book builder class list failed:',error);aiProgram.innerHTML='<option value="">Class list unavailable — refresh</option>';const status=$('learningAiBookStatus');if(status)status.textContent='Could not load classes: '+(error.message||'database access error');});
  }
