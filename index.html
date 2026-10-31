@@ -4492,7 +4492,7 @@ html body .vm-sponsored-bar .vm-sponsored-separator{margin:0 22px!important}
   const header=document.querySelector('header.vm-shared-header');
   if(!header||!window.supabase){setTimeout(init,400);return;}
   let slot=document.getElementById('vmHeaderManagedAds');
-  if(!slot){slot=document.createElement('section');slot.id='vmHeaderManagedAds';slot.setAttribute('aria-label','Sponsored advertisements');header.insertAdjacentElement('afterend',slot);}
+  if(!slot){slot=document.createElement('section');slot.id='vmHeaderManagedAds';slot.setAttribute('aria-label','Sponsored advertisements');const masthead=document.getElementById('vmUniversalMasthead')||header; masthead.insertAdjacentElement('afterend',slot);}
   if(slot.dataset.loaded==='1')return;
   slot.dataset.loaded='1';
   try{
