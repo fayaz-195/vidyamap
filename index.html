@@ -3267,7 +3267,7 @@ main{overflow:visible!important}
 <!-- VidyaMap Ask Query student guidance chatbot -->
 <div id="vmAskWidget" class="vm-ask-widget">
   <button id="vmAskLauncher" class="vm-ask-launcher" type="button" aria-label="Open Ask Query student guidance chatbot" aria-expanded="false">
-    <span class="vm-ask-launcher-icon">✦</span><span><strong>Ask Query</strong><small>Study • Courses • Careers</small></span><span class="vm-ask-online"></span>
+    <span class="vm-ask-launcher-icon" aria-hidden="true"><svg viewBox="0 0 48 48" width="30" height="30" role="presentation"><circle cx="24" cy="24" r="23" fill="#ffffff"/><path d="M11 24v-3a13 13 0 0 1 26 0v7" fill="none" stroke="#5425a8" stroke-width="3.2" stroke-linecap="round"/><rect x="8" y="21" width="7" height="12" rx="3.5" fill="#5425a8"/><rect x="33" y="21" width="7" height="12" rx="3.5" fill="#5425a8"/><path d="M35 32c-1 5-5 7-11 7" fill="none" stroke="#5425a8" stroke-width="2.8" stroke-linecap="round"/><circle cx="22" cy="39" r="2.2" fill="#e14b8b"/><path d="M18 18c2-3 8-4 12 0v8c0 5-3 8-6 8s-6-3-6-8z" fill="#f3bd91"/><path d="M17 20c0-6 4-9 8-9s8 3 8 9c-3-1-5-3-6-5-2 3-6 4-10 5" fill="#172f58"/></svg></span><span><strong>Ask Query</strong><small>Talk to our student guide</small></span><span class="vm-ask-online"></span>
   </button>
   <section id="vmAskPanel" class="vm-ask-panel" aria-label="Ask Query chatbot" hidden>
     <header class="vm-ask-head"><div class="vm-ask-avatar">🎓</div><div class="vm-ask-head-copy"><strong>Ask Query</strong><small id="vmAskSubTitle">Choose your language · భాషను ఎంచుకోండి</small></div><button id="vmAskClose" type="button" aria-label="Close chatbot">×</button></header><div id="vmAskLanguage" class="vm-ask-language"><strong id="vmAskLangPrompt">Choose your language</strong><div class="vm-ask-lang-row"><button type="button" data-lang="English">English</button><button type="button" data-lang="తెలుగు">తెలుగు</button><button type="button" data-lang="हिन्दी">हिन्दी</button><button type="button" data-lang="اردو">اردو</button><button type="button" data-lang="தமிழ்">தமிழ்</button><button type="button" data-lang="ಕನ್ನಡ">ಕನ್ನಡ</button></div><p id="vmAskLangHint">You can change language anytime by typing change language.</p></div>
@@ -3302,25 +3302,28 @@ main{overflow:visible!important}
 @media(max-width:560px){.vm-ask-widget{right:12px;bottom:12px}.vm-ask-launcher{min-width:0;padding:10px 12px;border-radius:16px}.vm-ask-launcher-icon{width:36px;height:36px}.vm-ask-launcher small{font-size:10px}.vm-ask-panel{position:fixed;left:8px;right:8px;bottom:8px;width:auto;height:min(78dvh,700px);min-height:390px;border-radius:20px}.vm-ask-quick button{font-size:10px}}
 .vm-ask-typing{letter-spacing:4px;font-weight:700;animation:vmAskDots 1s infinite ease-in-out}@keyframes vmAskDots{0%,60%,100%{opacity:.35}30%{opacity:1}}
 
-/* Ask Query launcher final sizing override */
-#vmAskWidget.vm-ask-widget{right:12px!important;bottom:12px!important;width:auto!important;max-width:calc(100vw - 24px)!important}
-#vmAskLauncher.vm-ask-launcher{box-sizing:border-box!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;gap:8px!important;width:164px!important;min-width:164px!important;max-width:164px!important;height:52px!important;min-height:52px!important;max-height:52px!important;padding:6px 10px!important;overflow:hidden!important;border-radius:15px!important;white-space:nowrap!important}
-#vmAskLauncher .vm-ask-launcher-icon{box-sizing:border-box!important;display:grid!important;flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;font-size:18px!important}
+/* Ask Query: static, friendly headset-assistant button */
+#vmAskWidget.vm-ask-widget{right:14px!important;bottom:14px!important;width:auto!important;max-width:calc(100vw - 28px)!important}
+#vmAskLauncher.vm-ask-launcher{box-sizing:border-box!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;gap:9px!important;width:184px!important;min-width:184px!important;max-width:184px!important;height:58px!important;min-height:58px!important;max-height:58px!important;padding:7px 12px!important;overflow:hidden!important;border-radius:17px!important;white-space:nowrap!important;background:linear-gradient(115deg,#342071,#5632b5)!important;box-shadow:0 5px 14px #2b1c6030!important;transform:none!important;animation:none!important;filter:none!important}
+#vmAskLauncher.vm-ask-launcher:hover,#vmAskLauncher.vm-ask-launcher:active{transform:none!important;filter:none!important;box-shadow:0 5px 14px #2b1c6030!important}
+#vmAskLauncher .vm-ask-launcher-icon{box-sizing:border-box!important;display:grid!important;place-items:center!important;flex:0 0 38px!important;width:38px!important;min-width:38px!important;height:38px!important;min-height:38px!important;padding:3px!important;border-radius:50%!important;background:#fff!important;border:1px solid #ffffff!important;box-shadow:none!important;font-size:0!important}
+#vmAskLauncher .vm-ask-launcher-icon svg{display:block!important;width:32px!important;height:32px!important}
 #vmAskLauncher>span:nth-child(2){display:block!important;flex:1 1 auto!important;min-width:0!important;overflow:hidden!important;white-space:nowrap!important}
-#vmAskLauncher .vm-ask-launcher strong{display:block!important;font-size:13px!important;line-height:1.2!important;white-space:nowrap!important;color:#fff!important}
-#vmAskLauncher .vm-ask-launcher small{display:block!important;font-size:9px!important;line-height:1.2!important;margin-top:2px!important;white-space:nowrap!important;color:#fff!important;opacity:.9!important}
-#vmAskLauncher .vm-ask-online{display:block!important;flex:0 0 7px!important;width:7px!important;height:7px!important;margin-left:0!important}
+#vmAskLauncher .vm-ask-launcher strong{display:block!important;font-size:14px!important;line-height:1.2!important;white-space:nowrap!important;color:#fff!important}
+#vmAskLauncher .vm-ask-launcher small{display:block!important;font-size:9px!important;line-height:1.2!important;margin-top:3px!important;white-space:nowrap!important;color:#fff!important;opacity:.92!important}
+#vmAskLauncher .vm-ask-online{display:block!important;flex:0 0 7px!important;width:7px!important;height:7px!important;margin-left:0!important;background:#64e5a2!important;box-shadow:none!important;animation:none!important}
 @media(max-width:560px){
  #vmAskWidget.vm-ask-widget{right:10px!important;bottom:10px!important}
- #vmAskLauncher.vm-ask-launcher{width:142px!important;min-width:142px!important;max-width:142px!important;height:46px!important;min-height:46px!important;max-height:46px!important;gap:7px!important;padding:5px 8px!important;border-radius:13px!important}
- #vmAskLauncher .vm-ask-launcher-icon{flex-basis:30px!important;width:30px!important;min-width:30px!important;height:30px!important;min-height:30px!important;font-size:16px!important}
- #vmAskLauncher .vm-ask-launcher strong{font-size:12px!important}
+ #vmAskLauncher.vm-ask-launcher{width:160px!important;min-width:160px!important;max-width:160px!important;height:50px!important;min-height:50px!important;max-height:50px!important;gap:8px!important;padding:6px 9px!important;border-radius:15px!important}
+ #vmAskLauncher .vm-ask-launcher-icon{flex-basis:34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important}
+ #vmAskLauncher .vm-ask-launcher-icon svg{width:29px!important;height:29px!important}
+ #vmAskLauncher .vm-ask-launcher strong{font-size:13px!important}
  #vmAskLauncher .vm-ask-launcher small{display:none!important}
  #vmAskLauncher .vm-ask-online{flex-basis:6px!important;width:6px!important;height:6px!important}
- .vm-ask-panel{left:8px!important;right:8px!important;bottom:58px!important;width:auto!important;height:min(78dvh,680px)!important;min-height:350px!important}
+ .vm-ask-panel{left:8px!important;right:8px!important;bottom:60px!important;width:auto!important;height:min(78dvh,680px)!important;min-height:350px!important}
 }
 @media(max-width:360px){
- #vmAskLauncher.vm-ask-launcher{width:128px!important;min-width:128px!important;max-width:128px!important}
+ #vmAskLauncher.vm-ask-launcher{width:150px!important;min-width:150px!important;max-width:150px!important}
 }
 /* ===== Floating glass header refresh ===== */
 .vm-site-header{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(248,247,255,.88));border-bottom:1px solid rgba(209,215,239,.8);box-shadow:0 12px 32px rgba(24,39,85,.09);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);overflow:visible}
