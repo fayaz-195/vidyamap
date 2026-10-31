@@ -339,6 +339,10 @@ html body header.vm-shared-header .vm-shared-toggle{display:none!important}
  html body header.vm-shared-header nav#vmSharedLinks .vm-shared-menu a{display:block!important;min-height:42px!important;padding:12px!important;color:#17345f!important;background:#fff!important}
  html body header.vm-shared-header nav#vmSharedLinks>a{display:flex!important;width:100%!important;min-height:44px!important;align-items:center!important;padding:12px!important;color:#fff!important;background:transparent!important}
 }
+
+/* Hide the back-to-top control completely until it is active; prevent its outline showing behind Ask Query. */
+#vm-brand-floating-tools .vm-float-top:not(.visible){visibility:hidden!important;opacity:0!important;pointer-events:none!important;border-color:transparent!important;background:transparent!important;box-shadow:none!important}
+#vm-brand-floating-tools .vm-float-top.visible{visibility:visible!important}
 </style>
 <script id="vm-home-navigation-final-js">
 (function(){
