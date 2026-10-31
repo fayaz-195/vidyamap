@@ -891,7 +891,7 @@ body.vm-dark-mode .notification-item{border-color:#303a55!important}
   </div>
 </section>
 <section id="learningLibrary" class="panel section-panel admin-page-view section-full">
- <div class="section-head"><div><h2>Digital Learning Library</h2><p>Build free chapter-wise study material for Telangana and Andhra Pradesh students. Only verified and published content is visible publicly.</p></div><button class="btn secondary" id="refreshLearningLibrary" type="button">↻ Refresh</button></div>
+ <div class="section-head"><div><h2>Digital Learning Library</h2><p>Build free chapter-wise study material for Telangana and Andhra Pradesh students. Only verified and published content is visible publicly.</p></div><div class="section-actions"><button class="btn" id="publishAllLearning" type="button">✓ Publish All Verified</button><button class="btn secondary" id="refreshLearningLibrary" type="button">↻ Refresh</button></div></div>
  <div class="learning-admin-wrap">
   <div id="learningAdminNotice" class="notice hidden" role="status" aria-live="polite"></div>
   <div class="learning-admin-stats"><article><strong id="learningProgramCount">40</strong><span>Classes &amp; courses</span></article><article><strong id="learningSubjectCount">0</strong><span>Subjects</span></article><article><strong id="learningChapterCount">0</strong><span>Chapters</span></article><article><strong id="learningContentCount">0</strong><span>Notes &amp; questions</span></article></div>
@@ -1761,6 +1761,25 @@ $('learningResourceForm')?.addEventListener('submit',async e=>{e.preventDefault(
  const {error}=await client.from('learning_resources').insert(payload);if(error)throw error;$('learningResourceForm').reset();learningAdminNotice('Study material saved. '+(publish?'It is now visible in the public library.':'It remains in admin review until verified and published.'));await loadLearningAdmin();
  }catch(err){learningAdminNotice('Could not save study material: '+err.message,true);}});
 $('learningQuestionForm')?.addEventListener('submit',async e=>{e.preventDefault();try{const chapterId=$('learningQuestionChapter').value;if(!chapterId)throw new Error('Choose a chapter.');const status=$('learningQuestionStatus').value,publish=$('learningQuestionPublish').checked,answer=$('learningQuestionAnswer').value.trim();if(publish&&(status!=='verified'||!answer))throw new Error('To publish, mark the question verified and provide its answer.');const payload={chapter_id:chapterId,question_text:$('learningQuestionText').value.trim(),answer_text:answer||null,marks:$('learningQuestionMarks').value?Number($('learningQuestionMarks').value):null,difficulty:$('learningQuestionDifficulty').value,question_type:$('learningQuestionType').value,source_year:$('learningQuestionYear').value.trim()||null,verification_status:status,is_published:publish,created_by:currentUser.id,updated_by:currentUser.id};const {error}=await client.from('learning_questions').insert(payload);if(error)throw error;$('learningQuestionForm').reset();learningAdminNotice('Question saved. '+(publish?'It is now visible to students.':'It remains in admin review.'));await loadLearningAdmin();}catch(err){learningAdminNotice('Could not save question: '+err.message,true);}});
+$('publishAllLearning')?.addEventListener('click',async()=>{
+ if(currentPermissions?.learningLibrary!==true){learningAdminNotice('You do not have permission to publish library content.',true);return;}
+ const verifiedResources=learningAdminCache.resources.filter(x=>x.verification_status==='verified'&&!x.is_published).length;
+ const verifiedQuestions=learningAdminCache.questions.filter(x=>x.verification_status==='verified'&&!x.is_published).length;
+ if(!confirm('Publish all verified, unpublished study materials and questions with answers? Draft and review items will remain unpublished.'))return;
+ const btn=$('publishAllLearning');if(btn){btn.disabled=true;btn.textContent='Publishing…';}
+ try{
+  const [resourcesResult,questionsResult]=await Promise.all([
+   client.from('learning_resources').update({is_published:true,updated_by:currentUser.id}).eq('verification_status','verified').eq('is_published',false).select('id'),
+   client.from('learning_questions').update({is_published:true,updated_by:currentUser.id}).eq('verification_status','verified').eq('is_published',false).not('answer_text','is',null).select('id')
+  ]);
+  if(resourcesResult.error)throw resourcesResult.error;
+  if(questionsResult.error)throw questionsResult.error;
+  const published=(resourcesResult.data||[]).length+(questionsResult.data||[]).length;
+  learningAdminNotice('Publish All complete: '+published+' verified item(s) published. Draft and review items were left unchanged.');
+  await loadLearningAdmin();
+ }catch(err){learningAdminNotice('Publish All could not be completed: '+(err.message||'unknown error'),true);await loadLearningAdmin();}
+ finally{if(btn){btn.disabled=false;btn.textContent='✓ Publish All Verified';}}
+});
 $('refreshLearningLibrary')?.addEventListener('click',loadLearningAdmin);
 $('learningAdminList')?.addEventListener('click',async e=>{const b=e.target.closest('[data-learning-delete-resource],[data-learning-delete-question]');if(!b)return;if(!confirm('Delete this learning content record?'))return;try{const isResource=b.hasAttribute('data-learning-delete-resource'),id=b.getAttribute(isResource?'data-learning-delete-resource':'data-learning-delete-question');const {error}=await client.from(isResource?'learning_resources':'learning_questions').delete().eq('id',id);if(error)throw error;learningAdminNotice('Content record deleted.');await loadLearningAdmin();}catch(err){learningAdminNotice('Could not delete record: '+err.message,true);}});
 async function loadScholarshipManager(){
