@@ -58,7 +58,7 @@
  }
  function splitPages(text){const chunks=String(text||'').split(/\n{2,}/).filter(Boolean);const pages=[];let buf='';for(const p of chunks){if((buf+'\n\n'+p).length>2200&&buf){pages.push(buf);buf=p;}else buf+=(buf?'\n\n':'')+p;}if(buf)pages.push(buf);return pages.length?pages:['No readable content is available.'];}
  function renderReader(){
-  const r=currentResources[currentPage];if(!r)return;
+  if(!pageChunks[currentPage])return;
   $('content').innerHTML='<article class="reader-body">'+esc(pageChunks[currentPage])+'</article><div class="pagebar"><button class="action" id="prevPage" '+(currentPage===0?'disabled':'')+'>← Previous page</button><span>Page '+(currentPage+1)+' of '+pageChunks.length+'</span><button class="action primary" id="nextPage" '+(currentPage===pageChunks.length-1?'disabled':'')+'>Next page →</button></div>';
   $('prevPage')?.addEventListener('click',()=>{currentPage--;renderReader();});
   $('nextPage')?.addEventListener('click',()=>{currentPage++;renderReader();});
