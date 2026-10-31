@@ -2034,8 +2034,13 @@ restoreAdminSession();
   if(!programId||!pdfUrl){alert('Choose class/course and paste the direct official PDF link.');return;}
   btn.disabled=true;btn.textContent='AI is reading the book…';status.textContent='Downloading PDF and generating chapter-wise content. Please keep this page open.';
   try{
-   const {data,error}=await db.functions.invoke('learning-ai-book-builder',{body:{program_id:programId,pdf_url:pdfUrl,language:$('learningAiLanguage')?.value||'English',subject_name:$('learningAiSubject')?.value.trim()||''}});
-   if(error||data?.error){let detail=data?.error||error?.message||'AI book generation failed';try{if(error?.context){const body=await error.context.clone().json();detail=body?.details?detail+' — '+body.details:(body?.error||detail);}}catch{}throw new Error(detail);}
+   const payload={program_id:programId,pdf_url:pdfUrl,language:$('learningAiLanguage')?.value||'English',subject_name:$('learningAiSubject')?.value.trim()||''};
+   const explain=async(result)=>{if(result.error||result.data?.error){let detail=result.data?.error||result.error?.message||'AI book generation failed';try{if(result.error?.context){const body=await result.error.context.clone().json();detail=body?.details?detail+' — '+body.details:(body?.error||detail);}}catch{}throw new Error(detail);}return result.data;};
+   status.textContent='Step 1/2: Downloading textbook PDF and uploading it to AI…';
+   const uploaded=await explain(await db.functions.invoke('learning-ai-book-builder',{body:{...payload,stage:'upload'}}));
+   if(!uploaded?.gemini_file_uri)throw new Error('PDF upload finished but AI file reference was not returned.');
+   status.textContent='Step 2/2: PDF uploaded. AI is analyzing chapters and preparing notes/questions…';
+   const data=await explain(await db.functions.invoke('learning-ai-book-builder',{body:{...payload,stage:'analyze',gemini_file_uri:uploaded.gemini_file_uri,gemini_file_mime:uploaded.gemini_file_mime}}));
    status.textContent='Generated '+data.chapters_created+' chapters, '+data.notes_created+' notes and '+data.questions_created+' questions. '+data.videos_created+' videos saved.';
    alert('AI book generation complete!\nChapters: '+data.chapters_created+'\nStudy notes: '+data.notes_created+'\nQuestions: '+data.questions_created+'\nYouTube videos: '+data.videos_created+'\n\nEverything is saved as REVIEW / UNPUBLISHED. Verify before publishing.');
    await load();if(typeof loadLearningAdmin==='function')await loadLearningAdmin();
