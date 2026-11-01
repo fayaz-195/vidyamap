@@ -85,6 +85,57 @@
   if(error){$('content').innerHTML='<div class="empty">Could not load questions: '+esc(error.message)+'</div>';return;}
   questionRows=data||[];renderQuestions();
  }
+ function mathSafe(value){
+  const raw=String(value??'');
+  if(!raw.trim())return '';
+  const safe=esc(raw);
+  if(/\\\\\\\\(?:frac|sqrt|sin|cos|tan|cot|sec|cosec|text|times|cdot|div|pm|leq|geq|theta|alpha|beta|pi|log|lim|sum|int)\\b/.test(raw)&&!/(\\$|\\\\\\\\\\\\\\\\\\(|\\\\\\\\\\\\\\\\\\[)/.test(raw))return '
+  const rows=questionRows.filter(q=>questionFilter==='all'||(questionFilter==='previous'&&/previous|past|year|paper/i.test((q.source_name||'')+' '+(q.question_type||'')))||(questionFilter==='model'&&/model/i.test((q.source_name||'')+' '+(q.question_type||'')))||(questionFilter==='important'&&(/important/i.test((q.question_type||'')+' '+(q.source_name||''))||!/(previous|past|year|paper|model)/i.test((q.question_type||'')+' '+(q.source_name||'')))));
+  $('content').innerHTML=rows.length?rows.map((q,i)=>'<article class="qcard"><div class="qmeta">'+esc(q.question_type||'Practice')+' · '+esc(q.marks||'')+' marks '+(q.source_year?' · '+esc(q.source_year):'')+'</div><h3>'+ (i+1)+'. '+mathSafe(q.question_text)+'</h3>'+(Array.isArray(q.options)&&q.options.length?'<ol type="A">'+q.options.map(o=>'<li>'+mathSafe(typeof o==='string'?o:o.text||o.label||'')+'</li>').join('')+'</ol>':'')+'<details><summary>Show answer & explanation</summary><div class="answer"><b>Answer:</b> '+mathSafe(q.answer_text||q.correct_answer||'Answer will be added soon.')+(q.explanation?'<br><br><b>Explanation:</b> '+mathSafe(q.explanation):'')+'</div></details></article>').join(''):'<div class="empty">No published questions in this category yet.</div>';
+  if(window.MathJax?.typesetPromise){window.MathJax.typesetClear?.([$('content')]);window.MathJax.typesetPromise([$('content')]).catch(()=>{});}
+  setStatus(rows.length+' question(s) shown. Answers are available under each question.');
+ }
+ async function loadContent(){
+  const videoBox=$('videoLessons'),videoLink=$('youtubeSearch');
+  if($('chapter').value){
+   const p=$('program').selectedOptions[0]?.textContent||'Andhra Pradesh SCERT';
+   const s=$('subject').selectedOptions[0]?.textContent||'';
+   const ch=$('chapter').selectedOptions[0]?.textContent||'';
+   const q=[p,s,ch,'lesson explanation Telugu English'].filter(Boolean).join(' ');
+   videoLink.href='https://www.youtube.com/results?search_query='+encodeURIComponent(q);
+   videoBox.classList.remove('hidden');
+  }else videoBox.classList.add('hidden');
+  if($('mode').value==='questions')await loadQuestions();else await loadStudy();
+ }
+ $('program').addEventListener('change',loadSubjects);$('subject').addEventListener('change',loadChapters);$('chapter').addEventListener('change',loadContent);$('mode').addEventListener('change',()=>{$('questionFilters').classList.toggle('hidden',$('mode').value!=='questions');loadContent();});
+ $('questionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;questionFilter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderQuestions();});
+ loadPrograms();
+})();
+</script></body></html>+safe+'
+  const rows=questionRows.filter(q=>questionFilter==='all'||(questionFilter==='previous'&&/previous|past|year|paper/i.test((q.source_name||'')+' '+(q.question_type||'')))||(questionFilter==='model'&&/model/i.test((q.source_name||'')+' '+(q.question_type||'')))||(questionFilter==='important'&&(/important/i.test((q.question_type||'')+' '+(q.source_name||''))||!/(previous|past|year|paper|model)/i.test((q.question_type||'')+' '+(q.source_name||'')))));
+  $('content').innerHTML=rows.length?rows.map((q,i)=>'<article class="qcard"><div class="qmeta">'+esc(q.question_type||'Practice')+' · '+esc(q.marks||'')+' marks '+(q.source_year?' · '+esc(q.source_year):'')+'</div><h3>'+ (i+1)+'. '+esc(q.question_text)+'</h3>'+(Array.isArray(q.options)&&q.options.length?'<ol type="A">'+q.options.map(o=>'<li>'+esc(typeof o==='string'?o:o.text||o.label||'')+'</li>').join('')+'</ol>':'')+'<details><summary>Show answer & explanation</summary><div class="answer"><b>Answer:</b> '+esc(q.answer_text||q.correct_answer||'Answer will be added soon.')+(q.explanation?'<br><br><b>Explanation:</b> '+esc(q.explanation):'')+'</div></details></article>').join(''):'<div class="empty">No published questions in this category yet.</div>';
+  if(window.MathJax?.typesetPromise){window.MathJax.typesetClear?.([$('content')]);window.MathJax.typesetPromise([$('content')]).catch(()=>{});}
+  setStatus(rows.length+' question(s) shown. Answers are available under each question.');
+ }
+ async function loadContent(){
+  const videoBox=$('videoLessons'),videoLink=$('youtubeSearch');
+  if($('chapter').value){
+   const p=$('program').selectedOptions[0]?.textContent||'Andhra Pradesh SCERT';
+   const s=$('subject').selectedOptions[0]?.textContent||'';
+   const ch=$('chapter').selectedOptions[0]?.textContent||'';
+   const q=[p,s,ch,'lesson explanation Telugu English'].filter(Boolean).join(' ');
+   videoLink.href='https://www.youtube.com/results?search_query='+encodeURIComponent(q);
+   videoBox.classList.remove('hidden');
+  }else videoBox.classList.add('hidden');
+  if($('mode').value==='questions')await loadQuestions();else await loadStudy();
+ }
+ $('program').addEventListener('change',loadSubjects);$('subject').addEventListener('change',loadChapters);$('chapter').addEventListener('change',loadContent);$('mode').addEventListener('change',()=>{$('questionFilters').classList.toggle('hidden',$('mode').value!=='questions');loadContent();});
+ $('questionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;questionFilter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderQuestions();});
+ loadPrograms();
+})();
+</script></body></html>;
+  return safe;
+ }
  function renderQuestions(){
   const rows=questionRows.filter(q=>questionFilter==='all'||(questionFilter==='previous'&&/previous|past|year|paper/i.test((q.source_name||'')+' '+(q.question_type||'')))||(questionFilter==='model'&&/model/i.test((q.source_name||'')+' '+(q.question_type||'')))||(questionFilter==='important'&&(/important/i.test((q.question_type||'')+' '+(q.source_name||''))||!/(previous|past|year|paper|model)/i.test((q.question_type||'')+' '+(q.source_name||'')))));
   $('content').innerHTML=rows.length?rows.map((q,i)=>'<article class="qcard"><div class="qmeta">'+esc(q.question_type||'Practice')+' · '+esc(q.marks||'')+' marks '+(q.source_year?' · '+esc(q.source_year):'')+'</div><h3>'+ (i+1)+'. '+esc(q.question_text)+'</h3>'+(Array.isArray(q.options)&&q.options.length?'<ol type="A">'+q.options.map(o=>'<li>'+esc(typeof o==='string'?o:o.text||o.label||'')+'</li>').join('')+'</ol>':'')+'<details><summary>Show answer & explanation</summary><div class="answer"><b>Answer:</b> '+esc(q.answer_text||q.correct_answer||'Answer will be added soon.')+(q.explanation?'<br><br><b>Explanation:</b> '+esc(q.explanation):'')+'</div></details></article>').join(''):'<div class="empty">No published questions in this category yet.</div>';
