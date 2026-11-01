@@ -31,7 +31,21 @@
 <script>
 (function(){
  const URL='https://taxlvccrinehasexgvhv.supabase.co',KEY='sb_publishable_mrT2M6uwRzH2ExfZh7tevg_zdfd0pyA';
- const db=window.supabase.createClient(URL,KEY),$=id=>document.getElementById(id);
+ let db=null;const $=id=>document.getElementById(id);
+ async function ensureLibraryClient(){
+  if(db)return db;
+  if(!window.supabase?.createClient){
+   await new Promise((resolve,reject)=>{
+    const script=document.createElement('script');
+    script.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    script.onload=resolve;script.onerror=()=>reject(new Error('Could not load the library connection script. Check internet/CDN access and refresh.'));
+    document.head.appendChild(script);
+   });
+  }
+  if(!window.supabase?.createClient)throw new Error('Library connection library did not initialize. Please refresh.');
+  db=window.supabase.createClient(URL,KEY);
+  return db;
+ }
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  let currentResources=[],currentPage=0,pageChunks=[],questionRows=[],questionFilter='important';
  const setStatus=t=>$('status').textContent=t;
@@ -39,7 +53,7 @@
  async function loadPrograms(){
   const select=$('program');
   try{
-   if(!window.supabase?.createClient)throw new Error('Library connection could not start. Refresh the page or check your internet connection.');
+   await ensureLibraryClient();
    setStatus('Connecting to the library catalogue…');
    const query=db.from('learning_programs').select('id,class_label,course_name,board,stream,display_order').eq('is_active',true).order('display_order');
    const result=await Promise.race([
@@ -57,6 +71,7 @@
   }
  }
  async function loadSubjects(){
+  await ensureLibraryClient();
   fill($('subject'),[],'Loading subjects…');fill($('chapter'),[],'Choose subject first');$('content').innerHTML='<div class="empty">Choose a subject.</div>';
   const id=$('program').value;if(!id)return;
   const {data,error}=await db.from('learning_subjects').select('id,subject_name,language,display_order').eq('program_id',id).eq('is_active',true).order('display_order');
@@ -65,6 +80,7 @@
   setStatus((data||[]).length?'Choose a subject.':'No subjects added for this class yet.');
  }
  async function loadChapters(){
+  await ensureLibraryClient();
   fill($('chapter'),[],'Loading chapters…');$('content').innerHTML='<div class="empty">Choose a chapter.</div>';
   const id=$('subject').value;if(!id)return;
   const {data,error}=await db.from('learning_chapters').select('id,chapter_number,chapter_title,display_order').eq('subject_id',id).eq('is_active',true).order('display_order');
@@ -83,6 +99,7 @@
   $('nextPage')?.addEventListener('click',()=>{currentPage++;renderReader();});
  }
  async function loadStudy(){
+  await ensureLibraryClient();
   $('sectionTitle').textContent='Study Material & Books';const id=$('chapter').value;if(!id){$('content').innerHTML='<div class="empty">Select a chapter to read its study material.</div>';return;}
   const {data,error}=await db.from('learning_resources').select('id,resource_type,title,content,external_url,source_name,language').eq('chapter_id',id).eq('is_published',true).eq('verification_status','verified').order('display_order');
   if(error){$('content').innerHTML='<div class="empty">Could not load study material: '+esc(error.message)+'</div>';return;}
@@ -102,6 +119,7 @@
   setStatus(internal.length+' study sections and '+links.length+' book links available.');
  }
  async function loadQuestions(){
+  await ensureLibraryClient();
   $('sectionTitle').textContent='Question Bank';const id=$('chapter').value;if(!id){$('content').innerHTML='<div class="empty">Select a chapter to see questions and answers.</div>';return;}
   const {data,error}=await db.from('learning_questions').select('id,question_text,answer_text,marks,difficulty,question_type,options,correct_answer,explanation,source_year,source_name').eq('chapter_id',id).eq('is_published',true).eq('verification_status','verified').order('display_order');
   if(error){$('content').innerHTML='<div class="empty">Could not load questions: '+esc(error.message)+'</div>';return;}
