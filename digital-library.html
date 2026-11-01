@@ -37,10 +37,24 @@
  const setStatus=t=>$('status').textContent=t;
  function fill(sel,rows,label){sel.innerHTML='<option value="">'+label+'</option>'+rows.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.label)+'</option>').join('');sel.disabled=!rows.length;}
  async function loadPrograms(){
-  const {data,error}=await db.from('learning_programs').select('id,class_label,course_name,board,stream,display_order').eq('is_active',true).order('display_order');
-  if(error){setStatus('Could not load classes: '+error.message);return;}
-  fill($('program'),(data||[]).map(x=>({id:x.id,label:[x.class_label||x.course_name,x.stream,x.board].filter(Boolean).join(' · ')})),'Choose class / course');
-  setStatus((data||[]).length+' classes and courses available. Select one to continue.');
+  const select=$('program');
+  try{
+   if(!window.supabase?.createClient)throw new Error('Library connection could not start. Refresh the page or check your internet connection.');
+   setStatus('Connecting to the library catalogue…');
+   const query=db.from('learning_programs').select('id,class_label,course_name,board,stream,display_order').eq('is_active',true).order('display_order');
+   const result=await Promise.race([
+    query,
+    new Promise((_,reject)=>setTimeout(()=>reject(new Error('Class loading timed out. Please refresh and try again.')),12000))
+   ]);
+   if(result.error)throw result.error;
+   const rows=result.data||[];
+   fill(select,rows.map(x=>({id:x.id,label:[x.class_label||x.course_name,x.stream,x.board].filter(Boolean).join(' · ')})),'Choose class / course');
+   setStatus(rows.length?rows.length+' classes and courses available. Select one to continue.':'No active classes or courses are available yet.');
+  }catch(error){
+   select.innerHTML='<option value="">Could not load classes — tap to retry</option>';
+   select.disabled=false;
+   setStatus('Could not load classes: '+(error?.message||'connection error')+'. Please refresh the page.');
+  }
  }
  async function loadSubjects(){
   fill($('subject'),[],'Loading subjects…');fill($('chapter'),[],'Choose subject first');$('content').innerHTML='<div class="empty">Choose a subject.</div>';
