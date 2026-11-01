@@ -87,11 +87,16 @@
   const internal=currentResources.filter(x=>(x.content||'').trim());
   const links=currentResources.filter(x=>x.external_url);
   let html='';
-  if(internal.length){currentPage=0;pageChunks=splitPages(internal[0].content);html='<div class="resource-list"><div class="resource"><h3>'+esc(internal[0].title)+'</h3><p>'+esc(internal[0].source_name||'VidyaMap study notes')+'</p><div id="pageMount"></div></div></div>';}
+  if(internal.length){
+   currentPage=0;
+   const combined=internal.map(x=>'# '+(x.title||'Study material')+'\n\n'+(x.content||'')).join('\n\n');
+   pageChunks=splitPages(combined);
+   html='<div class="resource-list"><div class="resource"><h3>Study material · '+internal.length+' sections</h3><p>Use Previous / Next to read all verified notes and important topics.</p><div id="pageMount"></div></div></div>';
+  }
   if(links.length)html+='<div class="resource-list" style="margin-top:14px">'+links.map(x=>'<div class="resource"><h3>'+esc(x.title)+'</h3><p>'+esc(x.resource_type)+' · '+esc(x.source_name||'Official source')+'</p><a href="'+esc(x.external_url)+'" target="_blank" rel="noopener noreferrer">Open book / resource ↗</a></div>').join('')+'</div>';
   $('content').innerHTML=html||'<div class="empty">No readable notes or book links are available.</div>';
   if(internal.length){currentResources=internal;currentPage=0;renderReader();}
-  setStatus(currentResources.length+' verified resource(s) available.');
+  setStatus(internal.length+' study sections and '+links.length+' book links available.');
  }
  async function loadQuestions(){
   $('sectionTitle').textContent='Question Bank';const id=$('chapter').value;if(!id){$('content').innerHTML='<div class="empty">Select a chapter to see questions and answers.</div>';return;}
