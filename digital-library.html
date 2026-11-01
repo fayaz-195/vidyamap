@@ -75,7 +75,8 @@
  function splitPages(text){const chunks=String(text||'').split(/\n{2,}/).filter(Boolean);const pages=[];let buf='';for(const p of chunks){if((buf+'\n\n'+p).length>2200&&buf){pages.push(buf);buf=p;}else buf+=(buf?'\n\n':'')+p;}if(buf)pages.push(buf);return pages.length?pages:['No readable content is available.'];}
  function renderReader(){
   if(!pageChunks[currentPage])return;
-  const slash=String.fromCharCode(92);const normalized=String(pageChunks[currentPage]).split(slash+slash).join(slash);\n  const rendered=window.marked?window.marked.parse(normalized):esc(normalized).replace(/\\n/g,'<br>');
+  const slash=String.fromCharCode(92);const normalized=String(pageChunks[currentPage]).split(slash+slash).join(slash);
+  const rendered=window.marked?window.marked.parse(normalized):esc(normalized).replace(/\\n/g,'<br>');
   $('content').innerHTML='<article class="reader-body">'+(window.DOMPurify?window.DOMPurify.sanitize(rendered):rendered)+'</article><div class="pagebar"><button class="action" id="prevPage" '+(currentPage===0?'disabled':'')+'>← Previous page</button><span>Page '+(currentPage+1)+' of '+pageChunks.length+'</span><button class="action primary" id="nextPage" '+(currentPage===pageChunks.length-1?'disabled':'')+'>Next page →</button></div>';
   if(window.MathJax?.typesetPromise){window.MathJax.typesetClear?.([$('content')]);window.MathJax.typesetPromise([$('content')]).catch(()=>{});}
   $('prevPage')?.addEventListener('click',()=>{currentPage--;renderReader();});
